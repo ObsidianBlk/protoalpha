@@ -1,0 +1,40 @@
+@tool
+extends State
+class_name ProtoState
+
+# ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const ANIM_CLIMB : StringName = &"climb"
+const ANIM_FALL : StringName = &"fall"
+const ANIM_IDLE_A : StringName = &"idle_a"
+const ANIM_IDLE_B : StringName = &"idle_b"
+const ANIM_JUMP : StringName = &"jump"
+const ANIM_RUN : StringName = &"run"
+const ANIM_SHOOT_RUN : StringName = &"shoot_run"
+const ANIM_SHOOT_STAND : StringName = &"shoot_stand"
+
+# ------------------------------------------------------------------------------
+# Export Variables
+# ------------------------------------------------------------------------------
+@export var sprite : AnimatedSprite2D = null
+
+# ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
+var _proto : CharacterBody2D = null
+
+# ------------------------------------------------------------------------------
+# Public Methods
+# ------------------------------------------------------------------------------
+func event_one_of(event : InputEvent, actions : Array[StringName]) -> bool:
+	for action : StringName in actions:
+		if event.is_action(action): return true
+	return false
+
+func get_proto_node() -> CharacterBody2D:
+	if _proto == null:
+		var host : Node = get_host()
+		if host is CharacterBody2D:
+			_proto = host
+	return _proto

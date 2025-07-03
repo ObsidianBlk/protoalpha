@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://4ksc5l4guac3"]
+
+[ext_resource type="PackedScene" uid="uid://begmbhotjdgsd" path="res://objects/proto/proto.tscn" id="1_hyk8p"]
+[ext_resource type="Texture2D" uid="uid://k5tiqts8etjb" path="res://icon.svg" id="1_iuonh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iuonh"]
+size = Vector2(300, 4)
+
+[node name="Main" type="Node"]
+
+[node name="Scene" type="Node2D" parent="."]
+
+[node name="Icon" type="Sprite2D" parent="Scene"]
+position = Vector2(-32, 15)
+texture = ExtResource("1_iuonh")
+
+[node name="Icon2" type="Sprite2D" parent="Scene"]
+position = Vector2(-159, 23)
+texture = ExtResource("1_iuonh")
+
+[node name="Icon3" type="Sprite2D" parent="Scene"]
+position = Vector2(-289, 14)
+texture = ExtResource("1_iuonh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Scene"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/StaticBody2D"]
+shape = SubResource("RectangleShape2D_iuonh")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Scene"]
+position = Vector2(-199, 57)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/StaticBody2D2"]
+shape = SubResource("RectangleShape2D_iuonh")
+
+[node name="Proto" parent="Scene" instance=ExtResource("1_hyk8p")]
+position = Vector2(0, -39)
+
+[node name="Camera2D" type="Camera2D" parent="Scene/Proto"]
+position = Vector2(0, -8)
+zoom = Vector2(4, 4)
