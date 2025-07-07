@@ -27,9 +27,10 @@ var _proto : CharacterBody2D = null
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
-func event_one_of(event : InputEvent, actions : Array[StringName]) -> bool:
-	for action : StringName in actions:
-		if event.is_action(action): return true
+func event_one_of(event : InputEvent, actions : Array[StringName], allow_echo : bool = false) -> bool:
+	if allow_echo or not event.is_echo():
+		for action : StringName in actions:
+			if event.is_action(action): return true
 	return false
 
 func get_proto_node() -> CharacterBody2D:

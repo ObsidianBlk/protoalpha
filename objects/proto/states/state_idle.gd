@@ -14,6 +14,7 @@ const FRAME_IDLE_B : int = 1
 # ------------------------------------------------------------------------------
 @export var state_move : StringName = &""
 @export var state_jump : StringName = &""
+@export var state_climb : StringName = &""
 @export var state_fall : StringName = &""
 @export var state_shoot : StringName = &""
 
@@ -51,16 +52,25 @@ func update(_delta : float) -> void:
 
 func physics_update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	proto.velocity.y = proto.get_gravity().y
+	if not proto.is_on_ladder():
+		proto.velocity.y = proto.get_gravity().y
+	else: proto.velocity.y = 0.0
+	
 	proto.move_and_slide()
-	if not proto.is_on_floor():
+	if not proto.is_on_surface():
 		if not state_fall.is_empty():
 			swap_to(state_fall)
 
 func handle_input(event : InputEvent) -> void:
+	var proto : CharacterBody2D = get_proto_node()
+	if proto == null: return
+
 	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		var move_direction : Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
-		swap_to(state_move, move_direction)
+		if not is_equal_approx(move_direction.y, 0.0) and proto.is_on_ladder():
+			swap_to(state_climb)
+		else:
+			swap_to(state_move, move_direction)
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
 	elif event.is_action_pressed(&"shoot"):

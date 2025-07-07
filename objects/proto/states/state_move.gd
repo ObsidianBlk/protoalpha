@@ -4,10 +4,9 @@ extends ProtoState
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-@export var speed : float = 100.0
-
 @export_subgroup("States")
 @export var state_idle : StringName = &""
+@export var state_climb : StringName = &""
 @export var state_jump : StringName = &""
 @export var state_fall : StringName = &""
 @export var state_shoot : StringName = &""
@@ -42,18 +41,26 @@ func physics_update(_delta : float) -> void:
 	if not is_equal_approx(abs(_move_direction.x), 0.0):
 		sprite.flip_h = _move_direction.x < 0.0
 	
-	proto.velocity.x = _move_direction.x * speed
-	proto.velocity.y = proto.get_gravity().y
+	proto.velocity.x = _move_direction.x * proto.speed
+	
+	if not proto.is_on_ladder():
+		proto.velocity.y = proto.get_gravity().y
+	else: proto.velocity.y = 0.0
 	proto.move_and_slide()
 	
-	if not proto.is_on_floor():
+	if not proto.is_on_surface():
 		swap_to(state_fall)
 	elif proto.velocity.is_equal_approx(Vector2.ZERO):
 		swap_to(state_idle)
 
 func handle_input(event : InputEvent) -> void:
+	var proto : CharacterBody2D = get_proto_node()
+	if proto == null: return
+	
 	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+		if not is_equal_approx(_move_direction.y, 0.0) and proto.is_on_ladder():
+			swap_to(state_climb)
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
 	elif event.is_action_pressed(&"shoot"):
