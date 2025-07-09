@@ -6,6 +6,7 @@ extends ProtoState
 @export_subgroup("States")
 @export var state_idle : StringName = &""
 @export var state_move : StringName = &""
+@export var state_climb : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -35,6 +36,8 @@ func update(_delta : float) -> void:
 	var falling : bool = proto.velocity.y >= 0.0
 	
 	if proto.is_on_surface():
+		if proto.is_on_ladder() and not is_equal_approx(_move_direction.y, 0.0):
+			swap_to(state_climb)
 		if falling:
 			if is_equal_approx(_move_direction.x, 0.0):
 				swap_to(state_idle)

@@ -16,7 +16,6 @@ const FRAME_IDLE_B : int = 1
 @export var state_jump : StringName = &""
 @export var state_climb : StringName = &""
 @export var state_fall : StringName = &""
-@export var state_shoot : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -41,14 +40,22 @@ func enter(payload : Variant = null) -> void:
 	proto.velocity = Vector2.ZERO
 	
 	if sprite != null:
+		if not sprite.animation_finished.is_connected(_on_animation_finished):
+			sprite.animation_finished.connect(_on_animation_finished)
 		sprite.play(ANIM_IDLE_A)
+
+func exit() -> void:
+	if sprite != null:
+		if sprite.animation_finished.is_connected(_on_animation_finished):
+			sprite.animation_finished.disconnect(_on_animation_finished)
 
 func update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
-	var action : StringName = _weighted_action.get_random()
-	if action == ACTION_CHANGE:
-		sprite.play(ANIM_IDLE_B if sprite.animation == ANIM_IDLE_A else ANIM_IDLE_A)
+	if proto.can_shoot():
+		var action : StringName = _weighted_action.get_random()
+		if action == ACTION_CHANGE:
+			sprite.play(ANIM_IDLE_B if sprite.animation == ANIM_IDLE_A else ANIM_IDLE_A)
 
 func physics_update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
@@ -74,4 +81,13 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
 	elif event.is_action_pressed(&"shoot"):
-		swap_to(state_shoot)
+		sprite.play(ANIM_SHOOT_STAND)
+		proto.shoot()
+
+
+# ------------------------------------------------------------------------------
+# Handler Methods
+# ------------------------------------------------------------------------------
+func _on_animation_finished() -> void:
+	if sprite.animation == ANIM_SHOOT_STAND:
+		sprite.play(ANIM_IDLE_A)

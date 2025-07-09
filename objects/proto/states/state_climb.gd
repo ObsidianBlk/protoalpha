@@ -24,6 +24,7 @@ func enter(payload : Variant = null) -> void:
 	if sprite != null:
 		sprite.play(ANIM_CLIMB)
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+	_CheckMovement()
 
 func exit() -> void:
 	pass
@@ -51,8 +52,20 @@ func physics_update(_delta : float) -> void:
 func handle_input(event : InputEvent) -> void:
 	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
-		if is_equal_approx(_move_direction.y, 0.0) and not is_equal_approx(_move_direction.x, 0.0):
-			swap_to(state_move, _move_direction)
+		_CheckMovement()
 	elif event.is_action_pressed(&"jump"):
 		if not state_jump.is_empty():
 			swap_to(state_jump)
+
+# ------------------------------------------------------------------------------
+# Private Methods
+# ------------------------------------------------------------------------------
+func _CheckMovement() -> void:
+	var proto : CharacterBody2D = get_proto_node()
+	if proto == null: return
+
+	var climbing : bool = not is_equal_approx(_move_direction.y, 0.0)
+	if not climbing and not is_equal_approx(_move_direction.x, 0.0):
+		swap_to(state_move, _move_direction)
+	elif climbing:
+		proto.velocity.x = 0.0
