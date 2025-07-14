@@ -13,11 +13,8 @@ const ANIM_JUMP : StringName = &"jump"
 const ANIM_RUN : StringName = &"run"
 const ANIM_SHOOT_RUN : StringName = &"shoot_run"
 const ANIM_SHOOT_STAND : StringName = &"shoot_stand"
+const ANIM_SHOOT_AIR : StringName = &"shoot_air"
 
-# ------------------------------------------------------------------------------
-# Export Variables
-# ------------------------------------------------------------------------------
-@export var sprite : AnimatedSprite2D = null
 
 # ------------------------------------------------------------------------------
 # Variables

@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://xfj4a2moijg2"]
+
+[ext_resource type="Script" uid="uid://jejiprc5138i" path="res://scripts/nodes/bullet.gd" id="1_04o4a"]
+[ext_resource type="Texture2D" uid="uid://fmxjsbiuie4f" path="res://assets/graphics/bullets/bullet_small.png" id="1_l4ibf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ofkrt"]
+radius = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g08x3"]
+atlas = ExtResource("1_l4ibf")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2pgv"]
+atlas = ExtResource("1_l4ibf")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b7usj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g08x3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2pgv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="ProtoBulletSmall" type="Area2D"]
+collision_layer = 0
+collision_mask = 33
+script = ExtResource("1_04o4a")
+speed = 160.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ofkrt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_b7usj")
+autoplay = "default"
+frame_progress = 0.989597

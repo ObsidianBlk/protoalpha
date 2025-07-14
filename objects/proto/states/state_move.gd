@@ -9,7 +9,6 @@ extends ProtoState
 @export var state_climb : StringName = &""
 @export var state_jump : StringName = &""
 @export var state_fall : StringName = &""
-@export var state_shoot : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -21,25 +20,32 @@ var _move_direction : Vector2 = Vector2.ZERO
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	if get_proto_node() == null:
+	var proto : CharacterBody2D = get_proto_node()
+	if proto == null:
 		pop()
-	if sprite != null:
-		sprite.play(ANIM_RUN)
+		return
+	
+	if not proto.reloaded.is_connected(_on_reloaded):
+		proto.reloaded.connect(_on_reloaded)
+	proto.play_animation(ANIM_RUN)
 	if typeof(payload) == TYPE_VECTOR2:
 		_move_direction = payload
 
 func exit() -> void:
-	pass
+	var proto : CharacterBody2D = get_proto_node()
+	if proto != null:
+		if proto.reloaded.is_connected(_on_reloaded):
+			proto.reloaded.disconnect(_on_reloaded)
 
 func update(_delta : float) -> void:
 	pass
 
 func physics_update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	if proto == null or sprite == null: return
+	if proto == null: return
 	
 	if not is_equal_approx(abs(_move_direction.x), 0.0):
-		sprite.flip_h = _move_direction.x < 0.0
+		proto.flip(_move_direction.x < 0.0)
 	
 	proto.velocity.x = _move_direction.x * proto.speed
 	
@@ -64,4 +70,14 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
 	elif event.is_action_pressed(&"shoot"):
-		swap_to(state_shoot)
+		proto.shoot()
+		proto.play_animation_sync(ANIM_SHOOT_RUN)
+
+
+# ------------------------------------------------------------------------------
+# Handler Methods
+# ------------------------------------------------------------------------------
+func _on_reloaded() -> void:
+	var proto : CharacterBody2D = get_proto_node()
+	if proto != null:
+		proto.play_animation_sync(ANIM_RUN)

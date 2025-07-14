@@ -38,24 +38,24 @@ func enter(payload : Variant = null) -> void:
 	if proto == null:
 		pop()
 	proto.velocity = Vector2.ZERO
-	
-	if sprite != null:
-		if not sprite.animation_finished.is_connected(_on_animation_finished):
-			sprite.animation_finished.connect(_on_animation_finished)
-		sprite.play(ANIM_IDLE_A)
+	if not proto.animation_finished.is_connected(_on_animation_finished):
+		proto.animation_finished.connect(_on_animation_finished)
+	proto.play_animation(ANIM_IDLE_A)
 
 func exit() -> void:
-	if sprite != null:
-		if sprite.animation_finished.is_connected(_on_animation_finished):
-			sprite.animation_finished.disconnect(_on_animation_finished)
+	var proto : CharacterBody2D = get_proto_node()
+	if proto != null:
+		if proto.animation_finished.is_connected(_on_animation_finished):
+			proto.animation_finished.disconnect(_on_animation_finished)
 
 func update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	if proto.can_shoot():
 		var action : StringName = _weighted_action.get_random()
+		var cur_anim : StringName = proto.get_current_animation()
 		if action == ACTION_CHANGE:
-			sprite.play(ANIM_IDLE_B if sprite.animation == ANIM_IDLE_A else ANIM_IDLE_A)
+			proto.play_animation(ANIM_IDLE_B if cur_anim == ANIM_IDLE_A else ANIM_IDLE_A)
 
 func physics_update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
@@ -81,13 +81,15 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
 	elif event.is_action_pressed(&"shoot"):
-		sprite.play(ANIM_SHOOT_STAND)
+		proto.play_animation(ANIM_SHOOT_STAND)
 		proto.shoot()
 
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_animation_finished() -> void:
-	if sprite.animation == ANIM_SHOOT_STAND:
-		sprite.play(ANIM_IDLE_A)
+func _on_animation_finished(anim_name : StringName) -> void:
+	var proto : CharacterBody2D = get_proto_node()
+	if proto == null: return
+	if anim_name == ANIM_SHOOT_STAND:
+		proto.play_animation(ANIM_IDLE_A)

@@ -19,19 +19,26 @@ var _jump_released : bool = false
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	if proto == null: return
+	if proto == null:
+		pop()
+		return
+	
+	if not proto.reloaded.is_connected(_on_reloaded):
+		proto.reloaded.connect(_on_reloaded)
 	proto.velocity.y = -proto.jump_power
-	if sprite != null:
-		sprite.play(ANIM_JUMP)
+	proto.play_animation(ANIM_JUMP)
 	_jump_released = false
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 
 func exit() -> void:
-	pass
+	var proto : CharacterBody2D = get_proto_node()
+	if proto == null: return
+	if proto.reloaded.is_connected(_on_reloaded):
+		proto.reloaded.disconnect(_on_reloaded)
 
 func update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	if proto == null or sprite == null: return
+	if proto == null: return
 	
 	var falling : bool = proto.velocity.y >= 0.0
 	
@@ -46,10 +53,10 @@ func update(_delta : float) -> void:
 
 func physics_update(delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	if proto == null or sprite == null: return
+	if proto == null: return
 	
 	if not is_equal_approx(abs(_move_direction.x), 0.0):
-		sprite.flip_h = _move_direction.x < 0.0
+		proto.flip(_move_direction.x < 0.0)
 	
 	if not is_equal_approx(_move_direction.x, 0.0):
 		var speed : float = _move_direction.x * (proto.speed * proto.air_speed_multiplier)
@@ -63,14 +70,28 @@ func physics_update(delta : float) -> void:
 		var g_actual : float = gravity
 		if proto.velocity.y >= 0.0:
 			g_actual = (gravity * proto.fall_multiplier)
-			if sprite.animation != ANIM_FALL:
-				sprite.play(ANIM_FALL)
+			if proto.get_current_animation() != ANIM_FALL:
+				proto.play_animation(ANIM_FALL)
 		proto.velocity.y = min(proto.velocity.y + (g_actual * delta), g_actual)
 	
 	proto.move_and_slide()
 
 func handle_input(event : InputEvent) -> void:
+	var proto : CharacterBody2D = get_proto_node()
+	if proto == null: return
+	
 	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	elif event.is_action_released(&"jump"):
 		_jump_released = true
+	elif event.is_action_pressed(&"shoot"):
+		proto.play_animation(ANIM_SHOOT_AIR)
+		proto.shoot()
+
+# ------------------------------------------------------------------------------
+# Handler Methods
+# ------------------------------------------------------------------------------
+func _on_reloaded() -> void:
+	var proto : CharacterBody2D = get_proto_node()
+	if proto == null: return
+	proto.play_animation(ANIM_JUMP)

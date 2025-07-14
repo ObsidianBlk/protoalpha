@@ -20,9 +20,10 @@ var _move_direction : Vector2 = Vector2.ZERO
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	if proto == null: return
-	if sprite != null:
-		sprite.play(ANIM_CLIMB)
+	if proto == null:
+		pop()
+		return
+	proto.play_animation(ANIM_CLIMB)
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	_CheckMovement()
 
@@ -39,12 +40,12 @@ func update(_delta : float) -> void:
 
 func physics_update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	if proto == null or sprite == null: return
+	if proto == null: return
 	
 	if is_equal_approx(_move_direction.y, 0.0):
-		sprite.stop()
-	elif not sprite.is_playing():
-		sprite.play()
+		proto.stop_animation()
+	elif not proto.is_animation_playing():
+		proto.play_animation()
 	
 	proto.velocity.y = _move_direction.y * proto.speed * 0.5
 	proto.move_and_slide()
