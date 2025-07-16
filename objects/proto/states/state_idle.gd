@@ -37,21 +37,31 @@ func enter(payload : Variant = null) -> void:
 	var proto : CharacterBody2D = get_proto_node()
 	if proto == null:
 		pop()
+	
+	var wep : Weapon = proto.get_weapon()
+	if not wep.reloaded.is_connected(_on_reloaded):
+		wep.reloaded.connect(_on_reloaded)
+	
 	proto.velocity = Vector2.ZERO
-	if not proto.animation_finished.is_connected(_on_animation_finished):
-		proto.animation_finished.connect(_on_animation_finished)
-	proto.play_animation(ANIM_IDLE_A)
+	if wep.is_triggered():
+		proto.play_animation(ANIM_SHOOT_STAND)
+	else:
+		proto.play_animation(ANIM_IDLE_A)
 
 func exit() -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	if proto != null:
-		if proto.animation_finished.is_connected(_on_animation_finished):
-			proto.animation_finished.disconnect(_on_animation_finished)
+	if proto == null: return
+	
+	var wep : Weapon = proto.get_weapon()
+	if wep == null: return
+	
+	if wep.reloaded.is_connected(_on_reloaded):
+		wep.reloaded.disconnect(_on_reloaded)
 
 func update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
-	if proto.can_shoot():
+	if not proto.get_weapon().is_triggered():
 		var action : StringName = _weighted_action.get_random()
 		var cur_anim : StringName = proto.get_current_animation()
 		if action == ACTION_CHANGE:
@@ -80,16 +90,28 @@ func handle_input(event : InputEvent) -> void:
 			swap_to(state_move, move_direction)
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
-	elif event.is_action_pressed(&"shoot"):
-		proto.play_animation(ANIM_SHOOT_STAND)
-		proto.shoot()
+	elif event.is_action(&"shoot"):
+		var wep : Weapon = proto.get_weapon()
+		if event.is_pressed():
+			if wep.can_shoot():
+				proto.play_animation(ANIM_SHOOT_STAND)
+				wep.press_trigger(proto.get_parent())
+		else:
+			if proto.get_current_animation() == ANIM_SHOOT_STAND:
+				proto.play_animation(ANIM_IDLE_A)
+			wep.release_trigger()
 
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_animation_finished(anim_name : StringName) -> void:
+func _on_reloaded() -> void:
 	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
-	if anim_name == ANIM_SHOOT_STAND:
-		proto.play_animation(ANIM_IDLE_A)
+	proto.play_animation(ANIM_IDLE_A)
+
+#func _on_animation_finished(anim_name : StringName) -> void:
+	#var proto : CharacterBody2D = get_proto_node()
+	#if proto == null: return
+	#if anim_name == ANIM_SHOOT_STAND:
+		#proto.play_animation(ANIM_IDLE_A)

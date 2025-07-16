@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="WeaponDef" load_steps=5 format=3 uid="uid://cjxpcqqqetplo"]
+
+[ext_resource type="Texture2D" uid="uid://cerxj7dxak3ah" path="res://assets/graphics/bullets/bullet_charged_bolt.png" id="1_62502"]
+[ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="2_buccd"]
+[ext_resource type="PackedScene" uid="uid://bfoxdetpiysud" path="res://objects/projectiles/charged_bolt/charged_bolt.tscn" id="2_w0654"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0654"]
+atlas = ExtResource("1_62502")
+region = Rect2(0, 0, 8, 8)
+
+[resource]
+script = ExtResource("2_buccd")
+type = 0
+name = &"Charged Bolt"
+icon = SubResource("AtlasTexture_w0654")
+projectile = ExtResource("2_w0654")
+rate_of_fire = 1.0
+charging = true
+metadata/_custom_type_script = "uid://dvj7a56df3qol"

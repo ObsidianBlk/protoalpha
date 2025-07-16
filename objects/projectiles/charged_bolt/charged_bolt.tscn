@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://bfoxdetpiysud"]
+
+[ext_resource type="Script" uid="uid://jejiprc5138i" path="res://scripts/nodes/projectile.gd" id="1_s7qmn"]
+[ext_resource type="Texture2D" uid="uid://cerxj7dxak3ah" path="res://assets/graphics/bullets/bullet_charged_bolt.png" id="2_ex7ch"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ex7ch"]
+radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dqk8"]
+atlas = ExtResource("2_ex7ch")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75qob"]
+atlas = ExtResource("2_ex7ch")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57iiv"]
+atlas = ExtResource("2_ex7ch")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3rnp2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dqk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75qob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57iiv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="ChargedBolt" type="Area2D" node_paths=PackedStringArray("visual_node")]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("1_s7qmn")
+speed = 80.0
+dmg = 8
+visual_node = NodePath("AnimatedSprite2D")
+metadata/_custom_type_script = "uid://jejiprc5138i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ex7ch")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3rnp2")
+autoplay = "default"
+frame_progress = 0.507198

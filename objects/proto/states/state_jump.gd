@@ -23,18 +23,26 @@ func enter(payload : Variant = null) -> void:
 		pop()
 		return
 	
-	if not proto.reloaded.is_connected(_on_reloaded):
-		proto.reloaded.connect(_on_reloaded)
+	var wep : Weapon = proto.get_weapon()
+	if not wep.reloaded.is_connected(_on_reloaded):
+		wep.reloaded.connect(_on_reloaded)
+	
 	proto.velocity.y = -proto.jump_power
-	proto.play_animation(ANIM_JUMP)
+	
+	if wep.is_triggered():
+		proto.play_animation(ANIM_SHOOT_AIR)
+	else:
+		proto.play_animation(ANIM_JUMP)
+	
 	_jump_released = false
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 
 func exit() -> void:
 	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
-	if proto.reloaded.is_connected(_on_reloaded):
-		proto.reloaded.disconnect(_on_reloaded)
+	var wep : Weapon = proto.get_weapon()
+	if wep.reloaded.is_connected(_on_reloaded):
+		wep.reloaded.disconnect(_on_reloaded)
 
 func update(_delta : float) -> void:
 	var proto : CharacterBody2D = get_proto_node()
@@ -70,8 +78,8 @@ func physics_update(delta : float) -> void:
 		var g_actual : float = gravity
 		if proto.velocity.y >= 0.0:
 			g_actual = (gravity * proto.fall_multiplier)
-			if proto.get_current_animation() != ANIM_FALL:
-				proto.play_animation(ANIM_FALL)
+			#if proto.get_current_animation() != ANIM_FALL:
+			#	proto.play_animation(ANIM_FALL)
 		proto.velocity.y = min(proto.velocity.y + (g_actual * delta), g_actual)
 	
 	proto.move_and_slide()
@@ -84,9 +92,15 @@ func handle_input(event : InputEvent) -> void:
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	elif event.is_action_released(&"jump"):
 		_jump_released = true
-	elif event.is_action_pressed(&"shoot"):
-		proto.play_animation(ANIM_SHOOT_AIR)
-		proto.shoot()
+	elif event.is_action(&"shoot"):
+		var wep : Weapon = proto.get_weapon()
+		if event.is_pressed():
+			proto.play_animation(ANIM_SHOOT_AIR)
+			wep.press_trigger(proto.get_parent())
+		else:
+			if proto.get_current_animation() == ANIM_SHOOT_AIR:
+				proto.play_animation(ANIM_JUMP)
+			wep.release_trigger()
 
 # ------------------------------------------------------------------------------
 # Handler Methods

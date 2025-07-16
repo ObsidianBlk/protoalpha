@@ -1,9 +1,12 @@
-[gd_scene load_steps=35 format=3 uid="uid://begmbhotjdgsd"]
+[gd_scene load_steps=39 format=3 uid="uid://begmbhotjdgsd"]
 
 [ext_resource type="Texture2D" uid="uid://b6uvydvrmfqvl" path="res://assets/graphics/proto/Proto.png" id="1_2x067"]
 [ext_resource type="Script" uid="uid://d3prep4q52isc" path="res://objects/proto/proto.gd" id="1_7jw1q"]
+[ext_resource type="Shader" uid="uid://cpvuiu5dv846r" path="res://shader/c64swap.gdshader" id="1_yd1xd"]
 [ext_resource type="Script" uid="uid://huvqh0h46t6l" path="res://scripts/fsm/state_machine.gd" id="2_ida5t"]
 [ext_resource type="Script" uid="uid://ci4iaqktpfy4g" path="res://objects/proto/states/state_idle.gd" id="3_ida5t"]
+[ext_resource type="Script" uid="uid://wjm481jeg5t0" path="res://scripts/nodes/weapon.gd" id="3_qpscq"]
+[ext_resource type="Resource" uid="uid://p0vcbjdbc78t" path="res://data/weapon_defs/wdef_bolt.tres" id="4_yd1xd"]
 [ext_resource type="Script" uid="uid://c8meeadd7u7jd" path="res://objects/proto/states/state_move.gd" id="4_ymabh"]
 [ext_resource type="Script" uid="uid://ycalhrr2ysbf" path="res://objects/proto/states/state_fall.gd" id="5_h7j6q"]
 [ext_resource type="Script" uid="uid://decnr5i54is8s" path="res://objects/proto/states/state_jump.gd" id="6_5qckx"]
@@ -12,6 +15,21 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ymabh"]
 radius = 3.0
 height = 20.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yd1xd"]
+shader = ExtResource("1_yd1xd")
+shader_parameter/from_palette_1 = 10
+shader_parameter/from_palette_2 = 7
+shader_parameter/from_palette_3 = 14
+shader_parameter/from_palette_4 = 0
+shader_parameter/from_palette_5 = 0
+shader_parameter/from_palette_6 = 0
+shader_parameter/to_palette_1 = 10
+shader_parameter/to_palette_2 = 7
+shader_parameter/to_palette_3 = 14
+shader_parameter/to_palette_4 = 0
+shader_parameter/to_palette_5 = 0
+shader_parameter/to_palette_6 = 0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t4jra"]
 atlas = ExtResource("1_2x067")
@@ -238,10 +256,21 @@ shape = SubResource("CapsuleShape2D_ymabh")
 
 [node name="ASprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_yd1xd")
 sprite_frames = SubResource("SpriteFrames_jl3in")
 animation = &"shoot_air"
 autoplay = "idle_a"
 offset = Vector2(0, -10.5)
+
+[node name="Body" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Weapon" type="Node2D" parent="Body"]
+unique_name_in_owner = true
+position = Vector2(5, -11)
+script = ExtResource("3_qpscq")
+weapon_def = ExtResource("4_yd1xd")
+metadata/_custom_type_script = "uid://wjm481jeg5t0"
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_ida5t")
@@ -286,10 +315,6 @@ collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LadderDetector"]
 shape = SubResource("RectangleShape2D_7jw1q")
-
-[node name="BulletPosition" type="Marker2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(0, -13)
 
 [connection signal="body_entered" from="LadderDetector" to="." method="_on_ladder_detector_body_entered"]
 [connection signal="body_exited" from="LadderDetector" to="." method="_on_ladder_detector_body_exited"]

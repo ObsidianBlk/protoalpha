@@ -28,6 +28,7 @@ func set_angle(a : float) -> void:
 	a = deg_to_rad(clampf(a, -180.0, 180.0))
 	if not is_equal_approx(_angle, a):
 		_angle = a
+		_UpdateVisualNode()
 
 func get_angle() -> float:
 	return rad_to_deg(_angle)
@@ -35,6 +36,7 @@ func get_angle() -> float:
 func set_visual_node(n : Node2D) -> void:
 	if visual_node != n:
 		visual_node = n
+		_UpdateVisualNode()
 
 
 # ------------------------------------------------------------------------------

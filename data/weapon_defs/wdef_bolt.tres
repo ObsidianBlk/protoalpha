@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponDef" load_steps=5 format=3 uid="uid://p0vcbjdbc78t"]
 
 [ext_resource type="Texture2D" uid="uid://fmxjsbiuie4f" path="res://assets/graphics/bullets/bullet_small.png" id="1_ytbac"]
-[ext_resource type="PackedScene" uid="uid://xfj4a2moijg2" path="res://objects/proto_bullet_small/proto_bullet_small.tscn" id="2_vmhm0"]
+[ext_resource type="PackedScene" uid="uid://xfj4a2moijg2" path="res://objects/projectiles/bolt/bolt.tscn" id="2_vmhm0"]
 [ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="3_80e0t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fid0d"]
@@ -14,6 +14,6 @@ type = 0
 name = &"Bolt"
 icon = SubResource("AtlasTexture_fid0d")
 projectile = ExtResource("2_vmhm0")
-rate_of_fire = 1.0
+rate_of_fire = 0.2
 charging = false
 metadata/_custom_type_script = "uid://dvj7a56df3qol"

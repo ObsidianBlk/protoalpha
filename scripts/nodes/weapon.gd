@@ -6,6 +6,7 @@ class_name Weapon
 # Signals
 # ------------------------------------------------------------------------------
 signal charged(percent : float)
+signal reloaded()
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -15,6 +16,7 @@ signal charged(percent : float)
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
+var _can_shoot : bool = true
 var _charge : float = 0.0
 var _final_trigger : Callable = _Stub
 
@@ -23,31 +25,68 @@ var _final_trigger : Callable = _Stub
 # ------------------------------------------------------------------------------
 func set_weapon_def(wd : WeaponDef) -> void:
 	if wd != weapon_def:
-		# TODO: Reset any variables as needed.
+		_Reset()
 		weapon_def = wd
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
-
+func _process(delta: float) -> void:
+	if weapon_def == null: return
+	if _charge > 0.0:
+		_charge -= delta
+		charged.emit(1.0 - (_charge/weapon_def.rate_of_fire))
+		if _charge <= 0.0:
+			_final_trigger.call()
+			_Reset()
+			reloaded.emit()
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
 func _Stub() -> void: pass
 
-func _trigger(projectile_container : Node2D) -> void:
+func _Reset() -> void:
+	_can_shoot = true
+	_charge = 0.0
+	_final_trigger = _Stub
+
+func _Trigger(projectile_container : Node2D) -> void:
 	if projectile_container == null or weapon_def == null: return
 	var p : Projectile = weapon_def.get_projectile_instance()
 	projectile_container.add_child(p)
 	p.global_position = global_position
+	p.angle = rad_to_deg(Vector2.RIGHT.rotated(global_rotation).angle())
 
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
-func trigger(projectile_container : Node2D = null) -> void:
-	if weapon_def == null: return
-	if projectile_container == null:
-		_charge = 0.0
-		_final_trigger = _Stub
-		return
+func can_shoot() -> bool:
+	return _can_shoot
+
+func is_triggered() -> bool:
+	return not _can_shoot or _charge > 0.0
+
+func press_trigger(projectile_container : Node2D = null) -> void:
+	if weapon_def == null or projectile_container == null or not _can_shoot: return
+	
+	match weapon_def.type:
+		WeaponDef.Type.PROJECTILE:
+			if weapon_def.charging:
+				_charge = weapon_def.rate_of_fire
+				_final_trigger = _Trigger.bind(projectile_container)
+			else:
+				_can_shoot = false
+				_Trigger(projectile_container)
+				get_tree().create_timer(weapon_def.rate_of_fire).timeout.connect(
+					(func():
+						if not _can_shoot:
+							_can_shoot = true
+							reloaded.emit()),
+					CONNECT_ONE_SHOT
+				)
+		WeaponDef.Type.BEAM:
+			print("Yeah right... like I bothered making a beam!")
+
+func release_trigger() -> void:
+	_Reset()

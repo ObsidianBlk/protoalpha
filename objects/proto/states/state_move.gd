@@ -24,18 +24,25 @@ func enter(payload : Variant = null) -> void:
 	if proto == null:
 		pop()
 		return
+		
+	var wep : Weapon = proto.get_weapon()
+	if not wep.reloaded.is_connected(_on_reloaded):
+		wep.reloaded.connect(_on_reloaded)
 	
-	if not proto.reloaded.is_connected(_on_reloaded):
-		proto.reloaded.connect(_on_reloaded)
-	proto.play_animation(ANIM_RUN)
+	if wep.is_triggered():
+		proto.play_animation(ANIM_SHOOT_RUN)
+	else:
+		proto.play_animation(ANIM_RUN)
+	
 	if typeof(payload) == TYPE_VECTOR2:
 		_move_direction = payload
 
 func exit() -> void:
 	var proto : CharacterBody2D = get_proto_node()
-	if proto != null:
-		if proto.reloaded.is_connected(_on_reloaded):
-			proto.reloaded.disconnect(_on_reloaded)
+	if proto == null: return
+	var wep : Weapon = proto.get_weapon()
+	if wep.reloaded.is_connected(_on_reloaded):
+		wep.reloaded.disconnect(_on_reloaded)
 
 func update(_delta : float) -> void:
 	pass
@@ -69,9 +76,16 @@ func handle_input(event : InputEvent) -> void:
 			swap_to(state_climb)
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
-	elif event.is_action_pressed(&"shoot"):
-		proto.shoot()
-		proto.play_animation_sync(ANIM_SHOOT_RUN)
+	elif event.is_action(&"shoot"):
+		var wep : Weapon = proto.get_weapon()
+		if event.is_pressed():
+			if wep.can_shoot():
+				wep.press_trigger(proto.get_parent())
+				proto.play_animation_sync(ANIM_SHOOT_RUN)
+		else:
+			if proto.get_current_animation() == ANIM_SHOOT_RUN:
+				proto.play_animation(ANIM_RUN)
+			wep.release_trigger()
 
 
 # ------------------------------------------------------------------------------

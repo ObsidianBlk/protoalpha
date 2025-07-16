@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ProtoAlpha"
-config/tags=PackedStringArray("2025", "2d")
+config/tags=PackedStringArray("2025", "2d", "platformer")
 run/main_scene="uid://4ksc5l4guac3"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"

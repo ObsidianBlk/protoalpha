@@ -9,7 +9,6 @@ signal reloaded()
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
-const BULLET_SMALL_SCENE : PackedScene = preload("uid://xfj4a2moijg2")
 
 
 # ------------------------------------------------------------------------------
@@ -19,27 +18,28 @@ const BULLET_SMALL_SCENE : PackedScene = preload("uid://xfj4a2moijg2")
 @export var jump_power : float = 140.0
 @export var air_speed_multiplier : float = 0.25
 @export var fall_multiplier : float = 1.4
-@export var rate_of_fire : float = 0.1
 
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _is_on_ladder : bool = false
-var _can_shoot : bool = true
-var _continuous_fire : bool = false
 
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
-@onready var _bullet_position: Marker2D = %BulletPosition
 @onready var _sprite: AnimatedSprite2D = %ASprite
+@onready var _body: Node2D = %Body
+@onready var _weapon: Weapon = %Weapon
 
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	_weapon.reloaded.connect(
+		func(): reloaded.emit()
+	)
 	_sprite.animation_finished.connect(
 		func():
 			animation_finished.emit(_sprite.animation)
@@ -57,6 +57,8 @@ func is_on_ladder() -> bool:
 func flip(enable : bool) -> void:
 	if _sprite != null:
 		_sprite.flip_h = enable
+	if _body != null:
+		_body.scale.x = -1.0 if enable else 1.0
 
 func is_flipped() -> bool:
 	if _sprite != null:
@@ -99,31 +101,12 @@ func get_current_animation() -> StringName:
 	if _sprite == null: return &""
 	return _sprite.animation
 
-func can_shoot() -> bool:
-	return _can_shoot
-
-func is_shooting() -> bool:
-	return _continuous_fire
-
-func shoot() -> void:
-	if not _can_shoot: return
-	var parent : Node = get_parent()
-	if parent is Node2D:
-		var bullet = BULLET_SMALL_SCENE.instantiate()
-		bullet.angle = 180.0 if _sprite.flip_h else 0.0
-		parent.add_child(bullet)
-		move_to_front()
-		bullet.global_position = _bullet_position.global_position
-		_can_shoot = false
-		get_tree().create_timer(rate_of_fire).timeout.connect(_on_rof_timeout, CONNECT_ONE_SHOT)
+func get_weapon() -> Weapon:
+	return _weapon
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_rof_timeout() -> void:
-	_can_shoot = true
-	reloaded.emit()
-
 func _on_ladder_detector_body_entered(body: Node2D) -> void:
 	_is_on_ladder = true
 
