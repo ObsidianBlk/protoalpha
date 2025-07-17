@@ -98,7 +98,7 @@ func handle_input(event : InputEvent) -> void:
 			proto.play_animation(ANIM_SHOOT_AIR)
 			wep.press_trigger(proto.get_parent())
 		else:
-			if proto.get_current_animation() == ANIM_SHOOT_AIR:
+			if wep.can_shoot() and proto.get_current_animation() == ANIM_SHOOT_AIR:
 				proto.play_animation(ANIM_JUMP)
 			wep.release_trigger()
 

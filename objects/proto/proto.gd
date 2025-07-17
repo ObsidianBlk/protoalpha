@@ -109,6 +109,8 @@ func get_weapon() -> Weapon:
 # ------------------------------------------------------------------------------
 func _on_ladder_detector_body_entered(body: Node2D) -> void:
 	_is_on_ladder = true
+	if velocity.y > 0.0:
+		velocity.y = 0.0
 
 func _on_ladder_detector_body_exited(body: Node2D) -> void:
 	_is_on_ladder = false

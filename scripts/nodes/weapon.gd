@@ -89,4 +89,6 @@ func press_trigger(projectile_container : Node2D = null) -> void:
 			print("Yeah right... like I bothered making a beam!")
 
 func release_trigger() -> void:
-	_Reset()
+	if weapon_def == null: return
+	if weapon_def.charging:
+		_Reset()

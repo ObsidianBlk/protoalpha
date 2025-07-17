@@ -241,10 +241,11 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jw1q"]
-size = Vector2(6, 2)
+size = Vector2(2, 1)
 
 [node name="Proto" type="CharacterBody2D"]
 collision_layer = 2
+floor_block_on_wall = false
 script = ExtResource("1_7jw1q")
 jump_power = 120.0
 air_speed_multiplier = 0.1

@@ -45,7 +45,7 @@ func physics_update(_delta : float) -> void:
 		proto.flip(_move_direction.x < 0.0)
 	
 	proto.velocity.x = _move_direction.x * speed
-	proto.velocity.y = proto.get_gravity().y
+	proto.velocity.y = 0.0 if proto.is_on_surface() else proto.get_gravity().y
 	proto.move_and_slide()
 
 func handle_input(event : InputEvent) -> void:
