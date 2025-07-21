@@ -1,0 +1,25 @@
+@tool
+extends RefCounted
+class_name Game
+
+
+# ------------------------------------------------------------------------------
+# ENUMs
+# ------------------------------------------------------------------------------
+enum ScrollAxis {HORIZONTAL=0, VERTICAL=1}
+
+# ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const SCREEN_RESOLUTION : Vector2 = Vector2(320, 240)
+
+const GUIDE_COLOR_MATCHING_AXIS : Color = Color.AQUAMARINE
+const GUIDE_COLOR_APPOSING_AXIS : Color = Color.BROWN
+
+# ------------------------------------------------------------------------------
+# Helper Methods
+# ------------------------------------------------------------------------------
+
+static func Guide_Color_From_Axis(axis : ScrollAxis, target_axis : ScrollAxis) -> Color:
+	var matching : bool = axis == target_axis
+	return GUIDE_COLOR_MATCHING_AXIS if matching else GUIDE_COLOR_APPOSING_AXIS
