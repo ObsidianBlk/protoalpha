@@ -16,6 +16,8 @@ const SCREEN_RESOLUTION : Vector2 = Vector2(320, 240)
 const GUIDE_COLOR_MATCHING_AXIS : Color = Color.AQUAMARINE
 const GUIDE_COLOR_APPOSING_AXIS : Color = Color.BROWN
 
+const GROUP_PLAYER : StringName = &"player"
+
 # ------------------------------------------------------------------------------
 # Helper Methods
 # ------------------------------------------------------------------------------

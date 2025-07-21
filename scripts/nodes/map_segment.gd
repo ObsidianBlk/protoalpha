@@ -6,7 +6,8 @@ class_name MapSegment
 # ------------------------------------------------------------------------------
 # Constants and ENUMs
 # ------------------------------------------------------------------------------
-
+const GROUP_CAMERA : StringName = &"LevelCamera"
+const LOCK_DELAY : float = 0.15
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -23,6 +24,7 @@ class_name MapSegment
 var _collision : CollisionShape2D = null
 var _shape : RectangleShape2D = null
 var _layer_rect : Rect2i = Rect2i(0,0,0,0)
+var _locked : float = 0.0
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -49,9 +51,12 @@ func set_hide_collision(c : bool) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
 	_UpdateBoundry()
 
 func _draw() -> void:
+	if not Engine.is_editor_hint(): return
 	if layer == null or layer.tile_set == null: return
 	var crect : Rect2i = layer.get_used_rect()
 	var rpos : Vector2 = crect.position * layer.tile_set.tile_size
@@ -75,6 +80,8 @@ func _draw() -> void:
 	draw_line(tr, br, vcolor, 1.0, true)
 
 func _process(delta: float) -> void:
+	if _locked > 0.0:
+		_locked -= delta
 	if layer == null: return
 	var nrect : Rect2i = layer.get_used_rect()
 	if nrect != _layer_rect:
@@ -135,8 +142,29 @@ func _UpdateBoundry() -> void:
 		_collision.position = rpos + Vector2(rsize.x * 0.5, rsize.y * 0.5)
 	queue_redraw()
 
+func _GrabCamera() -> void:
+	if _shape == null or _collision == null: return
+	var camera : ChaseCamera = ChaseCamera.Get_Camera()
+	if camera == null: return
+	camera.limit_left = _collision.global_position.x - (_shape.size.x * 0.5)
+	camera.limit_right = _collision.global_position.x + (_shape.size.x * 0.5)
+	camera.limit_top = _collision.global_position.y - (_shape.size.y * 0.5)
+	camera.limit_bottom = _collision.global_position.y + (_shape.size.y * 0.5)
+
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_layer_changed() -> void:
 	_UpdateBoundry.call_deferred()
+
+func _on_body_entered(body : Node2D) -> void:
+	print("Body Entered: ", body.name, " | ", name)
+	if body == null: return
+	if _locked <= 0.0 and body.is_in_group(Game.GROUP_PLAYER):
+		_GrabCamera()
+
+func _on_body_exited(body : Node2D) -> void:
+	if body == null: return
+	if body.is_in_group(Game.GROUP_PLAYER):
+		_locked = LOCK_DELAY
+		print("Body Exited: ", body.name, " | ", name)

@@ -24,6 +24,7 @@ signal reloaded()
 # Variables
 # ------------------------------------------------------------------------------
 var _is_on_ladder : bool = false
+var _ladders : Dictionary[StringName, bool] = {}
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -104,13 +105,24 @@ func get_current_animation() -> StringName:
 func get_weapon() -> Weapon:
 	return _weapon
 
+func spawn_at(spawn_position : Vector2) -> void:
+	# Test Lives?
+	if has_user_signal(&"spawn"):
+		emit_signal(&"spawn")
+		global_position = spawn_position
+
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_ladder_detector_body_entered(body: Node2D) -> void:
+	if not body.name in _ladders:
+		_ladders[body.name] = true 
 	_is_on_ladder = true
 	if velocity.y > 0.0:
 		velocity.y = 0.0
 
 func _on_ladder_detector_body_exited(body: Node2D) -> void:
-	_is_on_ladder = false
+	if body.name in _ladders:
+		_ladders.erase(body.name)
+	if _ladders.size() <= 0:
+		_is_on_ladder = false
