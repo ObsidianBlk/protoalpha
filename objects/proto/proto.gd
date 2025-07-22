@@ -24,7 +24,6 @@ signal reloaded()
 # Variables
 # ------------------------------------------------------------------------------
 var _is_on_ladder : bool = false
-var _ladders : Dictionary[StringName, bool] = {}
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -114,15 +113,12 @@ func spawn_at(spawn_position : Vector2) -> void:
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_ladder_detector_body_entered(body: Node2D) -> void:
-	if not body.name in _ladders:
-		_ladders[body.name] = true 
+
+func _on_ladder_detector_ladder_entered() -> void:
 	_is_on_ladder = true
 	if velocity.y > 0.0:
 		velocity.y = 0.0
 
-func _on_ladder_detector_body_exited(body: Node2D) -> void:
-	if body.name in _ladders:
-		_ladders.erase(body.name)
-	if _ladders.size() <= 0:
-		_is_on_ladder = false
+
+func _on_ladder_detector_ladder_exited() -> void:
+	_is_on_ladder = false
