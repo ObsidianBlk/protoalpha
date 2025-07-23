@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvm0cfywbnaes"]
+
+[ext_resource type="Script" uid="uid://byg5fmger46ue" path="res://scenes/ui/main_menu/main_menu.gd" id="1_1ch07"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_02q7b"]
+
+[node name="MainMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_02q7b")
+script = ExtResource("1_1ch07")
+
+[node name="VLayout" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="VLayout"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="HSeparator" type="HSeparator" parent="VLayout"]
+layout_mode = 2
+
+[node name="BTN_Start" type="Button" parent="VLayout"]
+layout_mode = 2
+text = "Start"
+
+[node name="BTN_Quit" type="Button" parent="VLayout"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="VLayout/BTN_Start" to="." method="_on_btn_start_pressed"]
+[connection signal="pressed" from="VLayout/BTN_Quit" to="." method="_on_btn_quit_pressed"]

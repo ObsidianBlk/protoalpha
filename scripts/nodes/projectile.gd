@@ -44,6 +44,7 @@ func set_visual_node(n : Node2D) -> void:
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	area_entered.connect(_on_area_entered)
 	_UpdateVisualNode()
 
 func _process(delta: float) -> void:
@@ -76,7 +77,9 @@ func die() -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_body_entered(body : Node2D) -> void:
-	if _dead: return
-	if body.has_method(&"hit"):
-		body.hit(dmg)
-	die()
+	if not _dead:
+		die()
+
+func _on_area_entered(area : Area2D) -> void:
+	if area is HitBox:
+		area.hurt(dmg)

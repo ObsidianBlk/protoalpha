@@ -1,55 +1,82 @@
-[gd_scene load_steps=4 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=8 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
+[ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="4_6q06x"]
 [ext_resource type="Texture2D" uid="uid://dy2jtx5nc7oqv" path="res://assets/graphics/Ref320x240.png" id="4_l3cfh"]
+[ext_resource type="PackedScene" uid="uid://d05nd38n0uwiq" path="res://scenes/game_hud/game_hud.tscn" id="4_ow5a4"]
 [ext_resource type="Script" uid="uid://bmot2xnxfcohb" path="res://scripts/nodes/chase_camera.gd" id="5_6q06x"]
+[ext_resource type="Script" uid="uid://dktc706cbs45f" path="res://addons/OBSUI/scripts/ui_layer.gd" id="6_ow5a4"]
+[ext_resource type="PackedScene" uid="uid://cvm0cfywbnaes" path="res://scenes/ui/main_menu/main_menu.tscn" id="7_hujxm"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_k2fmo")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="GameLayer" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/VBoxContainer"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="GameLayer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 ratio = 1.333
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/VBoxContainer/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="GameLayer/VBoxContainer/AspectRatioContainer"]
 layout_mode = 2
 texture = ExtResource("4_l3cfh")
 stretch_mode = 5
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/VBoxContainer/AspectRatioContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GameLayer/VBoxContainer/AspectRatioContainer"]
 custom_minimum_size = Vector2(320, 240)
 layout_mode = 2
 stretch = true
 
-[node name="GameViewport" type="SubViewport" parent="CanvasLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer"]
+[node name="GameViewport" type="SubViewport" parent="GameLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer"]
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(320, 240)
+size = Vector2i(817, 613)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="Game" type="Node2D" parent="CanvasLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer/GameViewport"]
+[node name="Game" type="Node2D" parent="GameLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer/GameViewport"]
 unique_name_in_owner = true
 
-[node name="ChaseCamera" type="Camera2D" parent="CanvasLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer/GameViewport/Game"]
+[node name="ChaseCamera" type="Camera2D" parent="GameLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer/GameViewport/Game"]
 limit_smoothed = true
 script = ExtResource("5_6q06x")
 metadata/_custom_type_script = "uid://bmot2xnxfcohb"
 
-[node name="Control" type="Control" parent="CanvasLayer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 256)
+[node name="GameHudLayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer/GameViewport"]
+
+[node name="GameHUD" parent="GameLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer/GameViewport/GameHudLayer" instance=ExtResource("4_ow5a4")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameLayer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Button" type="Button" parent="GameLayer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "CLICK ME!!"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameLayer/VBoxContainer/HBoxContainer/Button"]
+stream = ExtResource("4_6q06x")
+bus = &"SFX"
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+layer = 10
+script = ExtResource("6_ow5a4")
+immediate_open = true
+metadata/_custom_type_script = "uid://dktc706cbs45f"
+
+[node name="MainMenu" parent="UILayer" instance=ExtResource("7_hujxm")]
+default_ui = true
+
+[connection signal="pressed" from="GameLayer/VBoxContainer/HBoxContainer/Button" to="GameLayer/VBoxContainer/HBoxContainer/Button/AudioStreamPlayer" method="play" binds= [0.0]]

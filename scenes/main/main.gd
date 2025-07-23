@@ -16,12 +16,14 @@ var _level : Level = null
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _game: Node2D = %Game
+@onready var _ui_layer: UILayer = %UILayer
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	_LoadLevel(LEVEL)
+	_ui_layer.register_action_handler(Game.UI_ACTION_START_GAME, _StartGame)
+	_ui_layer.register_action_handler(Game.UI_ACTION_QUIT_APPLICATION, _QuitApplication)
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -50,3 +52,11 @@ func _LoadLevel(path_or_uid : String) -> void:
 	_level = lvl
 	_game.add_child(_level)
 	_level.spawn_player(true)
+
+func _StartGame() -> void:
+	if _level != null: return
+	_ui_layer.close_all_ui()
+	_LoadLevel(LEVEL)
+
+func _QuitApplication() -> void:
+	get_tree().quit()

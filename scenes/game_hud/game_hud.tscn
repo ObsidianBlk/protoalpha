@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://d05nd38n0uwiq"]
+
+[ext_resource type="Script" uid="uid://5aqrmx0br1ip" path="res://scenes/game_hud/game_hud.gd" id="1_7s1mr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45v0f"]
+content_margin_left = 1.0
+content_margin_top = 1.0
+content_margin_right = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7s1mr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7upun"]
+bg_color = Color(0.580392, 0.878431, 0.537255, 1)
+
+[node name="GameHUD" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+script = ExtResource("1_7s1mr")
+
+[node name="HealthBar" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_45v0f")
+
+[node name="HealthProgress" type="ProgressBar" parent="HealthBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/background = SubResource("StyleBoxEmpty_7s1mr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7upun")
+value = 61.98
+fill_mode = 3
+show_percentage = false

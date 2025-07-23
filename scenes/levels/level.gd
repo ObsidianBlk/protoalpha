@@ -65,6 +65,7 @@ func spawn_player(level_start : bool = false) -> void:
 	add_child(player)
 	if player.has_method("spawn_at"):
 		player.spawn_at(checkpoint.global_position)
+		Relay.health_changed.emit(100, 100)
 	_can_spawn_player = false
 
 

@@ -12,6 +12,7 @@ signal reloaded()
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var weapon_def : WeaponDef = null:			set=set_weapon_def
+@export_flags_2d_physics var collision_mask : int
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -54,6 +55,7 @@ func _Reset() -> void:
 func _Trigger(projectile_container : Node2D) -> void:
 	if projectile_container == null or weapon_def == null: return
 	var p : Projectile = weapon_def.get_projectile_instance()
+	p.collision_mask = collision_mask
 	projectile_container.add_child(p)
 	p.global_position = global_position
 	p.angle = rad_to_deg(Vector2.RIGHT.rotated(global_rotation).angle())

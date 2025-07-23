@@ -16,6 +16,14 @@ run/main_scene="uid://4ksc5l4guac3"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Relay="*res://scripts/autos/relay.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/OBSUI/plugin.cfg")
+
 [input]
 
 move_left={
