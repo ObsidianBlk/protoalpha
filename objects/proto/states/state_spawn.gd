@@ -10,16 +10,17 @@ extends ProtoState
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
-func _ready() -> void:
-	pass
-	#if proto != null:
-		#proto.add_user_signal(&"spawn")
-		#proto.connect(&"spawn", _on_spawn)
 
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
 # ------------------------------------------------------------------------------
+func set_host(host : Node) -> void:
+	super.set_host(host)
+	if proto != null:
+		proto.add_user_signal(&"spawn")
+		proto.connect(&"spawn", _on_spawn)
+
 func enter(payload : Variant = null) -> void:
 	if proto == null:
 		pop()

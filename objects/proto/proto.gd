@@ -92,6 +92,11 @@ func get_current_animation() -> StringName:
 func get_weapon() -> Weapon:
 	return _weapon
 
+func spawn_at(spawn_position : Vector2, payload : Dictionary = {}) -> void:
+	super.spawn_at(spawn_position, payload)
+	if has_user_signal(&"spawn"):
+		emit_signal(&"spawn")
+
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
