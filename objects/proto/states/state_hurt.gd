@@ -6,7 +6,6 @@ extends ProtoState
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null:
 		pop()
 		return
@@ -20,7 +19,6 @@ func enter(payload : Variant = null) -> void:
 
 
 func exit() -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto != null:
 		if proto.animation_finished.is_connected(_on_animation_finished):
 			proto.animation_finished.disconnect(_on_animation_finished)

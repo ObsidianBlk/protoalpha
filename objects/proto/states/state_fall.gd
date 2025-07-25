@@ -18,7 +18,6 @@ var _move_direction : Vector2 = Vector2.ZERO
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null:
 		pop()
 		return
@@ -27,7 +26,6 @@ func enter(payload : Variant = null) -> void:
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 
 func update(_delta : float) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	
 	if proto.is_on_surface():
@@ -38,7 +36,6 @@ func update(_delta : float) -> void:
 
 
 func physics_update(_delta : float) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	
 	if not is_equal_approx(abs(_move_direction.x), 0.0):

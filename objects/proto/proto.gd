@@ -1,11 +1,9 @@
-extends CharacterBody2D
+extends CharacterActor2D
 
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
-signal animation_finished(animation_name : StringName)
 signal reloaded()
-signal dead()
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -20,12 +18,6 @@ signal dead()
 @export var air_speed_multiplier : float = 0.25
 @export var fall_multiplier : float = 1.4
 
-
-# ------------------------------------------------------------------------------
-# Variables
-# ------------------------------------------------------------------------------
-var _is_on_ladder : bool = false
-var _is_dead : bool = false
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -50,12 +42,6 @@ func _ready() -> void:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
-func is_on_surface() -> bool:
-	return is_on_floor() or _is_on_ladder
-
-func is_on_ladder() -> bool:
-	return _is_on_ladder
-
 func flip(enable : bool) -> void:
 	if _sprite != null:
 		_sprite.flip_h = enable
@@ -106,29 +92,10 @@ func get_current_animation() -> StringName:
 func get_weapon() -> Weapon:
 	return _weapon
 
-func is_dead() -> bool:
-	return _is_dead
-
-func die() -> void:
-	if not _is_dead:
-		_is_dead = true
-		dead.emit()
-
-func spawn_at(spawn_position : Vector2) -> void:
-	# Test Lives?
-	if has_user_signal(&"spawn"):
-		emit_signal(&"spawn")
-		global_position = spawn_position
-
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
 
-func _on_ladder_detector_ladder_entered() -> void:
-	_is_on_ladder = true
+func _on_ladder_entered() -> void:
 	if velocity.y > 0.0:
 		velocity.y = 0.0
-
-
-func _on_ladder_detector_ladder_exited() -> void:
-	_is_on_ladder = false

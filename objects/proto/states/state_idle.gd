@@ -34,9 +34,9 @@ func _ready() -> void:
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null:
 		pop()
+		return
 	
 	var wep : Weapon = proto.get_weapon()
 	if not wep.reloaded.is_connected(_on_reloaded):
@@ -49,7 +49,6 @@ func enter(payload : Variant = null) -> void:
 		proto.play_animation(ANIM_IDLE_A)
 
 func exit() -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	
 	var wep : Weapon = proto.get_weapon()
@@ -59,7 +58,6 @@ func exit() -> void:
 		wep.reloaded.disconnect(_on_reloaded)
 
 func update(_delta : float) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	if not proto.get_weapon().is_triggered():
 		var action : StringName = _weighted_action.get_random()
@@ -68,7 +66,7 @@ func update(_delta : float) -> void:
 			proto.play_animation(ANIM_IDLE_B if cur_anim == ANIM_IDLE_A else ANIM_IDLE_A)
 
 func physics_update(_delta : float) -> void:
-	var proto : CharacterBody2D = get_proto_node()
+	if proto == null: return
 	if not proto.is_on_ladder():
 		proto.velocity.y = proto.get_gravity().y
 	else: proto.velocity.y = 0.0
@@ -79,7 +77,6 @@ func physics_update(_delta : float) -> void:
 			swap_to(state_fall)
 
 func handle_input(event : InputEvent) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 
 	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
@@ -106,12 +103,5 @@ func handle_input(event : InputEvent) -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_reloaded() -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	proto.play_animation(ANIM_IDLE_A)
-
-#func _on_animation_finished(anim_name : StringName) -> void:
-	#var proto : CharacterBody2D = get_proto_node()
-	#if proto == null: return
-	#if anim_name == ANIM_SHOOT_STAND:
-		#proto.play_animation(ANIM_IDLE_A)

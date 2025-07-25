@@ -35,3 +35,8 @@ static var Player_Lives : int = INITIAL_PLAYER_LIVES
 static func Guide_Color_From_Axis(axis : ScrollAxis, target_axis : ScrollAxis) -> Color:
 	var matching : bool = axis == target_axis
 	return GUIDE_COLOR_MATCHING_AXIS if matching else GUIDE_COLOR_APPOSING_AXIS
+
+static func Dict_Key_Of_Type(d : Dictionary, key : Variant, type : int) -> bool:
+	if key in d:
+		return typeof(d[key]) == type
+	return false

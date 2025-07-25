@@ -5,8 +5,6 @@ extends ProtoState
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	print("Dead")
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null:
 		pop()
 		return
@@ -17,7 +15,6 @@ func enter(payload : Variant = null) -> void:
 
 
 func die() -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	proto.queue_free()
 

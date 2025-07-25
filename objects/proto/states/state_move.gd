@@ -20,11 +20,10 @@ var _move_direction : Vector2 = Vector2.ZERO
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null:
 		pop()
 		return
-		
+
 	var wep : Weapon = proto.get_weapon()
 	if not wep.reloaded.is_connected(_on_reloaded):
 		wep.reloaded.connect(_on_reloaded)
@@ -38,7 +37,6 @@ func enter(payload : Variant = null) -> void:
 		_move_direction = payload
 
 func exit() -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	var wep : Weapon = proto.get_weapon()
 	if wep.reloaded.is_connected(_on_reloaded):
@@ -48,7 +46,6 @@ func update(_delta : float) -> void:
 	pass
 
 func physics_update(_delta : float) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	
 	if not is_equal_approx(abs(_move_direction.x), 0.0):
@@ -67,7 +64,6 @@ func physics_update(_delta : float) -> void:
 		swap_to(state_idle)
 
 func handle_input(event : InputEvent) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	
 	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
@@ -92,6 +88,5 @@ func handle_input(event : InputEvent) -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_reloaded() -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto != null:
 		proto.play_animation_sync(ANIM_RUN)

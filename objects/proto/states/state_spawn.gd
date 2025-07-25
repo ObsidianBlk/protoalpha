@@ -11,26 +11,25 @@ extends ProtoState
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	var proto : CharacterBody2D = get_proto_node()
-	if proto != null:
-		proto.add_user_signal(&"spawn")
-		proto.connect(&"spawn", _on_spawn)
+	pass
+	#if proto != null:
+		#proto.add_user_signal(&"spawn")
+		#proto.connect(&"spawn", _on_spawn)
 
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null:
 		pop()
 		return
+
 	if not proto.animation_finished.is_connected(_on_animation_finished):
 		proto.animation_finished.connect(_on_animation_finished)
 	proto.play_animation(ANIM_SPAWN)
 
 func exit() -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto != null:
 		if proto.animation_finished.is_connected(_on_animation_finished):
 			proto.animation_finished.disconnect(_on_animation_finished)

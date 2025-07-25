@@ -485,7 +485,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jw1q"]
 size = Vector2(2, 2)
 
-[node name="Proto" type="CharacterBody2D"]
+[node name="Proto" type="CharacterBody2D" node_paths=PackedStringArray("ladder_detector")]
 collision_layer = 2
 floor_block_on_wall = false
 script = ExtResource("1_7jw1q")
@@ -493,6 +493,7 @@ speed = 80.0
 jump_power = 120.0
 air_speed_multiplier = 0.1
 fall_multiplier = 3.0
+ladder_detector = NodePath("LadderDetector")
 
 [node name="ComponentRelay" type="Node" parent="."]
 script = ExtResource("2_7lxdh")
@@ -595,5 +596,3 @@ shape = SubResource("RectangleShape2D_7jw1q")
 [connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed"]
 [connection signal="hit" from="ComponentHealth" to="StateMachine" method="transition_state" binds= [&"Hurt"]]
-[connection signal="ladder_entered" from="LadderDetector" to="." method="_on_ladder_detector_ladder_entered"]
-[connection signal="ladder_exited" from="LadderDetector" to="." method="_on_ladder_detector_ladder_exited"]

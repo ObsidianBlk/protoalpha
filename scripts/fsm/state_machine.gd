@@ -5,8 +5,7 @@ class_name StateMachine
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-
-
+@export var host : Node = null:		set=set_host
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -15,10 +14,24 @@ var _default : State = null
 var _stack : Array[State] = []
 
 # ------------------------------------------------------------------------------
+# Setters
+# ------------------------------------------------------------------------------
+func set_host(h : Node) -> void:
+	if h != host:
+		host = h if is_valid_host(h) else null
+
+# ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	await owner.ready
+	if host == null:
+		var parent : Node = get_parent()
+		if not is_valid_host(parent):
+			printerr("Finite State Machine parent invalid node type.")
+		else:
+			host = parent
+	
 	var possible_default : State = null
 	for child : Node in get_children():
 		if child is State:
@@ -32,10 +45,11 @@ func _ready() -> void:
 					child.default = false
 	if _default == null:
 		_default = possible_default
-	if _default == null: return # Yes, we need to check for no default state
+	if _default == null:
+		print_debug("Finite State Machine missing default/initial state. FSM will not run automatically.")
+		return # Yes, we need to check for no default state
 
-	_stack.append(_default)
-	_stack[-1].enter()
+	transition_state(_default.name)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -58,6 +72,7 @@ func _physics_process(delta: float) -> void:
 # ------------------------------------------------------------------------------
 func _ConnectChildState(child : State) -> void:
 	if child == null: return
+	child.set_host(host)
 	if not child.default_state_changed.is_connected(_on_state_default_changed.bind(child.name)):
 		child.default_state_changed.connect(_on_state_default_changed.bind(child.name))
 	if not child.action_requested.is_connected(_on_state_action_requested):
@@ -65,6 +80,7 @@ func _ConnectChildState(child : State) -> void:
 
 func _DisconnectChildState(child : State) -> void:
 	if child == null: return
+	child.set_host(null)
 	if child.default_state_changed.is_connected(_on_state_default_changed.bind(child.name)):
 		child.default_state_changed.disconnect(_on_state_default_changed.bind(child.name))
 	if child.action_requested.is_connected(_on_state_action_requested):
@@ -86,6 +102,12 @@ func _GetStackIndex(state_name : StringName) -> int:
 		if _stack[i].name == state_name:
 			return i
 	return -1
+
+# ------------------------------------------------------------------------------
+# "Virtual" Public Methods
+# ------------------------------------------------------------------------------
+func is_valid_host(n : Node) -> bool:
+	return true
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -122,7 +144,7 @@ func pop_state(ignore_default : bool = false, payload : Variant = null) -> int:
 		var state : State = _stack.pop_back()
 		if state != null: state.exit()
 		if _stack.size() > 0:
-			_stack[-1].enter()
+			_stack[-1].enter(host)
 	if _stack.size() <= 0 and not (ignore_default or _default == null):
 		_stack.append(_default)
 		_stack[-1].enter(payload)

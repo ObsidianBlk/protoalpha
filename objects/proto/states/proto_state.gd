@@ -23,7 +23,14 @@ const ANIM_SPAWN : StringName = &"spawn"
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _proto : CharacterBody2D = null
+var proto : CharacterActor2D = null
+
+# ------------------------------------------------------------------------------
+# "Virtual" Methods
+# ------------------------------------------------------------------------------
+func set_host(host : Node) -> void:
+	if host == null or host is CharacterActor2D:
+		proto = host
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -33,10 +40,3 @@ func event_one_of(event : InputEvent, actions : Array[StringName], allow_echo : 
 		for action : StringName in actions:
 			if event.is_action(action): return true
 	return false
-
-func get_proto_node() -> CharacterBody2D:
-	if _proto == null:
-		var host : Node = get_host()
-		if host is CharacterBody2D:
-			_proto = host
-	return _proto

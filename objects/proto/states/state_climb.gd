@@ -19,10 +19,10 @@ var _move_direction : Vector2 = Vector2.ZERO
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null:
 		pop()
 		return
+	
 	proto.play_animation(ANIM_CLIMB)
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	_CheckMovement()
@@ -31,7 +31,6 @@ func exit() -> void:
 	pass
 
 func update(_delta : float) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	
 	if not proto.is_on_surface():
@@ -39,7 +38,6 @@ func update(_delta : float) -> void:
 			swap_to(state_fall)
 
 func physics_update(_delta : float) -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 	
 	if is_equal_approx(_move_direction.y, 0.0):
@@ -62,7 +60,6 @@ func handle_input(event : InputEvent) -> void:
 # Private Methods
 # ------------------------------------------------------------------------------
 func _CheckMovement() -> void:
-	var proto : CharacterBody2D = get_proto_node()
 	if proto == null: return
 
 	var climbing : bool = not is_equal_approx(_move_direction.y, 0.0)
