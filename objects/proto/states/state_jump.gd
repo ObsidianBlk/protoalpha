@@ -83,7 +83,7 @@ func physics_update(delta : float) -> void:
 func handle_input(event : InputEvent) -> void:
 	if proto == null: return
 	
-	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
+	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	elif event.is_action_released(&"jump"):
 		_jump_released = true

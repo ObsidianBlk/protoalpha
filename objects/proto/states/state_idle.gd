@@ -21,6 +21,9 @@ const FRAME_IDLE_B : int = 1
 # Variables
 # ------------------------------------------------------------------------------
 var _weighted_action : WeightedRandomCollection = null
+var _weapon_signals : Array[Game.SigDef] = [
+	Game.SigDef.new(&"reloaded", _on_reloaded)
+]
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -39,8 +42,7 @@ func enter(payload : Variant = null) -> void:
 		return
 	
 	var wep : Weapon = proto.get_weapon()
-	if not wep.reloaded.is_connected(_on_reloaded):
-		wep.reloaded.connect(_on_reloaded)
+	Game.Connect_Signals(wep, _weapon_signals)
 	
 	proto.velocity = Vector2.ZERO
 	if wep.is_triggered():
@@ -53,9 +55,7 @@ func exit() -> void:
 	
 	var wep : Weapon = proto.get_weapon()
 	if wep == null: return
-	
-	if wep.reloaded.is_connected(_on_reloaded):
-		wep.reloaded.disconnect(_on_reloaded)
+	Game.Disconnect_Signals(wep, _weapon_signals)
 
 func update(_delta : float) -> void:
 	if proto == null: return
@@ -79,7 +79,7 @@ func physics_update(_delta : float) -> void:
 func handle_input(event : InputEvent) -> void:
 	if proto == null: return
 
-	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
+	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		var move_direction : Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 		if not is_equal_approx(move_direction.y, 0.0) and proto.is_on_ladder():
 			swap_to(state_climb)

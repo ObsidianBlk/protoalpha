@@ -49,7 +49,7 @@ func physics_update(_delta : float) -> void:
 	proto.move_and_slide()
 
 func handle_input(event : InputEvent) -> void:
-	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
+	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 		_CheckMovement()
 	elif event.is_action_pressed(&"jump"):

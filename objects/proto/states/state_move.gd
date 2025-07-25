@@ -66,7 +66,7 @@ func physics_update(_delta : float) -> void:
 func handle_input(event : InputEvent) -> void:
 	if proto == null: return
 	
-	if event_one_of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
+	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 		if not is_equal_approx(_move_direction.y, 0.0) and proto.is_on_ladder():
 			swap_to(state_climb)
