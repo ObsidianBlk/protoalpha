@@ -6,7 +6,7 @@ class_name ChaseCamera
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var pixels_per_second : float = 320.0
-@export var target : Node2D = null
+@export var target : Node2D = null:					set=set_target
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -18,6 +18,20 @@ var _tween : Tween = null
 # Static Variables
 # ------------------------------------------------------------------------------
 static var _instance : ChaseCamera = null
+
+# ------------------------------------------------------------------------------
+# Setters
+# ------------------------------------------------------------------------------
+func set_target(t : Node2D) -> void:
+	if t != target:
+		target = t
+		if target == null:
+			_target_position = get_screen_center_position()
+			if not global_position.is_equal_approx(_target_position):
+				global_position = _target_position
+			if _tween != null:
+				_tween.kill()
+				_tween = null
 
 # ------------------------------------------------------------------------------
 # Override Methods

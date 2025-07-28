@@ -4,10 +4,21 @@ class_name MapSegment
 
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal entered()
+signal exited()
+
+# ------------------------------------------------------------------------------
 # Constants and ENUMs
 # ------------------------------------------------------------------------------
 const GROUP_CAMERA : StringName = &"LevelCamera"
 const LOCK_DELAY : float = 0.15
+
+const BOUNDS_LEFT : StringName = &"left"
+const BOUNDS_RIGHT : StringName = &"right"
+const BOUNDS_TOP : StringName = &"top"
+const BOUNDS_BOTTOM : StringName = &"bottom"
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -25,6 +36,7 @@ var _collision : CollisionShape2D = null
 var _shape : RectangleShape2D = null
 var _layer_rect : Rect2i = Rect2i(0,0,0,0)
 var _locked : float = 0.0
+var _player_entered : bool = false
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -142,14 +154,56 @@ func _UpdateBoundry() -> void:
 		_collision.position = rpos + Vector2(rsize.x * 0.5, rsize.y * 0.5)
 	queue_redraw()
 
-func _GrabCamera() -> void:
+# ------------------------------------------------------------------------------
+# Public Methods
+# ------------------------------------------------------------------------------
+func player_in_segment() -> bool:
+	return _player_entered
+
+func lock(duration : float) -> void:
+	if _locked <= 0.0 and duration > 0.0:
+		_locked = duration
+
+func get_bounds() -> Dictionary[StringName, float]:
+	if _shape == null or _collision == null: return {}
+	return {
+		BOUNDS_LEFT: _collision.global_position.x - (_shape.size.x * 0.5),
+		BOUNDS_RIGHT: _collision.global_position.x + (_shape.size.x * 0.5),
+		BOUNDS_TOP: _collision.global_position.y - (_shape.size.y * 0.5),
+		BOUNDS_BOTTOM: _collision.global_position.y + (_shape.size.y * 0.5)
+	}
+
+func get_center() -> Vector2:
+	var bounds : Dictionary[StringName, float] = get_bounds()
+	if bounds.is_empty(): return Vector2.ZERO
+	return Vector2(
+		bounds[BOUNDS_LEFT] + ((bounds[BOUNDS_RIGHT] - bounds[BOUNDS_LEFT]) * 0.5),
+		bounds[BOUNDS_TOP] + ((bounds[BOUNDS_BOTTOM] - bounds[BOUNDS_TOP]) * 0.5)
+	)
+
+func in_focus() -> bool:
+	var bounds : Dictionary[StringName, float] = get_bounds()
+	var camera : ChaseCamera = ChaseCamera.Get_Camera()
+	if camera == null or bounds.is_empty(): return false
+	if not is_equal_approx(camera.limit_left, bounds[BOUNDS_LEFT]):
+		return false
+	if not is_equal_approx(camera.limit_right, bounds[BOUNDS_RIGHT]):
+		return false
+	if not is_equal_approx(camera.limit_top, bounds[BOUNDS_TOP]):
+		return false
+	if not is_equal_approx(camera.limit_bottom, bounds[BOUNDS_BOTTOM]):
+		return false
+	return true
+
+func focus() -> void:
 	if _shape == null or _collision == null: return
 	var camera : ChaseCamera = ChaseCamera.Get_Camera()
 	if camera == null: return
-	camera.limit_left = _collision.global_position.x - (_shape.size.x * 0.5)
-	camera.limit_right = _collision.global_position.x + (_shape.size.x * 0.5)
-	camera.limit_top = _collision.global_position.y - (_shape.size.y * 0.5)
-	camera.limit_bottom = _collision.global_position.y + (_shape.size.y * 0.5)
+	var bounds : Dictionary[StringName, float] = get_bounds()
+	camera.limit_left = bounds[BOUNDS_LEFT]
+	camera.limit_right = bounds[BOUNDS_RIGHT]
+	camera.limit_top = bounds[BOUNDS_TOP]
+	camera.limit_bottom = bounds[BOUNDS_BOTTOM]
 
 # ------------------------------------------------------------------------------
 # Handler Methods
@@ -158,13 +212,16 @@ func _on_layer_changed() -> void:
 	_UpdateBoundry.call_deferred()
 
 func _on_body_entered(body : Node2D) -> void:
-	print("Body Entered: ", body.name, " | ", name)
 	if body == null: return
-	if _locked <= 0.0 and body.is_in_group(Game.GROUP_PLAYER):
-		_GrabCamera()
+	if body.is_in_group(Game.GROUP_PLAYER):
+		_player_entered = true
+		if _locked <= 0.0:
+			focus()
+			entered.emit()
 
 func _on_body_exited(body : Node2D) -> void:
 	if body == null: return
 	if body.is_in_group(Game.GROUP_PLAYER):
 		_locked = LOCK_DELAY
-		print("Body Exited: ", body.name, " | ", name)
+		_player_entered = false
+		exited.emit()

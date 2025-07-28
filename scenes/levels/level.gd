@@ -16,6 +16,7 @@ const PLAYER_SCENE : PackedScene = preload("res://objects/proto/proto.tscn")
 # Variables
 # ------------------------------------------------------------------------------
 var _can_spawn_player : bool = true
+var _active_segments : Dictionary[StringName, MapSegment] = {}
 
 
 # ------------------------------------------------------------------------------
@@ -30,6 +31,10 @@ func set_player_container(pc : Node2D) -> void:
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
+func _ready() -> void:
+	for child : Node in get_children():
+		if child is MapSegment:
+			_ConnectSegment(child)
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -43,6 +48,20 @@ func _DisconnectPlayerContainer() -> void:
 	if player_container == null: return
 	if player_container.child_exiting_tree.is_connected(_on_child_exiting):
 		player_container.child_exiting_tree.disconnect(_on_child_exiting)
+
+func _ConnectSegment(segment : MapSegment) -> void:
+	if segment == null: return
+	if not segment.entered.is_connected(_on_segment_entered.bind(segment)):
+		segment.entered.connect(_on_segment_entered.bind(segment))
+	if not segment.exited.is_connected(_on_segment_exited.bind(segment)):
+		segment.exited.connect(_on_segment_exited.bind(segment))
+
+func _DisconnectSegment(segment : MapSegment) -> void:
+	if segment == null: return
+	if segment.entered.is_connected(_on_segment_entered.bind(segment)):
+		segment.entered.disconnect(_on_segment_entered.bind(segment))
+	if segment.exited.is_connected(_on_segment_exited.bind(segment)):
+		segment.exited.disconnect(_on_segment_exited.bind(segment))
 
 
 # ------------------------------------------------------------------------------
@@ -77,3 +96,13 @@ func _on_child_exiting(child : Node) -> void:
 	if child.is_in_group(Game.GROUP_PLAYER):
 		# TODO: Disconnect from signals as needed
 		_can_spawn_player = true
+
+func _on_segment_entered(segment : MapSegment) -> void:
+	if not segment.name in _active_segments:
+		_active_segments[segment.name] = segment
+
+func _on_segment_exited(segment : MapSegment) -> void:
+	if segment.name in _active_segments:
+		_active_segments.erase(segment.name)
+	if _active_segments.size() == 1:
+		_active_segments.values()[0].focus()
