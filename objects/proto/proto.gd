@@ -57,27 +57,16 @@ func stop_animation() -> void:
 	if _sprite == null: return
 	_sprite.stop()
 
-func play_animation(anim_name : StringName = &"") -> void:
+func play_animation(anim_name : StringName = &"", sync : bool = false) -> void:
 	if _sprite == null: return
 	if anim_name.is_empty():
 		if not _sprite.animation.is_empty():
 			_sprite.play()
-	elif not (_sprite.animation == anim_name and _sprite.is_playing()):
-		_sprite.play(anim_name)
-
-func play_animation_sync(anim_name : StringName) -> void:
-	if _sprite == null: return
-	if _sprite.sprite_frames == null: return
-	
-	var cur_anim : StringName = _sprite.animation
-	if cur_anim == anim_name: return
-	
-	if _sprite.sprite_frames.get_frame_count(cur_anim) == _sprite.sprite_frames.get_frame_count(anim_name):
-		var cur_frame : int = _sprite.frame
-		var cur_progress : float = _sprite.frame_progress
-		_sprite.play(anim_name)
-		_sprite.set_frame_and_progress(cur_frame, cur_progress)
-		
+	elif _sprite.animation != anim_name:
+		if sync:
+			Game.Sync_Play_Animated_Sprite(_sprite, anim_name)
+		else:
+			_sprite.play(anim_name)
 
 func is_animation_playing(anim_name : StringName = &"") -> bool:
 	if _sprite != null:

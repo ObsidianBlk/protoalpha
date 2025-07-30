@@ -50,6 +50,24 @@ func _DisconnectLadderDetector() -> void:
 # ------------------------------------------------------------------------------
 # "Virtual" Public Methods
 # ------------------------------------------------------------------------------
+func flip(enable : bool) -> void:
+	pass
+
+func is_flipped() -> bool:
+	return false
+
+func stop_animation() -> void:
+	pass
+
+func play_animation(anim_name : StringName = &"", sync : bool = false) -> void:
+	pass
+
+func is_animation_playing(anim_name : StringName = &"") -> bool:
+	return false
+
+func get_current_animation() -> StringName:
+	return &""
+
 func spawn_at(spawn_position : Vector2, spawn_payload : Dictionary = {}) -> void:
 	global_position = spawn_position
 

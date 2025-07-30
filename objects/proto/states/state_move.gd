@@ -77,7 +77,7 @@ func handle_input(event : InputEvent) -> void:
 		if event.is_pressed():
 			if wep.can_shoot():
 				wep.press_trigger(proto.get_parent())
-				proto.play_animation_sync(ANIM_SHOOT_RUN)
+				proto.play_animation(ANIM_SHOOT_RUN, true)
 		else:
 			if wep.can_shoot() and proto.get_current_animation() == ANIM_SHOOT_RUN:
 				proto.play_animation(ANIM_RUN)
@@ -89,4 +89,4 @@ func handle_input(event : InputEvent) -> void:
 # ------------------------------------------------------------------------------
 func _on_reloaded() -> void:
 	if proto != null:
-		proto.play_animation_sync(ANIM_RUN)
+		proto.play_animation(ANIM_RUN, true)
