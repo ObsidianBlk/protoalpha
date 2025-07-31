@@ -5,8 +5,8 @@ class_name SoundBoard
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-@export var polyphony = 32:					set=set_polyphony
-@export var bus : StringName = &"Master"
+@export var polyphony = 32:											set=set_polyphony
+@export var bus : StringName = &"Master":							set=set_bus
 @export var streams : Dictionary[StringName, AudioStream] = {}
 
 
@@ -14,6 +14,7 @@ class_name SoundBoard
 # Variables
 # ------------------------------------------------------------------------------
 var _asp : AudioStreamPlayer = null
+var _playback : AudioStreamPlaybackPolyphonic = null
 
 # ------------------------------------------------------------------------------
 # Static Private Variables
@@ -41,6 +42,10 @@ func _ready() -> void:
 	add_child(_asp)
 	_asp.stream = AudioStreamPolyphonic.new()
 	_UpdateASP()
+	_asp.play()
+	_playback = _asp.get_stream_playback()
+	if _playback == null:
+		print("Failed to obtain polyphonic stream playback")
 
 func _enter_tree() -> void:
 	if _instance == null:
@@ -67,5 +72,17 @@ static func Get() -> SoundBoard:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
-func play(stream : AudioStream) -> void:
-	pass
+func is_playing(stream_id : int) -> bool:
+	if _playback != null:
+		return _playback.is_stream_playing(stream_id)
+	return false
+
+func play(stream : AudioStream, offset : float = 0.0, volume_db : float = 0.0, pitch : float = 1.0) -> int:
+	if _playback == null or stream == null: return -1
+	return _playback.play_stream(
+		stream, offset, volume_db, pitch, AudioServer.PLAYBACK_TYPE_DEFAULT, bus
+	)
+
+func stop(stream_id : int) -> void:
+	if _playback != null:
+		_playback.stop_stream(stream_id)

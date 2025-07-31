@@ -62,6 +62,8 @@ const SCREEN_RESOLUTION : Vector2 = Vector2(320, 240)
 const UI_ACTION_START_GAME : StringName = &"start_game"
 ## UI Action - Quit Application
 const UI_ACTION_QUIT_APPLICATION : StringName = &"quit_app"
+## UI Action - Play sound effect
+const UI_ACTION_SOUND : StringName = &"sound"
 
 ## Guide color for matching axis (used primarily by in-editor guides)
 const GUIDE_COLOR_MATCHING_AXIS : Color = Color.AQUAMARINE
