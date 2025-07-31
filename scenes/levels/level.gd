@@ -81,7 +81,11 @@ func spawn_player(level_start : bool = false) -> void:
 	var player : Node2D = PLAYER_SCENE.instantiate()
 	player.add_to_group(Game.GROUP_PLAYER)
 	camera.target = player
-	add_child(player)
+	if player_container != null:
+		player_container.add_child(player)
+	else:
+		print_debug("WARNING: No player container defined. Adding player directly under level tree.")
+		add_child(player)
 	if player.has_method("spawn_at"):
 		player.spawn_at(checkpoint.global_position)
 		Relay.health_changed.emit(100, 100)

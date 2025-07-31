@@ -111,42 +111,63 @@ func _Transition(player : CharacterActor2D) -> void:
 	_tween.set_trans(Tween.TRANS_SINE)
 	_tween.set_parallel(false)
 	
-	var tween_to : Callable = func(n : Node2D, prop : String, from : float, to : float, parallel : bool = false):
+	var tween_to : Callable = func(n : Node2D, prop : String, from : float, to : float, parallel : bool = false, force_duration : float = 0.0):
 		if not is_equal_approx(from, to):
 			var duration : float = abs(to - from) / pixels_per_second
-			_tween.tween_property(n, prop, to, duration)
+			if force_duration > 0.0:
+				duration = force_duration
 			if parallel:
-				_tween.parallel()
+				_tween.parallel().tween_property(n, prop, to, duration)
+			else: _tween.tween_property(n, prop, to, duration)
+			return duration
+		return 0.0
 	
 	segment.lock(3.0)
 	match scroll_axis:
 		Game.ScrollAxis.HORIZONTAL:
-			var res : float = Game.SCREEN_RESOLUTION.x * 0.5
 			var bound : StringName = MapSegment.BOUNDS_RIGHT
 			if camera.global_position.x < seg_center.x:
 				bound = MapSegment.BOUNDS_LEFT
-				res *= -1.0
 			
-			tween_to.call(camera, "global_position:y", camera.global_position.y, seg_center.y)
+			var last_duration : float = 0.0
 			if segment.axis == Game.ScrollAxis.HORIZONTAL:
-				tween_to.call(camera, "global_position:x", camera.global_position.x, bounds[bound] - res)
+				var res : float = Game.SCREEN_RESOLUTION.x * 0.5
+				if bound == MapSegment.BOUNDS_LEFT:
+					res *= -1.0
+			
+				tween_to.call(camera, "global_position:y", camera.global_position.y, seg_center.y)
+				last_duration = tween_to.call(camera, "global_position:x", camera.global_position.x, bounds[bound] - res)
 			else:
-				tween_to.call(camera, "global_position:x", camera.global_position.x, seg_center.x)
+				var res : float = Game.SCREEN_RESOLUTION.y * 0.5
+				var tedge : float = bounds[MapSegment.BOUNDS_TOP] + res
+				var bedge : float = bounds[MapSegment.BOUNDS_BOTTOM] - res
+				if not (camera.global_position.y >= tedge and camera.global_position.y <= bedge):
+					var edge : float = tedge
+					if camera.global_position.y > bedge:
+						edge = bedge
+					tween_to.call(camera, "global_position:y", camera.global_position.y, edge)
+				last_duration = tween_to.call(camera, "global_position:x", camera.global_position.x, seg_center.x)
 				
-			#tween_to.call(
-				#player, "global_position:x",
-				#player.global_position.x, bounds[bound] + (sign(res) * float(offset)),
-				#true
-			#)
+			var sn : float = -1.0 if bound == MapSegment.BOUNDS_RIGHT else 1.0
+			tween_to.call(
+				player, "global_position:x",
+				player.global_position.x, bounds[bound] + (sn * float(offset)),
+				true,
+				last_duration
+			)
 		Game.ScrollAxis.VERTICAL:
+			var bound : StringName = MapSegment.BOUNDS_BOTTOM
+			if camera.global_position.y < seg_center.y:
+				bound = MapSegment.BOUNDS_TOP
+			
+			var last_duration : float = 0.0
 			if segment.axis == Game.ScrollAxis.VERTICAL:
 				var res : float = Game.SCREEN_RESOLUTION.y * 0.5
-				var bound : StringName = MapSegment.BOUNDS_BOTTOM
-				if camera.global_position.y < seg_center.y:
-					bound = MapSegment.BOUNDS_TOP
+				if bound == MapSegment.BOUNDS_TOP:
 					res *= -1
+				
 				tween_to.call(camera, "global_position:x", camera.global_position.x, seg_center.x)
-				tween_to.call(camera, "global_position:y", camera.global_position.y, bounds[bound] - res)
+				last_duration = tween_to.call(camera, "global_position:y", camera.global_position.y, bounds[bound] - res)
 			else:
 				var res : float = Game.SCREEN_RESOLUTION.x * 0.5
 				var ledge : float = bounds[MapSegment.BOUNDS_LEFT] + res
@@ -156,12 +177,15 @@ func _Transition(player : CharacterActor2D) -> void:
 					if camera.global_position.x > redge:
 						edge = redge
 					tween_to.call(camera, "global_position:x", camera.global_position.x, edge)
-				tween_to.call(camera, "global_position:y", camera.global_position.y, seg_center.y)
-			#tween_to.call(
-				#player, "global_position:y",
-				#player.global_position.y, bounds[bound] + (sign(res) * float(offset)),
-				#true
-			#)
+				last_duration = tween_to.call(camera, "global_position:y", camera.global_position.y, seg_center.y)
+			
+			var sn : float = -1.0 if bound == MapSegment.BOUNDS_BOTTOM else 1.0
+			tween_to.call(
+				player, "global_position:y",
+				player.global_position.y, bounds[bound] + (sn * float(offset)),
+				true,
+				last_duration
+			)
 	
 	_tween.finished.connect(_on_transition_complete.bind(segment, camera, cam_target), CONNECT_ONE_SHOT)
 
