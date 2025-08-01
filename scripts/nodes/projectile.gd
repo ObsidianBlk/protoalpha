@@ -1,6 +1,12 @@
+@tool
 extends Area2D
 class_name Projectile
 
+
+# ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal hit()
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -43,12 +49,13 @@ func set_visual_node(n : Node2D) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	body_entered.connect(_on_body_entered)
-	area_entered.connect(_on_area_entered)
+	if not Engine.is_editor_hint():
+		body_entered.connect(_on_body_entered)
+		area_entered.connect(_on_area_entered)
 	_UpdateVisualNode()
 
 func _process(delta: float) -> void:
-	if not _dead:
+	if not (Engine.is_editor_hint() or _dead):
 		position += Vector2.RIGHT.rotated(_angle) * speed * delta
 		lifetime -= delta
 		if lifetime <= 0.0:
@@ -61,12 +68,11 @@ func _UpdateVisualNode() -> void:
 	if visual_node != null:
 		visual_node.rotation = _angle
 
-
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
 func die() -> void:
-	if not _dead:
+	if not (Engine.is_editor_hint() or _dead):
 		_dead = true
 		if visual_node != null:
 			visual_node.visible = false
@@ -77,9 +83,13 @@ func die() -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_body_entered(body : Node2D) -> void:
-	if not _dead:
+	if not (Engine.is_editor_hint() or _dead):
+		hit.emit()
 		die()
 
 func _on_area_entered(area : Area2D) -> void:
+	if Engine.is_editor_hint(): return
 	if area is HitBox:
+		hit.emit()
 		area.hurt(dmg)
+		die()

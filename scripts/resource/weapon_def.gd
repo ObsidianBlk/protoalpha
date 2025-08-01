@@ -14,6 +14,7 @@ enum Type {PROJECTILE=0, BEAM=1}
 @export var type : Type = Type.PROJECTILE
 @export var name : StringName = "Weapon"
 @export var icon : Texture2D = null
+@export var sound_sheet : SoundSheet = null
 @export_group("Projectile Info")
 @export var projectile : PackedScene = null
 @export var rate_of_fire : float = 1.0

@@ -1,18 +1,49 @@
-[gd_resource type="Resource" script_class="WeaponDef" load_steps=5 format=3 uid="uid://p0vcbjdbc78t"]
+[gd_resource type="Resource" script_class="WeaponDef" load_steps=12 format=3 uid="uid://p0vcbjdbc78t"]
 
 [ext_resource type="Texture2D" uid="uid://fmxjsbiuie4f" path="res://assets/graphics/bullets/bullet_small.png" id="1_ytbac"]
 [ext_resource type="PackedScene" uid="uid://xfj4a2moijg2" path="res://objects/projectiles/bolt/bolt.tscn" id="2_vmhm0"]
 [ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="3_80e0t"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="4_6wwc2"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="5_5ysna"]
+[ext_resource type="AudioStream" uid="uid://cfffboj7xxd6n" path="res://assets/audio/sfx/bolt_fired.wav" id="6_dmkoc"]
+[ext_resource type="AudioStream" uid="uid://b62lisctvvruw" path="res://assets/audio/sfx/bolt_explosion.wav" id="7_p8ep2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fid0d"]
 atlas = ExtResource("1_ytbac")
 region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="Resource" id="Resource_rhf5e"]
+script = ExtResource("5_5ysna")
+stream = ExtResource("6_dmkoc")
+volume_db = 0.0
+volume_linear = 1.0
+min_pitch = 1.0
+max_pitch = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_0coyi"]
+script = ExtResource("5_5ysna")
+stream = ExtResource("7_p8ep2")
+volume_db = 0.0
+volume_linear = 1.0
+min_pitch = 1.0
+max_pitch = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_v22gl"]
+script = ExtResource("4_6wwc2")
+sound_list = Dictionary[StringName, ExtResource("5_5ysna")]({
+&"explode": SubResource("Resource_0coyi"),
+&"spawn": SubResource("Resource_rhf5e")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [resource]
 script = ExtResource("3_80e0t")
 type = 0
 name = &"Bolt"
 icon = SubResource("AtlasTexture_fid0d")
+sound_sheet = SubResource("Resource_v22gl")
 projectile = ExtResource("2_vmhm0")
 rate_of_fire = 0.2
 charging = false
