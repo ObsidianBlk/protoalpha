@@ -1,13 +1,54 @@
-[gd_scene load_steps=10 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=19 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="4_6q06x"]
 [ext_resource type="Texture2D" uid="uid://dy2jtx5nc7oqv" path="res://assets/graphics/Ref320x240.png" id="4_l3cfh"]
 [ext_resource type="PackedScene" uid="uid://d05nd38n0uwiq" path="res://scenes/game_hud/game_hud.tscn" id="4_ow5a4"]
 [ext_resource type="Script" uid="uid://bmot2xnxfcohb" path="res://scripts/nodes/chase_camera.gd" id="5_6q06x"]
+[ext_resource type="Script" uid="uid://i1maoaaedj5" path="res://scripts/nodes/component_ui_sound_handler.gd" id="6_ouso4"]
 [ext_resource type="Script" uid="uid://dktc706cbs45f" path="res://addons/OBSUI/scripts/ui_layer.gd" id="6_ow5a4"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="7_blune"]
 [ext_resource type="PackedScene" uid="uid://cvm0cfywbnaes" path="res://scenes/ui/main_menu/main_menu.tscn" id="7_hujxm"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="8_th5th"]
 [ext_resource type="Script" uid="uid://yyvcjvlmtm48" path="res://scripts/nodes/sound_board.gd" id="8_yyfjg"]
+[ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_th5th"]
+[ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="10_7smn1"]
+
+[sub_resource type="Resource" id="Resource_raeie"]
+script = ExtResource("8_th5th")
+stream = ExtResource("9_th5th")
+volume_db = 0.0
+volume_linear = 1.0
+min_pitch = 1.0
+max_pitch = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_hxu8e"]
+script = ExtResource("8_th5th")
+stream = ExtResource("10_7smn1")
+volume_db = 0.0
+volume_linear = 1.0
+min_pitch = 1.0
+max_pitch = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_nvumn"]
+script = ExtResource("8_th5th")
+stream = ExtResource("4_6q06x")
+volume_db = 0.0
+volume_linear = 1.0
+min_pitch = 1.0
+max_pitch = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_7smn1"]
+script = ExtResource("7_blune")
+sound_list = Dictionary[StringName, ExtResource("8_th5th")]({
+&"btn_focused": SubResource("Resource_hxu8e"),
+&"btn_hover": SubResource("Resource_raeie"),
+&"btn_pressed": SubResource("Resource_nvumn")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_hujxm"]
 
@@ -44,7 +85,7 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(320, 240)
+size = Vector2i(863, 648)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
@@ -61,23 +102,17 @@ metadata/_custom_type_script = "uid://bmot2xnxfcohb"
 
 [node name="GameHUD" parent="GameLayer/VBoxContainer/AspectRatioContainer/SubViewportContainer/GameViewport/GameHudLayer" instance=ExtResource("4_ow5a4")]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameLayer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="GameLayer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "CLICK ME!!"
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameLayer/VBoxContainer/HBoxContainer/Button"]
-stream = ExtResource("4_6q06x")
-bus = &"SFX"
-
 [node name="UILayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 layer = 10
 script = ExtResource("6_ow5a4")
 immediate_open = true
 metadata/_custom_type_script = "uid://dktc706cbs45f"
+
+[node name="ComponentUISoundHandler" type="Node" parent="UILayer"]
+script = ExtResource("6_ouso4")
+sound_sheet = SubResource("Resource_7smn1")
+metadata/_custom_type_script = "uid://i1maoaaedj5"
 
 [node name="MainMenu" parent="UILayer" instance=ExtResource("7_hujxm")]
 default_ui = true
@@ -91,5 +126,3 @@ streams = Dictionary[StringName, AudioStream]({
 &"blip": ExtResource("4_6q06x")
 })
 metadata/_custom_type_script = "uid://yyvcjvlmtm48"
-
-[connection signal="pressed" from="GameLayer/VBoxContainer/HBoxContainer/Button" to="GameLayer/VBoxContainer/HBoxContainer/Button/AudioStreamPlayer" method="play" binds= [0.0]]
