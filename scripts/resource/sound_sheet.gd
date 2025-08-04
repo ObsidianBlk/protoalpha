@@ -41,13 +41,16 @@ func _DisconnectSoundEntries() -> void:
 # Public Methods
 # ------------------------------------------------------------------------------
 func play(sound_name : StringName) -> int:
-	if sound_name in sound_list and sound_list[sound_name].stream != null:
+	var sfxplayer : AudioPlayerPolyphonic = AudioBoard.get_sfx_player()
+	if sfxplayer != null and sound_name in sound_list and sound_list[sound_name].stream != null:
 		var entry : SoundEntry = sound_list[sound_name]
-		return AudioBoard.play_sfx(entry.stream, 0.0, entry.volume_db, entry.get_pitch())
+		return sfxplayer.play(entry.stream, 0.0, entry.volume_db, entry.get_pitch())
 	return -1
 
 func stop(id : int) -> void:
-	AudioBoard.stop_sfx(id)
+	var sfxplayer : AudioPlayerPolyphonic = AudioBoard.get_sfx_player()
+	if sfxplayer != null:
+		sfxplayer.stop(id)
 
 # ------------------------------------------------------------------------------
 # Handler Methods
