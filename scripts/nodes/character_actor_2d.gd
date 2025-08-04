@@ -13,7 +13,7 @@ signal dead()
 # ------------------------------------------------------------------------------
 @export var alive : bool = true:						set=set_alive
 @export var ladder_detector : LadderDetector = null:	set=set_ladder_detector
-
+@export var sound_sheet : SoundSheet = null
 
 # ------------------------------------------------------------------------------
 # Setters

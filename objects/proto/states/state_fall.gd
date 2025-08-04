@@ -29,6 +29,7 @@ func update(_delta : float) -> void:
 	if proto == null: return
 	
 	if proto.is_on_surface():
+		play_sfx(AUDIO_LAND)
 		if is_equal_approx(_move_direction.x, 0.0):
 			swap_to(state_idle)
 		else:

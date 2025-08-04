@@ -19,6 +19,9 @@ const ANIM_HURT_GROUND : StringName = &"hurt_ground"
 const ANIM_HURT_AIR : StringName = &"hurt_air"
 const ANIM_SPAWN : StringName = &"spawn"
 
+const AUDIO_JUMP : StringName = &"jump"
+const AUDIO_LAND : StringName = &"land"
+const AUDIO_HURT : StringName = &"hurt"
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -35,3 +38,11 @@ func set_host(host : Node) -> void:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
+func play_sfx(audio_name : StringName) -> int:
+	if proto != null and proto.sound_sheet != null:
+		return proto.sound_sheet.play(audio_name)
+	return -1
+
+func stop_sfx(id : int) -> void:
+	if proto != null and proto.sound_sheet != null:
+		proto.sound_sheet.stop(id)

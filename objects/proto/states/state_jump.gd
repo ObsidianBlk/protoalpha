@@ -1,5 +1,6 @@
 extends ProtoState
 
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
@@ -28,6 +29,7 @@ func enter(payload : Variant = null) -> void:
 	
 	proto.velocity.y = -proto.jump_power
 	
+	play_sfx(AUDIO_JUMP)
 	if wep.is_triggered():
 		proto.play_animation(ANIM_SHOOT_AIR)
 	else:
@@ -48,6 +50,7 @@ func update(_delta : float) -> void:
 	var falling : bool = proto.velocity.y >= 0.0
 	
 	if proto.is_on_surface():
+		play_sfx(AUDIO_LAND)
 		if proto.is_on_ladder() and not is_equal_approx(_move_direction.y, 0.0):
 			swap_to(state_climb)
 		if falling:

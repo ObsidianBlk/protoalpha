@@ -10,6 +10,7 @@ func enter(payload : Variant = null) -> void:
 		pop()
 		return
 	
+	play_sfx(AUDIO_HURT)
 	if not proto.animation_finished.is_connected(_on_animation_finished):
 		proto.animation_finished.connect(_on_animation_finished)
 	if proto.is_on_surface():

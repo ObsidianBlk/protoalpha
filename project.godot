@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Relay="*res://scripts/autos/relay.gd"
+AudioBoard="*res://scripts/autos/audio_board.gd"
 
 [editor_plugins]
 

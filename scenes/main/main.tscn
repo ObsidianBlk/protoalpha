@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=18 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="4_6q06x"]
@@ -10,22 +10,21 @@
 [ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="7_blune"]
 [ext_resource type="PackedScene" uid="uid://cvm0cfywbnaes" path="res://scenes/ui/main_menu/main_menu.tscn" id="7_hujxm"]
 [ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="8_th5th"]
-[ext_resource type="Script" uid="uid://yyvcjvlmtm48" path="res://scripts/nodes/sound_board.gd" id="8_yyfjg"]
 [ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_th5th"]
 [ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="10_7smn1"]
 
-[sub_resource type="Resource" id="Resource_raeie"]
+[sub_resource type="Resource" id="Resource_hxu8e"]
 script = ExtResource("8_th5th")
-stream = ExtResource("9_th5th")
+stream = ExtResource("10_7smn1")
 volume_db = 0.0
 volume_linear = 1.0
 min_pitch = 1.0
 max_pitch = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
-[sub_resource type="Resource" id="Resource_hxu8e"]
+[sub_resource type="Resource" id="Resource_raeie"]
 script = ExtResource("8_th5th")
-stream = ExtResource("10_7smn1")
+stream = ExtResource("9_th5th")
 volume_db = 0.0
 volume_linear = 1.0
 min_pitch = 1.0
@@ -119,10 +118,3 @@ default_ui = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
-
-[node name="SoundBoard" type="Node" parent="."]
-script = ExtResource("8_yyfjg")
-streams = Dictionary[StringName, AudioStream]({
-&"blip": ExtResource("4_6q06x")
-})
-metadata/_custom_type_script = "uid://yyvcjvlmtm48"

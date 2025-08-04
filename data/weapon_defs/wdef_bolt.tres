@@ -12,18 +12,18 @@
 atlas = ExtResource("1_ytbac")
 region = Rect2(0, 0, 8, 8)
 
-[sub_resource type="Resource" id="Resource_rhf5e"]
+[sub_resource type="Resource" id="Resource_0coyi"]
 script = ExtResource("5_5ysna")
-stream = ExtResource("6_dmkoc")
+stream = ExtResource("7_p8ep2")
 volume_db = 0.0
 volume_linear = 1.0
 min_pitch = 1.0
 max_pitch = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
-[sub_resource type="Resource" id="Resource_0coyi"]
+[sub_resource type="Resource" id="Resource_rhf5e"]
 script = ExtResource("5_5ysna")
-stream = ExtResource("7_p8ep2")
+stream = ExtResource("6_dmkoc")
 volume_db = 0.0
 volume_linear = 1.0
 min_pitch = 1.0
