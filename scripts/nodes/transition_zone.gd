@@ -202,4 +202,4 @@ func _on_transition_complete(segment : MapSegment, camera : ChaseCamera, target 
 	if camera != null and target != null:
 		camera.target = target
 	if segment != null:
-		segment.focus()
+		segment.focus(true)

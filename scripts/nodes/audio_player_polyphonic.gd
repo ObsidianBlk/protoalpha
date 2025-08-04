@@ -73,6 +73,14 @@ func play(stream : AudioStream, offset : float = 0.0, volume_db : float = 0.0, p
 		stream, offset, volume_db, pitch, AudioServer.PLAYBACK_TYPE_DEFAULT, bus
 	)
 
+func set_volume_db(id : int, volume_db : float) -> void:
+	if _playback != null:
+		_playback.set_stream_volume(id, volume_db)
+
+func set_volume_linear(id : int, volume : float) -> void:
+	if _playback != null:
+		_playback.set_stream_volume(id, linear_to_db(clampf(volume, 0.0, 1.0)))
+
 func stop(id : int) -> void:
 	if _playback != null:
 		_playback.stop_stream(id)

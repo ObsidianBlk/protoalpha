@@ -25,6 +25,7 @@ const BOUNDS_BOTTOM : StringName = &"bottom"
 # ------------------------------------------------------------------------------
 @export var layer : TileMapLayer = null:							set=set_layer
 @export var axis : Game.ScrollAxis = Game.ScrollAxis.HORIZONTAL:	set=set_axis
+@export var music_name : StringName = &""
 @export var hide_collision : bool = false:							set=set_hide_collision
 @export_tool_button("Refresh") var refresh_action = _UpdateBoundry
 
@@ -195,8 +196,9 @@ func in_focus() -> bool:
 		return false
 	return true
 
-func focus() -> void:
+func focus(force : bool = false) -> void:
 	if _shape == null or _collision == null: return
+	if not (_locked <= 0.0 or force): return
 	var camera : ChaseCamera = ChaseCamera.Get_Camera()
 	if camera == null: return
 	var bounds : Dictionary[StringName, float] = get_bounds()
@@ -215,9 +217,8 @@ func _on_body_entered(body : Node2D) -> void:
 	if body == null: return
 	if body.is_in_group(Game.GROUP_PLAYER):
 		_player_entered = true
-		if _locked <= 0.0:
-			focus()
-			entered.emit()
+		focus()
+		entered.emit()
 
 func _on_body_exited(body : Node2D) -> void:
 	if body == null: return

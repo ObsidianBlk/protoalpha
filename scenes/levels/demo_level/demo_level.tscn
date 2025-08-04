@@ -1,11 +1,41 @@
-[gd_scene load_steps=11 format=4 uid="uid://bhq77qjywxvva"]
+[gd_scene load_steps=18 format=4 uid="uid://bhq77qjywxvva"]
 
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="1_k1sf6"]
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_kntij"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="2_hk6jy"]
 [ext_resource type="TileSet" uid="uid://guqkyefalo5p" path="res://assets/graphics/tilesets/tileset.tres" id="2_ysebk"]
+[ext_resource type="AudioStream" uid="uid://t06kwyfhj7ey" path="res://assets/audio/music/Level 1.ogg" id="3_gtfch"]
+[ext_resource type="Script" uid="uid://b1nbws7klh6i" path="res://scripts/resource/music_sheet.gd" id="3_t4i1j"]
 [ext_resource type="Script" uid="uid://b7nn8ybn2tmlb" path="res://scripts/nodes/checkpoint.gd" id="3_ysebk"]
 [ext_resource type="Script" uid="uid://b51ttt7nf66dg" path="res://scripts/nodes/transition_zone.gd" id="4_a11qx"]
+[ext_resource type="AudioStream" uid="uid://bkhshhbjico1n" path="res://assets/audio/music/Level 2.ogg" id="4_u3rpf"]
 [ext_resource type="PackedScene" uid="uid://tfm2jtgj2is3" path="res://objects/enemy_glob/enemy_glob.tscn" id="5_kntij"]
+
+[sub_resource type="Resource" id="Resource_dka4h"]
+script = ExtResource("2_hk6jy")
+stream = ExtResource("3_gtfch")
+volume_db = -12.0412
+volume_linear = 0.25
+min_pitch = 1.0
+max_pitch = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_7m45j"]
+script = ExtResource("2_hk6jy")
+stream = ExtResource("4_u3rpf")
+volume_db = -12.0412
+volume_linear = 0.25
+min_pitch = 1.0
+max_pitch = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_gtfch"]
+script = ExtResource("3_t4i1j")
+music_list = Dictionary[StringName, ExtResource("2_hk6jy")]({
+&"Level 1": SubResource("Resource_dka4h"),
+&"Level 2": SubResource("Resource_7m45j")
+})
+metadata/_custom_type_script = "uid://b1nbws7klh6i"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amc2f"]
 size = Vector2(16, 4)
@@ -22,12 +52,14 @@ size = Vector2(20, 240)
 [node name="DemoLevel" type="Node2D" node_paths=PackedStringArray("player_container")]
 script = ExtResource("1_kntij")
 player_container = NodePath("PlayerContainer")
+music_sheet = SubResource("Resource_gtfch")
 
 [node name="Segment_A" type="Area2D" parent="." node_paths=PackedStringArray("layer")]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_k1sf6")
 layer = NodePath("Map")
+music_name = &"Level 1"
 metadata/_custom_type_script = "uid://iseo8u8frf3w"
 
 [node name="Map" type="TileMapLayer" parent="Segment_A"]
@@ -40,6 +72,7 @@ collision_mask = 2
 script = ExtResource("1_k1sf6")
 layer = NodePath("TileMapLayer")
 axis = 1
+music_name = &"Level 2"
 metadata/_custom_type_script = "uid://iseo8u8frf3w"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Segment_B"]

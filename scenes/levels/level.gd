@@ -7,10 +7,13 @@ class_name Level
 # ------------------------------------------------------------------------------
 const PLAYER_SCENE : PackedScene = preload("res://objects/proto/proto.tscn")
 
+const MUSIC_CROSSFADE_DURATION : float = 1.0
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var player_container : Node2D = null:		set=set_player_container
+@export var music_sheet : MusicSheet = null
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -104,6 +107,8 @@ func _on_child_exiting(child : Node) -> void:
 func _on_segment_entered(segment : MapSegment) -> void:
 	if not segment.name in _active_segments:
 		_active_segments[segment.name] = segment
+		if music_sheet != null:
+			music_sheet.play(segment.music_name, MUSIC_CROSSFADE_DURATION)
 
 func _on_segment_exited(segment : MapSegment) -> void:
 	if segment.name in _active_segments:
