@@ -1,19 +1,23 @@
-[gd_scene load_steps=36 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=45 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
-[ext_resource type="Texture2D" uid="uid://bgbwkodg84dv8" path="res://assets/graphics/tv_frame_01.png" id="2_th5th"]
+[ext_resource type="Texture2D" uid="uid://bgbwkodg84dv8" path="res://assets/graphics/tv/tv_frame_01.png" id="2_th5th"]
 [ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="4_6q06x"]
 [ext_resource type="Texture2D" uid="uid://dy2jtx5nc7oqv" path="res://assets/graphics/Ref320x240.png" id="4_l3cfh"]
 [ext_resource type="PackedScene" uid="uid://d05nd38n0uwiq" path="res://scenes/game_hud/game_hud.tscn" id="4_ow5a4"]
 [ext_resource type="Script" uid="uid://bmot2xnxfcohb" path="res://scripts/nodes/chase_camera.gd" id="5_6q06x"]
-[ext_resource type="Texture2D" uid="uid://cyawkb7mwvu77" path="res://assets/graphics/tv_ctrl_panel.png" id="6_7smn1"]
+[ext_resource type="Texture2D" uid="uid://caeylxq5gwomt" path="res://assets/graphics/tv/tv_screen_boarder.png" id="5_hxu8e"]
+[ext_resource type="Texture2D" uid="uid://cyawkb7mwvu77" path="res://assets/graphics/tv/tv_ctrl_panel.png" id="6_7smn1"]
 [ext_resource type="Script" uid="uid://i1maoaaedj5" path="res://scripts/nodes/component_ui_sound_handler.gd" id="6_ouso4"]
 [ext_resource type="Script" uid="uid://dktc706cbs45f" path="res://addons/OBSUI/scripts/ui_layer.gd" id="6_ow5a4"]
+[ext_resource type="Texture2D" uid="uid://bx4xestmcewyb" path="res://assets/graphics/tv/tv_grill_pattern.png" id="6_raeie"]
 [ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="7_blune"]
 [ext_resource type="PackedScene" uid="uid://cvm0cfywbnaes" path="res://scenes/ui/main_menu/main_menu.tscn" id="7_hujxm"]
 [ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="8_th5th"]
 [ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_th5th"]
 [ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="10_7smn1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nvumn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7smn1"]
 atlas = ExtResource("2_th5th")
@@ -30,54 +34,6 @@ region = Rect2(220, 0, 36, 36)
 [sub_resource type="AtlasTexture" id="AtlasTexture_nvumn"]
 atlas = ExtResource("2_th5th")
 region = Rect2(0, 37, 36, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ou6is"]
-atlas = ExtResource("2_th5th")
-region = Rect2(220, 37, 36, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_necax"]
-atlas = ExtResource("2_th5th")
-region = Rect2(0, 220, 36, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r4lks"]
-atlas = ExtResource("2_th5th")
-region = Rect2(37, 220, 8, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pg34l"]
-atlas = ExtResource("2_th5th")
-region = Rect2(220, 220, 36, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m4h2d"]
-atlas = ExtResource("6_7smn1")
-region = Rect2(0, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p8abn"]
-atlas = ExtResource("6_7smn1")
-region = Rect2(25, 0, 8, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s17dp"]
-atlas = ExtResource("6_7smn1")
-region = Rect2(104, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_37hlw"]
-atlas = ExtResource("6_7smn1")
-region = Rect2(0, 25, 24, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6llfj"]
-atlas = ExtResource("6_7smn1")
-region = Rect2(104, 25, 24, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0bhws"]
-atlas = ExtResource("6_7smn1")
-region = Rect2(0, 232, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_62atk"]
-atlas = ExtResource("6_7smn1")
-region = Rect2(25, 232, 8, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i7in8"]
-atlas = ExtResource("6_7smn1")
-region = Rect2(104, 232, 24, 24)
 
 [sub_resource type="Resource" id="Resource_hxu8e"]
 script = ExtResource("8_th5th")
@@ -115,6 +71,102 @@ sound_list = Dictionary[StringName, ExtResource("8_th5th")]({
 })
 metadata/_custom_type_script = "uid://wbuewjeffa70"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ou6is"]
+atlas = ExtResource("2_th5th")
+region = Rect2(220, 37, 36, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_necax"]
+atlas = ExtResource("2_th5th")
+region = Rect2(0, 220, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4lks"]
+atlas = ExtResource("2_th5th")
+region = Rect2(37, 220, 8, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pg34l"]
+atlas = ExtResource("2_th5th")
+region = Rect2(220, 220, 36, 36)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ou6is"]
+texture = ExtResource("5_hxu8e")
+texture_margin_left = 126.0
+texture_margin_top = 126.0
+texture_margin_right = 126.0
+texture_margin_bottom = 126.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxu8e"]
+texture = ExtResource("6_raeie")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4h2d"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p8abn"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(25, 0, 8, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s17dp"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(104, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37hlw"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(0, 25, 24, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6llfj"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(104, 25, 24, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0bhws"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(0, 232, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62atk"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(25, 232, 8, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7in8"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(104, 232, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkmcc"]
+atlas = ExtResource("6_7smn1")
+region = Rect2(0, 71, 128, 103)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7nlll"]
+texture = SubResource("AtlasTexture_gkmcc")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxu8e"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.068687, 0.0686869, 0.0686868, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvumn"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_hujxm"]
 
 [node name="Main" type="Node"]
@@ -130,202 +182,275 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Spacer" type="Control" parent="GameLayer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="TV" type="AspectRatioContainer" parent="GameLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 1.628
+
+[node name="TVBody" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TV" type="HBoxContainer" parent="GameLayer/VBoxContainer"]
+[node name="TV_Screen" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.27
+theme_override_styles/panel = SubResource("StyleBoxEmpty_nvumn")
 
-[node name="TV_Screen" type="VBoxContainer" parent="GameLayer/VBoxContainer/TV"]
+[node name="Screen_Main" type="VBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="TV_Top" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TV_Screen"]
+[node name="TV_Top" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TL_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Top"]
+[node name="TL_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Top"]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 texture = SubResource("AtlasTexture_7smn1")
 
-[node name="Top_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Top"]
+[node name="Top_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Top"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_raeie")
 expand_mode = 3
 stretch_mode = 1
 
-[node name="TR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Top"]
+[node name="TR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Top"]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 texture = SubResource("AtlasTexture_hxu8e")
 
-[node name="TV_Center" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TV_Screen"]
+[node name="TV_Center" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Left_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center"]
+[node name="Left_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center"]
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 texture = SubResource("AtlasTexture_nvumn")
 stretch_mode = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-ratio = 1.333
-
-[node name="TextureRect" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center/AspectRatioContainer"]
-layout_mode = 2
-texture = ExtResource("4_l3cfh")
-stretch_mode = 5
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center/AspectRatioContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center"]
 custom_minimum_size = Vector2(320, 240)
 layout_mode = 2
+size_flags_horizontal = 3
 stretch = true
 
-[node name="GameViewport" type="SubViewport" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center/AspectRatioContainer/SubViewportContainer"]
+[node name="GameViewport" type="SubViewport" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer"]
 disable_3d = true
-transparent_bg = true
-handle_input_locally = false
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(320, 240)
+size = Vector2i(726, 576)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="Game" type="Node2D" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center/AspectRatioContainer/SubViewportContainer/GameViewport"]
+[node name="Game" type="Node2D" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
 unique_name_in_owner = true
 
-[node name="ChaseCamera" type="Camera2D" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center/AspectRatioContainer/SubViewportContainer/GameViewport/Game"]
+[node name="ChaseCamera" type="Camera2D" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/Game"]
 limit_smoothed = true
 script = ExtResource("5_6q06x")
 metadata/_custom_type_script = "uid://bmot2xnxfcohb"
 
-[node name="GameHudLayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center/AspectRatioContainer/SubViewportContainer/GameViewport"]
+[node name="GameHudLayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
+visible = false
 
-[node name="GameHUD" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center/AspectRatioContainer/SubViewportContainer/GameViewport/GameHudLayer" instance=ExtResource("4_ow5a4")]
+[node name="GameHUD" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/GameHudLayer" instance=ExtResource("4_ow5a4")]
 
-[node name="Right_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Center"]
-custom_minimum_size = Vector2(36, 0)
-layout_mode = 2
-texture = SubResource("AtlasTexture_ou6is")
-stretch_mode = 1
-
-[node name="TV_Bottom" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TV_Screen"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="BL_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Bottom"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_necax")
-
-[node name="Bottom_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Bottom"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture = SubResource("AtlasTexture_r4lks")
-stretch_mode = 1
-
-[node name="BR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Screen/TV_Bottom"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_pg34l")
-
-[node name="TV_Controls" type="PanelContainer" parent="GameLayer/VBoxContainer/TV"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Frame" type="VBoxContainer" parent="GameLayer/VBoxContainer/TV/TV_Controls"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Top" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="TL_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Top"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = SubResource("AtlasTexture_m4h2d")
-
-[node name="Top_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Top"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = SubResource("AtlasTexture_p8abn")
-stretch_mode = 1
-
-[node name="TR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Top"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = SubResource("AtlasTexture_s17dp")
-
-[node name="Center" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="Left_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Center"]
-custom_minimum_size = Vector2(24, 0)
-layout_mode = 2
-texture = SubResource("AtlasTexture_37hlw")
-stretch_mode = 1
-
-[node name="Spacer" type="Control" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Center"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Right_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Center"]
-custom_minimum_size = Vector2(24, 0)
-layout_mode = 2
-texture = SubResource("AtlasTexture_6llfj")
-stretch_mode = 1
-
-[node name="Bottom" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="BL_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Bottom"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = SubResource("AtlasTexture_0bhws")
-
-[node name="Bottom_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Bottom"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = SubResource("AtlasTexture_62atk")
-stretch_mode = 1
-
-[node name="BR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TV_Controls/Frame/Bottom"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = SubResource("AtlasTexture_i7in8")
-
-[node name="TVShelf" type="HBoxContainer" parent="GameLayer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 128)
-layout_mode = 2
-
-[node name="UILayer" type="CanvasLayer" parent="."]
+[node name="UILayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
 unique_name_in_owner = true
 layer = 10
 script = ExtResource("6_ow5a4")
 immediate_open = true
 metadata/_custom_type_script = "uid://dktc706cbs45f"
 
-[node name="ComponentUISoundHandler" type="Node" parent="UILayer"]
+[node name="ComponentUISoundHandler" type="Node" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/UILayer"]
 script = ExtResource("6_ouso4")
 sound_sheet = SubResource("Resource_7smn1")
 metadata/_custom_type_script = "uid://i1maoaaedj5"
 
-[node name="MainMenu" parent="UILayer" instance=ExtResource("7_hujxm")]
+[node name="MainMenu" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/UILayer" instance=ExtResource("7_hujxm")]
+mouse_filter = 2
 default_ui = true
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
+layer = -10
+
+[node name="ColorRect" type="ColorRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Right_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center"]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+texture = SubResource("AtlasTexture_ou6is")
+stretch_mode = 1
+
+[node name="TV_Bottom" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BL_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_necax")
+
+[node name="Bottom_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_r4lks")
+stretch_mode = 1
+
+[node name="BR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_pg34l")
+
+[node name="ScreenBoarder" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ou6is")
+
+[node name="TV_Controls" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+theme_override_styles/panel = SubResource("StyleBoxTexture_hxu8e")
+
+[node name="Frame" type="VBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Top" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TL_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Top"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = SubResource("AtlasTexture_m4h2d")
+
+[node name="Top_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Top"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_p8abn")
+stretch_mode = 1
+
+[node name="TR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Top"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = SubResource("AtlasTexture_s17dp")
+
+[node name="Center" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Left_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Center"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+texture = SubResource("AtlasTexture_37hlw")
+stretch_mode = 1
+
+[node name="Spacer" type="Control" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Center"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Center"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+texture = SubResource("AtlasTexture_6llfj")
+stretch_mode = 1
+
+[node name="Bottom" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BL_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Bottom"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = SubResource("AtlasTexture_0bhws")
+
+[node name="Bottom_Edge" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Bottom"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_62atk")
+stretch_mode = 1
+
+[node name="BR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Frame/Bottom"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = SubResource("AtlasTexture_i7in8")
+
+[node name="Controls" type="VBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="TVControls" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7nlll")
+
+[node name="PanelContainer" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hxu8e")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_nvumn")
+
+[node name="Label" type="Label" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Some Spiffy Controls here"
+autowrap_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "B"
+
+[node name="CheckButton2" type="CheckButton" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton3" type="CheckButton" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TVShelf" type="HBoxContainer" parent="GameLayer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="GameLayer"]
+visible = false
+offset_left = 341.0
+offset_top = 37.0
+offset_right = 695.0
+offset_bottom = 277.0
+texture = ExtResource("4_l3cfh")
+stretch_mode = 5
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
