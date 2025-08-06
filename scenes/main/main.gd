@@ -22,6 +22,9 @@ var _level : Level = null
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	if Settings.load() != OK:
+		Settings.request_reset()
+		Settings.save()
 	_ui_layer.register_action_handler(Game.UI_ACTION_START_GAME, _StartGame)
 	_ui_layer.register_action_handler(Game.UI_ACTION_QUIT_APPLICATION, _QuitApplication)
 
@@ -59,4 +62,6 @@ func _StartGame() -> void:
 	_LoadLevel(LEVEL)
 
 func _QuitApplication() -> void:
+	#print("Master: ", Settings.get_value(AudioBoard.CONFIG_SECTION, AudioBoard.BUS_MASTER))
+	Settings.save()
 	get_tree().quit()

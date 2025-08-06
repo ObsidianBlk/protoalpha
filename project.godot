@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Settings="*res://scripts/autos/settings.gd"
 Relay="*res://scripts/autos/relay.gd"
 AudioBoard="*res://scripts/autos/audio_board.gd"
 

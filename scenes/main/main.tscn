@@ -1,6 +1,7 @@
 [gd_scene load_steps=45 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
+[ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
 [ext_resource type="Texture2D" uid="uid://bgbwkodg84dv8" path="res://assets/graphics/tv/tv_frame_01.png" id="2_th5th"]
 [ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="4_6q06x"]
 [ext_resource type="Texture2D" uid="uid://dy2jtx5nc7oqv" path="res://assets/graphics/Ref320x240.png" id="4_l3cfh"]
@@ -16,6 +17,7 @@
 [ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="8_th5th"]
 [ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_th5th"]
 [ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="10_7smn1"]
+[ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nvumn"]
 
@@ -142,31 +144,6 @@ texture_margin_top = 24.0
 texture_margin_right = 24.0
 texture_margin_bottom = 24.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxu8e"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-bg_color = Color(0.068687, 0.0686869, 0.0686868, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvumn"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_hujxm"]
 
 [node name="Main" type="Node"]
@@ -180,6 +157,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_ou6is")
 
 [node name="Spacer" type="Control" parent="GameLayer/VBoxContainer"]
 visible = false
@@ -248,6 +226,7 @@ stretch = true
 
 [node name="GameViewport" type="SubViewport" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer"]
 disable_3d = true
+handle_input_locally = false
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
 size = Vector2i(726, 576)
@@ -401,42 +380,20 @@ texture = SubResource("AtlasTexture_i7in8")
 layout_mode = 2
 
 [node name="Spacer" type="Control" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls"]
-custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 
-[node name="TVControls" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls"]
+[node name="ControlPlate" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_7nlll")
 
-[node name="PanelContainer" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_hxu8e")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer"]
+[node name="TVControlBox" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/ControlPlate" instance=ExtResource("16_nvumn")]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer"]
+[node name="BottomSpacer" type="Control" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_nvumn")
-
-[node name="Label" type="Label" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer/PanelContainer"]
-layout_mode = 2
-text = "Some Spiffy Controls here"
-autowrap_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="CheckButton" type="CheckButton" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "B"
-
-[node name="CheckButton2" type="CheckButton" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CheckButton3" type="CheckButton" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/TVControls/PanelContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
+size_flags_vertical = 3
 
 [node name="TVShelf" type="HBoxContainer" parent="GameLayer/VBoxContainer"]
 visible = false
