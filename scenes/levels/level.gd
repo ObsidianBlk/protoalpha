@@ -3,6 +3,11 @@ class_name Level
 
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal pause_requested()
+
+# ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const PLAYER_SCENE : PackedScene = preload("res://objects/proto/proto.tscn")
@@ -38,6 +43,14 @@ func _ready() -> void:
 	for child : Node in get_children():
 		if child is MapSegment:
 			_ConnectSegment(child)
+
+func _exit_tree() -> void:
+	if music_sheet != null:
+		music_sheet.stop_all()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause_game"):
+		pause_requested.emit()
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -108,6 +121,7 @@ func _on_segment_entered(segment : MapSegment) -> void:
 	if not segment.name in _active_segments:
 		_active_segments[segment.name] = segment
 		if music_sheet != null:
+			music_sheet.stop_non_local()
 			music_sheet.play(segment.music_name, MUSIC_CROSSFADE_DURATION)
 
 func _on_segment_exited(segment : MapSegment) -> void:

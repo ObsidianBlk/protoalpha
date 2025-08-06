@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=46 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="8_th5th"]
 [ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_th5th"]
 [ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="10_7smn1"]
+[ext_resource type="PackedScene" uid="uid://vo57uryqt5t8" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="14_necax"]
 [ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nvumn"]
@@ -148,8 +149,10 @@ texture_margin_bottom = 24.0
 
 [node name="Main" type="Node"]
 script = ExtResource("1_k2fmo")
+pause_menu = &"PauseMenu"
 
 [node name="GameLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameLayer"]
 anchors_preset = 15
@@ -227,6 +230,7 @@ stretch = true
 [node name="GameViewport" type="SubViewport" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
+snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
 size = Vector2i(726, 576)
@@ -236,6 +240,7 @@ render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
 unique_name_in_owner = true
+process_mode = 1
 
 [node name="ChaseCamera" type="Camera2D" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/Game"]
 limit_smoothed = true
@@ -243,6 +248,7 @@ script = ExtResource("5_6q06x")
 metadata/_custom_type_script = "uid://bmot2xnxfcohb"
 
 [node name="GameHudLayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
+unique_name_in_owner = true
 visible = false
 
 [node name="GameHUD" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/GameHudLayer" instance=ExtResource("4_ow5a4")]
@@ -262,6 +268,8 @@ metadata/_custom_type_script = "uid://i1maoaaedj5"
 [node name="MainMenu" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/UILayer" instance=ExtResource("7_hujxm")]
 mouse_filter = 2
 default_ui = true
+
+[node name="PauseMenu" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/UILayer" instance=ExtResource("14_necax")]
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
 layer = -10

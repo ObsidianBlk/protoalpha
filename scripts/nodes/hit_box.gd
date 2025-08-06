@@ -12,18 +12,32 @@ signal invulnerability_changed(enabled : bool)
 # ------------------------------------------------------------------------------
 @export var health : ComponentHealth = null
 @export var damage : int = 0
+@export var continuous : bool = false
 @export var invulnerability_time : float = 1.0
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _is_invulnerable : bool = false
+var _hitboxes : Dictionary[StringName, HitBox] = {}
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
+	area_exited.connect(_on_area_exited)
+
+# ------------------------------------------------------------------------------
+# Private Methods
+# ------------------------------------------------------------------------------
+func _HurtIfWithin(hb : HitBox) -> void:
+	if damage <= 0 or not hb.name in _hitboxes: return
+	hb.hurt(damage)
+	if continuous:
+		get_tree().create_timer(hb.invulnerability_time).timeout.connect(
+				_HurtIfWithin.bind(hb), CONNECT_ONE_SHOT
+			)
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -52,4 +66,9 @@ func is_invulnerable() -> bool:
 # ------------------------------------------------------------------------------
 func _on_area_entered(area : Area2D) -> void:
 	if damage > 0 and area is HitBox:
-		area.hurt(damage)
+		_hitboxes[area.name] = area
+		_HurtIfWithin(area)
+
+func _on_area_exited(area : Area2D) -> void:
+	if area.name in _hitboxes:
+		_hitboxes.erase(area.name)

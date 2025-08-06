@@ -120,6 +120,9 @@ func close_all_ui(immediate : bool = false) -> void:
 		info.is_open = false
 		_ui_children[info.ui_name].hide_ui(immediate)
 
+func has_ui(ui_name : StringName) -> bool:
+	return ui_name in _ui_children
+
 func get_ui_list() -> Array[StringName]:
 	return _ui_children.keys()
 

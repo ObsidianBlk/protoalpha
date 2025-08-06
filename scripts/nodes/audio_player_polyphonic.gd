@@ -20,6 +20,8 @@ var _asp : AudioStreamPlayer = null
 var _poly : AudioStreamPolyphonic = null
 var _playback : AudioStreamPlaybackPolyphonic = null
 
+var _streams : Dictionary[int, bool] = {}
+
 # ------------------------------------------------------------------------------
 # Setters
 # ------------------------------------------------------------------------------
@@ -63,24 +65,42 @@ func _Build() -> void:
 # Public Methods
 # ------------------------------------------------------------------------------
 func is_playing(id : int) -> bool:
-	if _playback != null:
-		return _playback.is_stream_playing(id)
+	if id in _streams:
+		if _playback != null:
+			if _playback.is_stream_playing(id):
+				return true
+		_streams.erase(id)
 	return false
+
+func get_active_stream_ids() -> Array[int]:
+	var arr : Array[int] = []
+	for id : int in _streams.keys():
+		if is_playing(id):
+			arr.append(id)
+	return arr
 
 func play(stream : AudioStream, offset : float = 0.0, volume_db : float = 0.0, pitch : float = 1.0) -> int:
 	if _playback == null or stream == null: return -1
-	return _playback.play_stream(
+	var id : int = _playback.play_stream(
 		stream, offset, volume_db, pitch, AudioServer.PLAYBACK_TYPE_DEFAULT, bus
 	)
+	if id >= 0:
+		_streams[id] = true
+	return id
 
 func set_volume_db(id : int, volume_db : float) -> void:
-	if _playback != null:
+	if is_playing(id):
 		_playback.set_stream_volume(id, volume_db)
 
 func set_volume_linear(id : int, volume : float) -> void:
-	if _playback != null:
+	if is_playing(id):
 		_playback.set_stream_volume(id, linear_to_db(clampf(volume, 0.0, 1.0)))
 
 func stop(id : int) -> void:
-	if _playback != null:
+	if is_playing(id):
 		_playback.stop_stream(id)
+		_streams.erase(id)
+
+func stop_all() -> void:
+	for id : int in _streams.keys():
+		stop(id)

@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://vo57uryqt5t8"]
+
+[ext_resource type="Script" uid="uid://c7ve6fw3ndl11" path="res://scenes/ui/pause_menu/pause_menu.gd" id="1_kgchh"]
+[ext_resource type="Theme" uid="uid://c4lk81a4r3ren" path="res://assets/game.theme" id="1_rbnsh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbnsh"]
+bg_color = Color(0.25098, 0.192157, 0.552941, 1)
+
+[node name="PauseMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rbnsh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_rbnsh")
+script = ExtResource("1_kgchh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="BTN_Resume" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Resume"
+
+[node name="BTN_Password" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Password"
+
+[node name="BTN_Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/BTN_Resume" to="." method="_on_btn_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/BTN_Password" to="." method="_on_btn_password_pressed"]
+[connection signal="pressed" from="VBoxContainer/BTN_Quit" to="." method="_on_btn_quit_pressed"]

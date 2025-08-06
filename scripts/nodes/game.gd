@@ -62,6 +62,12 @@ const SCREEN_RESOLUTION : Vector2 = Vector2(320, 240)
 const UI_ACTION_START_GAME : StringName = &"start_game"
 ## UI Action - Quit Application
 const UI_ACTION_QUIT_APPLICATION : StringName = &"quit_app"
+## UI Action - Quit Game (return to Main Menu)
+const UI_ACTION_QUIT_GAME : StringName = &"quit_game"
+## UI Action - Pause Game (show Pause Menu)
+const UI_ACTION_PAUSE : StringName = &"pause"
+## UI Action - Resume Game (close menus and returns to game)
+const UI_ACTION_RESUME : StringName = &"unpause"
 ## UI Action - Play sound effect
 const UI_ACTION_SOUND : StringName = &"sound"
 
@@ -79,6 +85,10 @@ const INITIAL_PLAYER_LIVES : int = 3
 # ------------------------------------------------------------------------------
 # Static Variables
 # ------------------------------------------------------------------------------
+## Identifies if the game is actively running. If true, then either the initial
+## level loads or the Level Select menu displays by default.
+static var Game_Running : bool = false
+
 ## Current number of player lives.
 static var Player_Lives : int = INITIAL_PLAYER_LIVES
 

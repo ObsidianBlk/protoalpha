@@ -12,7 +12,7 @@ const META_VOLUME : StringName = &"volume"
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var music_list : Dictionary[StringName, SoundEntry] = {}:		set=set_music_list
-
+@export var default_music : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -164,6 +164,9 @@ func play(music_name : StringName, crossfade_duration : float = 0.0) -> void:
 					if crossfade_duration > 0.0:
 						_FadeIn(musicplayer, music_name, crossfade_duration)
 
+func play_default(crossfade_duration : float = 0.0) -> void:
+	if not default_music.is_empty():
+		play(default_music, crossfade_duration)
 
 func stop(music_name : StringName) -> void:
 	if music_name in _streams:
@@ -178,6 +181,15 @@ func stop_all() -> void:
 		_tween = null
 	for music_name : StringName in _streams.keys():
 		stop(music_name)
+
+func stop_non_local() -> void:
+	var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player()
+	if musicplayer == null: return
+	
+	var ids : Array[int] = musicplayer.get_active_stream_ids()
+	for id : int in ids:
+		if _streams.values().find(id) < 0:
+			musicplayer.stop(id)
 
 # ------------------------------------------------------------------------------
 # Handler Methods
