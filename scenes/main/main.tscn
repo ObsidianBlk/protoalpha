@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=47 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_th5th"]
 [ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="10_7smn1"]
 [ext_resource type="PackedScene" uid="uid://vo57uryqt5t8" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="14_necax"]
+[ext_resource type="PackedScene" uid="uid://d4g38v5ho1jt1" path="res://scenes/main/crt_effect/crt_effect.tscn" id="15_r4lks"]
 [ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nvumn"]
@@ -305,6 +306,28 @@ stretch_mode = 1
 [node name="BR_Corner" type="TextureRect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_pg34l")
+
+[node name="CRT_Effect" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen" instance=ExtResource("15_r4lks")]
+layout_mode = 2
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 26
+enabled = false
+resolution = Vector2(320, 240)
+scan_line_amount = 1.0
+warp_amount = 0.1
+noise_amount = 0.03
+interference_amount = 0.2
+grille_amount = 0.1
+grille_size = 1.0
+vignette_amount = 0.6
+vignette_intensity = 0.4
+aberation_amount = 0.5
+roll_line_amount = 0.3
+roll_speed = 1.0
+scan_line_strength = -8.0
+pixel_strength = -2.0
 
 [node name="ScreenBoarder" type="PanelContainer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen"]
 layout_mode = 2
