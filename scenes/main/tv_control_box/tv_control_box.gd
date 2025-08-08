@@ -5,6 +5,10 @@ extends PanelContainer
 # Signals
 # ------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const KEYPAD_CODE_TOGGLE_CRT : int = 42
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -50,3 +54,10 @@ func _on_vslider_music_value_changed(value: float) -> void:
 func _on_vslider_sfx_value_changed(value: float) -> void:
 	var p : float = value / _vslider_sfx.max_value
 	AudioBoard.set_volume(AudioBoard.BUS_SFX, p, true)
+
+func _on_key_pad_coded(value: int) -> void:
+	match value:
+		KEYPAD_CODE_TOGGLE_CRT:
+			var crt : CRTEffect = CRTEffect.Get()
+			if crt != null:
+				crt.enabled = not crt.enabled

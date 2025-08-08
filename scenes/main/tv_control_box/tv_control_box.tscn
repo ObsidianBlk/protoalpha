@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://lq2t4d33t4ng"]
+[gd_scene load_steps=4 format=3 uid="uid://lq2t4d33t4ng"]
 
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="1_pal1k"]
 [ext_resource type="Script" uid="uid://b0b1fsmftkooo" path="res://scenes/main/tv_control_box/tv_control_box.gd" id="2_6o00b"]
+[ext_resource type="PackedScene" uid="uid://8wm8hlochlv4" path="res://scenes/main/tv_control_box/key_pad/key_pad.tscn" id="3_ajjg8"]
 
 [node name="TVControlBox" type="PanelContainer"]
 theme = ExtResource("1_pal1k")
@@ -16,11 +17,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TVControlPanelB"
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer"]
-visible = false
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
-text = "Some Spiffy Controls here"
-autowrap_mode = 2
+
+[node name="KeyPad" parent="HBoxContainer/PanelContainer/VBoxContainer" instance=ExtResource("3_ajjg8")]
+layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="VolumeCTRLs" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -73,6 +75,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 step = 0.1
 
+[connection signal="coded" from="HBoxContainer/PanelContainer/VBoxContainer/KeyPad" to="." method="_on_key_pad_coded"]
 [connection signal="value_changed" from="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_Master" to="." method="_on_vslider_master_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_Music" to="." method="_on_vslider_music_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_SFX" to="." method="_on_vslider_sfx_value_changed"]

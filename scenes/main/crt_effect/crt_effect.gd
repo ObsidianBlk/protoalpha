@@ -1,5 +1,6 @@
 @tool
 extends MarginContainer
+class_name CRTEffect
 
 
 # ------------------------------------------------------------------------------
@@ -36,6 +37,11 @@ const PARAMS : Dictionary[StringName, Dictionary] = {
 @export var enabled : bool = true:		set=set_enabled, get=get_enabled
 
 # ------------------------------------------------------------------------------
+# Static Variables
+# ------------------------------------------------------------------------------
+static var _Instance : CRTEffect = null
+
+# ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _shader_surface: ColorRect = %ShaderSurface
@@ -63,6 +69,14 @@ func _ready() -> void:
 		Settings.reset.connect(_on_settings_reset)
 		Settings.loaded.connect(_on_settings_load)
 		Settings.value_changed.connect(_on_settings_value_changed)
+
+func _enter_tree() -> void:
+	if _Instance == null:
+		_Instance = self
+
+func _exit_tree() -> void:
+	if _Instance == self:
+		_Instance = null
 
 func _get(property: StringName) -> Variant:
 	return _GetParameterValue(property)
@@ -115,6 +129,12 @@ func _SetParameterValue(param : StringName, value : Variant, ignore_settings : b
 					Settings.set_value(CONFIG_SECTION, param, value)
 				return true
 	return false
+
+# ------------------------------------------------------------------------------
+# Public Static Methods
+# ------------------------------------------------------------------------------
+static func Get() -> CRTEffect:
+	return _Instance
 
 # ------------------------------------------------------------------------------
 # Handler Methods

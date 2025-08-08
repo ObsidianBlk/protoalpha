@@ -1,0 +1,151 @@
+[gd_scene load_steps=6 format=3 uid="uid://8wm8hlochlv4"]
+
+[ext_resource type="Script" uid="uid://bywgkwncwibdr" path="res://scenes/main/tv_control_box/key_pad/key_pad.gd" id="1_2os4x"]
+[ext_resource type="FontFile" uid="uid://be60jvab5bvpd" path="res://assets/fonts/E1234/E1234-Regular.otf" id="1_lq5np"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lq5np"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2os4x"]
+content_margin_top = 4.0
+bg_color = Color(0.15, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.313726, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jhg78"]
+content_margin_left = 1.0
+content_margin_top = 4.0
+
+[node name="KeyPad" type="PanelContainer"]
+offset_right = 62.0
+offset_bottom = 164.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lq5np")
+script = ExtResource("1_2os4x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="DigitalDisplay" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DigiDisplayBase" type="Label" parent="VBoxContainer/DigitalDisplay"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.313726, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_lq5np")
+theme_override_styles/normal = SubResource("StyleBoxFlat_2os4x")
+text = "888"
+
+[node name="DigiReadout" type="Label" parent="VBoxContainer/DigitalDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_lq5np")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jhg78")
+text = "000"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="KeyPad" type="GridContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[node name="BTN_7" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "7"
+
+[node name="BTN_8" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "8"
+
+[node name="BTN_9" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "9"
+
+[node name="BTN_4" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "4"
+
+[node name="BTN_5" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "5"
+
+[node name="BTN_6" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "6"
+
+[node name="BTN_1" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "1"
+
+[node name="BTN_2" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "2"
+
+[node name="BTN_3" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+layout_mode = 2
+text = "3"
+
+[node name="BTN_Blank_1" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+
+[node name="BTN_0" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+text = "0"
+
+[node name="BTN_Del" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "DEL"
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="SideButtons" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BTN_Enter" type="Button" parent="VBoxContainer/HBoxContainer/SideButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 8
+text = "Enter"
+
+[node name="BTN_Clear" type="Button" parent="VBoxContainer/HBoxContainer/SideButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 8
+text = "Clear"
+
+[node name="BTN_Cancel" type="Button" parent="VBoxContainer/HBoxContainer/SideButtons"]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 8
+text = "Cancel"
+
+[node name="BTN_Blank" type="Button" parent="VBoxContainer/HBoxContainer/SideButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_7" to="." method="_on_btn_number_pressed" binds= ["7"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_8" to="." method="_on_btn_number_pressed" binds= ["8"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_9" to="." method="_on_btn_number_pressed" binds= ["9"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_4" to="." method="_on_btn_number_pressed" binds= ["4"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_5" to="." method="_on_btn_number_pressed" binds= ["5"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_6" to="." method="_on_btn_number_pressed" binds= ["6"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_1" to="." method="_on_btn_number_pressed" binds= ["1"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_2" to="." method="_on_btn_number_pressed" binds= ["2"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_3" to="." method="_on_btn_number_pressed" binds= ["3"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_0" to="." method="_on_btn_number_pressed" binds= ["0"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SideButtons/BTN_Enter" to="." method="_on_btn_enter_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SideButtons/BTN_Clear" to="." method="_on_btn_clear_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SideButtons/BTN_Cancel" to="." method="_on_btn_cancel_pressed"]
