@@ -52,4 +52,4 @@ func _on_btn_clear_pressed() -> void:
 	_UpdateReadout()
 
 func _on_btn_cancel_pressed() -> void:
-	_on_btn_cancel_pressed() # Just in case I think of something to do with this button
+	_on_btn_clear_pressed() # Just in case I think of something to do with this button

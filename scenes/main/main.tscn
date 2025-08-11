@@ -234,7 +234,7 @@ handle_input_locally = false
 snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(686, 576)
+size = Vector2i(472, 444)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
@@ -427,7 +427,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="TVShelf" type="HBoxContainer" parent="GameLayer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 

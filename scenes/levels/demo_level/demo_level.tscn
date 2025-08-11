@@ -35,7 +35,7 @@ music_list = Dictionary[StringName, ExtResource("2_hk6jy")]({
 &"Level 1": SubResource("Resource_dka4h"),
 &"Level 2": SubResource("Resource_7m45j")
 })
-default_music = null
+default_music = &""
 metadata/_custom_type_script = "uid://b1nbws7klh6i"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amc2f"]

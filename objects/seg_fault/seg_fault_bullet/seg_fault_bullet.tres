@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="WeaponDef" load_steps=5 format=3 uid="uid://w7fk7rhct13v"]
+
+[ext_resource type="Texture2D" uid="uid://cl511iy864v3m" path="res://assets/graphics/bosses/seg_fault/Sef_Fault_Bullet.png" id="1_s3m7j"]
+[ext_resource type="PackedScene" uid="uid://cd8ohi7glhch6" path="res://objects/seg_fault/seg_fault_bullet/seg_fault_bullet.tscn" id="2_5wm4w"]
+[ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="3_rp3ma"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7jt7"]
+atlas = ExtResource("1_s3m7j")
+region = Rect2(8, 1, 7, 7)
+
+[resource]
+script = ExtResource("3_rp3ma")
+type = 0
+name = &"SegFaultBullet"
+icon = SubResource("AtlasTexture_l7jt7")
+projectile = ExtResource("2_5wm4w")
+rate_of_fire = 1.0
+charging = false
+metadata/_custom_type_script = "uid://dvj7a56df3qol"
