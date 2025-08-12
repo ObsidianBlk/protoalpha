@@ -563,8 +563,9 @@ shape = SubResource("CapsuleShape2D_ymabh")
 [node name="ASprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_jl3in")
-animation = &"dead"
+animation = &"run"
 autoplay = "idle_a"
+frame = 2
 offset = Vector2(0, -10.5)
 
 [node name="Body" type="Node2D" parent="."]
