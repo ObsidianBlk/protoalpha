@@ -12,6 +12,8 @@ signal dead()
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var alive : bool = true:						set=set_alive
+@export var flip_h : bool = false
+@export var animation_tree : AnimationTree = null:		set=set_animation_tree
 @export var ladder_detector : LadderDetector = null:	set=set_ladder_detector
 @export var sound_sheet : SoundSheet = null
 
@@ -24,6 +26,12 @@ func set_alive(a : bool) -> void:
 		if not alive:
 			dead.emit()
 
+func set_animation_tree(at : AnimationTree) -> void:
+	if at != animation_tree:
+		_DisconnectAnimationTree()
+		animation_tree = at
+		_ConnectAnimationTree()
+
 func set_ladder_detector(ld : LadderDetector) -> void:
 	if ld != ladder_detector:
 		_DisconnectLadderDetector()
@@ -33,6 +41,16 @@ func set_ladder_detector(ld : LadderDetector) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _ConnectAnimationTree() -> void:
+	if animation_tree == null: return
+	if not animation_tree.animation_finished.is_connected(_on_anim_tree_animation_finished):
+		animation_tree.animation_finished.connect(_on_anim_tree_animation_finished)
+
+func _DisconnectAnimationTree() -> void:
+	if animation_tree == null: return
+	if animation_tree.animation_finished.is_connected(_on_anim_tree_animation_finished):
+		animation_tree.animation_finished.disconnect(_on_anim_tree_animation_finished)
+
 func _ConnectLadderDetector() -> void:
 	if ladder_detector == null: return
 	if not ladder_detector.ladder_entered.is_connected(_on_ladder_entered):
@@ -89,9 +107,21 @@ func is_on_surface() -> bool:
 func is_dead() -> bool:
 	return not alive
 
+func set_tree_param(param : String, value : Variant) -> void:
+	if animation_tree == null: return
+	animation_tree.set(param, value)
+
+func get_tree_param(param : String) -> Variant:
+	if animation_tree != null:
+		return animation_tree.get(param)
+	return null
+
 # ------------------------------------------------------------------------------
 # "Virtual" Handler Methods
 # ------------------------------------------------------------------------------
+func _on_anim_tree_animation_finished(anim_name : StringName) -> void:
+	animation_finished.emit(anim_name)
+
 func _on_ladder_entered() -> void:
 	pass
 
