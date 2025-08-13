@@ -48,18 +48,25 @@ func _ClearAnimationLibrary(lib : AnimationLibrary) -> void:
 	for anim_name : StringName in anims:
 		lib.remove_animation(anim_name)
 
-func _GetAnimationLibraryOrNew(library_name : StringName) -> AnimationLibrary:
+func _GetAnimationLibraryOrNew(lib_name : StringName) -> AnimationLibrary:
 	# Given <library_name>, returns an existing AnimationLibrary under the given name
 	# or returns a new AnimationLibrary.
-	if has_animation_library(library_name):
-		return get_animation_library(library_name)
+	if has_animation_library(lib_name):
+		return get_animation_library(lib_name)
 	return AnimationLibrary.new()
 
-func _StoreLibraryIfNotExists(library_name : StringName, lib : AnimationLibrary) -> void:
+func _StoreLibraryIfNotExists(lib_name : StringName, lib : AnimationLibrary) -> void:
 	# Will store the given AnimationLibrary if no AnimationLibrary already exists
 	# with the given <library_name>
-	if not has_animation_library(library_name):
-		add_animation_library(library_name, lib)
+	if not has_animation_library(lib_name):
+		add_animation_library(lib_name, lib)
+
+func _GetNodePathToAnimSprite() -> NodePath:
+	if animated_sprite != null:
+		var root : Node = get_node_or_null(root_node)
+		if root != null:
+			return root.get_path_to(animated_sprite)
+	return NodePath("")
 
 func _Generate() -> void:
 	print("Ping")
@@ -82,7 +89,8 @@ func _Generate() -> void:
 		printerr("Animated Sprite missing sprite frames")
 		return
 	
-	var node_path : NodePath = get_path_to(animated_sprite)
+	#var node_path : NodePath = owner.get_path_to(animated_sprite)
+	var node_path : NodePath = _GetNodePathToAnimSprite()
 	if node_path.is_empty():
 		# Complain and bail if we don't have a path to the AnimatedSprite2D
 		printerr("Path to ", animated_sprite.name, " is empty.")
