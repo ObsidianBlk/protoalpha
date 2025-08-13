@@ -19,11 +19,11 @@ var _move_direction : Vector2 = Vector2.ZERO
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	if proto == null:
+	if actor == null:
 		pop()
 		return
 	
-	proto.play_animation(ANIM_CLIMB)
+	actor.play_animation(ANIM_CLIMB)
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	_CheckMovement()
 
@@ -31,22 +31,22 @@ func exit() -> void:
 	pass
 
 func update(_delta : float) -> void:
-	if proto == null: return
+	if actor == null: return
 	
-	if not proto.is_on_surface():
+	if not actor.is_on_surface():
 		if not state_fall.is_empty():
 			swap_to(state_fall)
 
 func physics_update(_delta : float) -> void:
-	if proto == null: return
+	if actor == null: return
 	
 	if is_equal_approx(_move_direction.y, 0.0):
-		proto.stop_animation()
-	elif not proto.is_animation_playing():
-		proto.play_animation()
+		actor.stop_animation()
+	elif not actor.is_animation_playing():
+		actor.play_animation()
 	
-	proto.velocity.y = _move_direction.y * proto.speed * 0.5
-	proto.move_and_slide()
+	actor.velocity.y = _move_direction.y * actor.speed * 0.5
+	actor.move_and_slide()
 
 func handle_input(event : InputEvent) -> void:
 	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
@@ -60,10 +60,10 @@ func handle_input(event : InputEvent) -> void:
 # Private Methods
 # ------------------------------------------------------------------------------
 func _CheckMovement() -> void:
-	if proto == null: return
+	if actor == null: return
 
 	var climbing : bool = not is_equal_approx(_move_direction.y, 0.0)
 	if not climbing and not is_equal_approx(_move_direction.x, 0.0):
 		swap_to(state_move, _move_direction)
 	elif climbing:
-		proto.velocity.x = 0.0
+		actor.velocity.x = 0.0

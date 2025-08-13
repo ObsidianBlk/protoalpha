@@ -42,41 +42,41 @@ func _ready() -> void:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
-func flip(enable : bool) -> void:
-	if _sprite != null:
-		_sprite.flip_h = enable
-	if _body != null:
-		_body.scale.x = -1.0 if enable else 1.0
-
-func is_flipped() -> bool:
-	if _sprite != null:
-		return _sprite.flip_h
-	return false
-
-func stop_animation() -> void:
-	if _sprite == null: return
-	_sprite.stop()
-
-func play_animation(anim_name : StringName = &"", sync : bool = false) -> void:
-	if _sprite == null: return
-	if anim_name.is_empty():
-		if not _sprite.animation.is_empty():
-			_sprite.play()
-	elif _sprite.animation != anim_name:
-		if sync:
-			Game.Sync_Play_Animated_Sprite(_sprite, anim_name)
-		else:
-			_sprite.play(anim_name)
-
-func is_animation_playing(anim_name : StringName = &"") -> bool:
-	if _sprite != null:
-		if _sprite.animation == anim_name or anim_name.is_empty():
-			return _sprite.is_playing()
-	return false
-
-func get_current_animation() -> StringName:
-	if _sprite == null: return &""
-	return _sprite.animation
+#func flip(enable : bool) -> void:
+	#if _sprite != null:
+		#_sprite.flip_h = enable
+	#if _body != null:
+		#_body.scale.x = -1.0 if enable else 1.0
+#
+#func is_flipped() -> bool:
+	#if _sprite != null:
+		#return _sprite.flip_h
+	#return false
+#
+#func stop_animation() -> void:
+	#if _sprite == null: return
+	#_sprite.stop()
+#
+#func play_animation(anim_name : StringName = &"", sync : bool = false) -> void:
+	#if _sprite == null: return
+	#if anim_name.is_empty():
+		#if not _sprite.animation.is_empty():
+			#_sprite.play()
+	#elif _sprite.animation != anim_name:
+		#if sync:
+			#Game.Sync_Play_Animated_Sprite(_sprite, anim_name)
+		#else:
+			#_sprite.play(anim_name)
+#
+#func is_animation_playing(anim_name : StringName = &"") -> bool:
+	#if _sprite != null:
+		#if _sprite.animation == anim_name or anim_name.is_empty():
+			#return _sprite.is_playing()
+	#return false
+#
+#func get_current_animation() -> StringName:
+	#if _sprite == null: return &""
+	#return _sprite.animation
 
 func get_weapon() -> Weapon:
 	return _weapon

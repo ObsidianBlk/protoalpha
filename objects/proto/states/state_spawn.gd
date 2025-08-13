@@ -17,23 +17,23 @@ extends ProtoState
 # ------------------------------------------------------------------------------
 func set_host(host : Node) -> void:
 	super.set_host(host)
-	if proto != null:
-		proto.add_user_signal(&"spawn")
-		proto.connect(&"spawn", _on_spawn)
+	if actor != null:
+		actor.add_user_signal(&"spawn")
+		actor.connect(&"spawn", _on_spawn)
 
 func enter(payload : Variant = null) -> void:
-	if proto == null:
+	if actor == null:
 		pop()
 		return
 
-	if not proto.animation_finished.is_connected(_on_animation_finished):
-		proto.animation_finished.connect(_on_animation_finished)
-	proto.play_animation(ANIM_SPAWN)
+	if not actor.animation_finished.is_connected(_on_animation_finished):
+		actor.animation_finished.connect(_on_animation_finished)
+	actor.set_tree_param("parameters/spawn/active", true)
 
 func exit() -> void:
-	if proto != null:
-		if proto.animation_finished.is_connected(_on_animation_finished):
-			proto.animation_finished.disconnect(_on_animation_finished)
+	if actor != null:
+		if actor.animation_finished.is_connected(_on_animation_finished):
+			actor.animation_finished.disconnect(_on_animation_finished)
 
 
 # ------------------------------------------------------------------------------

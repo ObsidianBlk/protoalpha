@@ -37,65 +37,65 @@ func _ready() -> void:
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	if proto == null:
+	if actor == null:
 		pop()
 		return
 	
-	var wep : Weapon = proto.get_weapon()
+	var wep : Weapon = actor.get_weapon()
 	Game.Connect_Signals(wep, _weapon_signals)
 	
-	proto.velocity = Vector2.ZERO
+	actor.velocity = Vector2.ZERO
 	if wep.is_triggered():
-		proto.play_animation(ANIM_SHOOT_STAND)
+		actor.play_animation(ANIM_SHOOT_STAND)
 	else:
-		proto.play_animation(ANIM_IDLE_A)
+		actor.play_animation(ANIM_IDLE_A)
 
 func exit() -> void:
-	if proto == null: return
+	if actor == null: return
 	
-	var wep : Weapon = proto.get_weapon()
+	var wep : Weapon = actor.get_weapon()
 	if wep == null: return
 	Game.Disconnect_Signals(wep, _weapon_signals)
 
 func update(_delta : float) -> void:
-	if proto == null: return
-	if not proto.get_weapon().is_triggered():
+	if actor == null: return
+	if not actor.get_weapon().is_triggered():
 		var action : StringName = _weighted_action.get_random()
-		var cur_anim : StringName = proto.get_current_animation()
+		var cur_anim : StringName = actor.get_current_animation()
 		if action == ACTION_CHANGE:
-			proto.play_animation(ANIM_IDLE_B if cur_anim == ANIM_IDLE_A else ANIM_IDLE_A)
+			actor.play_animation(ANIM_IDLE_B if cur_anim == ANIM_IDLE_A else ANIM_IDLE_A)
 
 func physics_update(_delta : float) -> void:
-	if proto == null: return
-	if not proto.is_on_ladder():
-		proto.velocity.y = proto.get_gravity().y
-	else: proto.velocity.y = 0.0
+	if actor == null: return
+	if not actor.is_on_ladder():
+		actor.velocity.y = actor.get_gravity().y
+	else: actor.velocity.y = 0.0
 	
-	proto.move_and_slide()
-	if not proto.is_on_surface():
+	actor.move_and_slide()
+	if not actor.is_on_surface():
 		if not state_fall.is_empty():
 			swap_to(state_fall)
 
 func handle_input(event : InputEvent) -> void:
-	if proto == null: return
+	if actor == null: return
 
 	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		var move_direction : Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
-		if not is_equal_approx(move_direction.y, 0.0) and proto.is_on_ladder():
+		if not is_equal_approx(move_direction.y, 0.0) and actor.is_on_ladder():
 			swap_to(state_climb)
 		else:
 			swap_to(state_move, move_direction)
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
 	elif event.is_action(&"shoot"):
-		var wep : Weapon = proto.get_weapon()
+		var wep : Weapon = actor.get_weapon()
 		if event.is_pressed():
 			if wep.can_shoot():
-				proto.play_animation(ANIM_SHOOT_STAND)
-				wep.press_trigger(proto.get_parent())
+				actor.play_animation(ANIM_SHOOT_STAND)
+				wep.press_trigger(actor.get_parent())
 		else:
-			if proto.get_current_animation() == ANIM_SHOOT_STAND:
-				proto.play_animation(ANIM_IDLE_A)
+			if actor.get_current_animation() == ANIM_SHOOT_STAND:
+				actor.play_animation(ANIM_IDLE_A)
 			wep.release_trigger()
 
 
@@ -103,5 +103,5 @@ func handle_input(event : InputEvent) -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_reloaded() -> void:
-	if proto == null: return
-	proto.play_animation(ANIM_IDLE_A)
+	if actor == null: return
+	actor.play_animation(ANIM_IDLE_A)

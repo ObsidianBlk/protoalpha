@@ -18,17 +18,17 @@ var _move_direction : Vector2 = Vector2.ZERO
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	if proto == null:
+	if actor == null:
 		pop()
 		return
 	
-	proto.play_animation(ANIM_FALL)
+	actor.play_animation(ANIM_FALL)
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 
 func update(_delta : float) -> void:
-	if proto == null: return
+	if actor == null: return
 	
-	if proto.is_on_surface():
+	if actor.is_on_surface():
 		play_sfx(AUDIO_LAND)
 		if is_equal_approx(_move_direction.x, 0.0):
 			swap_to(state_idle)
@@ -37,14 +37,14 @@ func update(_delta : float) -> void:
 
 
 func physics_update(_delta : float) -> void:
-	if proto == null: return
+	if actor == null: return
 	
 	if not is_equal_approx(abs(_move_direction.x), 0.0):
-		proto.flip(_move_direction.x < 0.0)
+		actor.flip(_move_direction.x < 0.0)
 	
-	proto.velocity.x = _move_direction.x * speed
-	proto.velocity.y = 0.0 if proto.is_on_surface() else proto.get_gravity().y
-	proto.move_and_slide()
+	actor.velocity.x = _move_direction.x * speed
+	actor.velocity.y = 0.0 if actor.is_on_surface() else actor.get_gravity().y
+	actor.move_and_slide()
 
 func handle_input(event : InputEvent) -> void:
 	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):

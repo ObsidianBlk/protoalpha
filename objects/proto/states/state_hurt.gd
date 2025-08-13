@@ -6,23 +6,23 @@ extends ProtoState
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	if proto == null:
+	if actor == null:
 		pop()
 		return
 	
 	play_sfx(AUDIO_HURT)
-	if not proto.animation_finished.is_connected(_on_animation_finished):
-		proto.animation_finished.connect(_on_animation_finished)
-	if proto.is_on_surface():
-		proto.play_animation(ANIM_HURT_GROUND)
+	if not actor.animation_finished.is_connected(_on_animation_finished):
+		actor.animation_finished.connect(_on_animation_finished)
+	if actor.is_on_surface():
+		actor.play_animation(ANIM_HURT_GROUND)
 	else:
-		proto.play_animation(ANIM_HURT_AIR)
+		actor.play_animation(ANIM_HURT_AIR)
 
 
 func exit() -> void:
-	if proto != null:
-		if proto.animation_finished.is_connected(_on_animation_finished):
-			proto.animation_finished.disconnect(_on_animation_finished)
+	if actor != null:
+		if actor.animation_finished.is_connected(_on_animation_finished):
+			actor.animation_finished.disconnect(_on_animation_finished)
 
 
 # ------------------------------------------------------------------------------

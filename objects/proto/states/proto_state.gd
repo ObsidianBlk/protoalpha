@@ -1,5 +1,5 @@
 @tool
-extends State
+extends ActorState
 class_name ProtoState
 
 # ------------------------------------------------------------------------------
@@ -22,27 +22,3 @@ const ANIM_SPAWN : StringName = &"spawn"
 const AUDIO_JUMP : StringName = &"jump"
 const AUDIO_LAND : StringName = &"land"
 const AUDIO_HURT : StringName = &"hurt"
-
-# ------------------------------------------------------------------------------
-# Variables
-# ------------------------------------------------------------------------------
-var proto : CharacterActor2D = null
-
-# ------------------------------------------------------------------------------
-# "Virtual" Methods
-# ------------------------------------------------------------------------------
-func set_host(host : Node) -> void:
-	if host == null or host is CharacterActor2D:
-		proto = host
-
-# ------------------------------------------------------------------------------
-# Public Methods
-# ------------------------------------------------------------------------------
-func play_sfx(audio_name : StringName) -> int:
-	if proto != null and proto.sound_sheet != null:
-		return proto.sound_sheet.play(audio_name)
-	return -1
-
-func stop_sfx(id : int) -> void:
-	if proto != null and proto.sound_sheet != null:
-		proto.sound_sheet.stop(id)
