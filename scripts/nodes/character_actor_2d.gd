@@ -12,7 +12,7 @@ signal dead()
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var alive : bool = true:						set=set_alive
-@export var flip_h : bool = false
+@export var flip_h : bool = false:						set=flip
 @export var animation_tree : AnimationTree = null:		set=set_animation_tree
 @export var ladder_detector : LadderDetector = null:	set=set_ladder_detector
 @export var sound_sheet : SoundSheet = null
@@ -68,24 +68,6 @@ func _DisconnectLadderDetector() -> void:
 # ------------------------------------------------------------------------------
 # "Virtual" Public Methods
 # ------------------------------------------------------------------------------
-func flip(enable : bool) -> void:
-	pass
-
-func is_flipped() -> bool:
-	return false
-
-func stop_animation() -> void:
-	pass
-
-func play_animation(anim_name : StringName = &"", sync : bool = false) -> void:
-	pass
-
-func is_animation_playing(anim_name : StringName = &"") -> bool:
-	return false
-
-func get_current_animation() -> StringName:
-	return &""
-
 func spawn_at(spawn_position : Vector2, spawn_payload : Dictionary = {}) -> void:
 	global_position = spawn_position
 
@@ -96,6 +78,12 @@ func die() -> void:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
+func flip(enable : bool) -> void:
+	flip_h = enable
+
+func is_flipped() -> bool:
+	return flip_h
+
 func is_on_ladder() -> bool:
 	if ladder_detector != null:
 		return ladder_detector.is_on_ladder()
@@ -115,6 +103,13 @@ func get_tree_param(param : String) -> Variant:
 	if animation_tree != null:
 		return animation_tree.get(param)
 	return null
+
+func is_tree_param(param : String, value : Variant) -> bool:
+	if animation_tree != null:
+		var tree_val : Variant = get_tree_param(param)
+		if typeof(tree_val) == typeof(value):
+			return tree_val == value
+	return false
 
 # ------------------------------------------------------------------------------
 # "Virtual" Handler Methods

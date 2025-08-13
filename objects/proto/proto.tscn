@@ -1179,7 +1179,6 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mh7ni"]
-graph_offset = Vector2(-200.764, 225.975)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(300, 60)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_osq81")
@@ -1250,7 +1249,6 @@ offset = Vector2(0, -10.5)
 
 [node name="Body" type="Node2D" parent="."]
 unique_name_in_owner = true
-scale = Vector2(1e-05, 1e-05)
 
 [node name="Weapon" type="Node2D" parent="Body"]
 unique_name_in_owner = true
