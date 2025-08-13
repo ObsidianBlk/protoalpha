@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://begmbhotjdgsd"]
+[gd_scene load_steps=87 format=3 uid="uid://begmbhotjdgsd"]
 
 [ext_resource type="Texture2D" uid="uid://b6uvydvrmfqvl" path="res://assets/graphics/proto/Proto.png" id="1_2x067"]
 [ext_resource type="Script" uid="uid://d3prep4q52isc" path="res://objects/proto/proto.gd" id="1_7jw1q"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://decnr5i54is8s" path="res://objects/proto/states/state_jump.gd" id="6_5qckx"]
 [ext_resource type="AudioStream" uid="uid://5vmvo2undosl" path="res://assets/audio/sfx/proto_hurt.wav" id="6_mh7ni"]
 [ext_resource type="Script" uid="uid://ox02nn3ejehm" path="res://objects/proto/states/state_climb.gd" id="8_t4jra"]
+[ext_resource type="Script" uid="uid://gg0uxpt06y26" path="res://scripts/nodes/anim_sprite_player.gd" id="11_jl3in"]
 [ext_resource type="Script" uid="uid://c3n7vyfp1kdk5" path="res://objects/proto/states/state_spawn.gd" id="12_tjh6k"]
 [ext_resource type="Script" uid="uid://dg37gfjq0fw1r" path="res://scripts/nodes/ladder_detector.gd" id="13_ajrhu"]
 [ext_resource type="Script" uid="uid://csi3w2wjrro17" path="res://objects/proto/states/state_hurt.gd" id="14_l84w6"]
@@ -560,12 +561,18 @@ shape = SubResource("CapsuleShape2D_ymabh")
 position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_ymabh")
 
+[node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
+root_node = NodePath("../ASprite")
+script = ExtResource("11_jl3in")
+animated_sprite = NodePath("../ASprite")
+clear_existing_libraries = true
+metadata/_custom_type_script = "uid://gg0uxpt06y26"
+
 [node name="ASprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_jl3in")
-animation = &"run"
+animation = &"climb"
 autoplay = "idle_a"
-frame = 2
 offset = Vector2(0, -10.5)
 
 [node name="Body" type="Node2D" parent="."]
