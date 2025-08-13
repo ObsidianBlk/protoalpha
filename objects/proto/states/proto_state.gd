@@ -19,6 +19,15 @@ const ANIM_HURT_GROUND : StringName = &"hurt_ground"
 const ANIM_HURT_AIR : StringName = &"hurt_air"
 const ANIM_SPAWN : StringName = &"spawn"
 
+const TRANS_CORE : String = "core"
+const TRANS_ATTACK : String = "attack"
+const TRANS_CLIMB : String = "climb"
+const ONCE_FIRE : int = 1
+
+const APARAM_TRANSITION : String = "parameters/transition/transition_request"
+const APARAM_ONCE_HURT : String = "parameters/hurt/request"
+const APARAM_ONCE_SPAWN : String = "parameters/spawn_dead/request"
+
 const AUDIO_JUMP : StringName = &"jump"
 const AUDIO_LAND : StringName = &"land"
 const AUDIO_HURT : StringName = &"hurt"

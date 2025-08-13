@@ -22,7 +22,6 @@ func enter(payload : Variant = null) -> void:
 		pop()
 		return
 	
-	actor.play_animation(ANIM_FALL)
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 
 func update(_delta : float) -> void:

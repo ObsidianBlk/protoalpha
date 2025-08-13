@@ -28,12 +28,7 @@ func enter(payload : Variant = null) -> void:
 		wep.reloaded.connect(_on_reloaded)
 	
 	actor.velocity.y = -actor.jump_power
-	
 	play_sfx(AUDIO_JUMP)
-	if wep.is_triggered():
-		actor.play_animation(ANIM_SHOOT_AIR)
-	else:
-		actor.play_animation(ANIM_JUMP)
 	
 	_jump_released = false
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
@@ -93,11 +88,11 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action(&"shoot"):
 		var wep : Weapon = actor.get_weapon()
 		if event.is_pressed():
-			actor.play_animation(ANIM_SHOOT_AIR)
+			actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
 			wep.press_trigger(actor.get_parent())
 		else:
-			if wep.can_shoot() and actor.get_current_animation() == ANIM_SHOOT_AIR:
-				actor.play_animation(ANIM_JUMP)
+			if wep.can_shoot() and actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
+				actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
 			wep.release_trigger()
 
 # ------------------------------------------------------------------------------
@@ -105,4 +100,4 @@ func handle_input(event : InputEvent) -> void:
 # ------------------------------------------------------------------------------
 func _on_reloaded() -> void:
 	if actor == null: return
-	actor.play_animation(ANIM_JUMP)
+	actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)

@@ -23,12 +23,12 @@ func enter(payload : Variant = null) -> void:
 		pop()
 		return
 	
-	actor.play_animation(ANIM_CLIMB)
+	actor.set_tree_param(APARAM_TRANSITION, TRANS_CLIMB)
 	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	_CheckMovement()
 
 func exit() -> void:
-	pass
+	actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
 
 func update(_delta : float) -> void:
 	if actor == null: return
@@ -41,9 +41,9 @@ func physics_update(_delta : float) -> void:
 	if actor == null: return
 	
 	if is_equal_approx(_move_direction.y, 0.0):
-		actor.stop_animation()
-	elif not actor.is_animation_playing():
-		actor.play_animation()
+		actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+	else:
+		actor.set_tree_param(APARAM_TRANSITION, TRANS_CLIMB)
 	
 	actor.velocity.y = _move_direction.y * actor.speed * 0.5
 	actor.move_and_slide()

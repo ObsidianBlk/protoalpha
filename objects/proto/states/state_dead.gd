@@ -11,7 +11,7 @@ func enter(payload : Variant = null) -> void:
 	
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
-	actor.play_animation(ANIM_DEAD)
+	actor.set_tree_param(APARAM_ONCE_SPAWN, ONCE_FIRE)
 
 
 func die() -> void:

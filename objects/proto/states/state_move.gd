@@ -28,11 +28,6 @@ func enter(payload : Variant = null) -> void:
 	if not wep.reloaded.is_connected(_on_reloaded):
 		wep.reloaded.connect(_on_reloaded)
 	
-	if wep.is_triggered():
-		actor.play_animation(ANIM_SHOOT_RUN)
-	else:
-		actor.play_animation(ANIM_RUN)
-	
 	if typeof(payload) == TYPE_VECTOR2:
 		_move_direction = payload
 
@@ -77,10 +72,10 @@ func handle_input(event : InputEvent) -> void:
 		if event.is_pressed():
 			if wep.can_shoot():
 				wep.press_trigger(actor.get_parent())
-				actor.play_animation(ANIM_SHOOT_RUN, true)
+				actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
 		else:
-			if wep.can_shoot() and actor.get_current_animation() == ANIM_SHOOT_RUN:
-				actor.play_animation(ANIM_RUN)
+			if wep.can_shoot() and actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
+				actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
 			wep.release_trigger()
 
 
@@ -89,4 +84,4 @@ func handle_input(event : InputEvent) -> void:
 # ------------------------------------------------------------------------------
 func _on_reloaded() -> void:
 	if actor != null:
-		actor.play_animation(ANIM_RUN, true)
+		actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)

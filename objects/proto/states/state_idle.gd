@@ -43,12 +43,7 @@ func enter(payload : Variant = null) -> void:
 	
 	var wep : Weapon = actor.get_weapon()
 	Game.Connect_Signals(wep, _weapon_signals)
-	
 	actor.velocity = Vector2.ZERO
-	if wep.is_triggered():
-		actor.play_animation(ANIM_SHOOT_STAND)
-	else:
-		actor.play_animation(ANIM_IDLE_A)
 
 func exit() -> void:
 	if actor == null: return
@@ -61,9 +56,9 @@ func update(_delta : float) -> void:
 	if actor == null: return
 	if not actor.get_weapon().is_triggered():
 		var action : StringName = _weighted_action.get_random()
-		var cur_anim : StringName = actor.get_current_animation()
-		if action == ACTION_CHANGE:
-			actor.play_animation(ANIM_IDLE_B if cur_anim == ANIM_IDLE_A else ANIM_IDLE_A)
+		#var cur_anim : StringName = actor.get_current_animation()
+		#if action == ACTION_CHANGE:
+			#actor.play_animation(ANIM_IDLE_B if cur_anim == ANIM_IDLE_A else ANIM_IDLE_A)
 
 func physics_update(_delta : float) -> void:
 	if actor == null: return
@@ -91,11 +86,11 @@ func handle_input(event : InputEvent) -> void:
 		var wep : Weapon = actor.get_weapon()
 		if event.is_pressed():
 			if wep.can_shoot():
-				actor.play_animation(ANIM_SHOOT_STAND)
+				actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
 				wep.press_trigger(actor.get_parent())
 		else:
-			if actor.get_current_animation() == ANIM_SHOOT_STAND:
-				actor.play_animation(ANIM_IDLE_A)
+			if actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
+				actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
 			wep.release_trigger()
 
 
@@ -104,4 +99,4 @@ func handle_input(event : InputEvent) -> void:
 # ------------------------------------------------------------------------------
 func _on_reloaded() -> void:
 	if actor == null: return
-	actor.play_animation(ANIM_IDLE_A)
+	actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
