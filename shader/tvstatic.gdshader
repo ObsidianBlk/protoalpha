@@ -11,10 +11,10 @@ float noise(vec2 st){
 void fragment() {
 	vec3 static = vec3(noise(TIME * 0.25 * UV));
 	vec3 screen = texture(screen_texture, SCREEN_UV).rgb;
-	
+
 	float screen_intensity = (screen.r + screen.g + screen.b) / 3.0;
 	screen_intensity = step(0.5, screen_intensity) * screen_bleed;
-	
+
 	static += vec3(screen_intensity);
 	COLOR = vec4(mix(screen, static, intensity), 1.0);
 }

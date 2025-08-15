@@ -5,6 +5,7 @@ class_name SoundSheet
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+@export var asp_group : StringName = &"Master"
 @export var sound_list : Dictionary[StringName, SoundEntry] = {}:	set=set_sound_list
 
 
@@ -40,14 +41,14 @@ func _DisconnectSoundEntries() -> void:
 # Public Methods
 # ------------------------------------------------------------------------------
 func play(sound_name : StringName) -> int:
-	var sfxplayer : AudioPlayerPolyphonic = AudioBoard.get_sfx_player()
+	var sfxplayer : AudioPlayerPolyphonic = AudioBoard.get_sfx_player(asp_group)
 	if sfxplayer != null and sound_name in sound_list and sound_list[sound_name].stream != null:
 		var entry : SoundEntry = sound_list[sound_name]
 		return sfxplayer.play(entry.stream, 0.0, entry.volume_db, entry.get_pitch())
 	return -1
 
 func stop(id : int) -> void:
-	var sfxplayer : AudioPlayerPolyphonic = AudioBoard.get_sfx_player()
+	var sfxplayer : AudioPlayerPolyphonic = AudioBoard.get_sfx_player(asp_group)
 	if sfxplayer != null:
 		sfxplayer.stop(id)
 

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4govvu6ee7ds"]
+
+[ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="1_41ats"]
+[ext_resource type="Texture2D" uid="uid://cl03kgboxrixt" path="res://assets/graphics/tv/SMPTE_Pattern_001.png" id="2_py6fu"]
+[ext_resource type="Script" uid="uid://r2jngfffinae" path="res://scenes/tv_channels/tv_channels.gd" id="2_q80oc"]
+
+[node name="TVChannels" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_41ats")
+script = ExtResource("2_q80oc")
+
+[node name="SMPTE" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SMPTE"]
+layout_mode = 2
+texture = ExtResource("2_py6fu")
+
+[node name="SMPTE_Message" type="Label" parent="SMPTE"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"LabelSMPTE"
+text = "Please Stand By"
+horizontal_alignment = 1

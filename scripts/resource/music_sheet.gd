@@ -11,6 +11,7 @@ const META_VOLUME : StringName = &"volume"
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+@export var asp_group : StringName = &"Master"
 @export var music_list : Dictionary[StringName, SoundEntry] = {}:		set=set_music_list
 @export var default_music : StringName = &""
 

@@ -24,8 +24,10 @@ const VOLUME_DEFAULT_MUSIC : float = 0.6
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _music_asp : AudioPlayerPolyphonic = null
-var _sfx_asp : AudioPlayerPolyphonic = null
+#var _music_asp : AudioPlayerPolyphonic = null
+#var _sfx_asp : AudioPlayerPolyphonic = null
+var _music_asps : Dictionary[StringName, AudioPlayerPolyphonic] = {}
+var _sfx_asps : Dictionary[StringName, AudioPlayerPolyphonic] = {}
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -35,18 +37,29 @@ func _ready() -> void:
 	Settings.loaded.connect(_on_settings_loaded)
 	Settings.reset.connect(_on_settings_reset)
 	
-	_music_asp = AudioPlayerPolyphonic.new()
-	_music_asp.bus = BUS_MUSIC
-	_music_asp.polyphony = 2
-	add_child(_music_asp)
+	_CreatePolyphonics(_music_asps, &"Master", BUS_MUSIC, 2)
+	_CreatePolyphonics(_music_asps, &"Game", &"GameMusic", 2)
 	
-	_sfx_asp = AudioPlayerPolyphonic.new()
-	_sfx_asp.bus = BUS_SFX
-	add_child(_sfx_asp)
+	_CreatePolyphonics(_sfx_asps, &"Master", BUS_SFX)
+	_CreatePolyphonics(_sfx_asps, &"Game", &"GameSFX")
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _CreatePolyphonics(asps : Dictionary[StringName, AudioPlayerPolyphonic], key : StringName, bus : StringName, polyphony : int = 0) -> void:
+	var busidx : int = AudioServer.get_bus_index(bus)
+	if busidx < 0:
+		print_debug("WARNING: Audio bus '", bus, "' does not exist! Cannot create associated audio player.")
+		return
+	if key in asps:
+		print_debug("WARNING: ASP key '", key, "' already defined.")
+		return
+	asps[key] = AudioPlayerPolyphonic.new()
+	asps[key].bus = bus
+	if polyphony > 0:
+		asps[key].polyphony = polyphony
+	add_child(asps[key])
+
 func _SetVolume(bus_name : StringName, volume_db : float) -> bool:
 	var busidx : int = AudioServer.get_bus_index(bus_name)
 	if busidx < 0: return false
@@ -85,11 +98,15 @@ func get_volume_linear(bus_name : StringName) -> float:
 		return AudioServer.get_bus_volume_linear(busidx)
 	return 0.0
 
-func get_sfx_player() -> AudioPlayerPolyphonic:
-	return _sfx_asp
+func get_sfx_player(asp_name : StringName = &"Master") -> AudioPlayerPolyphonic:
+	if asp_name in _sfx_asps:
+		return _sfx_asps[asp_name]
+	return null
 
-func get_music_player() -> AudioPlayerPolyphonic:
-	return _music_asp
+func get_music_player(asp_name : StringName = &"Master") -> AudioPlayerPolyphonic:
+	if asp_name in _music_asps:
+		return _music_asps[asp_name]
+	return null
 
 # ------------------------------------------------------------------------------
 # HANDLER Methods

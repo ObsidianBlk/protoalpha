@@ -70,6 +70,7 @@ metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_7smn1"]
 script = ExtResource("7_blune")
+asp_group = &"Game"
 sound_list = Dictionary[StringName, ExtResource("8_th5th")]({
 &"btn_focused": SubResource("Resource_hxu8e"),
 &"btn_hover": SubResource("Resource_raeie"),

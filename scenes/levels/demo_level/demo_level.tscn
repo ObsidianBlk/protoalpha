@@ -31,6 +31,7 @@ metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_gtfch"]
 script = ExtResource("3_t4i1j")
+asp_group = &"Game"
 music_list = Dictionary[StringName, ExtResource("2_hk6jy")]({
 &"Level 1": SubResource("Resource_dka4h"),
 &"Level 2": SubResource("Resource_7m45j")
