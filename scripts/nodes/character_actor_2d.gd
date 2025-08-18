@@ -4,6 +4,8 @@ class_name CharacterActor2D
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
+signal weapon_fired()
+signal weapon_reloaded()
 signal animation_finished(animation_name : StringName)
 signal dead()
 
@@ -15,6 +17,7 @@ signal dead()
 @export var flip_h : bool = false:						set=flip
 @export var animation_tree : AnimationTree = null:		set=set_animation_tree
 @export var ladder_detector : LadderDetector = null:	set=set_ladder_detector
+@export var weapon : Weapon = null:						set=set_weapon
 @export var sound_sheet : SoundSheet = null
 
 # ------------------------------------------------------------------------------
@@ -38,6 +41,12 @@ func set_ladder_detector(ld : LadderDetector) -> void:
 		ladder_detector = ld
 		_ConnectLadderDetector()
 
+func set_weapon(w : Weapon) -> void:
+	if weapon != w:
+		_DisconnectWeapon()
+		weapon = w
+		_ConnectWeapon()
+
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
@@ -50,6 +59,22 @@ func _DisconnectAnimationTree() -> void:
 	if animation_tree == null: return
 	if animation_tree.animation_finished.is_connected(_on_anim_tree_animation_finished):
 		animation_tree.animation_finished.disconnect(_on_anim_tree_animation_finished)
+
+
+func _ConnectWeapon() -> void:
+	if weapon == null: return
+	if not weapon.fired.is_connected(_on_actor_weapon_fired):
+		weapon.fired.connect(_on_actor_weapon_fired)
+	if not weapon.reloaded.is_connected(_on_actor_weapon_reloaded):
+		weapon.reloaded.connect(_on_actor_weapon_reloaded)
+
+func _DisconnectWeapon() -> void:
+	if weapon == null: return
+	if weapon.fired.is_connected(_on_actor_weapon_fired):
+		weapon.fired.disconnect(_on_actor_weapon_fired)
+	if weapon.reloaded.is_connected(_on_actor_weapon_reloaded):
+		weapon.reloaded.disconnect(_on_actor_weapon_reloaded)
+
 
 func _ConnectLadderDetector() -> void:
 	if ladder_detector == null: return
@@ -114,6 +139,12 @@ func is_tree_param(param : String, value : Variant) -> bool:
 # ------------------------------------------------------------------------------
 # "Virtual" Handler Methods
 # ------------------------------------------------------------------------------
+func _on_actor_weapon_fired() -> void:
+	weapon_fired.emit()
+
+func _on_actor_weapon_reloaded() -> void:
+	weapon_reloaded.emit()
+
 func _on_anim_tree_animation_finished(anim_name : StringName) -> void:
 	animation_finished.emit(anim_name)
 

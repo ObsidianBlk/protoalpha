@@ -1180,7 +1180,7 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mh7ni"]
-graph_offset = Vector2(-238.668, 49.3402)
+graph_offset = Vector2(-276.52, -10.9137)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(300, 60)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_osq81")
@@ -1207,7 +1207,7 @@ node_connections = [&"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"hurt", 0, &"tr
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jw1q"]
 size = Vector2(2, 2)
 
-[node name="Proto" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree", "ladder_detector")]
+[node name="Proto" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree", "ladder_detector", "weapon")]
 collision_layer = 2
 floor_block_on_wall = false
 script = ExtResource("1_7jw1q")
@@ -1217,6 +1217,7 @@ air_speed_multiplier = 0.1
 fall_multiplier = 3.0
 animation_tree = NodePath("AnimationTree")
 ladder_detector = NodePath("LadderDetector")
+weapon = NodePath("Body/Weapon")
 sound_sheet = SubResource("Resource_j6iy6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

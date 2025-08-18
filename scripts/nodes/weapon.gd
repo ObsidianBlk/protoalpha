@@ -5,6 +5,7 @@ class_name Weapon
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
+signal fired()
 signal charged(percent : float)
 signal reloaded()
 
@@ -75,6 +76,7 @@ func _Trigger(projectile_container : Node2D) -> void:
 		var wss : SoundSheet = weapon_def.sound_sheet
 		wss.play(SFX_SPAWN)
 		p.hit.connect(wss.play.bind(SFX_EXPLODE))
+	fired.emit()
 
 # ------------------------------------------------------------------------------
 # Public Methods

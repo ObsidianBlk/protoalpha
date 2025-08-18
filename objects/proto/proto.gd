@@ -3,7 +3,7 @@ extends CharacterActor2D
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
-signal reloaded()
+#signal reloaded()
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -24,16 +24,15 @@ signal reloaded()
 # ------------------------------------------------------------------------------
 @onready var _sprite: AnimatedSprite2D = %ASprite
 @onready var _body: Node2D = %Body
-@onready var _weapon: Weapon = %Weapon
 
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	_weapon.reloaded.connect(
-		func(): reloaded.emit()
-	)
+	#_weapon.reloaded.connect(
+		#func(): reloaded.emit()
+	#)
 	_sprite.animation_finished.connect(
 		func():
 			animation_finished.emit(_sprite.animation)
@@ -43,7 +42,7 @@ func _ready() -> void:
 # Public Methods
 # ------------------------------------------------------------------------------
 func get_weapon() -> Weapon:
-	return _weapon
+	return weapon
 
 func spawn_at(spawn_position : Vector2, payload : Dictionary = {}) -> void:
 	super.spawn_at(spawn_position, payload)
