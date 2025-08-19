@@ -35,7 +35,7 @@ func _ready() -> void:
 		Settings.save()
 	_ui_layer.register_action_handler(Game.UI_ACTION_START_GAME, _StartGame)
 	_ui_layer.register_action_handler(Game.UI_ACTION_QUIT_GAME, _QuitGame)
-	_ui_layer.register_action_handler(Game.UI_ACTION_QUIT_APPLICATION, _QuitApplication)
+	#_ui_layer.register_action_handler(Game.UI_ACTION_QUIT_APPLICATION, _QuitApplication)
 	_ui_layer.register_action_handler(Game.UI_ACTION_PAUSE, _PauseGame)
 	_ui_layer.register_action_handler(Game.UI_ACTION_RESUME, _ResumeGame)
 
@@ -92,15 +92,26 @@ func _ResumeGame() -> void:
 	await _ui_layer.all_hidden
 	get_tree().paused = false
 
-func _QuitGame() -> void:
+func _QuitGame(keep_ui_closed : bool = false) -> void:
 	_CloseLevel()
 	Game.Game_Running = false
 	get_tree().paused = true
 	_game_hud_layer.visible = false
 	_ui_layer.close_all_ui()
 	await _ui_layer.all_hidden
-	_ui_layer.open_default_ui()
+	if not keep_ui_closed:
+		_ui_layer.open_default_ui()
 
 func _QuitApplication() -> void:
 	Settings.save()
 	get_tree().quit()
+
+
+# ------------------------------------------------------------------------------
+# Handler Methods
+# ------------------------------------------------------------------------------
+func _on_tv_control_box_close_game() -> void:
+	_QuitGame(true)
+
+func _on_tv_control_box_quit_application() -> void:
+	_QuitApplication()

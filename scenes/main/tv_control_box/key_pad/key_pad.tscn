@@ -47,107 +47,105 @@ theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jhg78")
 text = "000"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="KeyPad" type="GridContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="KeyPad" type="GridContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 3
 
-[node name="BTN_7" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_7" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "7"
 
-[node name="BTN_8" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_8" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "8"
 
-[node name="BTN_9" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_9" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "9"
 
-[node name="BTN_4" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_4" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "4"
 
-[node name="BTN_5" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_5" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "5"
 
-[node name="BTN_6" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_6" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "6"
 
-[node name="BTN_1" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_1" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "1"
 
-[node name="BTN_2" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_2" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "2"
 
-[node name="BTN_3" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_3" type="Button" parent="VBoxContainer/KeyPad"]
 layout_mode = 2
 text = "3"
 
-[node name="BTN_Blank_1" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_Up" type="Button" parent="VBoxContainer/KeyPad"]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
+text = "/\\"
 
-[node name="BTN_0" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_0" type="Button" parent="VBoxContainer/KeyPad"]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
 text = "0"
 
-[node name="BTN_Del" type="Button" parent="VBoxContainer/HBoxContainer/KeyPad"]
+[node name="BTN_Down" type="Button" parent="VBoxContainer/KeyPad"]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "DEL"
+text = "\\/"
 
-[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+[node name="Label_Spacer" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = " "
+
+[node name="Power" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="BTN_Power" type="Button" parent="VBoxContainer/Power"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.2
+size_flags_stretch_ratio = 2.0
+text = "PWR"
 
-[node name="SideButtons" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="PowerLight" type="VBoxContainer" parent="VBoxContainer/Power"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 0
 
-[node name="BTN_Enter" type="Button" parent="VBoxContainer/HBoxContainer/SideButtons"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 8
-text = "Enter"
-
-[node name="BTN_Clear" type="Button" parent="VBoxContainer/HBoxContainer/SideButtons"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 8
-text = "Clear"
-
-[node name="BTN_Cancel" type="Button" parent="VBoxContainer/HBoxContainer/SideButtons"]
-custom_minimum_size = Vector2(34, 0)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 8
-text = "Cancel"
-
-[node name="BTN_Blank" type="Button" parent="VBoxContainer/HBoxContainer/SideButtons"]
+[node name="Spacer_01" type="Control" parent="VBoxContainer/Power/PowerLight"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_7" to="." method="_on_btn_number_pressed" binds= ["7"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_8" to="." method="_on_btn_number_pressed" binds= ["8"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_9" to="." method="_on_btn_number_pressed" binds= ["9"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_4" to="." method="_on_btn_number_pressed" binds= ["4"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_5" to="." method="_on_btn_number_pressed" binds= ["5"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_6" to="." method="_on_btn_number_pressed" binds= ["6"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_1" to="." method="_on_btn_number_pressed" binds= ["1"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_2" to="." method="_on_btn_number_pressed" binds= ["2"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_3" to="." method="_on_btn_number_pressed" binds= ["3"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/KeyPad/BTN_0" to="." method="_on_btn_number_pressed" binds= ["0"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/SideButtons/BTN_Enter" to="." method="_on_btn_enter_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/SideButtons/BTN_Clear" to="." method="_on_btn_clear_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/SideButtons/BTN_Cancel" to="." method="_on_btn_cancel_pressed"]
+[node name="CRECT_PowerLight" type="ColorRect" parent="VBoxContainer/Power/PowerLight"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.0500001, 1, 0, 1)
+
+[node name="Spacer_02" type="Control" parent="VBoxContainer/Power/PowerLight"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_7" to="." method="_on_btn_number_pressed" binds= ["7"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_8" to="." method="_on_btn_number_pressed" binds= ["8"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_9" to="." method="_on_btn_number_pressed" binds= ["9"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_4" to="." method="_on_btn_number_pressed" binds= ["4"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_5" to="." method="_on_btn_number_pressed" binds= ["5"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_6" to="." method="_on_btn_number_pressed" binds= ["6"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_1" to="." method="_on_btn_number_pressed" binds= ["1"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_2" to="." method="_on_btn_number_pressed" binds= ["2"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_3" to="." method="_on_btn_number_pressed" binds= ["3"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_Up" to="." method="_on_btn_up_pressed"]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_0" to="." method="_on_btn_number_pressed" binds= ["0"]]
+[connection signal="pressed" from="VBoxContainer/KeyPad/BTN_Down" to="." method="_on_btn_down_pressed"]
+[connection signal="pressed" from="VBoxContainer/Power/BTN_Power" to="." method="_on_btn_power_pressed"]

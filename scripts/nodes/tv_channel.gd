@@ -13,3 +13,12 @@ signal smpte_hide_requested()
 # ------------------------------------------------------------------------------
 @export_range(0, 999) var channel_number : int = 0
 @export var sound_sheet : SoundSheet = null
+
+# ------------------------------------------------------------------------------
+# "Virtual" Methods
+# ------------------------------------------------------------------------------
+func enter(payload : Variant = null) -> void:
+	pass
+
+func exit() -> void:
+	pass

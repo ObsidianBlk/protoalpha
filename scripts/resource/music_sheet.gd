@@ -92,7 +92,7 @@ func _CrossFade(player : AudioPlayerPolyphonic, from_music_name : StringName, to
 # ------------------------------------------------------------------------------
 func is_playing(music_name : StringName) -> bool:
 	if music_name in _streams:
-		var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player()
+		var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player(asp_group)
 		if musicplayer != null:
 			var id : int = _streams[music_name]
 			var playing : bool = musicplayer.is_playing(id)
@@ -111,7 +111,7 @@ func currently_playing() -> StringName:
 	)
 
 func play(music_name : StringName, crossfade_duration : float = 0.0) -> void:
-	var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player()
+	var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player(asp_group)
 	if musicplayer != null and music_name in music_list and music_list[music_name].stream != null:
 		var music_playing : bool = is_playing(music_name)
 		var entry : SoundEntry = music_list[music_name]
@@ -171,7 +171,7 @@ func play_default(crossfade_duration : float = 0.0) -> void:
 
 func stop(music_name : StringName) -> void:
 	if music_name in _streams:
-		var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player()
+		var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player(asp_group)
 		if musicplayer != null:
 			musicplayer.stop(_streams[music_name])
 		_streams.erase(music_name)
@@ -184,7 +184,7 @@ func stop_all() -> void:
 		stop(music_name)
 
 func stop_non_local() -> void:
-	var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player()
+	var musicplayer : AudioPlayerPolyphonic = AudioBoard.get_music_player(asp_group)
 	if musicplayer == null: return
 	
 	var ids : Array[int] = musicplayer.get_active_stream_ids()

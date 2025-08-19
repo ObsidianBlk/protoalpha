@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=51 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="10_7smn1"]
 [ext_resource type="PackedScene" uid="uid://vo57uryqt5t8" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="14_necax"]
 [ext_resource type="PackedScene" uid="uid://opjjoh6tsx4v" path="res://scenes/main/static_effect/static_effect.tscn" id="15_m4h2d"]
+[ext_resource type="PackedScene" uid="uid://d4govvu6ee7ds" path="res://scenes/tv_channels/tv_channels.tscn" id="15_p8abn"]
 [ext_resource type="PackedScene" uid="uid://d4g38v5ho1jt1" path="res://scenes/main/crt_effect/crt_effect.tscn" id="15_r4lks"]
 [ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
 [ext_resource type="Script" uid="uid://dgbmsxanfwao6" path="res://scripts/resource/crt_effect_resource.gd" id="17_p8abn"]
@@ -254,7 +255,7 @@ handle_input_locally = false
 snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(320, 240)
+size = Vector2i(514, 444)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
@@ -291,6 +292,11 @@ mouse_filter = 2
 default_ui = true
 
 [node name="PauseMenu" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/UILayer" instance=ExtResource("14_necax")]
+
+[node name="Channels" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
+layer = 20
+
+[node name="TVChannels" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/Channels" instance=ExtResource("15_p8abn")]
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
 layer = -10
@@ -453,3 +459,7 @@ stretch_mode = 5
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
+
+[connection signal="close_game" from="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_close_game"]
+[connection signal="coded" from="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/Channels/TVChannels" method="show_channel"]
+[connection signal="quit_application" from="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_quit_application"]

@@ -19,8 +19,8 @@ const PARAMS : Dictionary[StringName, Dictionary] = {
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-@export_range(0.0, 1.0) var intensity : float = 0.0
-@export_range(0.0, 1.0) var screen_bleed : float = 0.3
+@export_range(0.0, 1.0) var intensity : float = 0.0:		set=set_intensity
+@export_range(0.0, 1.0) var screen_bleed : float = 0.3:		set=set_screen_bleed
 
 # ------------------------------------------------------------------------------
 # Private Static Variables
@@ -95,3 +95,8 @@ func _SetParameterValue(param : StringName, value : Variant, ignore_settings : b
 # ------------------------------------------------------------------------------
 static func Get() -> StaticEffect:
 	return _Instance
+
+static func Set_Effect(intensity : float, bleed : float) -> void:
+	if _Instance == null: return
+	_Instance.intensity = clampf(intensity, 0.0, 1.0)
+	_Instance.screen_bleed = clampf(bleed, 0.0, 1.0)

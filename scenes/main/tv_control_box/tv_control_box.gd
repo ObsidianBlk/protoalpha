@@ -4,6 +4,9 @@ extends PanelContainer
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
+signal coded(num : int)
+signal close_game()
+signal quit_application()
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -61,3 +64,12 @@ func _on_key_pad_coded(value: int) -> void:
 			var crt : CRTEffect = CRTEffect.Get()
 			if crt != null:
 				crt.enabled = not crt.enabled
+	coded.emit(value)
+
+
+func _on_key_pad_close_game() -> void:
+	close_game.emit()
+
+
+func _on_key_pad_quit_application() -> void:
+	quit_application.emit()

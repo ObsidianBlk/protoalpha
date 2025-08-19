@@ -5,6 +5,8 @@ extends Node
 # Signals
 # ------------------------------------------------------------------------------
 signal volume_changed(bus_name : StringName)
+signal muted(bus_name : StringName)
+signal unmuted(bus_name : StringName)
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -86,6 +88,15 @@ func set_volume(bus_name : StringName, volume : float, volume_linear : bool = fa
 	
 	_SetVolume(bus_name, volume_db)
 
+func mute(bus_name : StringName, enable : bool) -> void:
+	var busidx : int = AudioServer.get_bus_index(bus_name)
+	if busidx < 0: return
+	AudioServer.set_bus_mute(busidx, enable)
+	if enable:
+		muted.emit(bus_name)
+	else:
+		unmuted.emit(bus_name)
+
 func get_volume_db(bus_name : StringName) -> float:
 	var busidx : int = AudioServer.get_bus_index(bus_name)
 	if busidx >= 0:
@@ -97,6 +108,12 @@ func get_volume_linear(bus_name : StringName) -> float:
 	if busidx >= 0:
 		return AudioServer.get_bus_volume_linear(busidx)
 	return 0.0
+
+func is_mute(bus_name : StringName) -> bool:
+	var busidx : int = AudioServer.get_bus_index(bus_name)
+	if busidx >= 0:
+		return AudioServer.is_bus_mute(busidx)
+	return false
 
 func get_sfx_player(asp_name : StringName = &"Master") -> AudioPlayerPolyphonic:
 	if asp_name in _sfx_asps:
