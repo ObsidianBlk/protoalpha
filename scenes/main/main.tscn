@@ -1,23 +1,12 @@
-[gd_scene load_steps=51 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=36 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
 [ext_resource type="Texture2D" uid="uid://bgbwkodg84dv8" path="res://assets/graphics/tv/tv_frame_01.png" id="2_th5th"]
-[ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="4_6q06x"]
-[ext_resource type="Texture2D" uid="uid://dy2jtx5nc7oqv" path="res://assets/graphics/Ref320x240.png" id="4_l3cfh"]
-[ext_resource type="PackedScene" uid="uid://d05nd38n0uwiq" path="res://scenes/game_hud/game_hud.tscn" id="4_ow5a4"]
-[ext_resource type="Script" uid="uid://bmot2xnxfcohb" path="res://scripts/nodes/chase_camera.gd" id="5_6q06x"]
+[ext_resource type="PackedScene" uid="uid://dn33mh2f5g1je" path="res://scenes/proto_alpha/proto_alpha.tscn" id="4_blune"]
 [ext_resource type="Texture2D" uid="uid://caeylxq5gwomt" path="res://assets/graphics/tv/tv_screen_boarder.png" id="5_hxu8e"]
 [ext_resource type="Texture2D" uid="uid://cyawkb7mwvu77" path="res://assets/graphics/tv/tv_ctrl_panel.png" id="6_7smn1"]
-[ext_resource type="Script" uid="uid://i1maoaaedj5" path="res://scripts/nodes/component_ui_sound_handler.gd" id="6_ouso4"]
-[ext_resource type="Script" uid="uid://dktc706cbs45f" path="res://addons/OBSUI/scripts/ui_layer.gd" id="6_ow5a4"]
 [ext_resource type="Texture2D" uid="uid://bx4xestmcewyb" path="res://assets/graphics/tv/tv_grill_pattern.png" id="6_raeie"]
-[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="7_blune"]
-[ext_resource type="PackedScene" uid="uid://cvm0cfywbnaes" path="res://scenes/ui/main_menu/main_menu.tscn" id="7_hujxm"]
-[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="8_th5th"]
-[ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_th5th"]
-[ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="10_7smn1"]
-[ext_resource type="PackedScene" uid="uid://vo57uryqt5t8" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="14_necax"]
 [ext_resource type="PackedScene" uid="uid://opjjoh6tsx4v" path="res://scenes/main/static_effect/static_effect.tscn" id="15_m4h2d"]
 [ext_resource type="PackedScene" uid="uid://d4govvu6ee7ds" path="res://scenes/tv_channels/tv_channels.tscn" id="15_p8abn"]
 [ext_resource type="PackedScene" uid="uid://d4g38v5ho1jt1" path="res://scenes/main/crt_effect/crt_effect.tscn" id="15_r4lks"]
@@ -41,43 +30,6 @@ region = Rect2(220, 0, 36, 36)
 [sub_resource type="AtlasTexture" id="AtlasTexture_nvumn"]
 atlas = ExtResource("2_th5th")
 region = Rect2(0, 37, 36, 8)
-
-[sub_resource type="Resource" id="Resource_hxu8e"]
-script = ExtResource("8_th5th")
-stream = ExtResource("10_7smn1")
-volume_db = 0.0
-volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
-metadata/_custom_type_script = "uid://dveho6qshxx2o"
-
-[sub_resource type="Resource" id="Resource_raeie"]
-script = ExtResource("8_th5th")
-stream = ExtResource("9_th5th")
-volume_db = 0.0
-volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
-metadata/_custom_type_script = "uid://dveho6qshxx2o"
-
-[sub_resource type="Resource" id="Resource_nvumn"]
-script = ExtResource("8_th5th")
-stream = ExtResource("4_6q06x")
-volume_db = 0.0
-volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
-metadata/_custom_type_script = "uid://dveho6qshxx2o"
-
-[sub_resource type="Resource" id="Resource_7smn1"]
-script = ExtResource("7_blune")
-asp_group = &"Game"
-sound_list = Dictionary[StringName, ExtResource("8_th5th")]({
-&"btn_focused": SubResource("Resource_hxu8e"),
-&"btn_hover": SubResource("Resource_raeie"),
-&"btn_pressed": SubResource("Resource_nvumn")
-})
-metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ou6is"]
 atlas = ExtResource("2_th5th")
@@ -171,7 +123,6 @@ texture_margin_bottom = 24.0
 
 [node name="Main" type="Node"]
 script = ExtResource("1_k2fmo")
-pause_menu = &"PauseMenu"
 
 [node name="GameLayer" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -260,38 +211,7 @@ size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="Game" type="Node2D" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
-unique_name_in_owner = true
-process_mode = 1
-
-[node name="ChaseCamera" type="Camera2D" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/Game"]
-limit_smoothed = true
-script = ExtResource("5_6q06x")
-metadata/_custom_type_script = "uid://bmot2xnxfcohb"
-
-[node name="GameHudLayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
-unique_name_in_owner = true
-visible = false
-
-[node name="GameHUD" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/GameHudLayer" instance=ExtResource("4_ow5a4")]
-
-[node name="UILayer" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
-unique_name_in_owner = true
-layer = 10
-script = ExtResource("6_ow5a4")
-immediate_open = true
-metadata/_custom_type_script = "uid://dktc706cbs45f"
-
-[node name="ComponentUISoundHandler" type="Node" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/UILayer"]
-script = ExtResource("6_ouso4")
-sound_sheet = SubResource("Resource_7smn1")
-metadata/_custom_type_script = "uid://i1maoaaedj5"
-
-[node name="MainMenu" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/UILayer" instance=ExtResource("7_hujxm")]
-mouse_filter = 2
-default_ui = true
-
-[node name="PauseMenu" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/UILayer" instance=ExtResource("14_necax")]
+[node name="ProtoAlpha" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport" instance=ExtResource("4_blune")]
 
 [node name="Channels" type="CanvasLayer" parent="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport"]
 layer = 20
@@ -448,18 +368,10 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="GameLayer"]
-visible = false
-offset_left = 341.0
-offset_top = 37.0
-offset_right = 695.0
-offset_bottom = 277.0
-texture = ExtResource("4_l3cfh")
-stretch_mode = 5
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
 
-[connection signal="close_game" from="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_close_game"]
+[connection signal="start_game" from="." to="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]
+[connection signal="close_game" from="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="close_game"]
 [connection signal="coded" from="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/VBoxContainer/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/Channels/TVChannels" method="show_channel"]
 [connection signal="quit_application" from="GameLayer/VBoxContainer/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_quit_application"]

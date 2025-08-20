@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4govvu6ee7ds"]
+[gd_scene load_steps=8 format=3 uid="uid://d4govvu6ee7ds"]
 
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="1_41ats"]
 [ext_resource type="Texture2D" uid="uid://cl03kgboxrixt" path="res://assets/graphics/tv/SMPTE_Pattern_001.png" id="2_py6fu"]
@@ -12,6 +12,21 @@ static_intensity = 0.5
 static_bleed = 0.0
 metadata/_custom_type_script = "uid://cdbxv3snwf0s"
 
+[sub_resource type="Resource" id="Resource_q80oc"]
+script = ExtResource("3_q80oc")
+message = "Eat My
+Ass"
+static_intensity = 0.8
+static_bleed = 0.4
+metadata/_custom_type_script = "uid://cdbxv3snwf0s"
+
+[sub_resource type="Resource" id="Resource_4568u"]
+script = ExtResource("3_q80oc")
+message = "EMERGENCY ALERT"
+static_intensity = 0.85
+static_bleed = 0.0
+metadata/_custom_type_script = "uid://cdbxv3snwf0s"
+
 [node name="TVChannels" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +37,9 @@ mouse_filter = 2
 theme = ExtResource("1_41ats")
 script = ExtResource("2_q80oc")
 smpte_channels = Dictionary[int, ExtResource("3_q80oc")]({
-4: SubResource("Resource_0b7gv")
+4: SubResource("Resource_0b7gv"),
+9: SubResource("Resource_4568u"),
+69: SubResource("Resource_q80oc")
 })
 
 [node name="SMPTE" type="MarginContainer" parent="."]

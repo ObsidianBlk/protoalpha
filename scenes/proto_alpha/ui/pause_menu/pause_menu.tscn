@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://vo57uryqt5t8"]
 
-[ext_resource type="Script" uid="uid://c7ve6fw3ndl11" path="res://scenes/ui/pause_menu/pause_menu.gd" id="1_kgchh"]
+[ext_resource type="Script" uid="uid://c7ve6fw3ndl11" path="res://scenes/proto_alpha/ui/pause_menu/pause_menu.gd" id="1_kgchh"]
 [ext_resource type="Theme" uid="uid://c4lk81a4r3ren" path="res://assets/game.theme" id="1_rbnsh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbnsh"]

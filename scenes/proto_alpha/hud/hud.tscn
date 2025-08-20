@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d05nd38n0uwiq"]
 
-[ext_resource type="Script" uid="uid://5aqrmx0br1ip" path="res://scenes/game_hud/game_hud.gd" id="1_7s1mr"]
+[ext_resource type="Script" uid="uid://5aqrmx0br1ip" path="res://scenes/proto_alpha/hud/hud.gd" id="1_7s1mr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45v0f"]
 content_margin_left = 1.0
@@ -14,7 +14,7 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7upun"]
 bg_color = Color(0.580392, 0.878431, 0.537255, 1)
 
-[node name="GameHUD" type="MarginContainer"]
+[node name="HUD" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
