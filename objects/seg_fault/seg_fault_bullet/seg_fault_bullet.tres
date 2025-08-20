@@ -14,6 +14,6 @@ type = 0
 name = &"SegFaultBullet"
 icon = SubResource("AtlasTexture_l7jt7")
 projectile = ExtResource("2_5wm4w")
-rate_of_fire = 1.0
+rate_of_fire = 0.1
 charging = false
 metadata/_custom_type_script = "uid://dvj7a56df3qol"

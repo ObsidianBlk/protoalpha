@@ -1,4 +1,4 @@
-extends ActorState
+extends SegFaultState
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -8,6 +8,7 @@ extends ActorState
 @export_group("States")
 @export var state_move : StringName = &""
 @export var state_teleport : StringName = &""
+@export var state_fall : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -49,6 +50,7 @@ func enter(payload : Variant = null) -> void:
 	if actor == null:
 		pop()
 		return
+	
 	actor.velocity = Vector2.ZERO
 	_ConnectPlayer(actor.get_player())
 	_idle_time = randf_range(min_idle_time, max_idle_time)
@@ -71,9 +73,8 @@ func physics_update(_delta : float) -> void:
 	else: actor.velocity.y = 0.0
 	
 	actor.move_and_slide()
-	if not actor.is_on_surface(): pass
-		#if not state_fall.is_empty():
-			#swap_to(state_fall)
+	if not actor.is_on_surface():
+		swap_to(state_fall)
 
 # ------------------------------------------------------------------------------
 # Handler Methods

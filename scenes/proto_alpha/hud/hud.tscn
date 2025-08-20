@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://d05nd38n0uwiq"]
+[gd_scene load_steps=8 format=3 uid="uid://d05nd38n0uwiq"]
 
 [ext_resource type="Script" uid="uid://5aqrmx0br1ip" path="res://scenes/proto_alpha/hud/hud.gd" id="1_7s1mr"]
+[ext_resource type="Theme" uid="uid://cebftabff28vi" path="res://assets/hud.theme" id="1_kxqsr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45v0f"]
 content_margin_left = 1.0
@@ -14,16 +15,22 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7upun"]
 bg_color = Color(0.580392, 0.878431, 0.537255, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kxqsr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvkao"]
+bg_color = Color(0.721569, 0.411765, 0.384314, 1)
+
 [node name="HUD" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme = ExtResource("1_kxqsr")
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 script = ExtResource("1_7s1mr")
 
 [node name="HealthBar" type="PanelContainer" parent="."]
@@ -41,4 +48,20 @@ theme_override_styles/background = SubResource("StyleBoxEmpty_7s1mr")
 theme_override_styles/fill = SubResource("StyleBoxFlat_7upun")
 value = 61.98
 fill_mode = 3
+show_percentage = false
+
+[node name="BossBar" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="BossProgress" type="ProgressBar" parent="BossBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxEmpty_kxqsr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_nvkao")
+value = 50.0
 show_percentage = false

@@ -30,6 +30,7 @@ radius = 2.0
 
 [node name="SegFaultBullet" type="Area2D" node_paths=PackedStringArray("visual_node")]
 script = ExtResource("1_5wbky")
+lifetime = 1.0
 dmg = 15
 visual_node = NodePath("ASprite")
 metadata/_custom_type_script = "uid://jejiprc5138i"

@@ -20,11 +20,13 @@ signal invulnerability_changed(enabled : bool)
 # ------------------------------------------------------------------------------
 var _is_invulnerable : bool = false
 var _hitboxes : Dictionary[StringName, HitBox] = {}
+var _mask : int = 0
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	_mask = collision_mask
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
 
@@ -60,6 +62,10 @@ func trigger_invulnerability(time : float) -> void:
 
 func is_invulnerable() -> bool:
 	return _is_invulnerable
+
+func disable_mask(disable : bool = true) -> void:
+	if not is_node_ready(): return
+	collision_mask = 0 if disable else _mask
 
 # ------------------------------------------------------------------------------
 # Handler Methods

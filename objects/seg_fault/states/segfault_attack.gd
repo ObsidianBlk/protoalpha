@@ -1,20 +1,49 @@
-extends ActorState
+extends SegFaultState
 
 
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
-const ANIM_ATTACK : StringName = &"attack"
 
-const ACTION_STATE_MOVE : StringName = &"movement"
-const ACTION_STATE_ATTACK : StringName = &"teleport"
-
-const APARAM_STATE : String = "parameters/state/transition_request"
 
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var state_idle : StringName = &""
+@export var attack_count : int = 1
+@export var attack_delay : float = 0.25
+
+# ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
+var _count : int = 0
+var _delay : float = 0.0
+
+# ------------------------------------------------------------------------------
+# Override Methods
+# ------------------------------------------------------------------------------
+func _process(delta: float) -> void:
+	if _delay > 0.0:
+		_delay -= delta
+		if _delay <= 0.0 and _count > 0:
+			_count -= 1
+			_Attack()
+
+# ------------------------------------------------------------------------------
+# Private Methods
+# ------------------------------------------------------------------------------
+func _Attack() -> void:
+	if actor == null: return
+	var parent : Node = actor.get_parent()
+	var weapon : Weapon = actor.weapon
+	if weapon != null and parent is Node2D:
+		var player : CharacterActor2D = actor.get_player()
+		if player == null: return
+		weapon.look_at(player.global_position)
+		weapon.press_trigger(parent)
+		if _count > 0:
+			_delay = attack_delay
+		else: swap_to(state_idle)
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
@@ -23,6 +52,7 @@ func enter(payload : Variant = null) -> void:
 	if actor == null:
 		pop()
 		return
+	
 	actor.velocity = Vector2.ZERO
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
@@ -39,5 +69,6 @@ func exit() -> void:
 # ------------------------------------------------------------------------------
 func _on_animation_finished(anim_name : StringName) -> void:
 	if anim_name == ANIM_ATTACK:
-		# TODO: Fire actual weapon
-		swap_to(state_idle)
+		_count = attack_count - 1
+		_Attack()
+		#swap_to(state_idle)

@@ -18,6 +18,8 @@ class_name AnimSpritePlayer
 # ------------------------------------------------------------------------------
 ## The [AnimatedSprite2D] node from which to generate animations.
 @export var animated_sprite : AnimatedSprite2D = null
+## If defined, will only import given animation.
+@export var target_animation : StringName = &""
 ## If [code]true[/code], all non-default animation libraries will be cleared.
 @export var clear_existing_libraries: bool = false
 ## If [code]true[/code], will generate animations into the default animation library.
@@ -48,6 +50,10 @@ func _ClearAnimationLibrary(lib : AnimationLibrary) -> void:
 	for anim_name : StringName in anims:
 		lib.remove_animation(anim_name)
 
+func _ClearAnimationFromLibrary(lib : AnimationLibrary, anim_name : StringName) -> void:
+	if lib.has_animation(anim_name):
+		lib.remove_animation(anim_name)
+
 func _GetAnimationLibraryOrNew(lib_name : StringName) -> AnimationLibrary:
 	# Given <library_name>, returns an existing AnimationLibrary under the given name
 	# or returns a new AnimationLibrary.
@@ -68,8 +74,52 @@ func _GetNodePathToAnimSprite() -> NodePath:
 			return root.get_path_to(animated_sprite)
 	return NodePath("")
 
+func _PortAnimation(lib : AnimationLibrary, sf : SpriteFrames, node_path : NodePath, anim_name : StringName) -> void:
+	# Get the frames
+	var frame_count : int = sf.get_frame_count(anim_name)
+	if frame_count <= 0: return # Skip animation if there are no frames
+	# Get the speed/frames per second.
+	var fps : float = sf.get_animation_speed(anim_name)
+	
+	# Time to build an animation!
+	var animation : Animation = Animation.new()
+	
+	# Create a track to change AnimatedSprite2D:animation to the animation
+	# we'll be... animating! :D
+	var anim_name_track : int = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(anim_name_track, "%s:animation"%[node_path])
+	animation.track_insert_key(anim_name_track, 0.0, anim_name)
+	
+	# Create a track for the animation frames.
+	var frame_track : int = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(frame_track, "%s:frame"%[node_path])
+	animation.value_track_set_update_mode(frame_track, Animation.UPDATE_DISCRETE)
+	
+	# This <time> variable helps up keep track of the overall time and
+	# (as this is accumulative) the keyframe we're working on.
+	var time : float = 0.0
+	# Looping through the frames! Wheeeee!
+	for frame : int in range(frame_count):
+		# For each keyframe (<time>) we simple store the <frame> index!
+		animation.track_insert_key(frame_track, time, frame)
+		# Adjust the time based on the frame's duration divided by the
+		# defined speed/fps of the animation.
+		time += sf.get_frame_duration(anim_name, frame) / fps
+	
+	# Done with the loop, now tell the animation how long it actually is!
+	# (Which should just be the accumlated <time> value!)
+	animation.length = time
+	
+	# Tell the animation if it's looping!
+	if sf.get_animation_loop(anim_name):
+		animation.loop_mode = Animation.LOOP_LINEAR
+	
+	# Add the animation to the AnimationLibrary under the same name
+	# as appeared in the AnimatedSprite2D:SpriteFrames resource.
+	lib.add_animation(anim_name, animation)
+
+
 func _Generate() -> void:
-	print("Ping")
 	# This is where we kick the tires and light the fires!
 	# That is to say... this is where we generate the animations from the given
 	# AnimatedSprite2D node!
@@ -118,52 +168,16 @@ func _Generate() -> void:
 			# Complain and bail if we, somehow, didn't get an AnimationLibrary
 			printerr("Failed to obtain an animation library.")
 			return
-		_ClearAnimationLibrary(anim_library)
 		
-		# Loop through each animation in the AnimatedSprite2D:SpriteFrames resource.
-		for anim_name : StringName in sf.get_animation_names():
-			# Get the frames
-			var frame_count : int = sf.get_frame_count(anim_name)
-			if frame_count <= 0: continue # Skip animation if there are no frames
-			# Get the speed/frames per second.
-			var fps : float = sf.get_animation_speed(anim_name)
-			
-			# Time to build an animation!
-			var animation : Animation = Animation.new()
-			
-			# Create a track to change AnimatedSprite2D:animation to the animation
-			# we'll be... animating! :D
-			var anim_name_track : int = animation.add_track(Animation.TYPE_VALUE)
-			animation.track_set_path(anim_name_track, "%s:animation"%[node_path])
-			animation.track_insert_key(anim_name_track, 0.0, anim_name)
-			
-			# Create a track for the animation frames.
-			var frame_track : int = animation.add_track(Animation.TYPE_VALUE)
-			animation.track_set_path(frame_track, "%s:frame"%[node_path])
-			animation.value_track_set_update_mode(frame_track, Animation.UPDATE_DISCRETE)
-			
-			# This <time> variable helps up keep track of the overall time and
-			# (as this is accumulative) the keyframe we're working on.
-			var time : float = 0.0
-			# Looping through the frames! Wheeeee!
-			for frame : int in range(frame_count):
-				# For each keyframe (<time>) we simple store the <frame> index!
-				animation.track_insert_key(frame_track, time, frame)
-				# Adjust the time based on the frame's duration divided by the
-				# defined speed/fps of the animation.
-				time += sf.get_frame_duration(anim_name, frame) / fps
-			
-			# Done with the loop, now tell the animation how long it actually is!
-			# (Which should just be the accumlated <time> value!)
-			animation.length = time
-			
-			# Tell the animation if it's looping!
-			if sf.get_animation_loop(anim_name):
-				animation.loop_mode = Animation.LOOP_LINEAR
-			
-			# Add the animation to the AnimationLibrary under the same name
-			# as appeared in the AnimatedSprite2D:SpriteFrames resource.
-			anim_library.add_animation(anim_name, animation)
+		if not target_animation.is_empty():
+			if sf.has_animation(target_animation):
+				_ClearAnimationFromLibrary(anim_library, target_animation)
+				_PortAnimation(anim_library, sf, node_path, target_animation)
+		else:
+			_ClearAnimationLibrary(anim_library)
+			# Loop through each animation in the AnimatedSprite2D:SpriteFrames resource.
+			for anim_name : StringName in sf.get_animation_names():
+				_PortAnimation(anim_library, sf, node_path, anim_name)
 		
 		# Finally, store the AnimationLibrary if no library exists under the given name.
 		_StoreLibraryIfNotExists(

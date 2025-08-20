@@ -6,6 +6,8 @@ extends Node
 # ------------------------------------------------------------------------------
 signal health_changed(health : int, max_health : int)
 
+signal boss_health_changed(health : int, max_health : int)
+signal boss_dead()
 
 # ------------------------------------------------------------------------------
 # Override Methods

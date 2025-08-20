@@ -31,6 +31,11 @@ func set_health(h : int) -> void:
 		health = max(0, min(max_health, h))
 		health_changed.emit(health, max_health)
 
+# ------------------------------------------------------------------------------
+# Override Methods
+# ------------------------------------------------------------------------------
+func _ready() -> void:
+	health_changed.emit(health, max_health)
 
 # ------------------------------------------------------------------------------
 # Public Methods

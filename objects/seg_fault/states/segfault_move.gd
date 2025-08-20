@@ -1,4 +1,4 @@
-extends ActorState
+extends SegFaultState
 
 
 # ------------------------------------------------------------------------------
@@ -8,6 +8,7 @@ extends ActorState
 @export_group("States")
 @export var state_idle : StringName = &""
 @export var state_teleport : StringName = &""
+@export var state_fall : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -22,12 +23,6 @@ func _DisconnectPlayer(player : CharacterActor2D) -> void:
 	if player.weapon_fired.is_connected(_on_player_weapon_fired):
 		player.weapon_fired.disconnect(_on_player_weapon_fired)
 
-func _GetPlayerDirection(player : CharacterActor2D) -> float:
-	if player != null:
-		var dir : Vector2 = actor.global_position.direction_to(player.global_position)
-		return sign(dir.x)
-	return 0.0
-
 # ------------------------------------------------------------------------------
 # Virtual Methods
 # ------------------------------------------------------------------------------
@@ -35,6 +30,7 @@ func enter(payload : Variant = null) -> void:
 	if actor == null:
 		pop()
 		return
+	
 	actor.velocity = Vector2.ZERO
 	_ConnectPlayer(actor.get_player())
 
@@ -53,7 +49,7 @@ func physics_update(_delta : float) -> void:
 		swap_to(state_idle)
 		return
 	
-	var dir : float = _GetPlayerDirection(player)
+	var dir : float = get_player_direction(player)
 	actor.velocity.x = speed * dir
 	if not actor.is_on_surface():
 		actor.velocity.y = actor.get_gravity().y
@@ -63,7 +59,8 @@ func physics_update(_delta : float) -> void:
 	if player.global_position.distance_to(actor.global_position) < 4.0:
 		swap_to(state_teleport)
 		return
-	if not actor.is_on_surface(): pass
+	if not actor.is_on_surface():
+		swap_to(state_fall)
 
 # ------------------------------------------------------------------------------
 # Handler Methods

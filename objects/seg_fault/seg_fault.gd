@@ -38,7 +38,7 @@ func get_teleport_position() -> Vector2:
 			if pois.size() == 1:
 				return pois[0].global_position
 		_:
-			var idx : int = randi_range(0, pois.size())
+			var idx : int = randi_range(0, pois.size() - 1)
 			return pois[idx].global_position
 		
 	return Vector2.ZERO
