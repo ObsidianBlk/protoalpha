@@ -39,7 +39,9 @@ func _Attack() -> void:
 	if weapon != null and parent is Node2D:
 		var player : CharacterActor2D = actor.get_player()
 		if player == null: return
-		weapon.look_at(player.global_position)
+		weapon.look_at(
+			player.global_position - Vector2(0.0, randf_range(2, 18))
+		)
 		weapon.press_trigger(parent)
 		if _count > 0:
 			_delay = attack_delay

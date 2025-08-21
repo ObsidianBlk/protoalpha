@@ -7,6 +7,7 @@ class_name SegFaultState
 const ANIM_TELEPORT_IN : StringName = &"teleport_in"
 const ANIM_TELEPORT_OUT : StringName = &"teleport_out"
 const ANIM_ATTACK : StringName = &"attack"
+const ANIM_HURT : StringName = &"hurt"
 
 const ACTION_TELEPORT_IN : StringName = &"in"
 const ACTION_TELEPORT_OUT : StringName = &"out"
@@ -15,8 +16,11 @@ const ACTION_STATE_MOVE : StringName = &"movement"
 const ACTION_STATE_TELEPORT : StringName = &"teleport"
 const ACTION_STATE_ATTACK : StringName = &"attack"
 
+const ONCE_FIRE : int = 1
+
 const APARAM_STATE : String = "parameters/state/transition_request"
 const APARAM_TELEPORT : String = "parameters/teleport/transition_request"
+const APARAM_ONCE_HURT : String = "parameters/hurt/request"
 
 
 # ------------------------------------------------------------------------------

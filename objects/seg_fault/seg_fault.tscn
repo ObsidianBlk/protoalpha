@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://b1rbu87qlnwo6"]
+[gd_scene load_steps=101 format=3 uid="uid://b1rbu87qlnwo6"]
 
 [ext_resource type="Script" uid="uid://d1je67bseaejq" path="res://objects/seg_fault/seg_fault.gd" id="1_6dxb4"]
 [ext_resource type="Script" uid="uid://cwjk0b6j3hspo" path="res://scripts/nodes/component_relay.gd" id="2_cspb4"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://dql00fyr6cam1" path="res://objects/seg_fault/states/segfault_teleport.gd" id="11_57mec"]
 [ext_resource type="Script" uid="uid://derutq4qgsdm3" path="res://objects/seg_fault/states/segfault_attack.gd" id="12_sjfpj"]
 [ext_resource type="Script" uid="uid://8gwq0dba4lwc" path="res://objects/seg_fault/states/segfault_fall.gd" id="13_bhfqv"]
+[ext_resource type="Script" uid="uid://4m3c7l28683y" path="res://objects/seg_fault/states/segfault_hurt.gd" id="15_lhc8u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_72kkf"]
 radius = 4.0
@@ -387,6 +388,33 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
 
+[sub_resource type="Animation" id="Animation_8igdd"]
+length = 0.583333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ASprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"dead"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ASprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
 [sub_resource type="Animation" id="Animation_bhfqv"]
 resource_name = "face_left"
 length = 0.1
@@ -441,6 +469,59 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cspb4"]
+length = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ASprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"fall"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ASprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_lhc8u"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ASprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"hurt"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ASprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 }
 
 [sub_resource type="Animation" id="Animation_165qf"]
@@ -551,86 +632,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_cspb4"]
-length = 0.0833333
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ASprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [&"fall"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ASprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_lhc8u"]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ASprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [&"hurt"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ASprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-}
-
-[sub_resource type="Animation" id="Animation_8igdd"]
-length = 0.583333
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ASprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [&"dead"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ASprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_165qf"]
@@ -745,6 +746,8 @@ states/face_right/node = SubResource("AnimationNodeAnimation_165qf")
 states/face_right/position = Vector2(404.953, 87.7695)
 transitions = ["Start", "face_right", SubResource("AnimationNodeStateMachineTransition_wg0kf"), "Start", "face_left", SubResource("AnimationNodeStateMachineTransition_i3ypb"), "face_left", "face_right", SubResource("AnimationNodeStateMachineTransition_57mec"), "face_right", "face_left", SubResource("AnimationNodeStateMachineTransition_sjfpj")]
 
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_lhc8u"]
+
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_cspb4"]
 input_0/name = "movement"
 input_0/auto_advance = false
@@ -758,14 +761,10 @@ input_2/name = "attack"
 input_2/auto_advance = false
 input_2/break_loop_at_end = false
 input_2/reset = true
-input_3/name = "hurt"
+input_3/name = "dead"
 input_3/auto_advance = false
 input_3/break_loop_at_end = false
 input_3/reset = true
-input_4/name = "dead"
-input_4/auto_advance = false
-input_4/break_loop_at_end = false
-input_4/reset = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_rnv8l"]
 input_0/name = "in"
@@ -778,9 +777,9 @@ input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bhfqv"]
-graph_offset = Vector2(-577.337, 234.581)
+graph_offset = Vector2(-340.812, 172.431)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_mu864")
-nodes/Add2/position = Vector2(600, 240)
+nodes/Add2/position = Vector2(780, 240)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_i3ypb")
 nodes/Animation/position = Vector2(-660, 580)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_wg0kf")
@@ -788,19 +787,21 @@ nodes/Animation/position = Vector2(-660, 580)
 "nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_bhfqv")
 "nodes/Animation 3/position" = Vector2(-400, 880)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_la6sf")
-"nodes/Animation 4/position" = Vector2(-400, 1060)
+"nodes/Animation 4/position" = Vector2(400, 620)
 "nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_rnv8l")
-"nodes/Animation 5/position" = Vector2(-80, 1140)
+"nodes/Animation 5/position" = Vector2(-400, 1080)
 nodes/Movement/node = SubResource("AnimationNodeStateMachine_la6sf")
 nodes/Movement/position = Vector2(-480, 400)
 nodes/facing/node = SubResource("AnimationNodeStateMachine_bhfqv")
 nodes/facing/position = Vector2(120, 60)
+nodes/hurt/node = SubResource("AnimationNodeOneShot_lhc8u")
+nodes/hurt/position = Vector2(600, 460)
 nodes/output/position = Vector2(940, 240)
 nodes/state/node = SubResource("AnimationNodeTransition_cspb4")
 nodes/state/position = Vector2(220, 520)
 nodes/teleport/node = SubResource("AnimationNodeTransition_rnv8l")
 nodes/teleport/position = Vector2(-400, 600)
-node_connections = [&"Add2", 0, &"facing", &"Add2", 1, &"state", &"output", 0, &"Add2", &"state", 0, &"Movement", &"state", 1, &"teleport", &"state", 2, &"Animation 3", &"state", 3, &"Animation 4", &"state", 4, &"Animation 5", &"teleport", 0, &"Animation", &"teleport", 1, &"Animation 2"]
+node_connections = [&"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"hurt", 0, &"state", &"hurt", 1, &"Animation 4", &"output", 0, &"Add2", &"state", 0, &"Movement", &"state", 1, &"teleport", &"state", 2, &"Animation 3", &"state", 3, &"Animation 5", &"teleport", 0, &"Animation", &"teleport", 1, &"Animation 2"]
 
 [node name="SegFault" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree", "weapon")]
 collision_layer = 32
@@ -829,6 +830,7 @@ collision_mask = 256
 script = ExtResource("3_uxyan")
 health = NodePath("../ComponentHealth")
 damage = 5
+invulnerability_time = 2.0
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
@@ -867,6 +869,9 @@ tree_root = SubResource("AnimationNodeBlendTree_bhfqv")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimSpritePlayer")
 parameters/Add2/add_amount = 1.0
+parameters/hurt/active = false
+parameters/hurt/internal_active = false
+parameters/hurt/request = 0
 parameters/state/current_state = "movement"
 parameters/state/transition_request = ""
 parameters/state/current_index = 0
@@ -912,5 +917,10 @@ script = ExtResource("13_bhfqv")
 state_idle = &"Idle"
 metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 
+[node name="Hurt" type="Node" parent="AFSM"]
+script = ExtResource("15_lhc8u")
+metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
+
 [connection signal="dead" from="." to="ComponentRelay" method="boss_dead"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed" binds= [true]]
+[connection signal="hit" from="ComponentHealth" to="AFSM" method="transition_state" binds= [&"Hurt"]]

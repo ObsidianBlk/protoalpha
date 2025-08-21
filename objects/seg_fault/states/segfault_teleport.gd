@@ -43,7 +43,6 @@ func update(delta : float) -> void:
 	if _tp_delay > 0.0:
 		_tp_delay -= delta
 		if _tp_delay <= 0.0:
-			actor.global_position = actor.get_teleport_position()
 			actor.set_tree_param(APARAM_TELEPORT, ACTION_TELEPORT_IN)
 
 # ------------------------------------------------------------------------------
@@ -52,6 +51,7 @@ func update(delta : float) -> void:
 func _on_animation_finished(anim_name : StringName) -> void:
 	match anim_name:
 		ANIM_TELEPORT_OUT:
+			actor.global_position = actor.get_teleport_position()
 			_tp_delay = TELEPORT_DELAY
 		ANIM_TELEPORT_IN:
 			swap_to(state_attack)

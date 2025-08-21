@@ -53,6 +53,7 @@ metadata/_custom_type_script = "uid://wbuewjeffa70"
 [node name="ProtoAlpha" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_q6vex")
+pause_menu = &"PauseMenu"
 
 [node name="ChaseCamera" type="Camera2D" parent="."]
 script = ExtResource("2_fchvx")

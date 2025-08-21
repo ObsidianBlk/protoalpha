@@ -14,6 +14,7 @@ signal invulnerability_changed(enabled : bool)
 @export var damage : int = 0
 @export var continuous : bool = false
 @export var invulnerability_time : float = 1.0
+@export var debug_verbose : bool = false
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -33,6 +34,10 @@ func _ready() -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _DebugPrint(msg : String) -> void:
+	if not debug_verbose: return
+	print(msg)
+
 func _HurtIfWithin(hb : HitBox) -> void:
 	if damage <= 0 or not hb.name in _hitboxes: return
 	hb.hurt(damage)
