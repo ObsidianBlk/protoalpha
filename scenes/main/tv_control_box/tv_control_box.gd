@@ -19,6 +19,7 @@ const KEYPAD_CODE_TOGGLE_CRT : int = 42
 @onready var _vslider_master: VSlider = %VSLIDER_Master
 @onready var _vslider_music: VSlider = %VSLIDER_Music
 @onready var _vslider_sfx: VSlider = %VSLIDER_SFX
+@onready var _key_pad: KeyPad = %KeyPad
 
 
 # ------------------------------------------------------------------------------
@@ -64,6 +65,8 @@ func _on_key_pad_coded(value: int) -> void:
 			var crt : CRTEffect = CRTEffect.Get()
 			if crt != null:
 				crt.enabled = not crt.enabled
+			_key_pad.reset()
+			value = _key_pad.DEFAULT_CODE
 	coded.emit(value)
 
 

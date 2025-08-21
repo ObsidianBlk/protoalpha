@@ -21,6 +21,7 @@ theme_type_variation = &"TVControlPanelB"
 layout_mode = 2
 
 [node name="KeyPad" parent="HBoxContainer/PanelContainer/VBoxContainer" instance=ExtResource("3_ajjg8")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 

@@ -1267,7 +1267,6 @@ libraries = {
 }
 script = ExtResource("11_jl3in")
 animated_sprite = NodePath("../ASprite")
-target_animation = null
 clear_existing_libraries = true
 metadata/_custom_type_script = "uid://gg0uxpt06y26"
 
