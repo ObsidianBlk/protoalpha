@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://bhq77qjywxvva"]
+[gd_scene load_steps=21 format=4 uid="uid://bhq77qjywxvva"]
 
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="1_k1sf6"]
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_kntij"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://bkhshhbjico1n" path="res://assets/audio/music/Level 2.ogg" id="4_u3rpf"]
 [ext_resource type="PackedScene" uid="uid://tfm2jtgj2is3" path="res://objects/enemy_glob/enemy_glob.tscn" id="5_kntij"]
 [ext_resource type="Script" uid="uid://bk3uspbhs6g0p" path="res://scripts/nodes/boss_spawner.gd" id="11_u3rpf"]
+[ext_resource type="PackedScene" uid="uid://ojbp6siu8aak" path="res://objects/boss_door/boss_door.tscn" id="12_dka4h"]
 
 [sub_resource type="Resource" id="Resource_dka4h"]
 script = ExtResource("2_hk6jy")
@@ -126,7 +127,7 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("4_a11qx")
 pixels_per_second = 120.0
-offset = 16
+offset = 23
 segment_a = NodePath("../../Segment_B")
 segment_b = NodePath("../../Segment_C")
 metadata/_custom_type_script = "uid://b51ttt7nf66dg"
@@ -169,3 +170,7 @@ metadata/_custom_type_script = "uid://bk3uspbhs6g0p"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossSpawner"]
 position = Vector2(-136, -15.5)
 shape = SubResource("RectangleShape2D_u3rpf")
+
+[node name="BossDoor" parent="." instance=ExtResource("12_dka4h")]
+position = Vector2(496, -160)
+boss_side = 1

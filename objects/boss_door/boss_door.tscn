@@ -1,0 +1,108 @@
+[gd_scene load_steps=6 format=3 uid="uid://ojbp6siu8aak"]
+
+[ext_resource type="Script" uid="uid://1n8whgfwlci5" path="res://objects/boss_door/boss_door.gd" id="1_k1181"]
+[ext_resource type="Texture2D" uid="uid://b08rhqu7x7gha" path="res://assets/graphics/bosses/boss_door_segment.png" id="2_34e4t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ojne0"]
+size = Vector2(16, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1181"]
+size = Vector2(8, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_34e4t"]
+size = Vector2(8, 32)
+
+[node name="BossDoor" type="Node2D"]
+script = ExtResource("1_k1181")
+
+[node name="Segment_1" type="StaticBody2D" parent="."]
+position = Vector2(0, -2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_1"]
+shape = SubResource("RectangleShape2D_ojne0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment_1"]
+texture = ExtResource("2_34e4t")
+
+[node name="Segment_2" type="StaticBody2D" parent="."]
+position = Vector2(0, -6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_2"]
+shape = SubResource("RectangleShape2D_ojne0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment_2"]
+texture = ExtResource("2_34e4t")
+
+[node name="Segment_3" type="StaticBody2D" parent="."]
+position = Vector2(0, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_3"]
+shape = SubResource("RectangleShape2D_ojne0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment_3"]
+texture = ExtResource("2_34e4t")
+
+[node name="Segment_4" type="StaticBody2D" parent="."]
+position = Vector2(0, -14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_4"]
+shape = SubResource("RectangleShape2D_ojne0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment_4"]
+texture = ExtResource("2_34e4t")
+
+[node name="Segment_5" type="StaticBody2D" parent="."]
+position = Vector2(0, -18)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_5"]
+shape = SubResource("RectangleShape2D_ojne0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment_5"]
+texture = ExtResource("2_34e4t")
+
+[node name="Segment_6" type="StaticBody2D" parent="."]
+position = Vector2(0, -22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_6"]
+shape = SubResource("RectangleShape2D_ojne0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment_6"]
+texture = ExtResource("2_34e4t")
+
+[node name="Segment_7" type="StaticBody2D" parent="."]
+position = Vector2(0, -26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_7"]
+shape = SubResource("RectangleShape2D_ojne0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment_7"]
+texture = ExtResource("2_34e4t")
+
+[node name="Segment_8" type="StaticBody2D" parent="."]
+position = Vector2(0, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_8"]
+shape = SubResource("RectangleShape2D_ojne0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment_8"]
+texture = ExtResource("2_34e4t")
+
+[node name="LeftDetector" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-16, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDetector"]
+position = Vector2(4, -16)
+shape = SubResource("RectangleShape2D_k1181")
+
+[node name="RightDetector" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(16, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightDetector"]
+position = Vector2(-4, -16)
+shape = SubResource("RectangleShape2D_34e4t")
