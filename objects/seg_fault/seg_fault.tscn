@@ -854,6 +854,7 @@ unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_cdyep")
 animation = &"idle"
 autoplay = "idle"
+frame = 1
 offset = Vector2(0, -10.5)
 
 [node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
@@ -928,6 +929,7 @@ metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 
 [connection signal="dead" from="." to="ComponentRelay" method="boss_dead"]
 [connection signal="dead" from="." to="AFSM" method="transition_state" binds= [&"Dead"]]
+[connection signal="tree_exiting" from="." to="ComponentRelay" method="boss_removed"]
 [connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed" binds= [true]]
 [connection signal="hit" from="ComponentHealth" to="AFSM" method="transition_state" binds= [&"Hurt"]]

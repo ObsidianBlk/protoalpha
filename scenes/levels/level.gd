@@ -6,6 +6,8 @@ class_name Level
 # Signals
 # ------------------------------------------------------------------------------
 signal pause_requested()
+signal completed()
+signal defeated()
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -66,6 +68,7 @@ func _process(delta: float) -> void:
 	if _player_respawn_timer > 0.0:
 		_player_respawn_timer -= delta
 		if _player_respawn_timer <= 0.0:
+			_ClearBosses()
 			spawn_player()
 
 # ------------------------------------------------------------------------------
@@ -99,6 +102,10 @@ func _DisconnectSegment(segment : MapSegment) -> void:
 	if segment.exited.is_connected(_on_segment_exited.bind(segment)):
 		segment.exited.disconnect(_on_segment_exited.bind(segment))
 
+func _ClearBosses() -> void:
+	for boss : Node in get_tree().get_nodes_in_group(Game.GROUP_BOSS):
+		if boss is CharacterActor2D:
+			boss.queue_free()
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -117,6 +124,7 @@ func spawn_player(level_start : bool = false) -> void:
 	var player : Node2D = PLAYER_SCENE.instantiate()
 	player.add_to_group(Game.GROUP_PLAYER)
 	camera.target = player
+	player.position = checkpoint.global_position
 	if player_container != null:
 		player_container.add_child(player)
 	else:
@@ -125,6 +133,8 @@ func spawn_player(level_start : bool = false) -> void:
 	if player.has_method("spawn_at"):
 		player.spawn_at(checkpoint.global_position)
 		Relay.health_changed.emit(100, 100)
+	if level_start:
+		camera.snap_to_target()
 	_can_spawn_player = false
 
 
@@ -142,13 +152,16 @@ func _on_child_exiting(child : Node) -> void:
 	if child.is_in_group(Game.GROUP_PLAYER):
 		if not _boss_defeated:
 			Game.State.lives -= 1
-		_player_respawn_timer = PLAYER_RESPAWN_TIMER
-		_can_spawn_player = true
+		if Game.State.lives > 0:
+			_player_respawn_timer = PLAYER_RESPAWN_TIMER
+			_can_spawn_player = true
+		else: defeated.emit()
 	elif child.is_in_group(Game.GROUP_BOSS):
-		if _boss_defeated:
-			pass # TODO: Handle events where player defeated boss!
 		if child.dead.is_connected(_on_boss_dead):
 			child.dead.disconnect(_on_boss_dead)
+		if _boss_defeated:
+			# TODO: Call a Victory screen animation!
+			completed.emit()
 
 func _on_segment_entered(segment : MapSegment) -> void:
 	if not segment.name in _active_segments:

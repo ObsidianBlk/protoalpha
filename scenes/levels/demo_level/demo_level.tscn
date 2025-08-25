@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://bhq77qjywxvva"]
+[gd_scene load_steps=22 format=4 uid="uid://bhq77qjywxvva"]
 
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="1_k1sf6"]
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_kntij"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://tfm2jtgj2is3" path="res://objects/enemy_glob/enemy_glob.tscn" id="5_kntij"]
 [ext_resource type="Script" uid="uid://bk3uspbhs6g0p" path="res://scripts/nodes/boss_spawner.gd" id="11_u3rpf"]
 [ext_resource type="PackedScene" uid="uid://ojbp6siu8aak" path="res://objects/boss_door/boss_door.tscn" id="12_dka4h"]
+[ext_resource type="PackedScene" uid="uid://c6i2gkf7hw2tw" path="res://objects/pickups/pickup_proto_life/pickup_proto_life.tscn" id="13_7m45j"]
 
 [sub_resource type="Resource" id="Resource_dka4h"]
 script = ExtResource("2_hk6jy")
@@ -56,9 +57,10 @@ size = Vector2(20, 240)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dka4h"]
 size = Vector2(122, 51)
 
-[node name="DemoLevel" type="Node2D" node_paths=PackedStringArray("player_container")]
+[node name="DemoLevel" type="Node2D" node_paths=PackedStringArray("player_container", "boss_container")]
 script = ExtResource("1_kntij")
 player_container = NodePath("PlayerContainer")
+boss_container = NodePath("BossContainer")
 music_sheet = SubResource("Resource_gtfch")
 
 [node name="Segment_A" type="Area2D" parent="." node_paths=PackedStringArray("layer")]
@@ -105,6 +107,8 @@ position = Vector2(881, -240)
 position = Vector2(1077, -240)
 
 [node name="Segment_C" type="Area2D" parent="." node_paths=PackedStringArray("layer")]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("1_k1sf6")
 layer = NodePath("TileMapLayer")
 metadata/_custom_type_script = "uid://iseo8u8frf3w"
@@ -213,5 +217,10 @@ script = ExtResource("11_u3rpf")
 boss_path = "uid://b1rbu87qlnwo6"
 spawn_container = NodePath("../BossContainer")
 metadata/_custom_type_script = "uid://bk3uspbhs6g0p"
+
+[node name="PickupProtoLife" parent="." instance=ExtResource("13_7m45j")]
+position = Vector2(408, -454)
+collision_layer = 0
+collision_mask = 2
 
 [connection signal="closed_boss" from="_Inner_BossDoor" to="BossSpawner" method="spawn"]

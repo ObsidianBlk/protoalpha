@@ -66,6 +66,10 @@ func _CloseLevel() -> void:
 	_container.remove_child(_level)
 	if _level.pause_requested.is_connected(_PauseGame):
 		_level.pause_requested.disconnect(_PauseGame)
+	if _level.completed.is_connected(_on_level_completed):
+		_level.completed.disconnect(_on_level_completed)
+	if _level.defeated.is_connected(_on_level_defeated):
+		_level.defeated.disconnect(_on_level_defeated)
 	_level.queue_free()
 	_level = null
 
@@ -87,6 +91,10 @@ func _LoadLevel(path_or_uid : String) -> void:
 	_level = lvl
 	if not _level.pause_requested.is_connected(_PauseGame):
 		_level.pause_requested.connect(_PauseGame)
+	if not _level.completed.is_connected(_on_level_completed):
+		_level.completed.connect(_on_level_completed)
+	if not _level.defeated.is_connected(_on_level_defeated):
+		_level.defeated.connect(_on_level_defeated)
 	_container.add_child(_level)
 	_level.spawn_player(true)
 
@@ -95,6 +103,7 @@ func _StartGame() -> void:
 	_ui.close_all_ui()
 	await _ui.all_hidden
 	get_tree().paused = false
+	Game.State.reset()
 	_LoadLevel(LEVEL)
 	_hud.visible = true
 	Game.Game_Running = true
@@ -116,8 +125,9 @@ func _QuitGame(keep_ui_closed : bool = false) -> void:
 	Game.Game_Running = false
 	get_tree().paused = true
 	_hud.visible = false
-	_ui.close_all_ui()
-	await _ui.all_hidden
+	if _ui.ui_active():
+		_ui.close_all_ui()
+		await _ui.all_hidden
 	if not keep_ui_closed:
 		_ui.open_default_ui()
 
@@ -136,3 +146,13 @@ func close_game() -> void:
 
 func is_open() -> bool:
 	return _level != null or _ui.ui_active()
+
+
+# ------------------------------------------------------------------------------
+# Handler Methods
+# ------------------------------------------------------------------------------
+func _on_level_completed() -> void:
+	_QuitGame.call_deferred()
+
+func _on_level_defeated() -> void:
+	_QuitGame.call_deferred()

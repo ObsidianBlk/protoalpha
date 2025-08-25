@@ -8,6 +8,7 @@ signal health_changed(health : int, max_health : int)
 
 signal boss_health_changed(health : int, max_health : int)
 signal boss_dead()
+signal boss_removed()
 
 # ------------------------------------------------------------------------------
 # Override Methods

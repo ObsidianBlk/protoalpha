@@ -13,3 +13,6 @@ func health_changed(health : int, max_health : int, is_boss : bool = false) -> v
 
 func boss_dead() -> void:
 	Relay.boss_dead.emit()
+
+func boss_removed() -> void:
+	Relay.boss_removed.emit()

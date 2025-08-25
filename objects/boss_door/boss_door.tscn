@@ -1,7 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://ojbp6siu8aak"]
+[gd_scene load_steps=11 format=3 uid="uid://ojbp6siu8aak"]
 
 [ext_resource type="Script" uid="uid://1n8whgfwlci5" path="res://objects/boss_door/boss_door.gd" id="1_k1181"]
 [ext_resource type="Texture2D" uid="uid://b08rhqu7x7gha" path="res://assets/graphics/bosses/boss_door_segment.png" id="2_34e4t"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_ojne0"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_da15y"]
+[ext_resource type="AudioStream" uid="uid://d1n7k8ug1qeky" path="res://assets/audio/sfx/boss_door_segment.wav" id="4_da15y"]
+
+[sub_resource type="Resource" id="Resource_yu280"]
+script = ExtResource("3_da15y")
+stream = ExtResource("4_da15y")
+volume_db = 0.0
+volume_linear = 1.0
+min_pitch = 0.8
+max_pitch = 1.2
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_do3im"]
+script = ExtResource("2_ojne0")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("3_da15y")]({
+&"segment": SubResource("Resource_yu280")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ojne0"]
 size = Vector2(16, 4)
@@ -14,6 +34,7 @@ size = Vector2(8, 32)
 
 [node name="BossDoor" type="Node2D"]
 script = ExtResource("1_k1181")
+sound_sheet = SubResource("Resource_do3im")
 
 [node name="Segment_1" type="StaticBody2D" parent="."]
 position = Vector2(0, -2)

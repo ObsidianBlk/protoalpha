@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://3hpweo30ryty"]
+
+[ext_resource type="Script" uid="uid://qvif777vdc70" path="res://scenes/proto_alpha/ui/level_select/level_select.gd" id="1_daoap"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_daoap"]
+bg_color = Color(0.25098, 0.192157, 0.552941, 1)
+
+[node name="LevelSelect" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_daoap")
+script = ExtResource("1_daoap")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+columns = 3

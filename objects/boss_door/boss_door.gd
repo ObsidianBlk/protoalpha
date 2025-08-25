@@ -15,6 +15,8 @@ const SEGMENT_BASE_NAME : String = "Segment_"
 const INITIAL_SEGMENT : int = 1
 const MAX_SEGMENTS : int = 8
 
+const AUDIO_NAME : StringName = &"segment"
+
 enum BossSide {LEFT=0, RIGHT=1}
 
 # ------------------------------------------------------------------------------
@@ -24,6 +26,7 @@ enum BossSide {LEFT=0, RIGHT=1}
 @export var open : bool = false:					set=set_open
 @export var locked : bool = false
 @export var segment_delay : float = 0.1
+@export var sound_sheet : SoundSheet = null
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -142,6 +145,8 @@ func _ChangeSegment(vis : bool) -> void:
 		if child is StaticBody2D and child.name == target_name:
 			child.visible = vis
 			_EnableStaticCollision(child, vis)
+			if sound_sheet != null:
+				sound_sheet.play(AUDIO_NAME)
 			break
 	
 	_transition += -1 if vis else 1

@@ -52,7 +52,7 @@ func set_unlimited(u : bool) -> void:
 			changed.emit()
 
 func set_lives(l : int) -> void:
-	if l > 0 and l != lives:
+	if l >= 0 and l != lives:
 		lives = l
 		if _lock_change_emit <= 0:
 			changed.emit()

@@ -79,6 +79,13 @@ func set_target_position(pos : Vector2) -> void:
 		_target_position = pos
 		_TweenToTarget()
 
+func snap_to_target() -> void:
+	if target != null:
+		if _tween != null:
+			_tween.kill()
+			_tween = null
+		global_position = target.global_position
+
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
