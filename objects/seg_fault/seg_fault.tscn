@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=3 uid="uid://b1rbu87qlnwo6"]
+[gd_scene load_steps=102 format=3 uid="uid://b1rbu87qlnwo6"]
 
 [ext_resource type="Script" uid="uid://d1je67bseaejq" path="res://objects/seg_fault/seg_fault.gd" id="1_6dxb4"]
 [ext_resource type="Script" uid="uid://cwjk0b6j3hspo" path="res://scripts/nodes/component_relay.gd" id="2_cspb4"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://derutq4qgsdm3" path="res://objects/seg_fault/states/segfault_attack.gd" id="12_sjfpj"]
 [ext_resource type="Script" uid="uid://8gwq0dba4lwc" path="res://objects/seg_fault/states/segfault_fall.gd" id="13_bhfqv"]
 [ext_resource type="Script" uid="uid://4m3c7l28683y" path="res://objects/seg_fault/states/segfault_hurt.gd" id="15_lhc8u"]
+[ext_resource type="Script" uid="uid://lumlrdai1pvh" path="res://objects/seg_fault/states/segfault_dead.gd" id="16_8igdd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_72kkf"]
 radius = 4.0
@@ -777,7 +778,7 @@ input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bhfqv"]
-graph_offset = Vector2(-340.812, 172.431)
+graph_offset = Vector2(-486.07, 134.698)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_mu864")
 nodes/Add2/position = Vector2(780, 240)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_i3ypb")
@@ -821,7 +822,7 @@ metadata/_custom_type_script = "uid://cwjk0b6j3hspo"
 [node name="ComponentHealth" type="Node" parent="."]
 script = ExtResource("2_uxyan")
 max_health = 50
-health = 50
+health = 3
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
@@ -921,6 +922,12 @@ metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 script = ExtResource("15_lhc8u")
 metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 
+[node name="Dead" type="Node" parent="AFSM"]
+script = ExtResource("16_8igdd")
+metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
+
 [connection signal="dead" from="." to="ComponentRelay" method="boss_dead"]
+[connection signal="dead" from="." to="AFSM" method="transition_state" binds= [&"Dead"]]
+[connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed" binds= [true]]
 [connection signal="hit" from="ComponentHealth" to="AFSM" method="transition_state" binds= [&"Hurt"]]

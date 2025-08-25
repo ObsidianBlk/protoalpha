@@ -6,6 +6,7 @@ extends Node2D
 # ------------------------------------------------------------------------------
 signal opened()
 signal closed()
+signal closed_boss()
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -28,6 +29,7 @@ enum BossSide {LEFT=0, RIGHT=1}
 # Variables
 # ------------------------------------------------------------------------------
 var _transition : int = 0
+var _boss_side_exit : bool = false
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -52,6 +54,9 @@ func set_open(o : bool) -> void:
 			opened.emit()
 		else:
 			closed.emit()
+			if _boss_side_exit:
+				_boss_side_exit = false
+				closed_boss.emit()
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -176,15 +181,16 @@ func _on_body_entered(body : Node2D, side_id : int, detector : Area2D) -> void:
 		BossSide.RIGHT:
 			triggered = body.global_position.x > detector.global_position.x
 	if triggered:
-		open_door()
+		open_door.call_deferred()
 
 func _on_body_exited(body : Node2D, side_id : int, detector : Area2D) -> void:
 	if not open or locked: return
 	var triggered : bool = false
+	_boss_side_exit = boss_side == side_id
 	match side_id:
 		BossSide.LEFT:
 			triggered = body.global_position.x < detector.global_position.x
 		BossSide.RIGHT:
 			triggered = body.global_position.x > detector.global_position.x
 	if triggered:
-		close_door()
+		close_door.call_deferred()

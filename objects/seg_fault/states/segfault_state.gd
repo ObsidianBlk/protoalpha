@@ -8,6 +8,7 @@ const ANIM_TELEPORT_IN : StringName = &"teleport_in"
 const ANIM_TELEPORT_OUT : StringName = &"teleport_out"
 const ANIM_ATTACK : StringName = &"attack"
 const ANIM_HURT : StringName = &"hurt"
+const ANIM_DEAD : StringName = &"dead"
 
 const ACTION_TELEPORT_IN : StringName = &"in"
 const ACTION_TELEPORT_OUT : StringName = &"out"
@@ -15,6 +16,7 @@ const ACTION_TELEPORT_OUT : StringName = &"out"
 const ACTION_STATE_MOVE : StringName = &"movement"
 const ACTION_STATE_TELEPORT : StringName = &"teleport"
 const ACTION_STATE_ATTACK : StringName = &"attack"
+const ACTION_STATE_DEAD : StringName = &"dead"
 
 const ONCE_FIRE : int = 1
 

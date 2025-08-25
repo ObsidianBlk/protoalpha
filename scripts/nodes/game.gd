@@ -78,9 +78,11 @@ const GUIDE_COLOR_APPOSING_AXIS : Color = Color.BROWN
 
 ## The "Player" Group
 const GROUP_PLAYER : StringName = &"player"
+## The "Boss" Group
+const GROUP_BOSS : StringName = &"boss"
 
-## Number of initial lives players should start the game with.
-const INITIAL_PLAYER_LIVES : int = 3
+# Number of initial lives players should start the game with.
+#const INITIAL_PLAYER_LIVES : int = 3
 
 # ------------------------------------------------------------------------------
 # Static Variables
@@ -90,7 +92,10 @@ const INITIAL_PLAYER_LIVES : int = 3
 static var Game_Running : bool = false
 
 ## Current number of player lives.
-static var Player_Lives : int = INITIAL_PLAYER_LIVES
+#static var Player_Lives : int = INITIAL_PLAYER_LIVES
+
+## The GameState object
+static var State : GameState = GameState.new()
 
 # ------------------------------------------------------------------------------
 # Helper Methods

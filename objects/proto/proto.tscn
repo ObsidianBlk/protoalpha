@@ -1180,7 +1180,7 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mh7ni"]
-graph_offset = Vector2(-276.52, -10.9137)
+graph_offset = Vector2(-373.044, 0)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(300, 60)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_osq81")
@@ -1246,7 +1246,7 @@ shape = SubResource("CapsuleShape2D_ymabh")
 [node name="ASprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_jl3in")
-animation = &"idle_a"
+animation = &"climb"
 autoplay = "idle_a"
 offset = Vector2(0, -10.5)
 

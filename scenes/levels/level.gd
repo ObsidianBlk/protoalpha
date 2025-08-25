@@ -11,6 +11,7 @@ signal pause_requested()
 # Constants
 # ------------------------------------------------------------------------------
 const PLAYER_SCENE : PackedScene = preload("res://objects/proto/proto.tscn")
+const PLAYER_RESPAWN_TIMER : float = 1.0
 
 const MUSIC_CROSSFADE_DURATION : float = 1.0
 
@@ -18,23 +19,32 @@ const MUSIC_CROSSFADE_DURATION : float = 1.0
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var player_container : Node2D = null:		set=set_player_container
+@export var boss_container : Node2D = null:			set=set_boss_container
 @export var music_sheet : MusicSheet = null
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _can_spawn_player : bool = true
+var _player_respawn_timer : float = 0.0
 var _active_segments : Dictionary[StringName, MapSegment] = {}
 
+var _boss_defeated : bool = false
 
 # ------------------------------------------------------------------------------
 # Setters
 # ------------------------------------------------------------------------------
 func set_player_container(pc : Node2D) -> void:
 	if player_container != pc:
-		_DisconnectPlayerContainer()
+		_DisconnectContainer(player_container)
 		player_container = pc
-		_ConnectPlayerContainer()
+		_ConnectContainer(player_container)
+
+func set_boss_container(bc : Node2D) -> void:
+	if boss_container != bc:
+		_DisconnectContainer(boss_container)
+		boss_container = bc
+		_ConnectContainer(boss_container)
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -52,18 +62,28 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause_game"):
 		pause_requested.emit()
 
+func _process(delta: float) -> void:
+	if _player_respawn_timer > 0.0:
+		_player_respawn_timer -= delta
+		if _player_respawn_timer <= 0.0:
+			spawn_player()
+
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
-func _ConnectPlayerContainer() -> void:
-	if player_container == null: return
-	if not player_container.child_exiting_tree.is_connected(_on_child_exiting):
-		player_container.child_exiting_tree.connect(_on_child_exiting)
+func _ConnectContainer(container : Node2D) -> void:
+	if container == null: return
+	if not container.child_entered_tree.is_connected(_on_child_entered):
+		container.child_entered_tree.connect(_on_child_entered)
+	if not container.child_exiting_tree.is_connected(_on_child_exiting):
+		container.child_exiting_tree.connect(_on_child_exiting)
 
-func _DisconnectPlayerContainer() -> void:
-	if player_container == null: return
-	if player_container.child_exiting_tree.is_connected(_on_child_exiting):
-		player_container.child_exiting_tree.disconnect(_on_child_exiting)
+func _DisconnectContainer(container : Node2D) -> void:
+	if container == null: return
+	if container.child_entered_tree.is_connected(_on_child_entered):
+		container.child_entered_tree.disconnect(_on_child_entered)
+	if container.child_exiting_tree.is_connected(_on_child_exiting):
+		container.child_exiting_tree.disconnect(_on_child_exiting)
 
 func _ConnectSegment(segment : MapSegment) -> void:
 	if segment == null: return
@@ -111,11 +131,24 @@ func spawn_player(level_start : bool = false) -> void:
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
+func _on_child_entered(child : Node) -> void:
+	if child is CharacterActor2D and child.is_in_group(Game.GROUP_BOSS):
+		if not child.dead.is_connected(_on_boss_dead):
+			child.dead.connect(_on_boss_dead)
+		_boss_defeated = false
+
 func _on_child_exiting(child : Node) -> void:
-	if child == null: return
+	if not child is CharacterActor2D: return
 	if child.is_in_group(Game.GROUP_PLAYER):
-		# TODO: Disconnect from signals as needed
+		if not _boss_defeated:
+			Game.State.lives -= 1
+		_player_respawn_timer = PLAYER_RESPAWN_TIMER
 		_can_spawn_player = true
+	elif child.is_in_group(Game.GROUP_BOSS):
+		if _boss_defeated:
+			pass # TODO: Handle events where player defeated boss!
+		if child.dead.is_connected(_on_boss_dead):
+			child.dead.disconnect(_on_boss_dead)
 
 func _on_segment_entered(segment : MapSegment) -> void:
 	if not segment.name in _active_segments:
@@ -129,3 +162,6 @@ func _on_segment_exited(segment : MapSegment) -> void:
 		_active_segments.erase(segment.name)
 	if _active_segments.size() == 1:
 		_active_segments.values()[0].focus()
+
+func _on_boss_dead() -> void:
+	_boss_defeated = true
