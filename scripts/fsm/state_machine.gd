@@ -6,6 +6,7 @@ class_name StateMachine
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var host : Node = null:		set=set_host
+@export var verbose : bool = false
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -70,6 +71,10 @@ func _physics_process(delta: float) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _VPrint(msg : String) -> void:
+	if not verbose: return
+	print(msg)
+
 func _ConnectChildState(child : State) -> void:
 	if child == null: return
 	child.set_host(host)
@@ -116,6 +121,7 @@ func transition_state(state_name : StringName, payload : Variant = null) -> int:
 	var state : State = _GetState(state_name)
 	if state == null: return ERR_DOES_NOT_EXIST
 	
+	_VPrint("Transitioning to State: %s"%[state_name])
 	if _stack.size() > 0:
 		_stack[-1].exit()
 	_stack.append(state)
@@ -126,6 +132,7 @@ func swap_state(state_name : StringName, payload : Variant = null) -> int:
 	var state : State = _GetState(state_name)
 	if state == null: return ERR_DOES_NOT_EXIST
 	
+	_VPrint("Swapping to State: %s"%[state_name])
 	if _stack.size() > 0:
 		if _stack[-1] != state:
 			var ostate : State = _stack.pop_back()

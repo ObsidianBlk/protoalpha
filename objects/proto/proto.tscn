@@ -1246,7 +1246,7 @@ shape = SubResource("CapsuleShape2D_ymabh")
 [node name="ASprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_jl3in")
-animation = &"climb"
+animation = &"idle_a"
 autoplay = "idle_a"
 offset = Vector2(0, -10.5)
 
@@ -1325,6 +1325,7 @@ state_fall = &"Fall"
 [node name="Spawn" type="Node" parent="StateMachine"]
 script = ExtResource("12_tjh6k")
 state_idle = &"Idle"
+state_move = &"Move"
 
 [node name="Hurt" type="Node" parent="StateMachine"]
 script = ExtResource("14_l84w6")

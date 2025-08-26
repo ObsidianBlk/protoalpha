@@ -5,12 +5,13 @@ extends ProtoState
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var state_idle : StringName = &""
+@export var state_move : StringName = &""
 
 
 # ------------------------------------------------------------------------------
-# Override Methods
+# Variables
 # ------------------------------------------------------------------------------
-
+var _move_direction : Vector2 = Vector2.ZERO
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
@@ -35,13 +36,20 @@ func exit() -> void:
 		if actor.animation_finished.is_connected(_on_animation_finished):
 			actor.animation_finished.disconnect(_on_animation_finished)
 
+func handle_input(event : InputEvent) -> void:
+	if actor == null: return
+	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
+		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_animation_finished(anim_name : StringName) -> void:
 	if anim_name == ANIM_SPAWN:
-		swap_to(state_idle)
+		if _move_direction.is_equal_approx(Vector2.ZERO):
+			swap_to(state_idle)
+		else:
+			swap_to(state_move, _move_direction)
 
 func _on_spawn() -> void:
 	swap_to(name)

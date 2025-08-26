@@ -45,13 +45,14 @@ func update(_delta : float) -> void:
 	var falling : bool = actor.velocity.y >= 0.0
 	
 	if actor.is_on_surface():
-		play_sfx(AUDIO_LAND)
 		if actor.is_on_ladder() and not is_equal_approx(_move_direction.y, 0.0):
 			swap_to(state_climb)
 		if falling:
 			if is_equal_approx(_move_direction.x, 0.0):
+				play_sfx(AUDIO_LAND)
 				swap_to(state_idle)
 			else:
+				play_sfx(AUDIO_LAND)
 				swap_to(state_move, _move_direction)
 
 func physics_update(delta : float) -> void:
