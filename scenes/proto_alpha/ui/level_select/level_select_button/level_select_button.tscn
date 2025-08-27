@@ -1,0 +1,163 @@
+[gd_scene load_steps=15 format=3 uid="uid://dotnqb68bu7in"]
+
+[ext_resource type="Script" uid="uid://dqqlc8nui27nr" path="res://scenes/proto_alpha/ui/level_select/level_select_button/level_select_button.gd" id="1_4dsca"]
+[ext_resource type="Texture2D" uid="uid://k5tiqts8etjb" path="res://icon.svg" id="1_y7gfu"]
+[ext_resource type="Script" uid="uid://cvyaeabf016yc" path="res://addons/OBSControlLibrary/AnimatedTextureButton/animated_texture_button.gd" id="2_4dsca"]
+[ext_resource type="Texture2D" uid="uid://dw6783jflodk8" path="res://assets/graphics/ui/level_select_button_frame.png" id="3_y16rj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0x4wn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7gfu"]
+atlas = ExtResource("3_y16rj")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dsca"]
+atlas = ExtResource("3_y16rj")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1usrt"]
+atlas = ExtResource("3_y16rj")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y16rj"]
+atlas = ExtResource("3_y16rj")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s20i2"]
+atlas = ExtResource("3_y16rj")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnwe0"]
+atlas = ExtResource("3_y16rj")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcj4o"]
+atlas = ExtResource("3_y16rj")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3sex"]
+atlas = ExtResource("3_y16rj")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s20i2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7gfu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dsca")
+}],
+"loop": true,
+"name": &"hover",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1usrt")
+}],
+"loop": false,
+"name": &"normal",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y16rj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s20i2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnwe0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcj4o")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_n3sex")
+}],
+"loop": false,
+"name": &"pressed",
+"speed": 12.0
+}]
+
+[node name="LevelSelectButton" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0x4wn")
+script = ExtResource("1_4dsca")
+verbose = null
+
+[node name="IconTexture" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("1_y7gfu")
+expand_mode = 1
+
+[node name="ATBtn" type="BaseButton" parent="."]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 2
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = ExtResource("2_4dsca")
+sprite_frames = SubResource("SpriteFrames_s20i2")
+normal_animation = &"normal"
+pressed_animation = &"pressed"
+hover_animation = &"hover"
+focused_animation = &"hover"
+metadata/_custom_type_script = "uid://cvyaeabf016yc"
+
+[connection signal="animation_finished" from="ATBtn" to="." method="_on_at_btn_animation_finished"]
+[connection signal="pressed" from="ATBtn" to="." method="_on_at_btn_pressed"]

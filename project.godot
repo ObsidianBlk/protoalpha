@@ -24,7 +24,7 @@ AudioBoard="*res://scripts/autos/audio_board.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/OBSUI/plugin.cfg")
+enabled=PackedStringArray("res://addons/OBSControlLibrary/plugin.cfg", "res://addons/OBSUI/plugin.cfg")
 
 [input]
 
