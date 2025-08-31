@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=3 uid="uid://dotnqb68bu7in"]
 
 [ext_resource type="Script" uid="uid://dqqlc8nui27nr" path="res://scenes/proto_alpha/ui/level_select/level_select_button/level_select_button.gd" id="1_4dsca"]
-[ext_resource type="Texture2D" uid="uid://k5tiqts8etjb" path="res://icon.svg" id="1_y7gfu"]
 [ext_resource type="Script" uid="uid://cvyaeabf016yc" path="res://addons/OBSControlLibrary/AnimatedTextureButton/animated_texture_button.gd" id="2_4dsca"]
+[ext_resource type="Texture2D" uid="uid://cylmmsk5st5wc" path="res://assets/graphics/ui/level_select_default_icon.png" id="2_y16rj"]
 [ext_resource type="Texture2D" uid="uid://dw6783jflodk8" path="res://assets/graphics/ui/level_select_button_frame.png" id="3_y16rj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0x4wn"]
@@ -86,12 +86,12 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0x4wn")
 script = ExtResource("1_4dsca")
-verbose = null
+level_number = null
 
 [node name="IconTexture" type="TextureRect" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("1_y7gfu")
+texture = ExtResource("2_y16rj")
 expand_mode = 1
 
 [node name="ATBtn" type="BaseButton" parent="."]

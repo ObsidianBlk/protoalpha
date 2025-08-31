@@ -14,14 +14,16 @@ const LEVEL : String = "res://scenes/levels/demo_level/demo_level.tscn"
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-@export var HUD_layer : int = 1:				set=set_hud_layer
-@export var UI_layer : int = 10:				set=set_ui_layer
+@export var HUD_layer : int = 1:					set=set_hud_layer
+@export var UI_layer : int = 10:					set=set_ui_layer
 @export var pause_menu : StringName = &""
+@export var level_select_menu : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _level : Level = null
+var _game_running : bool = false
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -53,16 +55,33 @@ func _ready() -> void:
 	get_tree().paused = true
 	_ui.close_all_ui(true)
 	_ui.register_action_handler(Game.UI_ACTION_START_GAME, _StartGame)
+	_ui.register_action_handler(Game.UI_ACTION_LOAD_LEVEL, _LoadLevelFromID)
+	_ui.register_action_handler(Game.UI_ACTION_QUIT_LEVEL, _QuitLevel)
 	_ui.register_action_handler(Game.UI_ACTION_QUIT_GAME, _QuitGame)
-	#_ui_layer.register_action_handler(Game.UI_ACTION_QUIT_APPLICATION, _QuitApplication)
 	_ui.register_action_handler(Game.UI_ACTION_PAUSE, _PauseGame)
 	_ui.register_action_handler(Game.UI_ACTION_RESUME, _ResumeGame)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause_game"):
+		if _level != null:
+			if _ui.is_ui_active(level_select_menu):
+				_ui.swap_to_ui(pause_menu)
+			elif _ui.is_ui_active(pause_menu):
+				_ResumeGame()
+			else:
+				_PauseGame()
+		else:
+			if _ui.is_ui_active(level_select_menu):
+				await _ui.pop_ui()
+				_game_running = false
+				_ui.open_default_ui()
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
 func _CloseLevel() -> void:
 	if _level == null: return
+	_level.despawn()
 	_container.remove_child(_level)
 	if _level.pause_requested.is_connected(_PauseGame):
 		_level.pause_requested.disconnect(_PauseGame)
@@ -73,17 +92,21 @@ func _CloseLevel() -> void:
 	_level.queue_free()
 	_level = null
 
-func _LoadLevel(path_or_uid : String) -> void:
+func _LoadLevel(path_or_uid : String) -> int:
+	if path_or_uid.is_empty():
+		printerr("Given level path or resource ID is empty")
+		return ERR_FILE_BAD_PATH
+	
 	var scene : PackedScene = load(path_or_uid)
 	if scene == null:
 		printerr("Failed to load level scene '", path_or_uid, "'.")
-		return
+		return ERR_FILE_UNRECOGNIZED
 	
 	var lvl : Node = scene.instantiate()
 	if not lvl is Level:
 		printerr("Level scene, '", path_or_uid, "' is not a Level node!")
 		lvl.queue_free()
-		return
+		return ERR_CANT_RESOLVE
 	
 	if _level != null:
 		_CloseLevel()
@@ -97,32 +120,68 @@ func _LoadLevel(path_or_uid : String) -> void:
 		_level.defeated.connect(_on_level_defeated)
 	_container.add_child(_level)
 	_level.spawn_player(true)
+	return OK
 
-func _StartGame() -> void:
-	if _level != null: return
+func _LoadLevelFromID(level_id : int) -> void:
 	_ui.close_all_ui()
 	await _ui.all_hidden
 	get_tree().paused = false
+	
+	if _LoadLevel(Game.Get_Level_Path(level_id)) == OK:
+		_hud.visible = true
+	else:
+		(func():
+			get_tree().paused = true
+			_ui.open_ui(level_select_menu)
+		).call_deferred()
+
+func _StartGame() -> void:
+	if level_select_menu.is_empty() or pause_menu.is_empty():
+		printerr("Missing names for Pause and/or Level Select menus.")
+		return
+	if _game_running: return
+	
 	Game.State.reset()
-	_LoadLevel(LEVEL)
-	_hud.visible = true
-	Game.Game_Running = true
+	_game_running = true
+	_ui.swap_to_ui(level_select_menu)
+
+func _QuitLevel() -> void:
+	if not (_level != null and _game_running): return
+	_CloseLevel()
+	get_tree().paused = true
+	_hud.visible = false
+	_ui.swap_to_ui(level_select_menu)
+
+
+#func _StartGame() -> void:
+	#if _level != null: return
+	#_ui.close_all_ui()
+	#await _ui.all_hidden
+	#get_tree().paused = false
+	#Game.State.reset()
+	#_LoadLevel(LEVEL)
+	#_hud.visible = true
+	#Game.Game_Running = true
 
 func _PauseGame() -> void:
-	if not Game.Game_Running or get_tree().paused: return
+	if not _game_running or get_tree().paused: return
+	if _ui.ui_active(): return
+	
 	if _ui.has_ui(pause_menu):
 		get_tree().paused = true
 		_ui.open_ui(pause_menu)
 
 func _ResumeGame() -> void:
-	if not Game.Game_Running or not get_tree().paused: return
+	if not _game_running or not get_tree().paused: return
+	if _level == null: return
+	
 	_ui.close_all_ui()
 	await _ui.all_hidden
 	get_tree().paused = false
 
 func _QuitGame(keep_ui_closed : bool = false) -> void:
 	_CloseLevel()
-	Game.Game_Running = false
+	_game_running = false
 	get_tree().paused = true
 	_hud.visible = false
 	if _ui.ui_active():

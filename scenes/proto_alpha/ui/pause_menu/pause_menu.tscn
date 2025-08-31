@@ -38,10 +38,15 @@ text = "Resume"
 layout_mode = 2
 text = "Password"
 
+[node name="BTN_LevelSelect" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Level Select"
+
 [node name="BTN_Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 
 [connection signal="pressed" from="VBoxContainer/BTN_Resume" to="." method="_on_btn_resume_pressed"]
 [connection signal="pressed" from="VBoxContainer/BTN_Password" to="." method="_on_btn_password_pressed"]
+[connection signal="pressed" from="VBoxContainer/BTN_LevelSelect" to="." method="_on_btn_level_select_pressed"]
 [connection signal="pressed" from="VBoxContainer/BTN_Quit" to="." method="_on_btn_quit_pressed"]

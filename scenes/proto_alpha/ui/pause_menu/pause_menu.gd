@@ -25,3 +25,6 @@ func _on_btn_password_pressed() -> void:
 
 func _on_btn_quit_pressed() -> void:
 	request(Game.UI_ACTION_QUIT_GAME)
+
+func _on_btn_level_select_pressed() -> void:
+	request(Game.UI_ACTION_QUIT_LEVEL)

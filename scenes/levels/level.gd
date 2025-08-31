@@ -31,6 +31,7 @@ var _can_spawn_player : bool = true
 var _player_respawn_timer : float = 0.0
 var _active_segments : Dictionary[StringName, MapSegment] = {}
 
+var _despawning : bool = false
 var _boss_defeated : bool = false
 
 # ------------------------------------------------------------------------------
@@ -137,6 +138,8 @@ func spawn_player(level_start : bool = false) -> void:
 		camera.snap_to_target()
 	_can_spawn_player = false
 
+func despawn() -> void:
+	_despawning = true
 
 # ------------------------------------------------------------------------------
 # Handler Methods
@@ -148,7 +151,7 @@ func _on_child_entered(child : Node) -> void:
 		_boss_defeated = false
 
 func _on_child_exiting(child : Node) -> void:
-	if not child is CharacterActor2D: return
+	if not child is CharacterActor2D or _despawning: return
 	if child.is_in_group(Game.GROUP_PLAYER):
 		if not _boss_defeated:
 			Game.State.lives -= 1

@@ -55,6 +55,7 @@ metadata/_custom_type_script = "uid://wbuewjeffa70"
 process_mode = 3
 script = ExtResource("1_q6vex")
 pause_menu = &"PauseMenu"
+level_select_menu = &"LevelSelect"
 
 [node name="ChaseCamera" type="Camera2D" parent="."]
 script = ExtResource("2_fchvx")

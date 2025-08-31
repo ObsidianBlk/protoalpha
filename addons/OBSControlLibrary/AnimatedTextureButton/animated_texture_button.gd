@@ -148,7 +148,13 @@ func set_focused_animation(anim_name : StringName) -> void:
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	_sfm.texture_changed.connect(_on_texture_changed)
+	_sfm.animation_finished.connect(_on_sfm_animation_finished)
+	_sfm.animation_looped.connect(_on_sfm_animation_looped)
+	
 	_sfm_focus.texture_changed.connect(_on_texture_changed)
+	_sfm_focus.animation_finished.connect(_on_sfm_animation_finished)
+	_sfm_focus.animation_looped.connect(_on_sfm_animation_looped)
+	
 	_sfm_click_mask.texture_changed.connect(_on_texture_changed.bind(false))
 	toggled.connect(_on_self_button_toggled)
 	pressed.connect(_on_self_button_pressed)
@@ -157,10 +163,10 @@ func _ready() -> void:
 func _process(delta : float) -> void:
 	if not playing: return
 	var res : SpriteFramesManager.AnimationState = _sfm.update_animation(delta)
-	_EmitSignalByState(_sfm.animation, res)
+	#_EmitSignalByState(_sfm.animation, res)
 	
 	res = _sfm_focus.update_animation(delta)
-	_EmitSignalByState(_sfm_focus.animation, res)
+	#_EmitSignalByState(_sfm_focus.animation, res)
 
 func _get_minimum_size() -> Vector2:
 	var msize : Vector2 = Vector2.ZERO
@@ -223,12 +229,12 @@ func _notification(what : int) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
-func _EmitSignalByState(anim_name : StringName, anim_state : SpriteFramesManager.AnimationState) -> void:
-	match anim_state:
-		SpriteFramesManager.AnimationState.FINISHED:
-			animation_finished.emit(anim_name)
-		SpriteFramesManager.AnimationState.LOOPED:
-			animation_looped.emit(anim_name)
+#func _EmitSignalByState(anim_name : StringName, anim_state : SpriteFramesManager.AnimationState) -> void:
+	#match anim_state:
+		#SpriteFramesManager.AnimationState.FINISHED:
+			#animation_finished.emit(anim_name)
+		#SpriteFramesManager.AnimationState.LOOPED:
+			#animation_looped.emit(anim_name)
 
 func _UpdateActiveAnimation() -> void:
 	if _lock_animation: return
@@ -270,6 +276,12 @@ func _on_texture_changed(texture : Texture2D, redraw : bool = true) -> void:
 	if redraw:
 		queue_redraw()
 	update_minimum_size()
+
+func _on_sfm_animation_finished(anim_name : StringName) -> void:
+	animation_finished.emit(anim_name)
+
+func _on_sfm_animation_looped(anim_name : StringName) -> void:
+	animation_looped.emit(anim_name)
 
 func _on_self_button_pressed() -> void:
 	if disabled or not _sfm.has_animation(pressed_animation): return

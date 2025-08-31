@@ -60,6 +60,10 @@ const SCREEN_RESOLUTION : Vector2 = Vector2(320, 240)
 
 ## UI Action - Start Game
 const UI_ACTION_START_GAME : StringName = &"start_game"
+## UI Action - Load Level
+const UI_ACTION_LOAD_LEVEL : StringName = &"load_level"
+## UI Action - Quit Level
+const UI_ACTION_QUIT_LEVEL : StringName = &"quit_level"
 ## UI Action - Quit Application
 const UI_ACTION_QUIT_APPLICATION : StringName = &"quit_app"
 ## UI Action - Quit Game (return to Main Menu)
@@ -81,15 +85,49 @@ const GROUP_PLAYER : StringName = &"player"
 ## The "Boss" Group
 const GROUP_BOSS : StringName = &"boss"
 
-# Number of initial lives players should start the game with.
-#const INITIAL_PLAYER_LIVES : int = 3
+const _LEVEL_PATH : StringName = &"path"
+const _LEVEL_ICON : StringName = &"icon"
+const LEVELS : Dictionary[int, Dictionary] = {
+	GameState.LEVEL_1: {
+		_LEVEL_PATH:"res://scenes/levels/demo_level/demo_level.tscn",
+		_LEVEL_ICON:"res://assets/graphics/bosses/seg_fault/Seg_Fault_Portrait.png"
+	},
+	GameState.LEVEL_2: {
+		_LEVEL_PATH:"",
+		_LEVEL_ICON:""
+	},
+	GameState.LEVEL_3: {
+		_LEVEL_PATH:"",
+		_LEVEL_ICON:""
+	},
+	GameState.LEVEL_4: {
+		_LEVEL_PATH:"",
+		_LEVEL_ICON:""
+	},
+	GameState.LEVEL_5: {
+		_LEVEL_PATH:"",
+		_LEVEL_ICON:""
+	},
+	GameState.LEVEL_6: {
+		_LEVEL_PATH:"",
+		_LEVEL_ICON:""
+	},
+	GameState.LEVEL_7: {
+		_LEVEL_PATH:"",
+		_LEVEL_ICON:""
+	},
+	GameState.LEVEL_8: {
+		_LEVEL_PATH:"",
+		_LEVEL_ICON:""
+	},
+}
 
 # ------------------------------------------------------------------------------
 # Static Variables
 # ------------------------------------------------------------------------------
 ## Identifies if the game is actively running. If true, then either the initial
 ## level loads or the Level Select menu displays by default.
-static var Game_Running : bool = false
+#static var Game_Running : bool = false
 
 ## Current number of player lives.
 #static var Player_Lives : int = INITIAL_PLAYER_LIVES
@@ -141,3 +179,27 @@ static func Sync_Play_Animated_Sprite(asprite : AnimatedSprite2D, anim_name : St
 		asprite.set_frame_and_progress(cur_frame, cur_progress)
 	else:
 		asprite.play(anim_name)
+
+static func Get_Level_Icon(level_id : int) -> Texture2D:
+	if level_id in LEVELS:
+		if not LEVELS[level_id][_LEVEL_ICON].is_empty():
+			var ico : Texture2D = load(LEVELS[level_id][_LEVEL_ICON])
+			if ico != null:
+				return ico
+	return null
+
+static func Get_Level_Path(level_id : int) -> String:
+	if level_id in LEVELS:
+		return LEVELS[level_id][_LEVEL_PATH]
+	return ""
+
+#static func Create_Level_Instance(level_id : int) -> Level:
+	#if level_id in LEVELS:
+		#if not LEVELS[level_id][_LEVEL_PATH].is_empty():
+			#var scene : PackedScene = load(LEVELS[level_id][_LEVEL_PATH])
+			#if scene != null:
+				#var lvl : Node = scene.instantiate()
+				#if lvl is Level:
+					#return lvl
+				#lvl.queue_free()
+	#return null
