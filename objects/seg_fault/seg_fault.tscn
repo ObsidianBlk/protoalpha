@@ -822,7 +822,7 @@ metadata/_custom_type_script = "uid://cwjk0b6j3hspo"
 [node name="ComponentHealth" type="Node" parent="."]
 script = ExtResource("2_uxyan")
 max_health = 50
-health = 3
+health = 50
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
@@ -854,7 +854,6 @@ unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_cdyep")
 animation = &"idle"
 autoplay = "idle"
-frame = 1
 offset = Vector2(0, -10.5)
 
 [node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
