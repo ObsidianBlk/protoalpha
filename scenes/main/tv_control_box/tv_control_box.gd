@@ -7,12 +7,14 @@ extends PanelContainer
 signal coded(num : int)
 signal close_game()
 signal open_game()
+signal fullscreen_toggled()
 signal quit_application()
 
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const KEYPAD_CODE_TOGGLE_CRT : int = 42
+const KEYPAD_CODE_TOGGLE_FULLSCREEN : int = 0
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -66,6 +68,10 @@ func _on_key_pad_coded(value: int) -> void:
 			var crt : CRTEffect = CRTEffect.Get()
 			if crt != null:
 				crt.enabled = not crt.enabled
+			_key_pad.reset()
+			value = _key_pad.DEFAULT_CODE
+		KEYPAD_CODE_TOGGLE_FULLSCREEN:
+			fullscreen_toggled.emit()
 			_key_pad.reset()
 			value = _key_pad.DEFAULT_CODE
 	coded.emit(value)

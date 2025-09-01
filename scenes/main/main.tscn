@@ -475,5 +475,6 @@ stream = SubResource("AudioStreamPolyphonic_hujxm")
 [connection signal="start_game" from="." to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]
 [connection signal="close_game" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="close_game"]
 [connection signal="coded" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/Channels/TVChannels" method="show_channel"]
+[connection signal="fullscreen_toggled" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_fullscreen_toggled"]
 [connection signal="open_game" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]
 [connection signal="quit_application" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_quit_application"]
