@@ -7,8 +7,15 @@
 
 [sub_resource type="Resource" id="Resource_0b7gv"]
 script = ExtResource("3_q80oc")
-message = "Plase Stand By"
+message = "Please Stand By"
 static_intensity = 0.5
+static_bleed = 0.0
+metadata/_custom_type_script = "uid://cdbxv3snwf0s"
+
+[sub_resource type="Resource" id="Resource_4568u"]
+script = ExtResource("3_q80oc")
+message = "EMERGENCY ALERT"
+static_intensity = 0.85
 static_bleed = 0.0
 metadata/_custom_type_script = "uid://cdbxv3snwf0s"
 
@@ -18,13 +25,6 @@ message = "Eat My
 Ass"
 static_intensity = 0.8
 static_bleed = 0.4
-metadata/_custom_type_script = "uid://cdbxv3snwf0s"
-
-[sub_resource type="Resource" id="Resource_4568u"]
-script = ExtResource("3_q80oc")
-message = "EMERGENCY ALERT"
-static_intensity = 0.85
-static_bleed = 0.0
 metadata/_custom_type_script = "uid://cdbxv3snwf0s"
 
 [node name="TVChannels" type="MarginContainer"]

@@ -41,6 +41,14 @@ func handle_input(event : InputEvent) -> void:
 	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 
+func update(_delta : float) -> void:
+	if actor == null: return
+	# Technically, the player should spawn in on the ground,
+	# however, is_on_floor() will be false until the first move.
+	if not actor.is_on_surface():
+		actor.velocity.y = actor.get_gravity().y
+		actor.move_and_slide()
+
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------

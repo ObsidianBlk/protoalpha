@@ -11,7 +11,7 @@ extends UIControl
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
-	_btn_center.grab_focus()
+	_btn_center.focus()
 	super._on_reveal()
 
 # ------------------------------------------------------------------------------

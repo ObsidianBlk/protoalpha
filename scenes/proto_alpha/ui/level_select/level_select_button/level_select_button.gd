@@ -39,6 +39,7 @@ var _btn_pressed : bool = false
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _icon_texture: TextureRect = %IconTexture
+@onready var _btn: AnimatedTextureButton = %ATBtn
 
 
 # ------------------------------------------------------------------------------
@@ -66,6 +67,12 @@ func _UpdateIconTexture() -> void:
 		var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number])
 		icon = ICON_DEFAULT if ico == null else ico
 	_icon_texture.texture = icon
+
+# ------------------------------------------------------------------------------
+# Public Methods
+# ------------------------------------------------------------------------------
+func focus() -> void:
+	_btn.grab_focus()
 
 # ------------------------------------------------------------------------------
 # Handler Methods

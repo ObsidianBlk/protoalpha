@@ -1067,7 +1067,7 @@ states/jump/position = Vector2(579.059, 143.781)
 states/run/node = SubResource("AnimationNodeAnimation_bg1mb")
 states/run/position = Vector2(394.355, 306.652)
 transitions = ["Start", "run", SubResource("AnimationNodeStateMachineTransition_mh7ni"), "Start", "idle_a", SubResource("AnimationNodeStateMachineTransition_jl3in"), "idle_a", "run", SubResource("AnimationNodeStateMachineTransition_l6vdm"), "run", "idle_a", SubResource("AnimationNodeStateMachineTransition_bg1mb"), "idle_a", "jump", SubResource("AnimationNodeStateMachineTransition_heo4x"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_fql2o"), "jump", "idle_a", SubResource("AnimationNodeStateMachineTransition_k3t5h"), "jump", "run", SubResource("AnimationNodeStateMachineTransition_j6iy6")]
-graph_offset = Vector2(-10.7305, 53.3203)
+graph_offset = Vector2(-35.7032, 25.7812)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_heo4x"]
 animation = &"face_left"
@@ -1180,7 +1180,7 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mh7ni"]
-graph_offset = Vector2(-373.044, 0)
+graph_offset = Vector2(-508.764, -9.73097)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(300, 60)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_osq81")

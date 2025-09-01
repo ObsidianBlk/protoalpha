@@ -50,14 +50,14 @@ region = Rect2(220, 220, 36, 36)
 
 [sub_resource type="Resource" id="Resource_s17dp"]
 script = ExtResource("17_p8abn")
-resolution = Vector2(320, 240)
+resolution = Vector2(640, 480)
 scan_line_amount = 1.0
-warp_amount = 0.1
+warp_amount = 0.372
 noise_amount = 0.03
 interference_amount = 0.2
 grille_amount = 0.1
 grille_size = 1.0
-vignette_amount = 0.6
+vignette_amount = 0.794
 vignette_intensity = 0.4
 aberation_amount = 0.5
 roll_line_amount = 0.3
