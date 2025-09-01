@@ -5,15 +5,15 @@ class_name KeyPad
 # Signals
 # ------------------------------------------------------------------------------
 signal coded(value : int)
-signal close_game()
-signal quit_application()
+signal power_pressed()
+signal power_cycled(power_on : bool)
 
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const DEFAULT_CODE : int = 3
 const SUBMIT_DELAY : float = 1.0
-const POWER_OFF_DURATION : float = 0.5
+const POWER_CYCLE_DURATION : float = 0.5
 
 const COLOR_POWER_ON : Color = Color.LIME
 const COLOR_POWER_OFF : Color = Color.DARK_RED
@@ -25,6 +25,7 @@ var _code : String = ""
 var _active_code : int = DEFAULT_CODE
 var _submit_delay : float = 0.0
 
+var _power_on : bool = true
 var _tween : Tween = null
 
 # ------------------------------------------------------------------------------
@@ -63,14 +64,26 @@ func _SubmitCode() -> void:
 		_UpdateReadout()
 		coded.emit(_active_code)
 
-func _PowerOff() -> void:
+func _PowerCycle() -> void:
 	if _tween != null: return
+	var color : Color = COLOR_POWER_OFF if _power_on else COLOR_POWER_ON
 	_tween = create_tween()
 	_tween.set_ease(Tween.EASE_IN_OUT)
 	_tween.set_trans(Tween.TRANS_SINE)
-	_tween.tween_property(_crect_power_light, "color", COLOR_POWER_OFF, POWER_OFF_DURATION)
+	_tween.tween_property(_crect_power_light, "color", color, POWER_CYCLE_DURATION)
 	await _tween.finished
-	quit_application.emit()
+	_tween = null
+	_power_on = not _power_on
+	power_cycled.emit(_power_on)
+
+#func _PowerOff() -> void:
+	#if _tween != null: return
+	#_tween = create_tween()
+	#_tween.set_ease(Tween.EASE_IN_OUT)
+	#_tween.set_trans(Tween.TRANS_SINE)
+	#_tween.tween_property(_crect_power_light, "color", COLOR_POWER_OFF, POWER_CYCLE_DURATION)
+	#await _tween.finished
+	#quit_application.emit()
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -78,6 +91,9 @@ func _PowerOff() -> void:
 func reset() -> void:
 	_active_code = DEFAULT_CODE
 	_UpdateReadout()
+
+func is_powered() -> bool:
+	return _power_on
 
 # ------------------------------------------------------------------------------
 # Handler Methods
@@ -103,5 +119,5 @@ func _on_btn_power_pressed() -> void:
 	_active_code = DEFAULT_CODE
 	_UpdateReadout()
 	coded.emit(_active_code)
-	close_game.emit()
-	_PowerOff()
+	power_pressed.emit()
+	_PowerCycle()

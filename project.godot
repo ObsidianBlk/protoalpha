@@ -16,6 +16,10 @@ run/main_scene="uid://4ksc5l4guac3"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[audio]
+
+general/default_playback_type.web=0
+
 [autoload]
 
 Settings="*res://scripts/autos/settings.gd"

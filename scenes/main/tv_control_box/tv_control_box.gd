@@ -6,6 +6,7 @@ extends PanelContainer
 # ------------------------------------------------------------------------------
 signal coded(num : int)
 signal close_game()
+signal open_game()
 signal quit_application()
 
 # ------------------------------------------------------------------------------
@@ -69,10 +70,17 @@ func _on_key_pad_coded(value: int) -> void:
 			value = _key_pad.DEFAULT_CODE
 	coded.emit(value)
 
+func _on_key_pad_power_cycled(power_on: bool) -> void:
+	if OS.has_feature("wasm"):
+		if power_on:
+			open_game.emit()
+	else:
+		if not power_on:
+			quit_application.emit()
 
-func _on_key_pad_close_game() -> void:
-	close_game.emit()
-
-
-func _on_key_pad_quit_application() -> void:
-	quit_application.emit()
+func _on_key_pad_power_pressed() -> void:
+	if OS.has_feature("wasm"):
+		if _key_pad.is_powered():
+			close_game.emit()
+	else:
+		close_game.emit()

@@ -186,6 +186,9 @@ func _QuitGame(keep_ui_closed : bool = false) -> void:
 	_hud.visible = false
 	if _ui.ui_active():
 		_ui.close_all_ui()
+		var asp : AudioPlayerPolyphonic = AudioBoard.get_music_player(&"Game")
+		if asp != null:
+			asp.stop_all()
 		await _ui.all_hidden
 	if not keep_ui_closed:
 		_ui.open_default_ui()
