@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://bhq77qjywxvva"]
+[gd_scene load_steps=24 format=4 uid="uid://bhq77qjywxvva"]
 
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="1_k1sf6"]
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_kntij"]
@@ -42,6 +42,9 @@ music_list = Dictionary[StringName, ExtResource("2_hk6jy")]({
 })
 default_music = &""
 metadata/_custom_type_script = "uid://b1nbws7klh6i"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_757ib"]
+size = Vector2(6, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amc2f"]
 size = Vector2(16, 4)
@@ -114,6 +117,24 @@ position = Vector2(881, -240)
 
 [node name="Boss_POI_B" type="Marker2D" parent="Segment_Boss" groups=["SEGFAULT_POI"]]
 position = Vector2(1077, -240)
+
+[node name="StreakZone1" type="Area2D" parent="Segment_Boss" groups=["SEGFAULT_STREAK"]]
+position = Vector2(432, 46)
+collision_layer = 32768
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_Boss/StreakZone1"]
+position = Vector2(403, -222)
+shape = SubResource("RectangleShape2D_757ib")
+
+[node name="StreakZone2" type="Area2D" parent="Segment_Boss" groups=["SEGFAULT_STREAK"]]
+position = Vector2(701, 46)
+collision_layer = 32768
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_Boss/StreakZone2"]
+position = Vector2(403, -222)
+shape = SubResource("RectangleShape2D_757ib")
 
 [node name="Segment_C" type="Area2D" parent="." node_paths=PackedStringArray("layer")]
 collision_layer = 0

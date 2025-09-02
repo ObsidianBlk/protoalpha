@@ -14,6 +14,7 @@ signal invulnerability_changed(enabled : bool)
 @export var damage : int = 0
 @export var continuous : bool = false
 @export var invulnerability_time : float = 1.0
+@export var disabled_on_start : bool = false
 @export var debug_verbose : bool = false
 
 # ------------------------------------------------------------------------------
@@ -30,6 +31,8 @@ func _ready() -> void:
 	_mask = collision_mask
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
+	if disabled_on_start:
+		disable_hitbox(true)
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -71,6 +74,13 @@ func is_invulnerable() -> bool:
 func disable_mask(disable : bool = true) -> void:
 	if not is_node_ready(): return
 	collision_mask = 0 if disable else _mask
+
+func disable_hitbox(disable : bool = true) -> void:
+	for child : Node in get_children():
+		if child is CollisionShape2D:
+			child.disabled = disable
+		if child is CollisionPolygon2D:
+			child.disabled = disable
 
 # ------------------------------------------------------------------------------
 # Handler Methods

@@ -58,6 +58,7 @@ func enter(payload : Variant = null) -> void:
 	actor.velocity = Vector2.ZERO
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
+	actor.set_tree_param(APARAM_ATTACK_TYPE, ACTION_ATTACK_BULLET)
 	actor.set_tree_param(APARAM_STATE, ACTION_STATE_ATTACK)
 
 func exit() -> void:

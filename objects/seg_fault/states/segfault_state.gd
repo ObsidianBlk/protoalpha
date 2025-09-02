@@ -7,6 +7,8 @@ class_name SegFaultState
 const ANIM_TELEPORT_IN : StringName = &"teleport_in"
 const ANIM_TELEPORT_OUT : StringName = &"teleport_out"
 const ANIM_ATTACK : StringName = &"attack"
+const ANIM_ATTACK_STREAK_START : StringName = &"attack2_start"
+const ANIM_ATTACK_STREAK_END : StringName = &"attack2_end"
 const ANIM_HURT : StringName = &"hurt"
 const ANIM_DEAD : StringName = &"dead"
 
@@ -18,10 +20,19 @@ const ACTION_STATE_TELEPORT : StringName = &"teleport"
 const ACTION_STATE_ATTACK : StringName = &"attack"
 const ACTION_STATE_DEAD : StringName = &"dead"
 
+const ACTION_ATTACK_BULLET : StringName = &"attack_bullet"
+const ACTION_ATTACK_STREAK : StringName = &"attack_streak"
+
+const ACTION_ATTACK_STREAK_START : StringName = &"start"
+const ACTION_ATTACK_STREAK_END : StringName = &"end"
+
 const ONCE_FIRE : int = 1
 
 const APARAM_STATE : String = "parameters/state/transition_request"
 const APARAM_TELEPORT : String = "parameters/teleport/transition_request"
+const APARAM_ATTACK_TYPE : String = "parameters/attack_type/transition_request"
+const APARAM_ATTACK_STREAK_SE : String = "parameters/a2se/transition_request"
+const APARAM_ONCE_ATTACK2 : String = "parameters/a2shot/request"
 const APARAM_ONCE_HURT : String = "parameters/hurt/request"
 
 

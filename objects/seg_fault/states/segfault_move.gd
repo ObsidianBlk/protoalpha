@@ -2,6 +2,14 @@ extends SegFaultState
 
 
 # ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const THRESHOLD_DISTANCE : float = 8.0
+
+const WEIGHTED_ACTION_NONE : StringName = &"none"
+const WEIGHTED_ACTION_ATTACK : StringName = &"attack"
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var speed : float = 50.0
@@ -9,6 +17,23 @@ extends SegFaultState
 @export var state_idle : StringName = &""
 @export var state_teleport : StringName = &""
 @export var state_fall : StringName = &""
+@export var state_attack_streak : StringName = &""
+
+# ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
+var _actions : WeightedRandomCollection = WeightedRandomCollection.new(
+	[
+		{
+			WeightedRandomCollection.DICT_KEY_ID: WEIGHTED_ACTION_NONE,
+			WeightedRandomCollection.DICT_KEY_WEIGHT: 80.0
+		},
+		{
+			WeightedRandomCollection.DICT_KEY_ID: WEIGHTED_ACTION_ATTACK,
+			WeightedRandomCollection.DICT_KEY_WEIGHT: 1.0
+		}
+	]
+)
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -22,6 +47,10 @@ func _DisconnectPlayer(player : CharacterActor2D) -> void:
 	if player == null: return
 	if player.weapon_fired.is_connected(_on_player_weapon_fired):
 		player.weapon_fired.disconnect(_on_player_weapon_fired)
+
+func _OnSameLevel(player : CharacterActor2D) -> bool:
+	var d : float = actor.global_position.y - player.global_position.y
+	return d <= THRESHOLD_DISTANCE
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
@@ -56,7 +85,11 @@ func physics_update(_delta : float) -> void:
 	else: actor.velocity.y = 0.0
 	
 	actor.move_and_slide()
-	if player.global_position.distance_to(actor.global_position) < 4.0:
+	if _OnSameLevel(player) and _actions.get_random() == WEIGHTED_ACTION_ATTACK:
+		swap_to(state_attack_streak)
+		return
+	
+	if player.global_position.distance_to(actor.global_position) < THRESHOLD_DISTANCE:
 		swap_to(state_teleport)
 		return
 	if not actor.is_on_surface():
