@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxolrrreicq30"]
+
+[ext_resource type="Script" uid="uid://jejiprc5138i" path="res://scripts/nodes/projectile.gd" id="1_42607"]
+[ext_resource type="Texture2D" uid="uid://xtdffbwyjkkn" path="res://assets/graphics/enemies/skullie/skullie_projectile.png" id="2_tsmit"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3exgv"]
+radius = 3.0
+
+[node name="SkullieProjectile" type="Area2D" node_paths=PackedStringArray("visual_node")]
+script = ExtResource("1_42607")
+dmg = 3
+visual_node = NodePath("Viz")
+metadata/_custom_type_script = "uid://jejiprc5138i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 2)
+shape = SubResource("CircleShape2D_3exgv")
+
+[node name="Viz" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Viz"]
+position = Vector2(2, 0)
+rotation = -0.66148
+texture = ExtResource("2_tsmit")

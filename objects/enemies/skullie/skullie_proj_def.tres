@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponDef" load_steps=3 format=3 uid="uid://circacuptpl7j"]
+
+[ext_resource type="Texture2D" uid="uid://xtdffbwyjkkn" path="res://assets/graphics/enemies/skullie/skullie_projectile.png" id="1_56566"]
+[ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="2_fs460"]
+
+[resource]
+script = ExtResource("2_fs460")
+type = 0
+name = &"SkullieProj"
+icon = ExtResource("1_56566")
+rate_of_fire = 1.0
+charging = false
+metadata/_custom_type_script = "uid://dvj7a56df3qol"
