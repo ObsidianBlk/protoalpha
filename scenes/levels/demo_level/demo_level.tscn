@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://bhq77qjywxvva"]
+[gd_scene load_steps=26 format=4 uid="uid://bhq77qjywxvva"]
 
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="1_k1sf6"]
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_kntij"]
@@ -11,9 +11,11 @@
 [ext_resource type="AudioStream" uid="uid://bkhshhbjico1n" path="res://assets/audio/music/Level 2.ogg" id="4_u3rpf"]
 [ext_resource type="Script" uid="uid://b0goixsc0lgyu" path="res://scripts/nodes/mob_spawner.gd" id="8_hvrg6"]
 [ext_resource type="Resource" uid="uid://bnrpywoias5g" path="res://objects/enemy_glob/glob_info.tres" id="9_evx77"]
+[ext_resource type="Resource" uid="uid://canl3jrmt1jtv" path="res://objects/enemies/skullie/skullie_info.tres" id="10_evx77"]
 [ext_resource type="Script" uid="uid://bk3uspbhs6g0p" path="res://scripts/nodes/boss_spawner.gd" id="11_u3rpf"]
 [ext_resource type="PackedScene" uid="uid://ojbp6siu8aak" path="res://objects/boss_door/boss_door.tscn" id="12_dka4h"]
 [ext_resource type="PackedScene" uid="uid://c6i2gkf7hw2tw" path="res://objects/pickups/pickup_proto_life/pickup_proto_life.tscn" id="13_7m45j"]
+[ext_resource type="PackedScene" uid="uid://s8f3pxytcno3" path="res://objects/block/block.tscn" id="16_evx77"]
 
 [sub_resource type="Resource" id="Resource_dka4h"]
 script = ExtResource("2_hk6jy")
@@ -83,6 +85,22 @@ tile_set = ExtResource("2_ysebk")
 position = Vector2(232, 0)
 script = ExtResource("8_hvrg6")
 mob = ExtResource("9_evx77")
+segment = NodePath("..")
+continuous = true
+metadata/_custom_type_script = "uid://b0goixsc0lgyu"
+
+[node name="SkullieSpawner" type="Node2D" parent="Segment_A" node_paths=PackedStringArray("segment")]
+position = Vector2(284, -66)
+script = ExtResource("8_hvrg6")
+mob = ExtResource("10_evx77")
+segment = NodePath("..")
+continuous = true
+metadata/_custom_type_script = "uid://b0goixsc0lgyu"
+
+[node name="SkullieSpawner2" type="Node2D" parent="Segment_A" node_paths=PackedStringArray("segment")]
+position = Vector2(-130, -30)
+script = ExtResource("8_hvrg6")
+mob = ExtResource("10_evx77")
 segment = NodePath("..")
 continuous = true
 metadata/_custom_type_script = "uid://b0goixsc0lgyu"
@@ -249,5 +267,8 @@ metadata/_custom_type_script = "uid://bk3uspbhs6g0p"
 position = Vector2(408, -454)
 collision_layer = 0
 collision_mask = 2
+
+[node name="Block" parent="." instance=ExtResource("16_evx77")]
+position = Vector2(370, -185)
 
 [connection signal="closed_boss" from="_Inner_BossDoor" to="BossSpawner" method="spawn"]

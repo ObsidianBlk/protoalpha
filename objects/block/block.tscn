@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://s8f3pxytcno3"]
+
+[ext_resource type="Texture2D" uid="uid://d1v0kv6muf6wl" path="res://assets/graphics/enemies/blockie/blockie.png" id="1_h0uxo"]
+[ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="2_c42pi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yaxbg"]
+size = Vector2(8, 8)
+
+[node name="Block" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_h0uxo")
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("2_c42pi")
+deflect_bullets = true
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_yaxbg")

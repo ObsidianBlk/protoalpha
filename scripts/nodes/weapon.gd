@@ -68,6 +68,10 @@ func _PlayWeaponSFX(sound_name : StringName) -> void:
 func _Trigger(projectile_container : Node2D) -> void:
 	if projectile_container == null or weapon_def == null: return
 	var p : Projectile = weapon_def.get_projectile_instance()
+	if p == null:
+		printerr("Weapon Definition failed to spawn projectile instance.")
+		return
+	
 	p.collision_mask = collision_mask
 	projectile_container.add_child(p)
 	p.global_position = global_position

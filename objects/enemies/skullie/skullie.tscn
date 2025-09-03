@@ -204,8 +204,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_2y7vl"]
 radius = 6.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_p64tw"]
-radius = 150.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rufso"]
+size = Vector2(100, 320)
 
 [node name="Skullie" type="Node2D" node_paths=PackedStringArray("weapon")]
 script = ExtResource("1_2y7vl")
@@ -243,7 +243,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
-shape = SubResource("CircleShape2D_p64tw")
+shape = SubResource("RectangleShape2D_rufso")
 
 [node name="Weapon" type="Node2D" parent="."]
 position = Vector2(-3, 2)

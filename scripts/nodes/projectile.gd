@@ -7,6 +7,7 @@ class_name Projectile
 # Signals
 # ------------------------------------------------------------------------------
 signal hit()
+signal deflected()
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -68,6 +69,11 @@ func _UpdateVisualNode() -> void:
 	if visual_node != null:
 		visual_node.rotation = _angle
 
+func _Deflect(normal : Vector2) -> void:
+	var cur_direction : Vector2 = Vector2.RIGHT.rotated(_angle)
+	var ref_direction : Vector2 = cur_direction.reflect(normal)
+	_angle = ref_direction.angle()
+
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
@@ -90,6 +96,10 @@ func _on_body_entered(body : Node2D) -> void:
 func _on_area_entered(area : Area2D) -> void:
 	if Engine.is_editor_hint(): return
 	if area is HitBox:
-		hit.emit()
-		area.hurt(dmg)
-		die()
+		if area.deflect_bullets:
+			_Deflect(area.global_position.direction_to(global_position))
+			deflected.emit()
+		else:
+			hit.emit()
+			area.hurt(dmg)
+			die()

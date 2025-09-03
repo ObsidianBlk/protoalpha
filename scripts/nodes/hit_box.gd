@@ -15,6 +15,7 @@ signal invulnerability_changed(enabled : bool)
 @export var continuous : bool = false
 @export var invulnerability_time : float = 1.0
 @export var disabled_on_start : bool = false
+@export var deflect_bullets : bool = false
 @export var debug_verbose : bool = false
 
 # ------------------------------------------------------------------------------
