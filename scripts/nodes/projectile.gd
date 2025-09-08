@@ -10,6 +10,11 @@ signal hit()
 signal deflected()
 
 # ------------------------------------------------------------------------------
+# Constant
+# ------------------------------------------------------------------------------
+const DEFLECT_COLLISION_MASK : int = 0x8000
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var speed : float = 320.0
@@ -23,6 +28,8 @@ signal deflected()
 # ------------------------------------------------------------------------------
 var _angle : float = 0.0
 var _dead : bool = false
+
+var _ray : RayCast2D = null
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -53,6 +60,13 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		body_entered.connect(_on_body_entered)
 		area_entered.connect(_on_area_entered)
+		_ray = RayCast2D.new()
+		
+		add_child(_ray)
+		_ray.collision_mask = DEFLECT_COLLISION_MASK
+		_ray.hit_from_inside = true
+		_ray.collide_with_areas = true
+		_ray.collide_with_bodies = false
 	_UpdateVisualNode()
 
 func _process(delta: float) -> void:
@@ -68,11 +82,35 @@ func _process(delta: float) -> void:
 func _UpdateVisualNode() -> void:
 	if visual_node != null:
 		visual_node.rotation = _angle
+	if _ray != null:
+		_ray.target_position = Vector2.RIGHT.rotated(_angle)
 
 func _Deflect(normal : Vector2) -> void:
 	var cur_direction : Vector2 = Vector2.RIGHT.rotated(_angle)
-	var ref_direction : Vector2 = cur_direction.reflect(normal)
+	
+	# Setting ref_direction this way is in case the normal is invalid.
+	var ref_direction : Vector2 = (cur_direction * -1.0)
+	if not normal.is_equal_approx(Vector2.ZERO):
+		ref_direction = cur_direction.bounce(normal)
+	
 	_angle = ref_direction.angle()
+
+func _IsDeflecting() -> bool:
+	if _ray != null:
+		return _ray.is_colliding()
+	return false
+#func _IsDeflecting(collision_object : Node2D) -> bool:
+	#if _ray != null:
+		## Automatically assume that any TileMapLayer object is set to defectable
+		#var deflectable : bool = collision_object is TileMapLayer
+		## Check if we're dealing with a CollisionObject2D instead.
+		#if collision_object is CollisionObject2D:
+			## If so, does the collision object have the expected mask
+			#deflectable = collision_object.collision_layer & DEFLECT_COLLISION_MASK > 0
+		#
+		#if deflectable: # If the object is deflectable check ray collision.
+			#return _ray.is_colliding()
+	#return false
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -90,14 +128,18 @@ func die() -> void:
 # ------------------------------------------------------------------------------
 func _on_body_entered(body : Node2D) -> void:
 	if not (Engine.is_editor_hint() or _dead):
-		hit.emit()
-		die()
+		if _IsDeflecting():
+			_Deflect(_ray.get_collision_normal())
+			deflected.emit()
+		else:
+			hit.emit()
+			die()
 
 func _on_area_entered(area : Area2D) -> void:
 	if Engine.is_editor_hint(): return
 	if area is HitBox:
-		if area.deflect_bullets:
-			_Deflect(area.global_position.direction_to(global_position))
+		if _IsDeflecting():
+			_Deflect(_ray.get_collision_normal())
 			deflected.emit()
 		else:
 			hit.emit()
