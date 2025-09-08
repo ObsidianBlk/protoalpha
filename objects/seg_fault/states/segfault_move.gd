@@ -49,8 +49,17 @@ func _DisconnectPlayer(player : CharacterActor2D) -> void:
 		player.weapon_fired.disconnect(_on_player_weapon_fired)
 
 func _OnSameLevel(player : CharacterActor2D) -> bool:
-	var d : float = actor.global_position.y - player.global_position.y
+	var d : float = abs(actor.global_position.y - player.global_position.y)
 	return d <= THRESHOLD_DISTANCE
+
+func _GetScreenSide() -> float:
+	if actor != null:
+		var viewport : Viewport = actor.get_viewport()
+		if viewport != null:
+			var cam : Camera2D = viewport.get_camera_2d()
+			if cam != null:
+				return sign(actor.global_position.x - cam.get_screen_center_position().x)
+	return 0.0
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
@@ -77,15 +86,20 @@ func physics_update(_delta : float) -> void:
 	if player == null:
 		swap_to(state_idle)
 		return
+	var same_level : bool = _OnSameLevel(player)
 	
-	var dir : float = get_player_direction(player)
-	actor.velocity.x = speed * dir
+	if same_level:
+		var dir : float = get_player_direction(player)
+		actor.velocity.x = speed * dir
+	else:
+		actor.velocity.x = speed * -_GetScreenSide()
+	
 	if not actor.is_on_surface():
 		actor.velocity.y = actor.get_gravity().y
 	else: actor.velocity.y = 0.0
 	
 	actor.move_and_slide()
-	if _OnSameLevel(player) and _actions.get_random() == WEIGHTED_ACTION_ATTACK:
+	if same_level and _actions.get_random() == WEIGHTED_ACTION_ATTACK:
 		swap_to(state_attack_streak)
 		return
 	

@@ -88,7 +88,7 @@ func _IsOnScreen() -> bool:
 		var cam : Camera2D = viewport.get_camera_2d()
 		if cam != null:
 			var camera_rect : Rect2 = Rect2(
-				cam.global_position - (Game.SCREEN_RESOLUTION * 0.5),
+				cam.get_screen_center_position() - (Game.SCREEN_RESOLUTION * 0.5),
 				Game.SCREEN_RESOLUTION
 			)
 			var self_rect : Rect2 = Rect2(global_position - (SPRITE_SIZE * 0.5), SPRITE_SIZE)

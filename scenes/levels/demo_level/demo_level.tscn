@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://bk3uspbhs6g0p" path="res://scripts/nodes/boss_spawner.gd" id="11_u3rpf"]
 [ext_resource type="PackedScene" uid="uid://ojbp6siu8aak" path="res://objects/boss_door/boss_door.tscn" id="12_dka4h"]
 [ext_resource type="PackedScene" uid="uid://c6i2gkf7hw2tw" path="res://objects/pickups/pickup_proto_life/pickup_proto_life.tscn" id="13_7m45j"]
-[ext_resource type="PackedScene" uid="uid://s8f3pxytcno3" path="res://objects/block/block.tscn" id="16_evx77"]
+[ext_resource type="PackedScene" uid="uid://b0cf1q3ynw72e" path="res://objects/enemies/blockie/blockie.tscn" id="16_evx77"]
 
 [sub_resource type="Resource" id="Resource_dka4h"]
 script = ExtResource("2_hk6jy")
@@ -268,7 +268,8 @@ position = Vector2(408, -454)
 collision_layer = 0
 collision_mask = 2
 
-[node name="Block" parent="." instance=ExtResource("16_evx77")]
-position = Vector2(370, -185)
+[node name="Blockie" parent="." instance=ExtResource("16_evx77")]
+position = Vector2(128, 32)
+steps_from_center = 3
 
 [connection signal="closed_boss" from="_Inner_BossDoor" to="BossSpawner" method="spawn"]

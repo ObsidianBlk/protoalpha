@@ -1,0 +1,287 @@
+[gd_scene load_steps=20 format=3 uid="uid://b0cf1q3ynw72e"]
+
+[ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="1_6kdc4"]
+[ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="1_cl7q1"]
+[ext_resource type="Script" uid="uid://ppqd6wqqabys" path="res://objects/enemies/blockie/blockie.gd" id="1_ib21r"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_4vrvo"]
+[ext_resource type="Texture2D" uid="uid://d1v0kv6muf6wl" path="res://assets/graphics/enemies/blockie/blockie.png" id="2_cl7q1"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_pqucp"]
+[ext_resource type="AudioStream" uid="uid://whhxhvwirah4" path="res://assets/audio/sfx/explosions/explosion_001.wav" id="4_pqucp"]
+
+[sub_resource type="Resource" id="Resource_sva6x"]
+script = ExtResource("3_pqucp")
+stream = ExtResource("4_pqucp")
+volume_db = 0.0
+volume_linear = 1.0
+min_pitch = 0.8
+max_pitch = 1.2
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_6iyte"]
+script = ExtResource("2_4vrvo")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("3_pqucp")]({
+&"explosion": SubResource("Resource_sva6x")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ib21r"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebwp6"]
+atlas = ExtResource("2_cl7q1")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vrvo"]
+atlas = ExtResource("2_cl7q1")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqucp"]
+atlas = ExtResource("2_cl7q1")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iyte"]
+atlas = ExtResource("2_cl7q1")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sva6x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebwp6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vrvo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pqucp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iyte")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="Animation" id="Animation_4vrvo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Viz/Lower:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Viz/Mid:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -16)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Viz/Face:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -32)]
+}
+
+[sub_resource type="Animation" id="Animation_ebwp6"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Viz/Lower:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Viz/Mid:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -16)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Viz/Face:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -32)]
+}
+
+[sub_resource type="Animation" id="Animation_ib21r"]
+resource_name = "step"
+length = 1.50001
+loop_mode = 1
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Viz/Lower:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.416667, 0.5, 0.75, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(8, 0), Vector2(16, 0), Vector2(16, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Viz/Mid:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.666667, 0.75, 1, 1.25, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -16), Vector2(0, -16), Vector2(0, -16), Vector2(8, -16), Vector2(16, -16), Vector2(16, -16)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Viz/Face:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.916667, 1, 1.25, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -32), Vector2(0, -32), Vector2(0, -32), Vector2(8, -32), Vector2(16, -32)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_Step"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pqucp"]
+_data = {
+&"RESET": SubResource("Animation_4vrvo"),
+&"idle": SubResource("Animation_ebwp6"),
+&"step": SubResource("Animation_ib21r")
+}
+
+[node name="Blockie" type="Node2D"]
+script = ExtResource("1_ib21r")
+sound_sheet = SubResource("Resource_6iyte")
+sound_explosion = &"explosion"
+
+[node name="ComponentHealth" type="Node" parent="."]
+script = ExtResource("1_cl7q1")
+max_health = 1
+health = 1
+metadata/_custom_type_script = "uid://bk46f3unrl4vx"
+
+[node name="Viz" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Lower" type="Area2D" parent="Viz"]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 33024
+script = ExtResource("1_6kdc4")
+damage = 5
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Lower"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_ib21r")
+
+[node name="Sprite2D" type="Sprite2D" parent="Viz/Lower"]
+texture = ExtResource("2_cl7q1")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Mid" type="Area2D" parent="Viz"]
+unique_name_in_owner = true
+position = Vector2(0, -16)
+collision_layer = 0
+collision_mask = 33024
+script = ExtResource("1_6kdc4")
+damage = 5
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Mid"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_ib21r")
+
+[node name="Sprite2D" type="Sprite2D" parent="Viz/Mid"]
+texture = ExtResource("2_cl7q1")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Face" type="Area2D" parent="Viz" node_paths=PackedStringArray("health")]
+unique_name_in_owner = true
+position = Vector2(0, -32)
+collision_layer = 4096
+collision_mask = 256
+script = ExtResource("1_6kdc4")
+health = NodePath("../../ComponentHealth")
+damage = 5
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Face"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_ib21r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Viz/Face"]
+sprite_frames = SubResource("SpriteFrames_sva6x")
+autoplay = "default"
+frame_progress = 0.308064
+offset = Vector2(0, -8)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_pqucp")
+}
+autoplay = "step"
+
+[connection signal="dead" from="ComponentHealth" to="." method="_on_component_health_dead"]
