@@ -21,6 +21,7 @@ const EXPLOSION : PackedScene = preload("res://objects/enemy_explosion/enemy_exp
 # Variables
 # ------------------------------------------------------------------------------
 var _origin : Vector2 = Vector2.ZERO
+var _origin_defined : bool = false
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -49,7 +50,6 @@ func set_steps_from_center(s : int) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	_origin = global_position
 	_UpdateViz()
 
 func _draw() -> void:
@@ -68,6 +68,10 @@ func _UpdateViz() -> void:
 
 func _Step() -> void:
 	if Engine.is_editor_hint() or _viz == null: return
+	if not _origin_defined:
+		_origin_defined = true
+		_origin = global_position
+	
 	global_position.x += STEP * _viz.scale.x
 	if is_equal_approx(global_position.x, _origin.x + (_viz.scale.x * steps_from_center * STEP)):
 		flip_h = not flip_h

@@ -58,6 +58,7 @@ func _draw() -> void:
 	var size : Vector2i = mob.sprite_reference.get_size()
 	var pos : Vector2 = Vector2(-(size.x * 0.5), -size.y)
 	draw_texture(mob.sprite_reference, pos)
+	mob.draw_editor_display(self)
 
 func _physics_process(delta: float) -> void:
 	if _delay > 0.0:
