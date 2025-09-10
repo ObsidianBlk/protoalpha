@@ -13,4 +13,5 @@ mob_name = "Glob"
 description = "A small green pain in the ass"
 mob_scene = "uid://tfm2jtgj2is3"
 sprite_reference = SubResource("AtlasTexture_bxgdc")
+properties = Dictionary[StringName, Variant]({})
 metadata/_custom_type_script = "uid://c4pup75630mxb"

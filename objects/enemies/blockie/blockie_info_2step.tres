@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BlockieInfo" load_steps=4 format=3 uid="uid://mvcx6871dtnc"]
+
+[ext_resource type="Script" uid="uid://bjmq7uqclmwqm" path="res://objects/enemies/blockie/blockie_info.gd" id="1_67kij"]
+[ext_resource type="Texture2D" uid="uid://d1v0kv6muf6wl" path="res://assets/graphics/enemies/blockie/blockie.png" id="2_nbw7d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2l8y"]
+atlas = ExtResource("2_nbw7d")
+region = Rect2(16, 0, 16, 16)
+
+[resource]
+script = ExtResource("1_67kij")
+flip_h = false
+steps_from_center = 2
+mob_name = "Blockie"
+description = "A tall, blockie fellow."
+mob_scene = "uid://b0cf1q3ynw72e"
+sprite_reference = SubResource("AtlasTexture_q2l8y")
+properties = Dictionary[StringName, Variant]({
+&"steps_from_center": 2
+})
+metadata/_custom_type_script = "uid://bjmq7uqclmwqm"
