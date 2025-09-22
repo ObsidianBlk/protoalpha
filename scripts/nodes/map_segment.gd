@@ -202,10 +202,10 @@ func focus(force : bool = false) -> void:
 	var camera : ChaseCamera = ChaseCamera.Get_Camera()
 	if camera == null: return
 	var bounds : Dictionary[StringName, float] = get_bounds()
-	camera.limit_left = bounds[BOUNDS_LEFT]
-	camera.limit_right = bounds[BOUNDS_RIGHT]
-	camera.limit_top = bounds[BOUNDS_TOP]
-	camera.limit_bottom = bounds[BOUNDS_BOTTOM]
+	camera.limit_left = int(bounds[BOUNDS_LEFT])
+	camera.limit_right = int(bounds[BOUNDS_RIGHT])
+	camera.limit_top = int(bounds[BOUNDS_TOP])
+	camera.limit_bottom = int(bounds[BOUNDS_BOTTOM])
 
 # ------------------------------------------------------------------------------
 # Handler Methods

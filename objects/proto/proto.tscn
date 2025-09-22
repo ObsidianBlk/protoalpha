@@ -27,28 +27,19 @@
 [sub_resource type="Resource" id="Resource_k3t5h"]
 script = ExtResource("3_jl3in")
 stream = ExtResource("6_mh7ni")
-volume_db = 0.0
 volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_heo4x"]
 script = ExtResource("3_jl3in")
 stream = ExtResource("4_l6vdm")
-volume_db = 0.0
 volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_fql2o"]
 script = ExtResource("3_jl3in")
 stream = ExtResource("5_bg1mb")
-volume_db = 0.0
 volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_j6iy6"]
@@ -1181,6 +1172,7 @@ input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mh7ni"]
 graph_offset = Vector2(-508.764, -9.73097)
+nodes/output/position = Vector2(800, 140)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(300, 60)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_osq81")
@@ -1195,14 +1187,13 @@ nodes/hurt/node = SubResource("AnimationNodeOneShot_jl3in")
 nodes/hurt/position = Vector2(60, 320)
 nodes/hurt_states/node = SubResource("AnimationNodeStateMachine_pi3w1")
 nodes/hurt_states/position = Vector2(-220, 660)
-nodes/output/position = Vector2(800, 140)
 nodes/spawn_dead/node = SubResource("AnimationNodeOneShot_bg1mb")
 nodes/spawn_dead/position = Vector2(480, 380)
 nodes/spawn_dead_anims/node = SubResource("AnimationNodeStateMachine_rwdmr")
 nodes/spawn_dead_anims/position = Vector2(140, 640)
 nodes/transition/node = SubResource("AnimationNodeTransition_hdeo6")
 nodes/transition/position = Vector2(-140, 280)
-node_connections = [&"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"hurt", 0, &"transition", &"hurt", 1, &"hurt_states", &"output", 0, &"spawn_dead", &"spawn_dead", 0, &"Add2", &"spawn_dead", 1, &"spawn_dead_anims", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2"]
+node_connections = [&"output", 0, &"spawn_dead", &"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"hurt", 0, &"transition", &"hurt", 1, &"hurt_states", &"spawn_dead", 0, &"Add2", &"spawn_dead", 1, &"spawn_dead_anims", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jw1q"]
 size = Vector2(2, 2)

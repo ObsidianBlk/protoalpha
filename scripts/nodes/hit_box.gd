@@ -57,6 +57,12 @@ func hurt(amount : int) -> void:
 		health.hurt(amount)
 		trigger_invulnerability(invulnerability_time)
 
+func kill(ignore_invulnerability : bool = false) -> void:
+	# This should be a simple insta-kill
+	var can_kill : bool = not _is_invulnerable or ignore_invulnerability
+	if health.health > 0 and can_kill:
+		health.hurt(health.health)
+
 func trigger_invulnerability(time : float) -> void:
 	if _is_invulnerable or time <= 0.0: return
 	_is_invulnerable = true

@@ -85,6 +85,11 @@ const GROUP_PLAYER : StringName = &"player"
 ## The "Boss" Group
 const GROUP_BOSS : StringName = &"boss"
 
+## The "Player"'s primary collision layer
+const COLLISION_LAYER_PLAYER : int = 0x0002 # 2
+## The "Player"'s hitbox collision layer
+const COLLISION_LAYER_PLAYER_HITBOX : int = 0x0100 #256
+
 const _LEVEL_PATH : StringName = &"path"
 const _LEVEL_ICON : StringName = &"icon"
 const LEVELS : Dictionary[int, Dictionary] = {
