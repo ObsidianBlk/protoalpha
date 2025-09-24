@@ -23,7 +23,7 @@ extends CharacterActor2D
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _sprite: AnimatedSprite2D = %ASprite
-@onready var _body: Node2D = %Body
+#@onready var _body: Node2D = %Body
 
 
 # ------------------------------------------------------------------------------

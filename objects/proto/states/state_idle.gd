@@ -83,15 +83,18 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
 	elif event.is_action(&"shoot"):
-		var wep : Weapon = actor.get_weapon()
-		if event.is_pressed():
-			if wep.can_shoot():
-				actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
-				wep.press_trigger(actor.get_parent())
+		if event.is_pressed() and interactor != null and interactor.interactable_count() > 0:
+			interactor.interact()
 		else:
-			if actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
-				actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
-			wep.release_trigger()
+			var wep : Weapon = actor.get_weapon()
+			if event.is_pressed():
+				if wep.can_shoot():
+					actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
+					wep.press_trigger(actor.get_parent())
+			else:
+				if actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
+					actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+				wep.release_trigger()
 
 
 # ------------------------------------------------------------------------------

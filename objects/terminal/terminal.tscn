@@ -48,6 +48,7 @@ script = ExtResource("1_w4gef")
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_06yku")
 animation = &"inactive"
+frame_progress = 1.0
 offset = Vector2(0, -8)
 
 [node name="TriggerArea" type="Area2D" parent="."]

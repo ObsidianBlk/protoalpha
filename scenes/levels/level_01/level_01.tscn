@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://bax32yfavmwca"]
+[gd_scene load_steps=9 format=4 uid="uid://bax32yfavmwca"]
 
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_gkyti"]
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="2_15mrc"]
 [ext_resource type="TileSet" uid="uid://guqkyefalo5p" path="res://assets/graphics/tilesets/tileset.tres" id="3_h7puh"]
 [ext_resource type="Script" uid="uid://b7nn8ybn2tmlb" path="res://scripts/nodes/checkpoint.gd" id="4_h7puh"]
 [ext_resource type="Script" uid="uid://chxg35suyvuno" path="res://scripts/nodes/fall_zone.gd" id="5_fi7ee"]
+[ext_resource type="PackedScene" uid="uid://cospnyybfrr3e" path="res://objects/terminal/terminal.tscn" id="6_7mo7t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fi7ee"]
 size = Vector2(16, 64)
@@ -49,6 +50,10 @@ metadata/_custom_type_script = "uid://chxg35suyvuno"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapSegment/FallZone"]
 position = Vector2(199.5, 0)
 shape = SubResource("RectangleShape2D_7mo7t")
+
+[node name="Terminal" parent="MapSegment" instance=ExtResource("6_7mo7t")]
+position = Vector2(-32, -16)
+trigger_layer = 4
 
 [node name="BossContainer" type="Node2D" parent="."]
 

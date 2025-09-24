@@ -31,3 +31,8 @@ const APARAM_ONCE_SPAWN : String = "parameters/spawn_dead/request"
 const AUDIO_JUMP : StringName = &"jump"
 const AUDIO_LAND : StringName = &"land"
 const AUDIO_HURT : StringName = &"hurt"
+
+# ------------------------------------------------------------------------------
+# Export Variables
+# ------------------------------------------------------------------------------
+@export var interactor : Interactor2D = null
