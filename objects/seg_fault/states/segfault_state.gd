@@ -12,19 +12,19 @@ const ANIM_ATTACK_STREAK_END : StringName = &"attack2_end"
 const ANIM_HURT : StringName = &"hurt"
 const ANIM_DEAD : StringName = &"dead"
 
-const ACTION_TELEPORT_IN : StringName = &"in"
-const ACTION_TELEPORT_OUT : StringName = &"out"
+const ACTION_TELEPORT_IN : String = "in"
+const ACTION_TELEPORT_OUT : String = "out"
 
-const ACTION_STATE_MOVE : StringName = &"movement"
-const ACTION_STATE_TELEPORT : StringName = &"teleport"
-const ACTION_STATE_ATTACK : StringName = &"attack"
-const ACTION_STATE_DEAD : StringName = &"dead"
+const ACTION_STATE_MOVE : String = "movement"
+const ACTION_STATE_TELEPORT : String = "teleport"
+const ACTION_STATE_ATTACK : String = "attack"
+const ACTION_STATE_DEAD : String = "dead"
 
-const ACTION_ATTACK_BULLET : StringName = &"attack_bullet"
-const ACTION_ATTACK_STREAK : StringName = &"attack_streak"
+const ACTION_ATTACK_BULLET : String = "attack_bullet"
+const ACTION_ATTACK_STREAK : String = "attack_streak"
 
-const ACTION_ATTACK_STREAK_START : StringName = &"start"
-const ACTION_ATTACK_STREAK_END : StringName = &"end"
+const ACTION_ATTACK_STREAK_START : String = "start"
+const ACTION_ATTACK_STREAK_END : String = "end"
 
 const ONCE_FIRE : int = 1
 

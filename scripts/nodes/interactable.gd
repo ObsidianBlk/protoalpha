@@ -57,7 +57,7 @@ func _DisconnectFromHost() -> void:
 		if parent.has_user_signal(sig_name):
 			var siglist : Array[Dictionary] = parent.get_signal_connection_list(sig_name)
 			for sig : Dictionary in siglist:
-				parent.disconnect(sig_name, sig.method)
+				parent.disconnect(sig_name, sig.callable)
 			parent.remove_user_signal(sig_name)
 
 # ------------------------------------------------------------------------------

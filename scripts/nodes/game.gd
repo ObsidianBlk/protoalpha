@@ -95,6 +95,7 @@ const _LEVEL_ICON : StringName = &"icon"
 const LEVELS : Dictionary[int, Dictionary] = {
 	GameState.LEVEL_1: {
 		_LEVEL_PATH:"res://scenes/levels/level_01/level_01.tscn",
+		#_LEVEL_PATH:"res://scenes/levels/demo_level/demo_level.tscn",
 		_LEVEL_ICON:"res://assets/graphics/bosses/seg_fault/Seg_Fault_Portrait.png"
 	},
 	GameState.LEVEL_2: {

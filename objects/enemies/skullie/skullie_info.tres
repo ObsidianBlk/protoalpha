@@ -13,5 +13,4 @@ mob_name = "Skullie"
 description = "A floaty skull with back issues."
 mob_scene = "uid://d4lr2wjl887jl"
 sprite_reference = SubResource("AtlasTexture_n6n02")
-properties = Dictionary[StringName, Variant]({})
 metadata/_custom_type_script = "uid://c4pup75630mxb"

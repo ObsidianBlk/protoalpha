@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://cdu2rmkbkl0vo"]
+
+[ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="1_jmt0u"]
+[ext_resource type="Texture2D" uid="uid://badjmgla7vg1t" path="res://assets/graphics/environment/lazer/lazer.png" id="2_th0yn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4dfhx"]
+size = Vector2(16, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yueqd"]
+atlas = ExtResource("2_th0yn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqwjo"]
+atlas = ExtResource("2_th0yn")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mcc3r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yueqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqwjo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="HitBox" type="Area2D"]
+collision_layer = 0
+collision_mask = 256
+script = ExtResource("1_jmt0u")
+damage = 100
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_4dfhx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mcc3r")
+autoplay = "default"
+frame_progress = 0.40491214
