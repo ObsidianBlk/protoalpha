@@ -11,7 +11,7 @@ signal ladder_exited()
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _ladders : Dictionary[StringName, bool] = {}
+var _ladders : Dictionary[NodePath, bool] = {}
 
 
 # ------------------------------------------------------------------------------
@@ -33,14 +33,16 @@ func is_on_ladder() -> bool:
 func _on_body_entered(body : Node2D) -> void:
 	if body == null: return
 	var count : int = _ladders.size()
-	if not body.name in _ladders:
-		_ladders[body.name] = true
+	var path : NodePath = body.get_path()
+	if not path in _ladders:
+		_ladders[path] = true
 		if count == 0:
 			ladder_entered.emit()
 
 func _on_body_exited(body : Node2D) -> void:
 	if body == null: return
-	if body.name in _ladders:
-		_ladders.erase(body.name)
+	var path : NodePath = body.get_path()
+	if path in _ladders:
+		_ladders.erase(path)
 		if _ladders.size() <= 0:
 			ladder_exited.emit()
