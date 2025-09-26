@@ -67,6 +67,8 @@ func set_trigger_layer(tl : int) -> void:
 func _ready() -> void:
 	_trigger_area.collision_layer = trigger_layer
 	_sprite.play(ANIM_ACTIVE if triggered else ANIM_INACTIVE)
+	if triggered:
+		_reset_timer = trigger_reset_timer
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
@@ -94,3 +96,5 @@ func _on_interactable_focus_exited() -> void:
 func _on_interactable_interacted() -> void:
 	if not locked:
 		triggered = not triggered
+		if triggered:
+			_reset_timer = trigger_reset_timer
