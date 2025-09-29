@@ -7,8 +7,8 @@ extends CharacterBody2D
 const TILE_CUSTOM_DATA_NAME : String = "Platform"
 enum Rail {
 	NONE=0,
-	VERTICAL=1,
-	HORIZONTAL=2,
+	HORIZONTAL=1,
+	VERTICAL=2,
 	BOTTOM_RIGHT=3,
 	BOTTOM_LEFT=4,
 	TOP_LEFT=5,
@@ -22,66 +22,112 @@ enum Travel {UP_LEFT=-1, DOWN_RIGHT=1}
 # ------------------------------------------------------------------------------
 @export var map_layer : TileMapLayer = null
 @export var initial_direction : Travel = Travel.DOWN_RIGHT
-@export var pixels_per_second : int = 10
+@export_range(0.0, 4.0) var speed_scale : float = 1.0
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _coord : Vector2i = Vector2i.ZERO
-var _cur_rail : Rail = Rail.NONE
-
+var _cur_coord : Vector2i = Vector2i.ZERO
+var _prev_coord : Vector2i = Vector2i.ZERO
 var _dir : Travel = Travel.DOWN_RIGHT
-
-var _last_position : Vector2 = Vector2.ZERO
+var _progress : float = 0.0
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	_dir = initial_direction
-	_UpdateRail()
-	if _cur_rail == Rail.NONE:
-		printerr("Platform failed to find a rail.")
-	else:
-		_Process(0.0)
+	_Process(0.0, true)
 
 func _physics_process(delta: float) -> void:
-	if _cur_rail == Rail.NONE: return
 	_Process(delta)
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
-func _Process(delta : float) -> void:
-	if map_layer == null or map_layer.tile_set == null: return
+func _FlipDirection() -> void:
+	if _dir == Travel.UP_LEFT:
+		_dir = Travel.DOWN_RIGHT
+	else: _dir = Travel.UP_LEFT
+
+func _Process(delta : float, initial : bool = false) -> void:
+	if map_layer == null: return
 	
-	var nprog : float = 0.0#_progress + (delta * speed_scale)
+	var coord : Vector2i = map_layer.local_to_map(position)
+	var rail : Rail = _GetRailAtCoord(coord)
+	#print("Coord: ", coord, " | Cur: ", _cur_coord, " | Prev: ", _prev_coord)
+	if rail == Rail.NONE or rail == Rail.CROSS:
+		#print("No Rail")
+		return
+	#print("Rail: ", rail)
+	if initial: _cur_coord = coord
+	if coord != _cur_coord:
+		_prev_coord = _cur_coord
+		_cur_coord = coord
 	
-	match _cur_rail:
+	var nprog : float = _progress + (delta * speed_scale * _dir)
+	var skips : int = abs(floor(nprog))
+	for _i : int in range(skips):
+		# TODO: Shit'll get weird if rail is Rail.CROSS
+		var ncoord : Vector2i = _NextCellFromRail(_cur_coord, _dir, rail)
+		var nrail : Rail = _GetRailAtCoord(ncoord)
+		if nrail == Rail.NONE:
+			_prev_coord = _cur_coord
+			_FlipDirection()
+		else:
+			_prev_coord = _cur_coord
+			_cur_coord = ncoord
+			rail = nrail
+	
+	_progress = nprog - floor(nprog)
+	if _progress >= 0.98 and _progress <= 1.0:
+		print("Blah")
+	var progress : float = _progress
+	if _cur_coord.x < _prev_coord.x or _cur_coord.y < _prev_coord.y:
+		progress = 1.0 - _progress
+	
+	match rail:
 		Rail.HORIZONTAL:
-			_ProcessHorizontal(nprog)
+			_ProcessHorizontal(_cur_coord, progress)
 		Rail.VERTICAL:
-			_ProcessVertical(nprog)
+			_ProcessVertical(_cur_coord, progress)
+		Rail.BOTTOM_RIGHT:
+			if _progress <= 0.5:
+				_ProcessVertical(_cur_coord, 1.0 - progress)
+			else:
+				_ProcessHorizontal(_cur_coord, progress)
+		Rail.BOTTOM_LEFT:
+			if _progress <= 0.5:
+				_ProcessHorizontal(_cur_coord, progress)
+			else:
+				_ProcessVertical(_cur_coord, progress)
+		Rail.TOP_LEFT:
+			if _progress <= 0.5:
+				_ProcessHorizontal(_cur_coord, progress)
+			else:
+				_ProcessVertical(_cur_coord, 1.0 - progress)
+		Rail.TOP_RIGHT:
+			if _progress <= 0.5:
+				_ProcessVertical(_cur_coord, progress)
+			else:
+				_ProcessHorizontal(_cur_coord, progress)
 
-func _ProcessHorizontal(progress : float) -> void:
-	if map_layer == null or map_layer.tile_set == null: return
-	var pos : Vector2 = map_layer.map_to_local(_coord) 
-	var tile_size : int = map_layer.tile_set.tile_size.x
-	var dist : float = float(tile_size) * progress
-	if _dir == Travel.DOWN_RIGHT:
-		global_position = pos + Vector2(dist, 0.0)
-	else:
-		global_position = pos + Vector2(float(tile_size) - dist, 0.0)
 
-func _ProcessVertical(progress : float) -> void:
+func _ProcessHorizontal(coord : Vector2i, progress : float) -> void:
 	if map_layer == null or map_layer.tile_set == null: return
-	var pos : Vector2 = map_layer.map_to_local(_coord)
-	var tile_size : int = map_layer.tile_set.tile_size.y
-	var dist : float = float(tile_size) * progress
-	if _dir == Travel.DOWN_RIGHT:
-		global_position = pos + Vector2(0.0, dist)
-	else:
-		global_position = pos + Vector2(0.0, float(tile_size) - dist)
+	var tile_size : Vector2i = map_layer.tile_set.tile_size
+	var pos : Vector2 = map_layer.map_to_local(coord) - (tile_size * 0.5)
+	var dist : float = float(tile_size.x) * progress
+	var npos = pos + Vector2(dist, floor(float(tile_size.y) * 0.5))
+	position = npos
+
+func _ProcessVertical(coord : Vector2i, progress : float) -> void:
+	if map_layer == null or map_layer.tile_set == null: return
+	var tile_size : Vector2i = map_layer.tile_set.tile_size
+	var pos : Vector2 = map_layer.map_to_local(coord) - (tile_size * 0.5)
+	var dist : float = float(tile_size.y) * progress
+	var npos = pos + Vector2(floor(float(tile_size.x) * 0.5), dist)
+	position = npos
 
 
 func _GetRailAtCoord(coord : Vector2i) -> Rail:
@@ -93,68 +139,28 @@ func _GetRailAtCoord(coord : Vector2i) -> Rail:
 				if val > 0 and val <= 7: return val
 	return Rail.NONE
 
-func _GetRailAtPosition(pos : Vector2) -> Rail:
-	if map_layer != null:
-		var coord : Vector2i = map_layer.local_to_map(pos)
-		return _GetRailAtCoord(coord)
-	return Rail.NONE
-
-func _UpdateRail() -> void:
-	var nrail : Rail = Rail.NONE
-	if map_layer != null:
-		var coord : Vector2i = map_layer.local_to_map(global_position)
-		if coord != _coord or _cur_rail == Rail.NONE:
-			_coord = coord
-			nrail = _GetRailAtCoord(_coord)
-	_cur_rail = nrail
-
-#func _NextCellFromRail(cell : Vector2i, direction : Travel, rail : Rail, prev_rail : Rail = Rail.NONE) -> Vector2i:
-	#match rail:
-		#Rail.HORIZONTAL:
-			#cell.x += direction
-		#Rail.VERTICAL:
-			#cell.y += direction
-		#Rail.BOTTOM_RIGHT:
-			#if direction == Travel.DOWN_RIGHT:
-				#cell.y += 1
-			#else: cell.x -= 1
-		#Rail.BOTTOM_LEFT:
-			#if direction == Travel.DOWN_RIGHT:
-				#cell.y += 1
-			#else: cell.x -= 1
-		#Rail.TOP_LEFT:
-			#if direction == Travel.DOWN_RIGHT:
-				#cell.y -= 1
-			#else: cell.x -= 1
-		#Rail.TOP_RIGHT:
-			#if direction == Travel.DOWN_RIGHT:
-				#cell.x += 1
-			#else: cell.y -= 1
-		#Rail.CROSS:
-			#return _NextCellFromRail(cell, direction, prev_rail)
-	#return cell
-#
-#
-#func _BuildRails() -> void:
-	#if map_layer == null or map_layer.tile_set == null:
-		#printerr("Platform missing valid TileMapLayer.")
-		#return
-	#
-	#var cell : Vector2i = map_layer.local_to_map(global_position)
-	#var buffer : Array[Vector2i] = [cell]
-	#
-	#while buffer.size() > 0:
-		#cell = buffer.pop_front()
-		#var rail : Rail = _GetRailAt(cell)
-		#if rail == Rail.NONE: continue
-		#
-		#var ncell : Vector2 = _NextCellFromRail(cell, Travel.UP_LEFT, rail)
-		#if not (ncell in buffer or ncell in _rails):
-			#buffer.append(ncell)
-		#
-		#ncell = _NextCellFromRail(cell, Travel.DOWN_RIGHT, rail)
-		#if not (ncell in buffer or ncell in _rails):
-			#buffer.append(ncell)
-		#
-		#if not cell in _rails:
-			#_rails[cell] = rail
+func _NextCellFromRail(cell : Vector2i, direction : Travel, rail : Rail, prev_rail : Rail = Rail.NONE) -> Vector2i:
+	match rail:
+		Rail.HORIZONTAL:
+			cell.x += direction
+		Rail.VERTICAL:
+			cell.y += direction
+		Rail.BOTTOM_RIGHT:
+			if direction == Travel.DOWN_RIGHT:
+				cell.y += 1
+			else: cell.x -= 1
+		Rail.BOTTOM_LEFT:
+			if direction == Travel.DOWN_RIGHT:
+				cell.y += 1
+			else: cell.x -= 1
+		Rail.TOP_LEFT:
+			if direction == Travel.DOWN_RIGHT:
+				cell.y -= 1
+			else: cell.x -= 1
+		Rail.TOP_RIGHT:
+			if direction == Travel.DOWN_RIGHT:
+				cell.x += 1
+			else: cell.y -= 1
+		Rail.CROSS:
+			return _NextCellFromRail(cell, direction, prev_rail)
+	return cell
