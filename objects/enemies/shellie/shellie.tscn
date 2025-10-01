@@ -1,0 +1,266 @@
+[gd_scene load_steps=28 format=3 uid="uid://tyup2lbvemac"]
+
+[ext_resource type="Texture2D" uid="uid://buh3upxycg57n" path="res://assets/graphics/enemies/shellie/Shellie.png" id="1_irdim"]
+[ext_resource type="Script" uid="uid://dm5sqxtljhcqh" path="res://objects/enemies/shellie/shellie.gd" id="1_l2lmm"]
+[ext_resource type="Script" uid="uid://gg0uxpt06y26" path="res://scripts/nodes/anim_sprite_player.gd" id="2_mtjnk"]
+[ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="4_qxm5k"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qxm5k"]
+radius = 6.0
+height = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtjnk"]
+atlas = ExtResource("1_irdim")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2lmm"]
+atlas = ExtResource("1_irdim")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxm5k"]
+atlas = ExtResource("1_irdim")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rf6st"]
+atlas = ExtResource("1_irdim")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1t2o"]
+atlas = ExtResource("1_irdim")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ipiy"]
+atlas = ExtResource("1_irdim")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7d3w"]
+atlas = ExtResource("1_irdim")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsue5"]
+atlas = ExtResource("1_irdim")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b045h"]
+atlas = ExtResource("1_irdim")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqy6e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtjnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2lmm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxm5k")
+}],
+"loop": false,
+"name": &"cover",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rf6st")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1t2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ipiy")
+}],
+"loop": false,
+"name": &"reveal",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7d3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsue5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b045h")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 12.0
+}]
+
+[sub_resource type="Animation" id="Animation_l2lmm"]
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"cover"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_qxm5k"]
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"reveal"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_rf6st"]
+length = 0.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"walk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o1t2o"]
+_data = {
+&"cover": SubResource("Animation_l2lmm"),
+&"reveal": SubResource("Animation_qxm5k"),
+&"walk": SubResource("Animation_rf6st")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6ipiy"]
+animation = &"cover"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f7d3w"]
+animation = &"reveal"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jsue5"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b045h"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qxm5k"]
+advance_mode = 2
+advance_expression = "_state == ActionState.COVER"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rf6st"]
+advance_mode = 2
+advance_expression = "_state == ActionState.REVEAL"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_o1t2o"]
+advance_mode = 2
+advance_expression = "_state == ActionState.WALK"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_tqy6e"]
+states/cover/node = SubResource("AnimationNodeAnimation_6ipiy")
+states/cover/position = Vector2(554.1172, 89.61719)
+states/reveal/node = SubResource("AnimationNodeAnimation_f7d3w")
+states/reveal/position = Vector2(554.1172, 187.40625)
+states/walk/node = SubResource("AnimationNodeAnimation_jsue5")
+states/walk/position = Vector2(356.51172, 89.61719)
+transitions = ["Start", "walk", SubResource("AnimationNodeStateMachineTransition_b045h"), "walk", "cover", SubResource("AnimationNodeStateMachineTransition_qxm5k"), "cover", "reveal", SubResource("AnimationNodeStateMachineTransition_rf6st"), "reveal", "walk", SubResource("AnimationNodeStateMachineTransition_o1t2o")]
+
+[node name="Shellie" type="CharacterBody2D"]
+collision_layer = 32
+script = ExtResource("1_l2lmm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_qxm5k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_tqy6e")
+animation = &"walk"
+offset = Vector2(0, -2)
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 36864
+collision_mask = 256
+script = ExtResource("4_qxm5k")
+damage = 5
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_qxm5k")
+
+[node name="GroundRays" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="RayGroundL" type="RayCast2D" parent="GroundRays"]
+unique_name_in_owner = true
+position = Vector2(-8, 6)
+target_position = Vector2(0, 4)
+hit_from_inside = true
+
+[node name="RayGroundR" type="RayCast2D" parent="GroundRays"]
+unique_name_in_owner = true
+position = Vector2(8, 6)
+target_position = Vector2(0, 4)
+hit_from_inside = true
+
+[node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
+libraries = {
+&"": SubResource("AnimationLibrary_o1t2o")
+}
+script = ExtResource("2_mtjnk")
+animated_sprite = NodePath("../AnimatedSprite2D")
+metadata/_custom_type_script = "uid://gg0uxpt06y26"
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_tqy6e")
+advance_expression_base_node = NodePath("..")
+anim_player = NodePath("../AnimSpritePlayer")

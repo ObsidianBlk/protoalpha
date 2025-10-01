@@ -72,30 +72,12 @@ func _physics_process(delta: float) -> void:
 	# These are just to make logic easier to read.
 	var dhigh : bool = _direction == Travel.HIGH
 	var dlow : bool = not dhigh
-	#var ahoriz : bool = _axis == Axis.HORIZONTAL
-	#var avert : bool = not ahoriz
 	# ---
 	
 	var check_flip : bool = (dhigh and _progress >= 0.5) or (dlow and _progress <= 0.5)
 	if check_flip and not _corner_handled:
 		_corner_handled = true
 		_ProcessCornerFlip(rail)
-		#var flip_axis : bool = true
-		#match rail:
-			#Rail.BOTTOM_RIGHT:
-				#_direction = Travel.HIGH
-			#Rail.BOTTOM_LEFT:
-				#if ahoriz:
-					#_direction = Travel.HIGH
-				#else: _direction = Travel.LOW
-			#Rail.TOP_LEFT:
-				#_direction = Travel.LOW
-			#Rail.TOP_RIGHT:
-				#if ahoriz:
-					#_direction = Travel.LOW
-				#else: _direction = Travel.HIGH
-			#_: flip_axis = false
-		#if flip_axis: _axis = _FlipAxis(_axis)
 
 	if _axis == Axis.HORIZONTAL:
 		_PositionHorizontal()
