@@ -23,6 +23,7 @@ enum Axis {HORIZONTAL=0, VERTICAL=1}
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+@export var segment : MapSegment = null:						set=set_segment
 @export var map_layer : TileMapLayer = null
 @export var initial_direction : Travel = Travel.HIGH
 @export_range(0.0, 4.0) var speed_scale : float = 1.0
@@ -40,10 +41,17 @@ var _corner_handled : bool = false
 # ------------------------------------------------------------------------------
 # Setters
 # ------------------------------------------------------------------------------
+func set_segment(s : MapSegment) -> void:
+	if s != segment:
+		_DisconnectSegment()
+		segment = s
+		_ConnectSegment()
+		_UpdateProcessState()
+
 func set_enabled(e : bool) -> void:
 	if e != enabled:
 		enabled = e
-		set_physics_process(enabled)
+		_UpdateProcessState()
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -58,7 +66,7 @@ func _ready() -> void:
 			ERR_DOES_NOT_EXIST:
 				printerr("Platform not placed on a rail.")
 			
-	else: set_physics_process(enabled)
+	else: _UpdateProcessState()
 
 func _physics_process(delta: float) -> void:
 	if map_layer == null: return
@@ -87,6 +95,27 @@ func _physics_process(delta: float) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _UpdateProcessState() -> void:
+	var active : bool = true
+	if segment != null:
+		active = segment.player_in_segment()
+	else: print_debug("Platform ", get_path(), " not assigned a MapSegment.")
+	set_physics_process(enabled and active)
+
+func _ConnectSegment() -> void:
+	if segment == null: return
+	if not segment.entered.is_connected(_UpdateProcessState):
+		segment.entered.connect(_UpdateProcessState)
+	if not segment.exited.is_connected(_UpdateProcessState):
+		segment.exited.connect(_UpdateProcessState)
+
+func _DisconnectSegment() -> void:
+	if segment == null: return
+	if segment.entered.is_connected(_UpdateProcessState):
+		segment.entered.disconnect(_UpdateProcessState)
+	if segment.exited.is_connected(_UpdateProcessState):
+		segment.exited.disconnect(_UpdateProcessState)
+
 func _FlipDirection(d : Travel) -> Travel:
 	if d == Travel.HIGH:
 		return Travel.LOW

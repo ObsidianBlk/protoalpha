@@ -13,6 +13,7 @@ signal exited()
 # Constants and ENUMs
 # ------------------------------------------------------------------------------
 const GROUP_CAMERA : StringName = &"LevelCamera"
+const LAYER_MASK : int = 0x2
 const LOCK_DELAY : float = 0.15
 
 const BOUNDS_LEFT : StringName = &"left"
@@ -64,6 +65,8 @@ func set_hide_collision(c : bool) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	collision_layer = 0
+	collision_mask = LAYER_MASK
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	_UpdateBoundry()

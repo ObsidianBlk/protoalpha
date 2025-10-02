@@ -14,6 +14,8 @@ player_container = NodePath("PlayerContainer")
 metadata/_custom_type_script = "uid://bhbi6f2woh6pw"
 
 [node name="MapSegment" type="Area2D" parent="." node_paths=PackedStringArray("layer")]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("2_mh2oh")
 layer = NodePath("TileMapLayer")
 metadata/_custom_type_script = "uid://iseo8u8frf3w"
