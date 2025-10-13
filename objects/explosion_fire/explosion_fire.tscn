@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://boypmn503f4aq"]
+
+[ext_resource type="Texture2D" uid="uid://cgcij8io5hx57" path="res://assets/graphics/environment/particles/pixel_fire.png" id="1_7jnby"]
+[ext_resource type="Script" uid="uid://deyr00mxq8ieo" path="res://objects/explosion_fire/explosion_fire.gd" id="1_xibaa"]
+
+[sub_resource type="Gradient" id="Gradient_xibaa"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.07450545, 0.18440008, 0.531035, 0.8739786)
+colors = PackedColorArray(0.47058824, 0.47058824, 0.47058824, 1, 0.3137255, 0.3137255, 0.3137255, 1, 0.72156864, 0.4117647, 0.38431373, 1, 0.53333336, 0.22352941, 0.19607843, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0bylb"]
+gradient = SubResource("Gradient_xibaa")
+width = 64
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5mohm"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 15.0
+gravity = Vector3(0, 0, 0)
+color_initial_ramp = SubResource("GradientTexture1D_0bylb")
+
+[node name="ExplosionFire" type="Node2D"]
+script = ExtResource("1_xibaa")
+
+[node name="ExpFire" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+texture = ExtResource("1_7jnby")
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.75
+process_material = SubResource("ParticleProcessMaterial_5mohm")
