@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://bax32yfavmwca"]
+[gd_scene load_steps=18 format=4 uid="uid://bax32yfavmwca"]
 
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_gkyti"]
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="2_15mrc"]
@@ -9,9 +9,10 @@
 [ext_resource type="Script" uid="uid://biyvft8gmrpou" path="res://scripts/logics/logic_not.gd" id="7_a7arc"]
 [ext_resource type="PackedScene" uid="uid://cl1r4jttq45ui" path="res://objects/lazer/lazer.tscn" id="7_lb6o6"]
 [ext_resource type="PackedScene" uid="uid://ea1a4vtcufvn" path="res://objects/platforms/platform_01/platform_01.tscn" id="9_7f7yp"]
-[ext_resource type="PackedScene" uid="uid://dnpa4mhjjxvtj" path="res://objects/enemies/tp_gun/tp_gun.tscn" id="9_cxytl"]
+[ext_resource type="Script" uid="uid://cl3se2utwqe6u" path="res://scripts/nodes/mob_spawners/mob_spawner_tpgun.gd" id="9_cxytl"]
 [ext_resource type="Script" uid="uid://b51ttt7nf66dg" path="res://scripts/nodes/transition_zone.gd" id="9_nt34b"]
-[ext_resource type="PackedScene" uid="uid://tyup2lbvemac" path="res://objects/enemies/shellie/shellie.tscn" id="10_dic8d"]
+[ext_resource type="Resource" uid="uid://cjxpcqqqetplo" path="res://data/weapon_defs/wdef_charged_bolt.tres" id="10_pqr1j"]
+[ext_resource type="Resource" uid="uid://5ovideremesx" path="res://objects/enemies/tp_gun/info_tpgun.tres" id="11_pqr1j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fi7ee"]
 size = Vector2(16, 64)
@@ -104,10 +105,15 @@ position = Vector2(7, 56)
 orientation = 1
 length = 3
 
-[node name="TPGun" parent="SegA" node_paths=PackedStringArray("projectile_container") instance=ExtResource("9_cxytl")]
-position = Vector2(-92, -115)
-weapon_angle = 34.913
+[node name="MobSpawnerTPGun" type="Node2D" parent="SegA" node_paths=PackedStringArray("projectile_container", "segment")]
+position = Vector2(-91, -108)
+script = ExtResource("9_cxytl")
+weapon_angle = 30.0
+weapon_def = ExtResource("10_pqr1j")
 projectile_container = NodePath("..")
+mob = ExtResource("11_pqr1j")
+segment = NodePath("..")
+metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="SegB" type="Area2D" parent="." node_paths=PackedStringArray("layer")]
 collision_layer = 0
@@ -124,11 +130,6 @@ tile_set = ExtResource("3_h7puh")
 position = Vector2(88, -282)
 segment = NodePath("..")
 map_layer = NodePath("../TileMapLayer")
-
-[node name="Shellie" parent="SegB" instance=ExtResource("10_dic8d")]
-position = Vector2(46, -262)
-velocity = Vector2(-8, 0)
-speed = 16
 
 [node name="BossContainer" type="Node2D" parent="."]
 

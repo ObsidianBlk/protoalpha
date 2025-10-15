@@ -14,6 +14,14 @@ class_name Game
 ## Scroll Axis used primarily for defining the axis a camera can scroll.
 enum ScrollAxis {HORIZONTAL=0, VERTICAL=1}
 
+## A simple Facing enum for horizontally aligned Mobs.
+## [br][code]LEFT=-1[/code] and [code]RIGHT=1[/code]
+enum MobFacingH {LEFT=-1, RIGHT=1}
+
+## A simple Facing enum for vertically aligned Mobs.
+## [br][code]UP=-1[/code] and [code]DOWN=1[/code]
+enum MobFacingV {UP=-1, DOWN=1}
+
 # ------------------------------------------------------------------------------
 # Classes
 # ------------------------------------------------------------------------------

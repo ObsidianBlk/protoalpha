@@ -6,7 +6,7 @@ extends CharacterBody2D
 # Constants
 # ------------------------------------------------------------------------------
 enum ActionState {WALK=0, COVER=1, REVEAL=2}
-enum MobFacing {LEFT=-1, RIGHT=1}
+#enum MobFacing {LEFT=-1, RIGHT=1}
 
 const ANIM_REVEAL : String = "reveal"
 
@@ -15,7 +15,7 @@ const ANIM_REVEAL : String = "reveal"
 # ------------------------------------------------------------------------------
 @export_range(1, 16) var speed : int = 8
 @export_enum("TOP:1", "BOTTOM:-1") var orientation : int = 1:	set=set_orientation
-@export var facing : MobFacing = MobFacing.RIGHT:				set=set_facing
+@export var facing : Game.MobFacingH = Game.MobFacingH.RIGHT:	set=set_facing
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -42,11 +42,11 @@ func set_orientation(o : int) -> void:
 		if _sprite != null:
 			_sprite.flip_v = orientation == -1
 
-func set_facing(f : MobFacing) -> void:
+func set_facing(f : Game.MobFacingH) -> void:
 	if f != facing:
 		facing = f
 		if _sprite != null:
-			_sprite.flip_h = facing == MobFacing.LEFT
+			_sprite.flip_h = facing == Game.MobFacingH.LEFT
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -54,7 +54,7 @@ func set_facing(f : MobFacing) -> void:
 func _ready() -> void:
 	_ground_rays.scale.y = orientation
 	_sprite.flip_v = orientation == -1
-	_sprite.flip_h = facing == MobFacing.LEFT
+	_sprite.flip_h = facing == Game.MobFacingH.LEFT
 
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): return
@@ -66,9 +66,9 @@ func _physics_process(_delta: float) -> void:
 			var coll_count : int = get_slide_collision_count()
 			var eop : bool = _EdgeOfPlatform()
 			if coll_count > 1 or eop:
-				if facing == MobFacing.LEFT:
-					facing = MobFacing.RIGHT
-				else: facing = MobFacing.LEFT
+				if facing == Game.MobFacingH.LEFT:
+					facing = Game.MobFacingH.RIGHT
+				else: facing = Game.MobFacingH.LEFT
 
 # ------------------------------------------------------------------------------
 # Private Methods

@@ -39,5 +39,4 @@ icon = SubResource("AtlasTexture_fid0d")
 sound_sheet = SubResource("Resource_v22gl")
 projectile = ExtResource("2_vmhm0")
 rate_of_fire = 0.2
-automatic = null
 metadata/_custom_type_script = "uid://dvj7a56df3qol"

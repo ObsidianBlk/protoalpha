@@ -58,13 +58,23 @@ func _draw() -> void:
 	var size : Vector2i = mob.sprite_reference.get_size()
 	var pos : Vector2 = Vector2(-(size.x * 0.5), -size.y)
 	draw_texture(mob.sprite_reference, pos)
-	mob.draw_editor_display(self)
+	_draw_editor_display()
 
 func _physics_process(delta: float) -> void:
 	if _delay > 0.0:
 		_delay -= delta
 		if _delay <= 0.0:
 			_SpawnMob()
+
+
+# ------------------------------------------------------------------------------
+# "Virtual" Private Methods
+# ------------------------------------------------------------------------------
+func _draw_editor_display() -> void:
+	pass
+
+func _VerifyMob(mob : Node2D) -> bool:
+	return true
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -95,6 +105,10 @@ func _SpawnMob() -> void:
 	if (_spawned < count and not continuous) or (continuous and _spawns.size() < count):
 		var mob_instance : Node2D = mob.get_scene_instance()
 		if mob_instance != null:
+			if not _VerifyMob(mob_instance):
+				mob_instance.queue_free()
+				return
+			
 			if not continuous:
 				_spawned += 1
 			mob_instance.tree_exiting.connect(_on_spawn_exiting_tree.bind(mob_instance))

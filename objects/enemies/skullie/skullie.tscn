@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="2_f3o4m"]
 [ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="2_o4y2t"]
 [ext_resource type="Script" uid="uid://wjm481jeg5t0" path="res://scripts/nodes/weapon.gd" id="5_p64tw"]
-[ext_resource type="Resource" uid="uid://circacuptpl7j" path="res://objects/enemies/skullie/skullie_proj_def.tres" id="6_rufso"]
+[ext_resource type="Resource" uid="uid://circacuptpl7j" path="res://objects/enemies/skullie/projectile/skullie_proj_def.tres" id="6_rufso"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v21g"]
 atlas = ExtResource("1_3v21g")

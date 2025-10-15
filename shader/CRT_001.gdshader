@@ -20,6 +20,9 @@ Then ported by AHOPNESS (@ahopness)
 https://www.shadertoy.com/view/MsjXzh
 */
 
+// Original Source:
+// https://godotshaders.com/shader/realistic-crt-shader/
+
 shader_type canvas_item;
 
 uniform sampler2D SCREEN_TEXTURE: hint_screen_texture;

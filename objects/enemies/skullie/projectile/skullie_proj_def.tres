@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://xtdffbwyjkkn" path="res://assets/graphics/enemies/skullie/skullie_projectile.png" id="1_56566"]
 [ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="2_fs460"]
-[ext_resource type="PackedScene" uid="uid://dxolrrreicq30" path="res://objects/enemies/skullie/skullie_projectile.tscn" id="2_y3yiw"]
+[ext_resource type="PackedScene" uid="uid://dxolrrreicq30" path="res://objects/enemies/skullie/projectile/skullie_projectile.tscn" id="2_y3yiw"]
 
 [resource]
 script = ExtResource("2_fs460")
