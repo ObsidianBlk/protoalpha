@@ -18,6 +18,7 @@ const PRE_CHARGE_TIME : float = 1.0
 @export var flipped : bool = false:								set=set_flipped
 @export var idle_time : float = 1.0
 @export_range(-90.0, 90.0) var weapon_angle : float = 0.0:		set=set_weapon_angle
+@export var weapon_def : WeaponDef = null:						set=set_weapon_def
 @export var projectile_container : Node2D = null
 
 # ------------------------------------------------------------------------------
@@ -54,12 +55,19 @@ func set_weapon_angle(a : float) -> void:
 		if _weapon != null:
 			_weapon.rotation_degrees = weapon_angle
 
+func set_weapon_def(wd : WeaponDef) -> void:
+	if wd != weapon_def:
+		weapon_def = wd
+		if _weapon != null:
+			_weapon.weapon_def = weapon_def
+
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	_sprite.visible = Engine.is_editor_hint()
 	_viz.scale.x = -1.0 if flipped else 1.0
+	_weapon.weapon_def = weapon_def
 	_weapon.rotation_degrees = weapon_angle
 	if not Engine.is_editor_hint():
 		_Start()
@@ -87,10 +95,19 @@ func _Start() -> void:
 	_sprite.play(ANIM_TELEPORT_IN)
 	_sprite.visible = true
 
-func _AttackStage() -> void:
+func _ChargeStage() -> void:
 	if not _active: return
 	await get_tree().create_timer(PRE_CHARGE_TIME).timeout
 	_sprite.play(ANIM_CHARGE)
+
+func _AttackStage() -> void:
+	if projectile_container != null and _weapon != null and weapon_def != null:
+		_weapon.press_trigger(projectile_container)
+		if weapon_def.charging:
+			await get_tree().create_timer(weapon_def.rate_of_fire).timeout
+			_weapon.release_trigger()
+	_sprite.play(ANIM_TELEPORT_OUT)
+	_hitbox.disable_hitbox(true)
 
 # ------------------------------------------------------------------------------
 # Handler Methods
@@ -103,12 +120,9 @@ func _on_animation_finished() -> void:
 		ANIM_TELEPORT_IN:
 			_sprite.play(ANIM_IDLE)
 			_hitbox.disable_hitbox(false)
-			_AttackStage.call_deferred()
+			_ChargeStage.call_deferred()
 		ANIM_TELEPORT_OUT:
 			_active = false
 			_Start()
 		ANIM_CHARGE:
-			if projectile_container != null and _weapon != null:
-				_weapon.press_trigger(projectile_container)
-			_sprite.play(ANIM_TELEPORT_OUT)
-			_hitbox.disable_hitbox(true)
+			_AttackStage.call_deferred()

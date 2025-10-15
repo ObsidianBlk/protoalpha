@@ -5,13 +5,18 @@ class_name SoundSheet
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-@export var asp_group : StringName = &"Master"
+@export var asp_group : StringName = &"Master":						set=set_asp_group
 @export var sound_list : Dictionary[StringName, SoundEntry] = {}:	set=set_sound_list
 
 
 # ------------------------------------------------------------------------------
 # Setters
 # ------------------------------------------------------------------------------
+func set_asp_group(asp : StringName) -> void:
+	if asp != asp_group:
+		asp_group = asp
+		changed.emit()
+
 func set_sound_list(sl : Dictionary[StringName, SoundEntry]) -> void:
 	_DisconnectSoundEntries()
 	for sound_name : StringName in sl.keys():

@@ -115,4 +115,7 @@ func press_trigger(projectile_container : Node2D = null) -> void:
 func release_trigger() -> void:
 	if weapon_def == null: return
 	if weapon_def.charging:
+		if _final_trigger != _Stub:
+			_final_trigger.call()
+			_final_trigger = _Stub
 		_Reset()

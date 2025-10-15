@@ -10,10 +10,8 @@ region = Rect2(0, 0, 8, 8)
 
 [resource]
 script = ExtResource("2_buccd")
-type = 0
 name = &"Charged Bolt"
 icon = SubResource("AtlasTexture_w0654")
 projectile = ExtResource("2_w0654")
-rate_of_fire = 1.0
 charging = true
 metadata/_custom_type_script = "uid://dvj7a56df3qol"
