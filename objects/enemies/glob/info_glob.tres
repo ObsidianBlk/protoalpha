@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="MobInfo" load_steps=4 format=3 uid="uid://bnrpywoias5g"]
 
-[ext_resource type="Script" uid="uid://c4pup75630mxb" path="res://scripts/resource/mob_info.gd" id="1_l76d6"]
-[ext_resource type="Texture2D" uid="uid://dyxasmtccw6qi" path="res://assets/graphics/enemies/enemy_glob.png" id="2_xxoko"]
+[ext_resource type="Script" uid="uid://c4pup75630mxb" path="res://scripts/resource/mob_info.gd" id="1_mrwkr"]
+[ext_resource type="Texture2D" uid="uid://dyxasmtccw6qi" path="res://assets/graphics/enemies/enemy_glob.png" id="2_e2k3v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bxgdc"]
-atlas = ExtResource("2_xxoko")
+atlas = ExtResource("2_e2k3v")
 region = Rect2(0, 0, 16, 16)
 
 [resource]
-script = ExtResource("1_l76d6")
+script = ExtResource("1_mrwkr")
 mob_name = "Glob"
 description = "A small green pain in the ass"
 mob_scene = "uid://tfm2jtgj2is3"

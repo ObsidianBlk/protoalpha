@@ -208,6 +208,12 @@ static func Get_Level_Path(level_id : int) -> String:
 		return LEVELS[level_id][_LEVEL_PATH]
 	return ""
 
+
+static func Node_Has_Properties(n : Node, properties : Array[String]) -> bool:
+	for property : String in properties:
+		if not property in n: return false
+	return true
+
 #static func Create_Level_Instance(level_id : int) -> Level:
 	#if level_id in LEVELS:
 		#if not LEVELS[level_id][_LEVEL_PATH].is_empty():

@@ -6,7 +6,7 @@ class_name MobSpawner
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-@export var mob : MobInfo = null:			set=set_mob
+@export var mob_info : MobInfo = null:		set=set_mob_info
 @export var segment : MapSegment = null
 @export var mob_container : Node2D = null
 @export var count : int = 1
@@ -18,7 +18,7 @@ class_name MobSpawner
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _segment_active : bool = false
+#var _segment_active : bool = false
 var _spawned : int = 0
 var _spawns : Array[Node2D] = []
 var _delay : float = 0.0
@@ -26,9 +26,9 @@ var _delay : float = 0.0
 # ------------------------------------------------------------------------------
 # Setters
 # ------------------------------------------------------------------------------
-func set_mob(m : MobInfo) -> void:
+func set_mob_info(m : MobInfo) -> void:
 	_DisconnectMobInfo()
-	mob = m
+	mob_info = m
 	_ConnectMobInfo()
 	queue_redraw()
 
@@ -54,10 +54,8 @@ func _ready() -> void:
 
 func _draw() -> void:
 	if not Engine.is_editor_hint(): return
-	if mob == null or mob.sprite_reference == null: return
-	var size : Vector2i = mob.sprite_reference.get_size()
-	var pos : Vector2 = Vector2(-(size.x * 0.5), -size.y)
-	draw_texture(mob.sprite_reference, pos)
+	if mob_info == null or mob_info.sprite_reference == null: return
+	_draw_sprite_ref()
 	_draw_editor_display()
 
 func _physics_process(delta: float) -> void:
@@ -70,24 +68,29 @@ func _physics_process(delta: float) -> void:
 # ------------------------------------------------------------------------------
 # "Virtual" Private Methods
 # ------------------------------------------------------------------------------
+func _draw_sprite_ref() -> void:
+	var size : Vector2i = mob_info.sprite_reference.get_size()
+	var pos : Vector2 = Vector2(-(size.x * 0.5), -size.y)
+	draw_texture(mob_info.sprite_reference, pos)
+
 func _draw_editor_display() -> void:
 	pass
 
-func _VerifyMob(mob : Node2D) -> bool:
+func _verify_mob(_mob : Node2D) -> bool:
 	return true
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
 func _ConnectMobInfo() -> void:
-	if mob == null: return
-	if not mob.changed.is_connected(_on_mob_info_changed):
-		mob.changed.connect(_on_mob_info_changed)
+	if mob_info == null: return
+	if not mob_info.changed.is_connected(_on_mob_info_changed):
+		mob_info.changed.connect(_on_mob_info_changed)
 
 func _DisconnectMobInfo() -> void:
-	if mob == null: return
-	if mob.changed.is_connected(_on_mob_info_changed):
-		mob.changed.disconnect(_on_mob_info_changed)
+	if mob_info == null: return
+	if mob_info.changed.is_connected(_on_mob_info_changed):
+		mob_info.changed.disconnect(_on_mob_info_changed)
 
 func _GetContainer() -> Node2D:
 	if mob_container != null:
@@ -98,14 +101,14 @@ func _GetContainer() -> Node2D:
 	return null
 
 func _SpawnMob() -> void:
-	if not active or mob == null or mob.mob_scene == null: return
+	if not active or mob_info == null or mob_info.mob_scene == null: return
 	var container : Node2D = _GetContainer()
 	if container == null: return
 	
 	if (_spawned < count and not continuous) or (continuous and _spawns.size() < count):
-		var mob_instance : Node2D = mob.get_scene_instance()
+		var mob_instance : Node2D = mob_info.get_scene_instance()
 		if mob_instance != null:
-			if not _VerifyMob(mob_instance):
+			if not _verify_mob(mob_instance):
 				mob_instance.queue_free()
 				return
 			
@@ -120,7 +123,6 @@ func _SpawnMob() -> void:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
-
 
 # ------------------------------------------------------------------------------
 # Handler Methods

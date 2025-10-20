@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://tfm2jtgj2is3"]
 
 [ext_resource type="Texture2D" uid="uid://dyxasmtccw6qi" path="res://assets/graphics/enemies/enemy_glob.png" id="1_cgff3"]
-[ext_resource type="Script" uid="uid://ctfac6m006vw8" path="res://objects/enemy_glob/enemy_glob.gd" id="1_srvs0"]
+[ext_resource type="Script" uid="uid://ctfac6m006vw8" path="res://objects/enemies/glob/glob.gd" id="1_srvs0"]
 [ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="3_j365v"]
 [ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="3_srvs0"]
 
