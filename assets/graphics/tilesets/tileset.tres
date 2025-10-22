@@ -397,6 +397,9 @@ texture = ExtResource("1_06gt1")
 15:4/0/custom_data_1 = 5
 14:4/0 = 0
 14:4/0/custom_data_1 = 6
+4:1/0 = 0
+21:7/0 = 0
+21:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4tiyv"]
 resource_name = "FloorSpikes"

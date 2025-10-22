@@ -49,6 +49,10 @@ func spawn_at(spawn_position : Vector2, payload : Dictionary = {}) -> void:
 	if has_user_signal(&"spawn"):
 		emit_signal(&"spawn")
 
+func hide_sprite(h : bool) -> void:
+	if _sprite != null:
+		_sprite.visible = not h
+
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------

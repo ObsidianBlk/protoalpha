@@ -93,8 +93,11 @@ func _DisconnectLadderDetector() -> void:
 # ------------------------------------------------------------------------------
 # "Virtual" Public Methods
 # ------------------------------------------------------------------------------
-func spawn_at(spawn_position : Vector2, spawn_payload : Dictionary = {}) -> void:
+func spawn_at(spawn_position : Vector2, _spawn_payload : Dictionary = {}) -> void:
 	global_position = spawn_position
+
+func hide_sprite(_hide : bool) -> void:
+	pass
 
 func die() -> void:
 	if alive:

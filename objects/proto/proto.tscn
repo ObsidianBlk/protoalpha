@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=3 uid="uid://begmbhotjdgsd"]
+[gd_scene load_steps=158 format=3 uid="uid://begmbhotjdgsd"]
 
 [ext_resource type="Texture2D" uid="uid://b6uvydvrmfqvl" path="res://assets/graphics/proto/Proto.png" id="1_2x067"]
 [ext_resource type="Script" uid="uid://d3prep4q52isc" path="res://objects/proto/proto.gd" id="1_7jw1q"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://csi3w2wjrro17" path="res://objects/proto/states/state_hurt.gd" id="14_l84w6"]
 [ext_resource type="Script" uid="uid://b3kbun32ck0px" path="res://objects/proto/states/state_dead.gd" id="15_f3qg8"]
 [ext_resource type="Script" uid="uid://db7mt4i5smbni" path="res://scripts/nodes/interactor_2d.gd" id="24_l6vdm"]
+[ext_resource type="PackedScene" uid="uid://nj2tagnipopm" path="res://objects/enemy_explosion/enemy_explosion.tscn" id="25_bg1mb"]
 
 [sub_resource type="Resource" id="Resource_k3t5h"]
 script = ExtResource("3_jl3in")
@@ -1349,7 +1350,11 @@ metadata/_custom_type_script = "uid://db7mt4i5smbni"
 position = Vector2(-0.5, -10)
 shape = SubResource("RectangleShape2D_bg1mb")
 
+[node name="EnergyExplosion" parent="." instance=ExtResource("25_bg1mb")]
+
 [connection signal="dead" from="." to="StateMachine" method="transition_state" binds= [&"Dead"]]
 [connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed"]
 [connection signal="hit" from="ComponentHealth" to="StateMachine" method="transition_state" binds= [&"Hurt"]]
+[connection signal="explode" from="StateMachine/Dead" to="EnergyExplosion" method="set_emitting" binds= [true]]
+[connection signal="finished" from="EnergyExplosion" to="StateMachine/Dead" method="_on_explosion_finished"]
