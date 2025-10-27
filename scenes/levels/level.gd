@@ -62,8 +62,9 @@ func _exit_tree() -> void:
 		music_sheet.stop_all()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause_game"):
-		pause_requested.emit()
+	pass
+	#if event.is_action_pressed("pause_game"):
+		#pause_requested.emit()
 
 func _process(delta: float) -> void:
 	if _player_respawn_timer > 0.0:

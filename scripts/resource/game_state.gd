@@ -27,6 +27,10 @@ const ALL_LEVELS : int = LEVEL_1 | LEVEL_2 | LEVEL_3 | LEVEL_4 | LEVEL_5 | LEVEL
 const MAX_ENERGY : int = 255
 const INITIAL_PLAYER_LIVES : int = 3
 
+const CHEAT_INFINITE_LIVES : StringName = &"move_up_move_up_move_down_move_down_move_left_move_right_move_left_move_right_select_start"
+const CHEAT_CAN_DIE : StringName = &"select_select_select_start"
+const CHEAT_ADD_LIVES : StringName = &"move_up_move_up_shoot_shoot_select"
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
@@ -63,7 +67,8 @@ func set_unlimited(u : bool) -> void:
 
 func set_lives(l : int) -> void:
 	if l >= 0 and l != lives:
-		lives = l
+		if not unlimited:
+			lives = l
 		if _lock_change_emit <= 0:
 			changed.emit()
 
@@ -129,3 +134,18 @@ func is_level_unlocked(level : int) -> bool:
 	if level in [LEVEL_1,LEVEL_2,LEVEL_3,LEVEL_4,LEVEL_5,LEVEL_6,LEVEL_7,LEVEL_8]:
 		return (level & unlocked_levels) > 0
 	return false
+
+func activate_cheat(code : StringName) -> bool:
+	match code:
+		CHEAT_INFINITE_LIVES:
+			unlimited = true
+			print("Unlimited Lives Cheat")
+		CHEAT_ADD_LIVES:
+			lives += 3
+			print("Add Lived Cheat")
+		CHEAT_CAN_DIE:
+			unlimited = false
+			print("Clear Unlimited Lives")
+		_:
+			return false
+	return true

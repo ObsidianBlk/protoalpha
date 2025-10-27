@@ -7,6 +7,8 @@ extends Node2D
 signal active()
 signal inactive()
 signal transitioning()
+signal transitioning_active()
+signal transitioning_inactive()
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -75,26 +77,40 @@ func _UpdateIdleAnim() -> void:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
-func trigger_activate() -> void:
+func trigger_activate(delay : float = 0.0) -> void:
 	if verbose:
 		print("Trigger Activate")
+	if delay > 0.0:
+		get_tree().create_timer(delay).timeout.connect(trigger_activate)
+		return
+	
 	if _anim_player == null: return
 	if _anim_player.current_animation == ANIM_INACTIVE:
 		var speed : float = activating_speed if activating_speed > 0.0 else 1.0
 		_anim_player.play(ANIM_ACTIVATING, -1.0, speed)
+		transitioning_active.emit()
 		transitioning.emit()
 
-func trigger_deactivate() -> void:
+func trigger_deactivate(delay : float = 0.0) -> void:
 	if verbose:
 		print("Trigger Deactivate")
+	if delay > 0.0:
+		get_tree().create_timer(delay).timeout.connect(trigger_deactivate)
+		return
+	
 	if _anim_player == null: return
 	if _anim_player.current_animation == ANIM_ACTIVATED:
 		var speed : float = deactivating_speed if deactivating_speed > 0.0 else 1.0
 		_anim_player.play(ANIM_DEACTIVATING, -1.0, speed)
+		transitioning_inactive.emit()
 		transitioning.emit()
 
-func trigger_toggle() -> void:
+func trigger_toggle(delay : float = 0.0) -> void:
 	if _anim_player == null: return
+	if delay > 0.0:
+		get_tree().create_timer(delay).timeout.connect(trigger_toggle)
+		return
+
 	match _anim_player.current_animation:
 		ANIM_ACTIVATED:
 			trigger_deactivate()

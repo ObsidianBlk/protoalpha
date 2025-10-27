@@ -25,6 +25,9 @@ const LEVEL : String = "res://scenes/levels/demo_level/demo_level.tscn"
 var _level : Level = null
 var _game_running : bool = false
 
+var _input_record : Array[String] = []
+var _input_timestamp : float = 0.0
+
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
@@ -62,23 +65,74 @@ func _ready() -> void:
 	_ui.register_action_handler(Game.UI_ACTION_RESUME, _ResumeGame)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause_game"):
-		if _level != null:
+	if _level != null:
+		if event.is_action_pressed("start"):
 			if _ui.is_ui_active(level_select_menu):
 				_ui.swap_to_ui(pause_menu)
 			elif _ui.is_ui_active(pause_menu):
 				_ResumeGame()
-			else:
+			elif not _CheckCheatCode(event):
 				_PauseGame()
 		else:
+			_CheckCheatCode(event)
+	else:
+		if event.is_action_pressed("start"):
 			if _ui.is_ui_active(level_select_menu):
 				await _ui.pop_ui()
 				_game_running = false
 				_ui.open_default_ui()
+	
+	#if event.is_action_pressed("start"):
+		#if _level != null:
+			#if _ui.is_ui_active(level_select_menu):
+				#_ui.swap_to_ui(pause_menu)
+			#elif _ui.is_ui_active(pause_menu):
+				#_ResumeGame()
+			#else:
+				#_PauseGame()
+		#else:
+			#if _ui.is_ui_active(level_select_menu):
+				#await _ui.pop_ui()
+				#_game_running = false
+				#_ui.open_default_ui()
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _GetPressedActionName(event : InputEvent, actions : Array[String]) -> String:
+	for action : String in actions:
+		if event.is_action_pressed(action):
+			return action
+	return ""
+
+func _InputRecordCode() -> StringName:
+	var cheat_str : String = ""
+	for action : String in _input_record:
+		if action.is_empty(): continue
+		if cheat_str.is_empty():
+			cheat_str = action
+		else:
+			cheat_str = "%s_%s"%[cheat_str, action]
+	return cheat_str
+
+func _CheckCheatCode(event : InputEvent) -> bool:
+	var action : String = _GetPressedActionName(
+		event,
+		["move_up", "move_down", "move_left", "move_right", "jump", "shoot", "select", "start"]
+	)
+	if not action.is_empty():
+		var timestamp = Time.get_ticks_msec()
+		if _input_record.size() > 0:
+			var diff : float = timestamp - _input_timestamp
+			if diff >= 300.0:
+				_input_record.clear()
+		_input_record.append(action)
+		_input_timestamp = timestamp
+		
+		var cheat_code : StringName = _InputRecordCode()
+		return Game.State.activate_cheat(cheat_code)
+	return false
+
 func _CloseLevel() -> void:
 	if _level == null: return
 	_level.despawn()

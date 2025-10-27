@@ -51,19 +51,8 @@ region = Rect2(220, 220, 36, 36)
 [sub_resource type="Resource" id="Resource_s17dp"]
 script = ExtResource("17_p8abn")
 resolution = Vector2(640, 480)
-scan_line_amount = 1.0
 warp_amount = 0.372
-noise_amount = 0.03
-interference_amount = 0.2
-grille_amount = 0.1
-grille_size = 1.0
 vignette_amount = 0.794
-vignette_intensity = 0.4
-aberation_amount = 0.5
-roll_line_amount = 0.3
-roll_speed = 1.0
-scan_line_strength = -8.0
-pixel_strength = -2.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ou6is"]
 texture = ExtResource("5_hxu8e")
@@ -232,7 +221,7 @@ handle_input_locally = false
 snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(320, 240)
+size = Vector2i(494, 432)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
