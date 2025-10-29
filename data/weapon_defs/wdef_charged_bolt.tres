@@ -1,17 +1,45 @@
-[gd_resource type="Resource" script_class="WeaponDef" load_steps=5 format=3 uid="uid://cjxpcqqqetplo"]
+[gd_resource type="Resource" script_class="WeaponDef" load_steps=12 format=3 uid="uid://cjxpcqqqetplo"]
 
 [ext_resource type="Texture2D" uid="uid://cerxj7dxak3ah" path="res://assets/graphics/bullets/bullet_charged_bolt.png" id="1_62502"]
 [ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="2_buccd"]
 [ext_resource type="PackedScene" uid="uid://bfoxdetpiysud" path="res://objects/projectiles/charged_bolt/charged_bolt.tscn" id="2_w0654"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="4_jx5qh"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="5_by2oc"]
+[ext_resource type="AudioStream" uid="uid://b62lisctvvruw" path="res://assets/audio/sfx/bolt_explosion.wav" id="6_4fpv4"]
+[ext_resource type="AudioStream" uid="uid://ddff876f8wiv2" path="res://assets/audio/sfx/charged_bolt_fired.wav" id="7_by2oc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0654"]
 atlas = ExtResource("1_62502")
 region = Rect2(0, 0, 8, 8)
 
+[sub_resource type="Resource" id="Resource_e63ph"]
+script = ExtResource("5_by2oc")
+stream = ExtResource("6_4fpv4")
+volume_linear = 1.0
+min_pitch = 0.5
+max_pitch = 0.5
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_4fpv4"]
+script = ExtResource("5_by2oc")
+stream = ExtResource("7_by2oc")
+volume_linear = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_sap12"]
+script = ExtResource("4_jx5qh")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("5_by2oc")]({
+&"explode": SubResource("Resource_e63ph"),
+&"spawn": SubResource("Resource_4fpv4")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
+
 [resource]
 script = ExtResource("2_buccd")
 name = &"Charged Bolt"
 icon = SubResource("AtlasTexture_w0654")
+sound_sheet = SubResource("Resource_sap12")
 projectile = ExtResource("2_w0654")
 charging = true
 metadata/_custom_type_script = "uid://dvj7a56df3qol"

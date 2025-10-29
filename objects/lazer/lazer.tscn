@@ -1,7 +1,25 @@
-[gd_scene load_steps=23 format=3 uid="uid://cl1r4jttq45ui"]
+[gd_scene load_steps=28 format=3 uid="uid://cl1r4jttq45ui"]
 
 [ext_resource type="Texture2D" uid="uid://dgtraimhdlvh8" path="res://assets/graphics/environment/lazer/lazer_base.png" id="1_0e1ki"]
 [ext_resource type="Script" uid="uid://cqt5744j0b6um" path="res://objects/lazer/lazer.gd" id="1_7kud7"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_73xnr"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_2pko5"]
+[ext_resource type="AudioStream" uid="uid://ciy1cwlxuc8mu" path="res://assets/audio/sfx/lazer_beam.wav" id="4_2pko5"]
+
+[sub_resource type="Resource" id="Resource_v2m0d"]
+script = ExtResource("3_2pko5")
+stream = ExtResource("4_2pko5")
+volume_db = -40.0
+volume_linear = 0.010000000000000004
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_sgdrg"]
+script = ExtResource("2_73xnr")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("3_2pko5")]({
+&"active": SubResource("Resource_v2m0d")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_73xnr"]
 atlas = ExtResource("1_0e1ki")
@@ -161,6 +179,7 @@ animations = [{
 
 [node name="Lazer" type="Node2D"]
 script = ExtResource("1_7kud7")
+sound_sheet = SubResource("Resource_sgdrg")
 
 [node name="Body" type="Node2D" parent="."]
 unique_name_in_owner = true

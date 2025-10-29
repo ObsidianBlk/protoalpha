@@ -14,6 +14,10 @@ const ANIM_ACTIVE : StringName = &"active"
 const ANIM_CHARGING : StringName = &"charging"
 const ANIM_DISCHARGING : StringName = &"discharging"
 
+const AUDIO_ACTIVE : StringName = &"active"
+const AUDIO_CHARGING : StringName = &"charging"
+const AUDIO_DISCHARGING : StringName = &"discharging"
+
 enum Facing {RIGHT, DOWN, LEFT, UP}
 
 # ------------------------------------------------------------------------------
@@ -23,12 +27,14 @@ enum Facing {RIGHT, DOWN, LEFT, UP}
 @export var length : int = 2:							set=set_length
 @export var travel_speed : float = 12.0:				set=set_travel_speed
 @export var start_on : bool = true
+@export var sound_sheet : SoundSheet = null
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _beams : Array[HitBox] = []
 var _seg_delay : float = 0.0
+var _audio_id : int = -1
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -66,6 +72,7 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		if start_on:
 			_sprite.play(ANIM_ACTIVE)
+			_PlaySFX(AUDIO_ACTIVE)
 			_AllBeams()
 
 func _process(delta: float) -> void:
@@ -127,6 +134,14 @@ func _RemoveBeam() -> void:
 		_beams[idx].queue_free()
 		_beams.remove_at(idx)
 
+func _PlaySFX(audio_name : StringName) -> void:
+	if sound_sheet == null: return
+	_audio_id = sound_sheet.play(audio_name)
+
+func _StopSFX() -> void:
+	if sound_sheet == null: return
+	sound_sheet.stop(_audio_id)
+
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
@@ -144,6 +159,7 @@ func activate(on : bool) -> void:
 	if _sprite == null: return
 	if on and not is_active():
 		_sprite.play(ANIM_CHARGING)
+		_PlaySFX(AUDIO_CHARGING)
 	elif not on:
 		_sprite.play(ANIM_INACTIVE)
 
@@ -155,5 +171,7 @@ func _on_sprite_animation_finished() -> void:
 	match _sprite.animation:
 		ANIM_CHARGING:
 			_sprite.play(ANIM_DISCHARGING)
+			_PlaySFX(AUDIO_DISCHARGING)
 		ANIM_DISCHARGING:
 			_sprite.play(ANIM_ACTIVE)
+			_PlaySFX(AUDIO_ACTIVE)

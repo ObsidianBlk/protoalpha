@@ -31,6 +31,8 @@ const APARAM_ONCE_SPAWN : String = "parameters/spawn_dead/request"
 const AUDIO_JUMP : StringName = &"jump"
 const AUDIO_LAND : StringName = &"land"
 const AUDIO_HURT : StringName = &"hurt"
+const AUDIO_SPAWN : StringName = &"spawn"
+const AUDIO_EXPLODE : StringName = &"explode"
 
 # ------------------------------------------------------------------------------
 # Export Variables

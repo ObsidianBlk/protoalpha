@@ -26,6 +26,7 @@ metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_v22gl"]
 script = ExtResource("4_6wwc2")
+asp_group = &"Game"
 sound_list = Dictionary[StringName, ExtResource("5_5ysna")]({
 &"explode": SubResource("Resource_0coyi"),
 &"spawn": SubResource("Resource_rhf5e")

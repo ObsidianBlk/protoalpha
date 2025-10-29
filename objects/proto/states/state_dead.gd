@@ -21,6 +21,7 @@ func enter(payload : Variant = null) -> void:
 	else:
 		actor.hide_sprite(true)
 		explode.emit()
+		play_sfx(AUDIO_EXPLODE)
 
 
 func die() -> void:
