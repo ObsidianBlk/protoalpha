@@ -28,6 +28,7 @@ enum Facing {RIGHT, DOWN, LEFT, UP}
 @export var travel_speed : float = 12.0:				set=set_travel_speed
 @export var start_on : bool = true
 @export var sound_sheet : SoundSheet = null
+@export var disabled : bool = false:					set=set_disabled
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -64,15 +65,21 @@ func set_start_on(o : bool) -> void:
 		if Engine.is_editor_hint():
 			activate(start_on)
 
+func set_disabled(d : bool) -> void:
+	if d != disabled:
+		disabled = d
+		if disabled:
+			activate.call_deferred(false)
+		elif start_on and not Engine.is_editor_hint():
+			_AllBeams.call_deferred()
+
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	_UpdateFacing()
 	if not Engine.is_editor_hint():
-		if start_on:
-			_sprite.play(ANIM_ACTIVE)
-			_PlaySFX(AUDIO_ACTIVE)
+		if start_on and not disabled:
 			_AllBeams()
 
 func _process(delta: float) -> void:
@@ -92,6 +99,8 @@ func _process(delta: float) -> void:
 		_seg_delay -= delta
 		if _seg_delay <= 0.0:
 			_RemoveBeam()
+			if _beams.size() <= 0:
+				_StopSFX()
 			_seg_delay = 1.0 / travel_speed
 
 # ------------------------------------------------------------------------------
@@ -111,6 +120,8 @@ func _UpdateFacing() -> void:
 
 func _AllBeams() -> void:
 	if _body == null: return
+	_sprite.play(ANIM_ACTIVE)
+	_PlaySFX(AUDIO_ACTIVE)
 	while _beams.size() < length:
 		_AddBeam()
 
@@ -134,13 +145,22 @@ func _RemoveBeam() -> void:
 		_beams[idx].queue_free()
 		_beams.remove_at(idx)
 
+func _RemoveAllBeams() -> void:
+	if _body == null: return
+	for i : int in range(_beams.size()):
+		_body.remove_child(_beams[i])
+		_beams[i].queue_free()
+	_beams.clear()
+
 func _PlaySFX(audio_name : StringName) -> void:
-	if sound_sheet == null: return
+	if sound_sheet == null or Engine.is_editor_hint(): return
 	_audio_id = sound_sheet.play(audio_name)
 
 func _StopSFX() -> void:
-	if sound_sheet == null: return
-	sound_sheet.stop(_audio_id)
+	if sound_sheet == null or Engine.is_editor_hint(): return
+	if _audio_id >= 0:
+		sound_sheet.stop(_audio_id)
+		_audio_id = -1
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -156,12 +176,15 @@ func is_charging() -> bool:
 	return false
 
 func activate(on : bool) -> void:
-	if _sprite == null: return
+	if _sprite == null or (disabled and on): return
 	if on and not is_active():
 		_sprite.play(ANIM_CHARGING)
 		_PlaySFX(AUDIO_CHARGING)
-	elif not on:
+	elif not on and is_active():
 		_sprite.play(ANIM_INACTIVE)
+		if disabled:
+			_StopSFX()
+			_RemoveAllBeams()
 
 # ------------------------------------------------------------------------------
 # Handler Methods
