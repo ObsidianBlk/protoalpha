@@ -8,6 +8,8 @@ class_name MobSpawnerShellie
 # ------------------------------------------------------------------------------
 const MOB_INFO: MobInfo = preload("uid://1nk16vgguts7")
 
+const _SPRITE_Y_OFFSET : float = 2.0
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
@@ -40,6 +42,15 @@ func _ready() -> void:
 # ------------------------------------------------------------------------------
 # "Virutal" Private Methods
 # ------------------------------------------------------------------------------
+func _draw_sprite_ref() -> void:
+	var size : Vector2i = mob_info.sprite_reference.get_size()
+	var pos : Vector2 = Vector2(-(size.x * 0.5), -(size.y * 0.5) + (_SPRITE_Y_OFFSET * -orientation))
+	var rsize : Vector2 = Vector2(
+		size.x, size.y * orientation
+	)
+	draw_texture_rect(mob_info.sprite_reference, Rect2(pos, rsize), false)
+	#draw_texture(mob_info.sprite_reference, pos)
+
 func _verify_mob(mob : Node2D) -> bool:
 	if Game.Node_Has_Properties(mob, ["speed", "orientation", "facing"]):
 		mob.speed = speed

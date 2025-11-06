@@ -112,10 +112,10 @@ func _Transition(player : CharacterActor2D) -> void:
 	_tween.set_parallel(false)
 	
 	var tween_to : Callable = func(n : Node2D, prop : String, from : float, to : float, parallel : bool = false, force_duration : float = 0.0):
-		if not is_equal_approx(from, to):
-			var duration : float = abs(to - from) / pixels_per_second
-			if force_duration > 0.0:
-				duration = force_duration
+		if not is_equal_approx(from, to) or force_duration > 0.0:
+			var duration : float = force_duration
+			if force_duration <= 0.0:
+				duration = abs(to - from) / pixels_per_second
 			if parallel:
 				_tween.parallel().tween_property(n, prop, to, duration)
 			else: _tween.tween_property(n, prop, to, duration)
@@ -135,7 +135,9 @@ func _Transition(player : CharacterActor2D) -> void:
 				if bound == MapSegment.BOUNDS_LEFT:
 					res *= -1.0
 			
-				tween_to.call(camera, "global_position:y", camera.global_position.y, seg_center.y)
+				last_duration = tween_to.call(camera, "global_position:y", camera.global_position.y, seg_center.y)
+				# NOTE: Forcing the player in place
+				tween_to.call(player, "global_position:x", player.global_position.x, player.global_position.x, true, last_duration)
 				last_duration = tween_to.call(camera, "global_position:x", camera.global_position.x, bounds[bound] - res)
 			else:
 				var res : float = Game.SCREEN_RESOLUTION.y * 0.5
@@ -145,7 +147,9 @@ func _Transition(player : CharacterActor2D) -> void:
 					var edge : float = tedge
 					if camera.global_position.y > bedge:
 						edge = bedge
-					tween_to.call(camera, "global_position:y", camera.global_position.y, edge)
+					last_duration = tween_to.call(camera, "global_position:y", camera.global_position.y, edge)
+					# NOTE: Forcing the player in place
+					tween_to.call(player, "global_position:x", player.global_position.x, player.global_position.x, true, last_duration)
 				last_duration = tween_to.call(camera, "global_position:x", camera.global_position.x, seg_center.x)
 				
 			var sn : float = -1.0 if bound == MapSegment.BOUNDS_RIGHT else 1.0
@@ -167,6 +171,8 @@ func _Transition(player : CharacterActor2D) -> void:
 					res *= -1
 				
 				tween_to.call(camera, "global_position:x", camera.global_position.x, seg_center.x)
+				# NOTE: Forcing the player in place
+				tween_to.call(player, "global_position:y", player.global_position.y, player.global_position.y, true, last_duration)
 				last_duration = tween_to.call(camera, "global_position:y", camera.global_position.y, bounds[bound] - res)
 			else:
 				var res : float = Game.SCREEN_RESOLUTION.x * 0.5
@@ -177,6 +183,8 @@ func _Transition(player : CharacterActor2D) -> void:
 					if camera.global_position.x > redge:
 						edge = redge
 					tween_to.call(camera, "global_position:x", camera.global_position.x, edge)
+					# NOTE: Forcing the player in place
+					tween_to.call(player, "global_position:y", player.global_position.y, player.global_position.y, true, last_duration)
 				last_duration = tween_to.call(camera, "global_position:y", camera.global_position.y, seg_center.y)
 			
 			var sn : float = -1.0 if bound == MapSegment.BOUNDS_BOTTOM else 1.0

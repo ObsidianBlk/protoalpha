@@ -17,6 +17,8 @@ const PLAYER_RESPAWN_TIMER : float = 1.0
 
 const MUSIC_CROSSFADE_DURATION : float = 1.0
 
+const _DEBUG_POSITION_GROUP : StringName = &"DebugPosition"
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
@@ -57,9 +59,17 @@ func _ready() -> void:
 		if child is MapSegment:
 			_ConnectSegment(child)
 
+func _enter_tree() -> void:
+	if Game.State is GameState:
+		if not Game.State.cheat_activated.is_connected(_on_cheat_activated):
+			Game.State.cheat_activated.connect(_on_cheat_activated)
+
 func _exit_tree() -> void:
 	if music_sheet != null:
 		music_sheet.stop_all()
+	if Game.State is GameState:
+		if Game.State.cheat_activated.is_connected(_on_cheat_activated):
+			Game.State.cheat_activated.disconnect(_on_cheat_activated)
 
 func _unhandled_input(event: InputEvent) -> void:
 	pass
@@ -108,6 +118,25 @@ func _ClearBosses() -> void:
 	for boss : Node in get_tree().get_nodes_in_group(Game.GROUP_BOSS):
 		if boss is CharacterActor2D:
 			boss.queue_free()
+
+func _PlayerToDebugPosition() -> void:
+	var nlist : Array[Node] = get_tree().get_nodes_in_group(Game.GROUP_PLAYER)
+	var player : Node2D = null
+	for n : Node in nlist:
+		if n is Node2D:
+			player = n
+			break
+	if player == null: return
+	
+	nlist = get_tree().get_nodes_in_group(_DEBUG_POSITION_GROUP)
+	var dbp : Node2D = null
+	for n : Node in nlist:
+		if n is Node2D:
+			dbp = n
+			break
+	
+	if dbp != null:
+		player.global_position = dbp.global_position
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -182,3 +211,7 @@ func _on_segment_exited(segment : MapSegment) -> void:
 
 func _on_boss_dead() -> void:
 	_boss_defeated = true
+
+func _on_cheat_activated(code : StringName) -> void:
+	if code == GameState.CHEAT_DEBUG_POSITION:
+		_PlayerToDebugPosition.call_deferred()

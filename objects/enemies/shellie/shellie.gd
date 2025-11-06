@@ -10,6 +10,8 @@ enum ActionState {WALK=0, COVER=1, REVEAL=2}
 
 const ANIM_REVEAL : String = "reveal"
 
+const _SPRITE_Y_OFFSET : float = 2.0
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
@@ -29,6 +31,8 @@ var _state : ActionState = ActionState.WALK
 @onready var _sprite: AnimatedSprite2D = %AnimatedSprite2D
 @onready var _ray_ground_l: RayCast2D = %RayGroundL
 @onready var _ray_ground_r: RayCast2D = %RayGroundR
+@onready var _ray_wall_l: RayCast2D = %RayWallL
+@onready var _ray_wall_r: RayCast2D = %RayWallR
 
 
 # ------------------------------------------------------------------------------
@@ -41,6 +45,7 @@ func set_orientation(o : int) -> void:
 			_ground_rays.scale.y = orientation
 		if _sprite != null:
 			_sprite.flip_v = orientation == -1
+			_sprite.offset = Vector2(0.0, _SPRITE_Y_OFFSET * -orientation)
 
 func set_facing(f : Game.MobFacingH) -> void:
 	if f != facing:
@@ -54,6 +59,7 @@ func set_facing(f : Game.MobFacingH) -> void:
 func _ready() -> void:
 	_ground_rays.scale.y = orientation
 	_sprite.flip_v = orientation == -1
+	_sprite.offset = Vector2(0.0, _SPRITE_Y_OFFSET * -orientation)
 	_sprite.flip_h = facing == Game.MobFacingH.LEFT
 
 func _physics_process(_delta: float) -> void:
@@ -63,9 +69,10 @@ func _physics_process(_delta: float) -> void:
 			velocity = Vector2(float(speed) * facing, 0.0)
 			move_and_slide()
 			
-			var coll_count : int = get_slide_collision_count()
+			#var coll_count : int = get_slide_collision_count()
 			var eop : bool = _EdgeOfPlatform()
-			if coll_count > 1 or eop:
+			#if coll_count > 0 or eop:
+			if eop:
 				if facing == Game.MobFacingH.LEFT:
 					facing = Game.MobFacingH.RIGHT
 				else: facing = Game.MobFacingH.LEFT
@@ -76,9 +83,9 @@ func _physics_process(_delta: float) -> void:
 func _EdgeOfPlatform() -> bool:
 	if _sprite != null:
 		if _sprite.flip_h:
-			if _ray_ground_l != null:
-				return not _ray_ground_l.is_colliding()
+			if _ray_ground_l != null and _ray_wall_l != null:
+				return not _ray_ground_l.is_colliding() or _ray_wall_l.is_colliding()
 		else:
-			if _ray_ground_r != null:
-				return not _ray_ground_r.is_colliding()
+			if _ray_ground_r != null and _ray_wall_r != null:
+				return not _ray_ground_r.is_colliding() or _ray_wall_r.is_colliding()
 	return false

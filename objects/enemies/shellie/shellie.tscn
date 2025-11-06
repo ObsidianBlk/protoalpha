@@ -224,6 +224,7 @@ shape = SubResource("CapsuleShape2D_qxm5k")
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_tqy6e")
 animation = &"walk"
+frame = 2
 offset = Vector2(0, -2)
 
 [node name="HitBox" type="Area2D" parent="."]
@@ -246,10 +247,22 @@ position = Vector2(-8, 6)
 target_position = Vector2(0, 4)
 hit_from_inside = true
 
+[node name="RayWallL" type="RayCast2D" parent="GroundRays"]
+unique_name_in_owner = true
+position = Vector2(-8, 0)
+target_position = Vector2(-4, 0)
+hit_from_inside = true
+
 [node name="RayGroundR" type="RayCast2D" parent="GroundRays"]
 unique_name_in_owner = true
 position = Vector2(8, 6)
 target_position = Vector2(0, 4)
+hit_from_inside = true
+
+[node name="RayWallR" type="RayCast2D" parent="GroundRays"]
+unique_name_in_owner = true
+position = Vector2(8, 0)
+target_position = Vector2(4, 0)
 hit_from_inside = true
 
 [node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]

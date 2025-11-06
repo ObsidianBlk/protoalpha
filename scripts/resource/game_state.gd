@@ -3,6 +3,11 @@ extends Resource
 class_name GameState
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal cheat_activated(cheat_code : StringName)
+
+# ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 ## Level 1 ID
@@ -30,6 +35,7 @@ const INITIAL_PLAYER_LIVES : int = 3
 const CHEAT_INFINITE_LIVES : StringName = &"move_up_move_up_move_down_move_down_move_left_move_right_move_left_move_right_select_start"
 const CHEAT_CAN_DIE : StringName = &"select_select_select_start"
 const CHEAT_ADD_LIVES : StringName = &"move_up_move_up_shoot_shoot_select"
+const CHEAT_DEBUG_POSITION : StringName = &"move_up_move_left_move_down_move_right_select_select"
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -146,6 +152,9 @@ func activate_cheat(code : StringName) -> bool:
 		CHEAT_CAN_DIE:
 			unlimited = false
 			print("Clear Unlimited Lives")
+		CHEAT_DEBUG_POSITION:
+			print("Teleport to debug position")
 		_:
 			return false
+	cheat_activated.emit(code)
 	return true
