@@ -8,6 +8,7 @@ signal weapon_fired()
 signal weapon_reloaded()
 signal animation_finished(animation_name : StringName)
 signal dead()
+signal request_state(state : StringName, payload : Variant)
 
 
 # ------------------------------------------------------------------------------

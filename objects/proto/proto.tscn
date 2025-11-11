@@ -1,4 +1,4 @@
-[gd_scene load_steps=162 format=3 uid="uid://begmbhotjdgsd"]
+[gd_scene load_steps=185 format=3 uid="uid://begmbhotjdgsd"]
 
 [ext_resource type="Texture2D" uid="uid://b6uvydvrmfqvl" path="res://assets/graphics/proto/Proto.png" id="1_2x067"]
 [ext_resource type="Script" uid="uid://d3prep4q52isc" path="res://objects/proto/proto.gd" id="1_7jw1q"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://b865x7ayjvbki" path="res://scripts/fsm/actor_state_machine.gd" id="13_jl3in"]
 [ext_resource type="Script" uid="uid://csi3w2wjrro17" path="res://objects/proto/states/state_hurt.gd" id="14_l84w6"]
 [ext_resource type="Script" uid="uid://b3kbun32ck0px" path="res://objects/proto/states/state_dead.gd" id="15_f3qg8"]
+[ext_resource type="Script" uid="uid://bprt11s6lcv8p" path="res://objects/proto/states/state_teleport.gd" id="24_fql2o"]
 [ext_resource type="Script" uid="uid://db7mt4i5smbni" path="res://scripts/nodes/interactor_2d.gd" id="24_l6vdm"]
 [ext_resource type="PackedScene" uid="uid://nj2tagnipopm" path="res://objects/enemy_explosion/enemy_explosion.tscn" id="25_bg1mb"]
 
@@ -300,6 +301,50 @@ region = Rect2(216, 168, 24, 21)
 atlas = ExtResource("1_2x067")
 region = Rect2(0, 0, 24, 21)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8oyeu"]
+atlas = ExtResource("1_2x067")
+region = Rect2(96, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxl15"]
+atlas = ExtResource("1_2x067")
+region = Rect2(72, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5s4o"]
+atlas = ExtResource("1_2x067")
+region = Rect2(48, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxkxi"]
+atlas = ExtResource("1_2x067")
+region = Rect2(24, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkkpp"]
+atlas = ExtResource("1_2x067")
+region = Rect2(0, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ifsm1"]
+atlas = ExtResource("1_2x067")
+region = Rect2(0, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88g7h"]
+atlas = ExtResource("1_2x067")
+region = Rect2(24, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubger"]
+atlas = ExtResource("1_2x067")
+region = Rect2(48, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33wmr"]
+atlas = ExtResource("1_2x067")
+region = Rect2(72, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_up6up"]
+atlas = ExtResource("1_2x067")
+region = Rect2(96, 252, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntruq"]
+atlas = ExtResource("1_2x067")
+region = Rect2(120, 252, 24, 21)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_jl3in"]
 animations = [{
 "frames": [{
@@ -533,6 +578,49 @@ animations = [{
 }],
 "loop": false,
 "name": &"spawn",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8oyeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxl15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5s4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxkxi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkkpp")
+}],
+"loop": false,
+"name": &"teleport_in",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ifsm1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88g7h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ubger")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33wmr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_up6up")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntruq")
+}],
+"loop": false,
+"name": &"teleport_out",
 "speed": 12.0
 }]
 
@@ -950,6 +1038,60 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 }
 
+[sub_resource type="Animation" id="Animation_58maj"]
+length = 0.41666666
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ASprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"teleport_in"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ASprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_pi3w1"]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ASprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"teleport_out"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ASprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6fgtv"]
 _data = {
 &"climb": SubResource("Animation_jl3in"),
@@ -966,13 +1108,40 @@ _data = {
 &"shoot_air": SubResource("Animation_m7pd3"),
 &"shoot_run": SubResource("Animation_km1b0"),
 &"shoot_stand": SubResource("Animation_osq81"),
-&"spawn": SubResource("Animation_x6u88")
+&"spawn": SubResource("Animation_x6u88"),
+&"teleport_in": SubResource("Animation_58maj"),
+&"teleport_out": SubResource("Animation_pi3w1")
 }
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_jl3in"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_osq81"]
 animation = &"climb"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_08qad"]
+animation = &"teleport_in"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_58maj"]
+animation = &"teleport_out"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rwdmr"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_habph"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_35tl1"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_pn48n"]
+states/teleport_in/node = SubResource("AnimationNodeAnimation_08qad")
+states/teleport_in/position = Vector2(654.9883, 100)
+states/teleport_out/node = SubResource("AnimationNodeAnimation_58maj")
+states/teleport_out/position = Vector2(413.02734, 100)
+transitions = ["Start", "teleport_out", SubResource("AnimationNodeStateMachineTransition_rwdmr"), "teleport_out", "teleport_in", SubResource("AnimationNodeStateMachineTransition_habph"), "teleport_in", "End", SubResource("AnimationNodeStateMachineTransition_35tl1")]
+graph_offset = Vector2(-2.7226563, -118.19141)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j6iy6"]
 animation = &"shoot_air"
@@ -1152,6 +1321,12 @@ animation = &"dead"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6fgtv"]
 animation = &"spawn"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gffs1"]
+animation = &"teleport_in"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p830i"]
+animation = &"teleport_out"
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1smkx"]
 advance_mode = 2
 advance_expression = "alive"
@@ -1171,10 +1346,17 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_rwdmr"]
 states/Start/position = Vector2(155.004, 100)
 states/dead/node = SubResource("AnimationNodeAnimation_x6u88")
-states/dead/position = Vector2(410.066, 274.422)
+states/dead/position = Vector2(410.066, 384.56262)
 states/spawn/node = SubResource("AnimationNodeAnimation_6fgtv")
-states/spawn/position = Vector2(410.066, 104.121)
+states/spawn/position = Vector2(410.066, -55.570404)
+states/teleport_in/node = SubResource("AnimationNodeAnimation_gffs1")
+states/teleport_in/position = Vector2(337.95313, 100)
+states/teleport_out/node = SubResource("AnimationNodeAnimation_p830i")
+states/teleport_out/position = Vector2(569.1328, 100)
 transitions = ["Start", "spawn", SubResource("AnimationNodeStateMachineTransition_1smkx"), "Start", "dead", SubResource("AnimationNodeStateMachineTransition_ia62f"), "spawn", "End", SubResource("AnimationNodeStateMachineTransition_868yg"), "dead", "End", SubResource("AnimationNodeStateMachineTransition_t834i")]
+graph_offset = Vector2(-70.93359, -138.01563)
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_lm3v1"]
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_hdeo6"]
 input_0/name = "core"
@@ -1191,8 +1373,8 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mh7ni"]
-graph_offset = Vector2(-508.764, -9.73097)
-nodes/output/position = Vector2(800, 140)
+graph_offset = Vector2(-82.81189, 74.10336)
+nodes/output/position = Vector2(1240, 120)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(300, 60)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_osq81")
@@ -1213,7 +1395,11 @@ nodes/spawn_dead_anims/node = SubResource("AnimationNodeStateMachine_rwdmr")
 nodes/spawn_dead_anims/position = Vector2(140, 640)
 nodes/transition/node = SubResource("AnimationNodeTransition_hdeo6")
 nodes/transition/position = Vector2(-140, 280)
-node_connections = [&"output", 0, &"spawn_dead", &"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"hurt", 0, &"transition", &"hurt", 1, &"hurt_states", &"spawn_dead", 0, &"Add2", &"spawn_dead", 1, &"spawn_dead_anims", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2"]
+nodes/teleport_override/node = SubResource("AnimationNodeOneShot_lm3v1")
+nodes/teleport_override/position = Vector2(960, 260)
+nodes/Teleport/node = SubResource("AnimationNodeStateMachine_pn48n")
+nodes/Teleport/position = Vector2(640, 620)
+node_connections = [&"output", 0, &"teleport_override", &"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"hurt", 0, &"transition", &"hurt", 1, &"hurt_states", &"spawn_dead", 0, &"Add2", &"spawn_dead", 1, &"spawn_dead_anims", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2", &"teleport_override", 0, &"spawn_dead", &"teleport_override", 1, &"Teleport"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jw1q"]
 size = Vector2(2, 2)
@@ -1281,7 +1467,7 @@ libraries = {
 }
 script = ExtResource("11_jl3in")
 animated_sprite = NodePath("../ASprite")
-clear_existing_libraries = true
+target_animation = &"teleport_out"
 metadata/_custom_type_script = "uid://gg0uxpt06y26"
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
@@ -1298,6 +1484,9 @@ parameters/spawn_dead/request = 0
 parameters/transition/current_state = "core"
 parameters/transition/transition_request = ""
 parameters/transition/current_index = 0
+parameters/teleport_override/active = false
+parameters/teleport_override/internal_active = false
+parameters/teleport_override/request = 0
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("13_jl3in")
@@ -1346,6 +1535,10 @@ state_move = &"Move"
 [node name="Hurt" type="Node" parent="StateMachine"]
 script = ExtResource("14_l84w6")
 
+[node name="Teleport" type="Node" parent="StateMachine"]
+script = ExtResource("24_fql2o")
+state_idle = &"Idle"
+
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("15_f3qg8")
 
@@ -1371,6 +1564,7 @@ shape = SubResource("RectangleShape2D_bg1mb")
 [node name="EnergyExplosion" parent="." instance=ExtResource("25_bg1mb")]
 
 [connection signal="dead" from="." to="StateMachine" method="transition_state" binds= [&"Dead"]]
+[connection signal="request_state" from="." to="StateMachine" method="swap_state"]
 [connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed"]
 [connection signal="hit" from="ComponentHealth" to="StateMachine" method="transition_state" binds= [&"Hurt"]]

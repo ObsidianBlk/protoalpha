@@ -8,7 +8,7 @@ extends CharacterActor2D
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
-
+const STATE_TELEPORT : StringName = &"Teleport"
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -17,7 +17,6 @@ extends CharacterActor2D
 @export var jump_power : float = 140.0
 @export var air_speed_multiplier : float = 0.25
 @export var fall_multiplier : float = 1.4
-
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -52,6 +51,9 @@ func spawn_at(spawn_position : Vector2, payload : Dictionary = {}) -> void:
 func hide_sprite(h : bool) -> void:
 	if _sprite != null:
 		_sprite.visible = not h
+
+func teleport_to(destination : Vector2) -> void:
+	request_state.emit(STATE_TELEPORT, destination)
 
 # ------------------------------------------------------------------------------
 # Handler Methods
