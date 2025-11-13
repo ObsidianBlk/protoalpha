@@ -6,6 +6,7 @@ class_name ChaseCamera
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var pixels_per_second : float = 320.0
+@export var snap_distance : float = 160.0
 @export var target : Node2D = null:					set=set_target
 
 # ------------------------------------------------------------------------------
@@ -45,7 +46,7 @@ func _exit_tree() -> void:
 		_instance = null
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if target == null: return
 	if not target.global_position.is_equal_approx(_target_position):
 		_target_position = target.global_position
@@ -60,6 +61,10 @@ func _TweenToTarget() -> void:
 		_tween = null
 	
 	var dist : float = global_position.distance_to(_target_position)
+	if dist >= snap_distance:
+		global_position = _target_position
+		return
+	
 	var duration : float = dist / pixels_per_second
 	_tween = create_tween()
 	_tween.tween_property(self, "global_position", _target_position, duration)

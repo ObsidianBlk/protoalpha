@@ -2,11 +2,14 @@
 extends Node2D
 class_name Weapon
 
+# TODO: There's quite a bit of jank. Maybe another pass.
+
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
 signal fired()
 signal charged(percent : float)
+signal fully_charged()
 signal reloaded()
 
 # ------------------------------------------------------------------------------
@@ -28,6 +31,7 @@ const SFX_CHARGING : StringName = &"charging"
 var _can_shoot : bool = true
 var _charge : float = 0.0
 var _final_trigger : Callable = _Stub
+var _auto_attack : Callable = _Stub
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -46,9 +50,11 @@ func _process(delta: float) -> void:
 		_charge -= delta
 		charged.emit(1.0 - (_charge/weapon_def.rate_of_fire))
 		if _charge <= 0.0:
-			_final_trigger.call()
-			_Reset()
-			reloaded.emit()
+			fully_charged.emit()
+		#if _charge <= 0.0:
+			#_final_trigger.call()
+			#_Reset()
+			#reloaded.emit()
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -56,6 +62,8 @@ func _process(delta: float) -> void:
 func _Stub() -> void: pass
 
 func _Reset() -> void:
+	if weapon_def != null and weapon_def.charging == false:
+		print("Reset Called")
 	_can_shoot = true
 	_charge = 0.0
 	_final_trigger = _Stub
@@ -82,6 +90,11 @@ func _Trigger(projectile_container : Node2D) -> void:
 		p.hit.connect(wss.play.bind(SFX_EXPLODE))
 	fired.emit()
 
+func _StartCharging(projectile_container : Node2D) -> void:
+	if weapon_def.charging:
+		_charge = weapon_def.rate_of_fire
+		_final_trigger = _Trigger.bind(projectile_container)
+
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
@@ -97,16 +110,22 @@ func press_trigger(projectile_container : Node2D = null) -> void:
 	match weapon_def.type:
 		WeaponDef.Type.PROJECTILE:
 			if weapon_def.charging:
+				_can_shoot = false
 				_charge = weapon_def.rate_of_fire
 				_final_trigger = _Trigger.bind(projectile_container)
 			else:
 				_can_shoot = false
 				_Trigger(projectile_container)
+				if weapon_def.automatic:
+					_auto_attack = press_trigger.bind(projectile_container)
 				get_tree().create_timer(weapon_def.rate_of_fire).timeout.connect(
 					(func():
 						if not _can_shoot:
 							_can_shoot = true
-							reloaded.emit()),
+							if _auto_attack != _Stub:
+								_auto_attack.call()
+							else: reloaded.emit()
+						),
 					CONNECT_ONE_SHOT
 				)
 		WeaponDef.Type.BEAM:
@@ -115,7 +134,10 @@ func press_trigger(projectile_container : Node2D = null) -> void:
 func release_trigger() -> void:
 	if weapon_def == null: return
 	if weapon_def.charging:
-		if _final_trigger != _Stub:
+		if _charge <= 0.0 and _final_trigger != _Stub:
 			_final_trigger.call()
 			_final_trigger = _Stub
 		_Reset()
+		reloaded.emit()
+	else:
+		_auto_attack = _Stub

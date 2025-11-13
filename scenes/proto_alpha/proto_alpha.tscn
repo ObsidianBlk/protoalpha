@@ -17,28 +17,19 @@
 [sub_resource type="Resource" id="Resource_hxu8e"]
 script = ExtResource("7_kwc6g")
 stream = ExtResource("8_bg22g")
-volume_db = 0.0
 volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_raeie"]
 script = ExtResource("7_kwc6g")
 stream = ExtResource("9_xh1g3")
-volume_db = 0.0
 volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_nvumn"]
 script = ExtResource("7_kwc6g")
 stream = ExtResource("10_1423w")
-volume_db = 0.0
 volume_linear = 1.0
-min_pitch = 1.0
-max_pitch = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
 [sub_resource type="Resource" id="Resource_wwwwu"]

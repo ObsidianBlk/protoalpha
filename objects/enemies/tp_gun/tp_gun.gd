@@ -104,7 +104,8 @@ func _AttackStage() -> void:
 	if projectile_container != null and _weapon != null and weapon_def != null:
 		_weapon.press_trigger(projectile_container)
 		if weapon_def.charging:
-			await get_tree().create_timer(weapon_def.rate_of_fire).timeout
+			#await get_tree().create_timer(weapon_def.rate_of_fire).timeout
+			await _weapon.fully_charged
 			_weapon.release_trigger()
 	_sprite.play(ANIM_TELEPORT_OUT)
 	_hitbox.disable_hitbox(true)

@@ -93,6 +93,7 @@ select={
 
 2d_physics/layer_1="General"
 2d_physics/layer_2="Player Body"
+2d_physics/layer_3="Player Interaction"
 2d_physics/layer_6="Enemy Body"
 2d_physics/layer_9="Player Hitbox"
 2d_physics/layer_13="Enemy Hitbox"
