@@ -23,6 +23,7 @@ func enter(payload : Variant = null) -> void:
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
 	actor.set_tree_param(APARAM_ONCE_TELEPORT, ONCE_FIRE)
+	play_sfx(AUDIO_TELEPORT)
 
 
 func exit() -> void:

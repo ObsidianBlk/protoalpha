@@ -1,8 +1,38 @@
-[gd_scene load_steps=32 format=3 uid="uid://buxayrry4vrnx"]
+[gd_scene load_steps=49 format=3 uid="uid://buxayrry4vrnx"]
 
 [ext_resource type="Texture2D" uid="uid://b8urtm6ebwdm7" path="res://assets/graphics/environment/teleport_pad_01.png" id="1_mjx1j"]
 [ext_resource type="Script" uid="uid://ybvummdbdatw" path="res://objects/teleport_pad/teleport_pad.gd" id="1_xxeaq"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_ens5e"]
 [ext_resource type="Script" uid="uid://gg0uxpt06y26" path="res://scripts/nodes/anim_sprite_player.gd" id="2_vowlh"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_m7ptq"]
+[ext_resource type="AudioStream" uid="uid://cjovj86isb0gi" path="res://assets/audio/sfx/teleports/frag_teleport_lazer.wav" id="4_m7ptq"]
+[ext_resource type="AudioStream" uid="uid://bqmd1rgyseoee" path="res://assets/audio/sfx/clicks/click_01.wav" id="4_wivg4"]
+[ext_resource type="AudioStream" uid="uid://c36b2b6y4jhyr" path="res://assets/audio/sfx/clicks/click_02.wav" id="5_51fcj"]
+[ext_resource type="AudioStream" uid="uid://disu7s6skcps5" path="res://assets/audio/sfx/clicks/click_03.wav" id="6_24iyk"]
+[ext_resource type="AudioStream" uid="uid://dyaipgay37xaa" path="res://assets/audio/sfx/clicks/click_04.wav" id="7_ens5e"]
+[ext_resource type="AudioStream" uid="uid://c5xnstdr40bfg" path="res://assets/audio/sfx/clicks/click_05.wav" id="8_m7ptq"]
+[ext_resource type="AudioStream" uid="uid://cmjp30t2uulqa" path="res://assets/audio/sfx/clicks/click_06.wav" id="9_xqpoj"]
+[ext_resource type="AudioStream" uid="uid://0yfvf1vl8n54" path="res://assets/audio/sfx/clicks/click_07.wav" id="10_7vrs0"]
+[ext_resource type="AudioStream" uid="uid://ctj1tbjcbboaf" path="res://assets/audio/sfx/clicks/click_08.wav" id="11_lny5j"]
+[ext_resource type="AudioStream" uid="uid://c5fmhf8w4xxig" path="res://assets/audio/sfx/clicks/click_09.wav" id="12_ub8cr"]
+[ext_resource type="AudioStream" uid="uid://b2tjxctpoykqe" path="res://assets/audio/sfx/clicks/click_10.wav" id="13_0h8va"]
+[ext_resource type="Script" uid="uid://cwqgmmrlsuff8" path="res://objects/teleport_pad/chirper.gd" id="14_51fcj"]
+
+[sub_resource type="Resource" id="Resource_7vrs0"]
+script = ExtResource("3_m7ptq")
+stream = ExtResource("4_m7ptq")
+volume_linear = 1.0
+min_pitch = 0.9
+max_pitch = 1.1
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_xqpoj"]
+script = ExtResource("2_ens5e")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("3_m7ptq")]({
+&"discharging": SubResource("Resource_7vrs0")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xxeaq"]
 atlas = ExtResource("1_mjx1j")
@@ -282,12 +312,27 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vowlh"]
 size = Vector2(6, 3)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8vx58"]
+streams_count = 10
+stream_0/stream = ExtResource("4_wivg4")
+stream_1/stream = ExtResource("5_51fcj")
+stream_2/stream = ExtResource("6_24iyk")
+stream_3/stream = ExtResource("7_ens5e")
+stream_4/stream = ExtResource("8_m7ptq")
+stream_5/stream = ExtResource("9_xqpoj")
+stream_6/stream = ExtResource("10_7vrs0")
+stream_7/stream = ExtResource("11_lny5j")
+stream_8/stream = ExtResource("12_ub8cr")
+stream_9/stream = ExtResource("13_0h8va")
+
 [node name="TeleportPad" type="Node2D"]
 script = ExtResource("1_xxeaq")
+sound_sheet = SubResource("Resource_xqpoj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xxeaq")
-animation = &"idle"
+animation = &"active"
+frame = 1
 offset = Vector2(0, -16)
 
 [node name="APlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
@@ -308,6 +353,15 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
 position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_vowlh")
+
+[node name="AudioChirps" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_8vx58")
+max_distance = 200.0
+bus = &"GameSFX"
+
+[node name="Chirper" type="Node" parent="AudioChirps"]
+unique_name_in_owner = true
+script = ExtResource("14_51fcj")
 
 [connection signal="animation_finished" from="APlayer" to="." method="_on_anim_sprite_player_animation_finished"]
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

@@ -36,6 +36,7 @@ const AUDIO_LAND : StringName = &"land"
 const AUDIO_HURT : StringName = &"hurt"
 const AUDIO_SPAWN : StringName = &"spawn"
 const AUDIO_EXPLODE : StringName = &"explode"
+const AUDIO_TELEPORT : StringName = &"teleport"
 
 # ------------------------------------------------------------------------------
 # Export Variables
