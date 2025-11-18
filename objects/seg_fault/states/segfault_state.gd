@@ -12,6 +12,8 @@ const ANIM_ATTACK_STREAK_END : StringName = &"attack2_end"
 const ANIM_HURT : StringName = &"hurt"
 const ANIM_DEAD : StringName = &"dead"
 
+const GROUP_STREAK_TRIGGER : StringName = &"SEGFAULT_STREAK"
+
 const ACTION_TELEPORT_IN : String = "in"
 const ACTION_TELEPORT_OUT : String = "out"
 

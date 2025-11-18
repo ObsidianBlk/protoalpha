@@ -2,6 +2,12 @@ extends CharacterActor2D
 
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal area_entered()
+signal area_exited()
+
+# ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const GROUP_POI : StringName = &"SEGFAULT_POI"
@@ -10,11 +16,12 @@ const GROUP_POI : StringName = &"SEGFAULT_POI"
 # Variables
 # ------------------------------------------------------------------------------
 var _player : WeakRef = weakref(null)
+var _area : Area2D = null
 
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
-@onready var _sprite: AnimatedSprite2D = %ASprite
+#@onready var _sprite: AnimatedSprite2D = %ASprite
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -42,3 +49,23 @@ func get_teleport_position() -> Vector2:
 			return pois[idx].global_position
 		
 	return Vector2.ZERO
+
+func is_in_area(group_name : StringName = &"") -> bool:
+	if _area != null:
+		if not group_name.is_empty():
+			return _area.is_in_group(group_name)
+		return true
+	return false
+
+# ------------------------------------------------------------------------------
+# Handler Methods
+# ------------------------------------------------------------------------------
+func _on_area_entered(area : Area2D) -> void:
+	if _area == null:
+		_area = area
+		area_entered.emit()
+
+func _on_area_exited(area : Area2D) -> void:
+	if area == _area:
+		_area = null
+		area_exited.emit()

@@ -27,6 +27,8 @@ enum Facing {RIGHT, DOWN, LEFT, UP}
 @export var length : int = 2:							set=set_length
 @export var travel_speed : float = 12.0:				set=set_travel_speed
 @export var start_on : bool = true
+@export var locked : bool = false
+@export var lock_on_toggled : bool = false
 @export var sound_sheet : SoundSheet = null
 @export var disabled : bool = false:					set=set_disabled
 
@@ -63,13 +65,13 @@ func set_start_on(o : bool) -> void:
 	if o != start_on:
 		start_on = o
 		if Engine.is_editor_hint():
-			activate(start_on)
+			_Activate(start_on)
 
 func set_disabled(d : bool) -> void:
 	if d != disabled:
 		disabled = d
 		if disabled:
-			activate.call_deferred(false)
+			_Activate.call_deferred(false)
 		elif start_on and not Engine.is_editor_hint():
 			_AllBeams.call_deferred()
 
@@ -162,6 +164,19 @@ func _StopSFX() -> void:
 		sound_sheet.stop(_audio_id)
 		_audio_id = -1
 
+func _Activate(on : bool) -> void:
+	if _sprite == null or (disabled and on): return
+	if on == is_active() or (locked and not disabled): return
+	
+	if on:
+		_sprite.play(ANIM_CHARGING)
+		_PlaySFX(AUDIO_CHARGING)
+	else:
+		_sprite.play(ANIM_INACTIVE)
+		if disabled:
+			_StopSFX()
+			_RemoveAllBeams()
+
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
@@ -177,14 +192,11 @@ func is_charging() -> bool:
 
 func activate(on : bool) -> void:
 	if _sprite == null or (disabled and on): return
-	if on and not is_active():
-		_sprite.play(ANIM_CHARGING)
-		_PlaySFX(AUDIO_CHARGING)
-	elif not on and is_active():
-		_sprite.play(ANIM_INACTIVE)
-		if disabled:
-			_StopSFX()
-			_RemoveAllBeams()
+	if on == is_active() or locked: return
+	_Activate(on)
+	if lock_on_toggled:
+		start_on = on
+		locked = true
 
 # ------------------------------------------------------------------------------
 # Handler Methods

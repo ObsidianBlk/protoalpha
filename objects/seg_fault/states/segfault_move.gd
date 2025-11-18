@@ -70,11 +70,15 @@ func enter(payload : Variant = null) -> void:
 		return
 	
 	actor.velocity = Vector2.ZERO
+	if not actor.area_entered.is_connected(_on_area_entered):
+		actor.area_entered.connect(_on_area_entered)
 	_ConnectPlayer(actor.get_player())
 
 func exit() -> void:
 	if actor != null:
 		_DisconnectPlayer(actor.get_player())
+		if actor.area_entered.is_connected(_on_area_entered):
+			actor.area_entered.disconnect(_on_area_entered)
 
 func update(delta : float) -> void:
 	pass
@@ -99,9 +103,9 @@ func physics_update(_delta : float) -> void:
 	else: actor.velocity.y = 0.0
 	
 	actor.move_and_slide()
-	if same_level and _actions.get_random() == WEIGHTED_ACTION_ATTACK:
-		swap_to(state_attack_streak)
-		return
+	#if same_level and _actions.get_random() == WEIGHTED_ACTION_ATTACK:
+		#swap_to(state_attack_streak)
+		#return
 	
 	if player.global_position.distance_to(actor.global_position) < THRESHOLD_DISTANCE:
 		swap_to(state_teleport)
@@ -114,3 +118,8 @@ func physics_update(_delta : float) -> void:
 # ------------------------------------------------------------------------------
 func _on_player_weapon_fired() -> void:
 	swap_to(state_teleport)
+
+func _on_area_entered() -> void:
+	if actor == null: return
+	if actor.is_in_area(GROUP_STREAK_TRIGGER):
+		swap_to(state_attack_streak)

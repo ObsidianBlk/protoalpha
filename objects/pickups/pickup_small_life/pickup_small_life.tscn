@@ -1,0 +1,71 @@
+[gd_scene load_steps=12 format=3 uid="uid://ddd6ucx7yhx1u"]
+
+[ext_resource type="Texture2D" uid="uid://dr5jnn8ptd5es" path="res://assets/graphics/pickups/life_pickup_small.png" id="1_j2v4p"]
+[ext_resource type="Script" uid="uid://ko16ejkhcv1s" path="res://objects/pickups/pickup_small_life/pickup_small_life.gd" id="1_wg3qu"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_t0dr5"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_vf3pb"]
+[ext_resource type="AudioStream" uid="uid://d13g71wx7loqn" path="res://assets/audio/sfx/pickup_life_small.wav" id="4_vf3pb"]
+
+[sub_resource type="Resource" id="Resource_p4unv"]
+script = ExtResource("3_vf3pb")
+stream = ExtResource("4_vf3pb")
+volume_linear = 1.0
+min_pitch = 0.9
+max_pitch = 1.1
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_uw7fb"]
+script = ExtResource("2_t0dr5")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("3_vf3pb")]({
+&"pickup": SubResource("Resource_p4unv")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wg3qu"]
+radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eccq0"]
+atlas = ExtResource("1_j2v4p")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0dr5"]
+atlas = ExtResource("1_j2v4p")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vf3pb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eccq0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0dr5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="PickupSmallLife" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_wg3qu")
+sound_sheet = SubResource("Resource_uw7fb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wg3qu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vf3pb")
+autoplay = "default"
+frame_progress = 0.7597929
+offset = Vector2(0, -2)
+
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("CircleShape2D_wg3qu")
+
+[connection signal="area_entered" from="Detector" to="." method="_on_detector_area_entered"]

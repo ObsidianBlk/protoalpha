@@ -179,6 +179,8 @@ animations = [{
 
 [node name="Lazer" type="Node2D"]
 script = ExtResource("1_7kud7")
+locked = null
+lock_on_toggled = null
 sound_sheet = SubResource("Resource_sgdrg")
 
 [node name="Body" type="Node2D" parent="."]

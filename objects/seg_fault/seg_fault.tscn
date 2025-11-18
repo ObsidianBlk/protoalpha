@@ -975,6 +975,7 @@ input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bhfqv"]
 graph_offset = Vector2(-723.066, -14.5597)
+nodes/output/position = Vector2(940, 240)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_mu864")
 nodes/Add2/position = Vector2(780, 240)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_i3ypb")
@@ -1005,12 +1006,11 @@ nodes/facing/node = SubResource("AnimationNodeStateMachine_bhfqv")
 nodes/facing/position = Vector2(120, 60)
 nodes/hurt/node = SubResource("AnimationNodeOneShot_lhc8u")
 nodes/hurt/position = Vector2(600, 460)
-nodes/output/position = Vector2(940, 240)
 nodes/state/node = SubResource("AnimationNodeTransition_cspb4")
 nodes/state/position = Vector2(220, 520)
 nodes/teleport/node = SubResource("AnimationNodeTransition_rnv8l")
 nodes/teleport/position = Vector2(-400, 600)
-node_connections = [&"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"a2se", 0, &"Animation 7", &"a2se", 1, &"Animation 8", &"a2shot", 0, &"Animation 6", &"a2shot", 1, &"a2se", &"attack_type", 0, &"Animation 3", &"attack_type", 1, &"a2shot", &"hurt", 0, &"state", &"hurt", 1, &"Animation 4", &"output", 0, &"Add2", &"state", 0, &"Movement", &"state", 1, &"teleport", &"state", 2, &"attack_type", &"state", 3, &"Animation 5", &"teleport", 0, &"Animation", &"teleport", 1, &"Animation 2"]
+node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"a2se", 0, &"Animation 7", &"a2se", 1, &"Animation 8", &"a2shot", 0, &"Animation 6", &"a2shot", 1, &"a2se", &"attack_type", 0, &"Animation 3", &"attack_type", 1, &"a2shot", &"hurt", 0, &"state", &"hurt", 1, &"Animation 4", &"state", 0, &"Movement", &"state", 1, &"teleport", &"state", 2, &"attack_type", &"state", 3, &"Animation 5", &"teleport", 0, &"Animation", &"teleport", 1, &"Animation 2"]
 
 [node name="SegFault" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree", "weapon")]
 collision_layer = 32
@@ -1029,8 +1029,8 @@ metadata/_custom_type_script = "uid://cwjk0b6j3hspo"
 
 [node name="ComponentHealth" type="Node" parent="."]
 script = ExtResource("2_uxyan")
-max_health = 50
-health = 50
+max_health = 15
+health = 15
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
@@ -1072,7 +1072,7 @@ shape = SubResource("CapsuleShape2D_la6sf")
 [node name="Detector" type="Area2D" parent="."]
 position = Vector2(0, -10)
 collision_layer = 0
-collision_mask = 32768
+collision_mask = 1048576
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
 shape = SubResource("CircleShape2D_la6sf")
@@ -1082,7 +1082,6 @@ unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_cdyep")
 animation = &"idle"
 autoplay = "idle"
-frame = 1
 offset = Vector2(0, -10.5)
 
 [node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
@@ -1152,12 +1151,10 @@ state_idle = &"Idle"
 attack_count = 3
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
-[node name="AttackStreak" type="Node" parent="AFSM" node_paths=PackedStringArray("hitbox_primary", "hitbox_streak", "detector")]
+[node name="AttackStreak" type="Node" parent="AFSM" node_paths=PackedStringArray("hitbox_primary", "hitbox_streak")]
 script = ExtResource("17_la6sf")
 hitbox_primary = NodePath("../../HitBox")
 hitbox_streak = NodePath("../../Body/HitBox_Streak")
-detector = NodePath("../../Detector")
-detector_group = &"SEGFAULT_STREAK"
 state_idle = &"Idle"
 metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 
@@ -1180,3 +1177,5 @@ metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 [connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed" binds= [true]]
 [connection signal="hit" from="ComponentHealth" to="AFSM" method="transition_state" binds= [&"Hurt"]]
+[connection signal="area_entered" from="Detector" to="." method="_on_area_entered"]
+[connection signal="area_exited" from="Detector" to="." method="_on_area_exited"]

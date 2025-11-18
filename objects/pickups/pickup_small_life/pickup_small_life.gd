@@ -1,35 +1,32 @@
-@tool
-extends Area2D
-class_name Pickup
+extends CharacterBody2D
 
 # ------------------------------------------------------------------------------
-# Signals
+# Constants
 # ------------------------------------------------------------------------------
-signal picked_up(body : Node2D)
+const HEALTH_VALUE : int = 5
+
+const AUDIO : StringName = &"pickup"
 
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-@export var despawn_on_pickup : bool = true
+@export var sound_sheet : SoundSheet = null
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
-func _ready() -> void:
-	if not Engine.is_editor_hint():
-		body_entered.connect(_on_body_entered)
-
-# ------------------------------------------------------------------------------
-# "Virtual" Methods
-# ------------------------------------------------------------------------------
-func handle_pick_up(body : Node2D) -> void:
-	# Do something for having been picked up.
-	picked_up.emit(body)
+func _physics_process(_delta: float) -> void:
+	if not is_on_floor():
+		velocity = get_gravity()
+		move_and_slide()
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_body_entered(body : Node2D) -> void:
-	handle_pick_up(body)
-	if despawn_on_pickup:
+
+func _on_detector_area_entered(area: Area2D) -> void:
+	if area is HitBox:
+		if sound_sheet != null:
+			sound_sheet.play(AUDIO)
+		area.heal(HEALTH_VALUE)
 		queue_free.call_deferred()

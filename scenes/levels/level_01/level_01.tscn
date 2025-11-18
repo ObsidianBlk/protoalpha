@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://bax32yfavmwca"]
+[gd_scene load_steps=49 format=4 uid="uid://bax32yfavmwca"]
 
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_gkyti"]
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="2_15mrc"]
@@ -22,6 +22,8 @@
 [ext_resource type="Resource" uid="uid://1nk16vgguts7" path="res://objects/enemies/shellie/info_shellie.tres" id="19_p2akj"]
 [ext_resource type="PackedScene" uid="uid://ojbp6siu8aak" path="res://objects/boss_door/boss_door.tscn" id="21_hbx02"]
 [ext_resource type="PackedScene" uid="uid://buxayrry4vrnx" path="res://objects/teleport_pad/teleport_pad.tscn" id="22_alecm"]
+[ext_resource type="Script" uid="uid://bk3uspbhs6g0p" path="res://scripts/nodes/boss_spawner.gd" id="22_vlhjx"]
+[ext_resource type="PackedScene" uid="uid://ddd6ucx7yhx1u" path="res://objects/pickups/pickup_small_life/pickup_small_life.tscn" id="24_vlhjx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fi7ee"]
 size = Vector2(16, 64)
@@ -65,6 +67,9 @@ size = Vector2(33, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p8hkg"]
 size = Vector2(146, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yxijl"]
+size = Vector2(49, 45)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dswgj"]
 size = Vector2(208, 20)
 
@@ -82,6 +87,15 @@ size = Vector2(11, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlhjx"]
 size = Vector2(14, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kl82x"]
+size = Vector2(151, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckq7p"]
+size = Vector2(10, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bof24"]
+size = Vector2(7, 32)
 
 [node name="Level_01" type="Node2D" node_paths=PackedStringArray("player_container", "boss_container")]
 script = ExtResource("1_gkyti")
@@ -156,12 +170,16 @@ metadata/_custom_type_script = "uid://biyvft8gmrpou"
 
 [node name="Lazer" parent="SegA" instance=ExtResource("7_lb6o6")]
 position = Vector2(40, -7)
+locked = false
+lock_on_toggled = false
 disabled = true
 
 [node name="Lazer2" parent="SegA" instance=ExtResource("7_lb6o6")]
 position = Vector2(7, 56)
 orientation = 1
 length = 3
+locked = false
+lock_on_toggled = false
 disabled = true
 
 [node name="MobSpawnerTPGun" type="Node2D" parent="SegA" node_paths=PackedStringArray("projectile_container", "segment")]
@@ -245,12 +263,16 @@ metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 [node name="Lazer_H_Top" parent="SegB" instance=ExtResource("7_lb6o6")]
 position = Vector2(-88, -279)
 length = 4
+locked = false
+lock_on_toggled = false
 disabled = true
 
 [node name="Lazer_V_Exit" parent="SegB" instance=ExtResource("7_lb6o6")]
 position = Vector2(-169, -264)
 orientation = 1
 length = 3
+locked = false
+lock_on_toggled = false
 disabled = true
 
 [node name="Terminal_H_Top" parent="SegB" instance=ExtResource("6_7mo7t")]
@@ -339,6 +361,8 @@ shape = SubResource("RectangleShape2D_n50fv")
 [node name="Lazer" parent="SegC" instance=ExtResource("7_lb6o6")]
 position = Vector2(-488, -282)
 length = 15
+locked = false
+lock_on_toggled = false
 disabled = true
 
 [node name="LogicToggleTimer" type="Timer" parent="SegC/Lazer"]
@@ -352,6 +376,8 @@ metadata/_custom_type_script = "uid://dy1nabork34tn"
 position = Vector2(-232, -489)
 orientation = 2
 length = 14
+locked = false
+lock_on_toggled = false
 disabled = true
 
 [node name="LogicToggleTimer" type="Timer" parent="SegC/Lazer2"]
@@ -516,6 +542,8 @@ trigger_layer = 4
 [node name="Lazer" parent="SegE" instance=ExtResource("7_lb6o6")]
 position = Vector2(200, -695)
 length = 5
+locked = false
+lock_on_toggled = true
 disabled = true
 
 [node name="Term_Teleport" parent="SegE" instance=ExtResource("6_7mo7t")]
@@ -612,6 +640,31 @@ tile_set = ExtResource("3_h7puh")
 position = Vector2(864, -864)
 boss_side = 1
 
+[node name="BossPOIs" type="Node" parent="SegBossRoom"]
+
+[node name="Marker2D" type="Marker2D" parent="SegBossRoom/BossPOIs" groups=["SEGFAULT_POI"]]
+position = Vector2(943, -928)
+
+[node name="Marker2D2" type="Marker2D" parent="SegBossRoom/BossPOIs" groups=["SEGFAULT_POI"]]
+position = Vector2(1090, -928)
+
+[node name="StreakZone_01" type="Area2D" parent="SegBossRoom/BossPOIs" groups=["SEGFAULT_STREAK"]]
+collision_layer = 1048576
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SegBossRoom/BossPOIs/StreakZone_01"]
+position = Vector2(944.5, -886.5)
+shape = SubResource("RectangleShape2D_yxijl")
+
+[node name="StreakZone_02" type="Area2D" parent="SegBossRoom/BossPOIs" groups=["SEGFAULT_STREAK"]]
+position = Vector2(186, 0)
+collision_layer = 1048576
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SegBossRoom/BossPOIs/StreakZone_02"]
+position = Vector2(902, -886.5)
+shape = SubResource("RectangleShape2D_yxijl")
+
 [node name="FallZone" type="Area2D" parent="SegBossRoom"]
 position = Vector2(1018, -821)
 collision_layer = 0
@@ -621,6 +674,13 @@ metadata/_custom_type_script = "uid://chxg35suyvuno"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SegBossRoom/FallZone"]
 shape = SubResource("RectangleShape2D_dswgj")
+
+[node name="BossSpawner" type="Node2D" parent="SegBossRoom" node_paths=PackedStringArray("spawn_container")]
+position = Vector2(1017, -864)
+script = ExtResource("22_vlhjx")
+boss_path = "uid://b1rbu87qlnwo6"
+spawn_container = NodePath("../../BossContainer")
+metadata/_custom_type_script = "uid://bk3uspbhs6g0p"
 
 [node name="BossContainer" type="Node2D" parent="."]
 
@@ -702,8 +762,55 @@ metadata/_custom_type_script = "uid://b51ttt7nf66dg"
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_vlhjx")
 
+[node name="TZone_DE" type="Area2D" parent="TransitionZones" node_paths=PackedStringArray("segment_a", "segment_b")]
+position = Vector2(272, -640)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("9_nt34b")
+scroll_axis = 1
+pixels_per_second = 120.0
+offset = 24
+segment_a = NodePath("../../SegD")
+segment_b = NodePath("../../SegE")
+metadata/_custom_type_script = "uid://b51ttt7nf66dg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionZones/TZone_DE"]
+position = Vector2(-41.5, 0.5)
+shape = SubResource("RectangleShape2D_kl82x")
+
+[node name="TZone_EHall" type="Area2D" parent="TransitionZones" node_paths=PackedStringArray("segment_a", "segment_b")]
+position = Vector2(432, -1008)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("9_nt34b")
+pixels_per_second = 120.0
+offset = 24
+segment_a = NodePath("../../SegE")
+segment_b = NodePath("../../SegHallway")
+metadata/_custom_type_script = "uid://b51ttt7nf66dg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionZones/TZone_EHall"]
+shape = SubResource("RectangleShape2D_ckq7p")
+
+[node name="TZone_Hall_to_Boss" type="Area2D" parent="TransitionZones" node_paths=PackedStringArray("segment_a", "segment_b")]
+position = Vector2(864, -880)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("9_nt34b")
+pixels_per_second = 128.0
+offset = 24
+segment_a = NodePath("../../SegHallway")
+segment_b = NodePath("../../SegBossRoom")
+metadata/_custom_type_script = "uid://b51ttt7nf66dg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionZones/TZone_Hall_to_Boss"]
+shape = SubResource("RectangleShape2D_bof24")
+
 [node name="DebugPosition" type="Marker2D" parent="." groups=["DebugPosition"]]
-position = Vector2(472, -992)
+position = Vector2(104, -512)
+
+[node name="PickupSmallLife" parent="." instance=ExtResource("24_vlhjx")]
+position = Vector2(-47, -101)
 
 [connection signal="entered" from="SegA" to="SegA/Lazer" method="set_disabled" binds= [false]]
 [connection signal="entered" from="SegA" to="SegA/Lazer2" method="set_disabled" binds= [false]]
@@ -732,3 +839,4 @@ position = Vector2(472, -992)
 [connection signal="exited" from="SegE" to="SegE/Lazer" method="set_disabled" binds= [true]]
 [connection signal="trigger_state_changed" from="SegE/Term_Lazer" to="SegE/Lazer" method="activate"]
 [connection signal="trigger_state_changed" from="SegE/Term_Teleport" to="SegE/TeleportPad" method="set_active"]
+[connection signal="closed_boss" from="SegBossRoom/BossDoor" to="SegBossRoom/BossSpawner" method="spawn"]
