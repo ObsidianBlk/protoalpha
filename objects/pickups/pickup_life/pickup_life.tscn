@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bv3pmtfjy40p8"]
+
+[ext_resource type="Script" uid="uid://cj3rkhfbqd6yg" path="res://objects/pickups/pickup_life/pickup_life.gd" id="1_k2qte"]
+[ext_resource type="Script" uid="uid://5ne0bxw7dsyh" path="res://scripts/nodes/bobbing_node_2d.gd" id="2_8lloh"]
+[ext_resource type="Texture2D" uid="uid://wrlbxa2rl2n4" path="res://assets/graphics/proto/icon_proto_life.png" id="3_thcw2"]
+[ext_resource type="Script" uid="uid://ddbkyy847ju51" path="res://scripts/nodes/hitbox_detector.gd" id="4_twbv5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rsh8a"]
+radius = 4.0
+
+[node name="PickupLife" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_k2qte")
+metadata/_custom_type_script = "uid://dmslhe2vyvl8v"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_rsh8a")
+
+[node name="BobbingNode2D" type="Node2D" parent="."]
+script = ExtResource("2_8lloh")
+transition = 1
+metadata/_custom_type_script = "uid://5ne0bxw7dsyh"
+
+[node name="Sprite2D" type="Sprite2D" parent="BobbingNode2D"]
+position = Vector2(0, -4)
+texture = ExtResource("3_thcw2")
+
+[node name="Detector" type="Area2D" parent="BobbingNode2D"]
+position = Vector2(0, -4)
+collision_layer = 0
+collision_mask = 256
+script = ExtResource("4_twbv5")
+metadata/_custom_type_script = "uid://ddbkyy847ju51"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BobbingNode2D/Detector"]
+shape = SubResource("CircleShape2D_rsh8a")
+
+[connection signal="falling" from="." to="BobbingNode2D" method="set_disabled" binds= [true]]
+[connection signal="landed" from="." to="BobbingNode2D" method="set_disabled" binds= [false]]
+[connection signal="detected" from="BobbingNode2D/Detector" to="." method="_on_detected"]

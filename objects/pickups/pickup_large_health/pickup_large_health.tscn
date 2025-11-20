@@ -1,0 +1,86 @@
+[gd_scene load_steps=14 format=3 uid="uid://baw6apsyn4rpx"]
+
+[ext_resource type="Script" uid="uid://cqnteh12aqkym" path="res://objects/pickups/pickup_large_health/pickup_large_health.gd" id="1_gbtsa"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_ldueu"]
+[ext_resource type="Script" uid="uid://5ne0bxw7dsyh" path="res://scripts/nodes/bobbing_node_2d.gd" id="2_lh3qj"]
+[ext_resource type="Texture2D" uid="uid://dhnxxs8vnkw58" path="res://assets/graphics/pickups/health_pickup_large.png" id="3_gbtsa"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_m6pp3"]
+[ext_resource type="Script" uid="uid://ddbkyy847ju51" path="res://scripts/nodes/hitbox_detector.gd" id="4_gbtsa"]
+[ext_resource type="AudioStream" uid="uid://d13g71wx7loqn" path="res://assets/audio/sfx/pickup_life_small.wav" id="4_jso7e"]
+
+[sub_resource type="Resource" id="Resource_0khkc"]
+script = ExtResource("3_m6pp3")
+stream = ExtResource("4_jso7e")
+volume_linear = 1.0
+min_pitch = 0.5
+max_pitch = 0.6
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_1tpxp"]
+script = ExtResource("2_ldueu")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("3_m6pp3")]({
+&"pickup": SubResource("Resource_0khkc")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aq57f"]
+size = Vector2(12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq57f"]
+atlas = ExtResource("3_gbtsa")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgo8e"]
+atlas = ExtResource("3_gbtsa")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ldueu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aq57f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tgo8e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="pickup_large_health" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_gbtsa")
+sound_sheet = SubResource("Resource_1tpxp")
+metadata/_custom_type_script = "uid://dmslhe2vyvl8v"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_aq57f")
+
+[node name="BobbingNode2D" type="Node2D" parent="."]
+script = ExtResource("2_lh3qj")
+transition = 1
+metadata/_custom_type_script = "uid://5ne0bxw7dsyh"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BobbingNode2D"]
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_ldueu")
+autoplay = "default"
+frame = 1
+frame_progress = 0.79987204
+
+[node name="Detector" type="Area2D" parent="BobbingNode2D"]
+collision_layer = 0
+collision_mask = 256
+script = ExtResource("4_gbtsa")
+metadata/_custom_type_script = "uid://ddbkyy847ju51"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BobbingNode2D/Detector"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_aq57f")
+
+[connection signal="falling" from="." to="BobbingNode2D" method="set_disabled" binds= [true]]
+[connection signal="landed" from="." to="BobbingNode2D" method="set_disabled" binds= [false]]
+[connection signal="detected" from="BobbingNode2D/Detector" to="." method="_on_detected"]

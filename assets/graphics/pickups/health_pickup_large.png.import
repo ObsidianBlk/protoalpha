@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr5jnn8ptd5es"
-path="res://.godot/imported/life_pickup_small.png-0e01508bf8852eba88cb09ec5478f029.ctex"
+uid="uid://dhnxxs8vnkw58"
+path="res://.godot/imported/health_pickup_large.png-c1687609ce917da502c343412a6f66b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/pickups/life_pickup_small.png"
-dest_files=["res://.godot/imported/life_pickup_small.png-0e01508bf8852eba88cb09ec5478f029.ctex"]
+source_file="res://assets/graphics/pickups/health_pickup_large.png"
+dest_files=["res://.godot/imported/health_pickup_large.png-c1687609ce917da502c343412a6f66b1.ctex"]
 
 [params]
 

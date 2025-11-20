@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://bax32yfavmwca"]
+[gd_scene load_steps=51 format=4 uid="uid://bax32yfavmwca"]
 
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_gkyti"]
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="2_15mrc"]
@@ -20,10 +20,12 @@
 [ext_resource type="PackedScene" uid="uid://h7qg8v1nfrg5" path="res://objects/drop_platform_01/drop_platform_01.tscn" id="17_wo1oe"]
 [ext_resource type="Script" uid="uid://d01br3p7hnkj0" path="res://scripts/nodes/mob_spawners/mob_spawner_shellie.gd" id="18_jnghj"]
 [ext_resource type="Resource" uid="uid://1nk16vgguts7" path="res://objects/enemies/shellie/info_shellie.tres" id="19_p2akj"]
+[ext_resource type="Script" uid="uid://b0goixsc0lgyu" path="res://scripts/nodes/mob_spawner.gd" id="20_1thri"]
+[ext_resource type="Resource" uid="uid://qwirisn2l5ov" path="res://objects/enemies/skullie/info_skullie.tres" id="21_cw2fx"]
 [ext_resource type="PackedScene" uid="uid://ojbp6siu8aak" path="res://objects/boss_door/boss_door.tscn" id="21_hbx02"]
 [ext_resource type="PackedScene" uid="uid://buxayrry4vrnx" path="res://objects/teleport_pad/teleport_pad.tscn" id="22_alecm"]
 [ext_resource type="Script" uid="uid://bk3uspbhs6g0p" path="res://scripts/nodes/boss_spawner.gd" id="22_vlhjx"]
-[ext_resource type="PackedScene" uid="uid://ddd6ucx7yhx1u" path="res://objects/pickups/pickup_small_life/pickup_small_life.tscn" id="24_vlhjx"]
+[ext_resource type="PackedScene" uid="uid://bv3pmtfjy40p8" path="res://objects/pickups/pickup_life/pickup_life.tscn" id="25_1thri"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fi7ee"]
 size = Vector2(16, 64)
@@ -422,6 +424,19 @@ mob_info = ExtResource("19_p2akj")
 segment = NodePath("..")
 metadata/_custom_type_script = "uid://d01br3p7hnkj0"
 
+[node name="PickupLife" parent="SegC" instance=ExtResource("25_1thri")]
+position = Vector2(-482, -144)
+lifetime = 0.0
+
+[node name="MobSpawnerTPGun" type="Node2D" parent="SegC" node_paths=PackedStringArray("projectile_container", "segment")]
+position = Vector2(-495, -247)
+script = ExtResource("9_cxytl")
+weapon_def = ExtResource("13_x8ff0")
+projectile_container = NodePath("..")
+mob_info = ExtResource("11_pqr1j")
+segment = NodePath("..")
+metadata/_custom_type_script = "uid://cl3se2utwqe6u"
+
 [node name="SegC2" type="Area2D" parent="." node_paths=PackedStringArray("layer")]
 collision_layer = 0
 collision_mask = 2
@@ -491,6 +506,15 @@ metadata/_custom_type_script = "uid://b7nn8ybn2tmlb"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SegD/Checkpoint_Midpoint"]
 position = Vector2(-3.5, -44.5)
 shape = SubResource("RectangleShape2D_cw2fx")
+
+[node name="SkullieSpawner" type="Node2D" parent="SegD" node_paths=PackedStringArray("segment", "mob_container")]
+position = Vector2(15, -534)
+script = ExtResource("20_1thri")
+mob_info = ExtResource("21_cw2fx")
+segment = NodePath("..")
+mob_container = NodePath("..")
+continuous = true
+metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 
 [node name="SegD2" type="Area2D" parent="." node_paths=PackedStringArray("layer")]
 collision_layer = 0
@@ -807,10 +831,7 @@ metadata/_custom_type_script = "uid://b51ttt7nf66dg"
 shape = SubResource("RectangleShape2D_bof24")
 
 [node name="DebugPosition" type="Marker2D" parent="." groups=["DebugPosition"]]
-position = Vector2(104, -512)
-
-[node name="PickupSmallLife" parent="." instance=ExtResource("24_vlhjx")]
-position = Vector2(-47, -101)
+position = Vector2(-161, -528)
 
 [connection signal="entered" from="SegA" to="SegA/Lazer" method="set_disabled" binds= [false]]
 [connection signal="entered" from="SegA" to="SegA/Lazer2" method="set_disabled" binds= [false]]

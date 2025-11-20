@@ -4,6 +4,31 @@ class_name MobSpawner
 
 
 # ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const _LUTKEY_WEIGHT : String = "weight"
+const _LUTKEY_SCENE : String = "scene"
+
+const PICKUP_SMALL_HEALTH : StringName = &"small_health"
+const PICKUP_LARGE_HEALTH : StringName = &"large_health"
+const PICKUP_LIFE : StringName = &"life"
+
+const _PICKUP_LUT : Dictionary[StringName, Dictionary] = {
+	PICKUP_LIFE : {
+		_LUTKEY_WEIGHT: 1.0,
+		_LUTKEY_SCENE: preload("uid://bv3pmtfjy40p8")
+	},
+	PICKUP_SMALL_HEALTH : {
+		_LUTKEY_WEIGHT:20.0,
+		_LUTKEY_SCENE: preload("uid://ddd6ucx7yhx1u")
+	},
+	PICKUP_LARGE_HEALTH : {
+		_LUTKEY_WEIGHT:15.0,
+		_LUTKEY_SCENE: preload("uid://baw6apsyn4rpx")
+	},
+}
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var mob_info : MobInfo = null:		set=set_mob_info
@@ -22,6 +47,8 @@ class_name MobSpawner
 var _spawned : int = 0
 var _spawns : Array[Node2D] = []
 var _delay : float = 0.0
+
+var _pickup_collection : WeightedRandomCollection = WeightedRandomCollection.new()
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -43,6 +70,7 @@ func set_active(a : bool) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	_BuildPickupCollection()
 	set_physics_process(false)
 	if segment == null:
 		var parent : Node = get_parent()
@@ -92,6 +120,20 @@ func _DisconnectMobInfo() -> void:
 	if mob_info.changed.is_connected(_on_mob_info_changed):
 		mob_info.changed.disconnect(_on_mob_info_changed)
 
+func _BuildPickupCollection() -> void:
+	_pickup_collection.clear()
+	for key : StringName in _PICKUP_LUT.keys():
+		_pickup_collection.add_entry(key, _PICKUP_LUT[key][_LUTKEY_WEIGHT])
+
+func _GetRandomPickup() -> PickupBody2D:
+	var id : Variant = _pickup_collection.get_random()
+	if id in _PICKUP_LUT:
+		var scene : PackedScene = _PICKUP_LUT[id][_LUTKEY_SCENE]
+		var pickup : Node = scene.instantiate()
+		if pickup is PickupBody2D:
+			return pickup
+	return null
+
 func _GetContainer() -> Node2D:
 	if mob_container != null:
 		return mob_container
@@ -120,6 +162,16 @@ func _SpawnMob() -> void:
 			_spawns.append(mob_instance)
 			_delay = spawn_delay
 
+func _SpawnPickup(pickup_position : Vector2) -> void:
+	var container : Node2D = _GetContainer()
+	if container == null: return
+	
+	var pickup = _GetRandomPickup()
+	if pickup == null: return
+	container.add_child(pickup)
+	pickup.velocity.y = -100
+	pickup.global_position = pickup_position
+
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
@@ -146,6 +198,7 @@ func _on_segment_exited() -> void:
 func _on_spawn_exiting_tree(spawn : Node2D) -> void:
 	var idx : int = _spawns.find(spawn)
 	if idx >= 0:
+		_SpawnPickup.call_deferred(spawn.global_position)
 		_spawns.remove_at(idx)
 		if continuous:
 			_delay = spawn_delay
