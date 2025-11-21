@@ -1,9 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://bv3pmtfjy40p8"]
+[gd_scene load_steps=11 format=3 uid="uid://bv3pmtfjy40p8"]
 
 [ext_resource type="Script" uid="uid://cj3rkhfbqd6yg" path="res://objects/pickups/pickup_life/pickup_life.gd" id="1_k2qte"]
 [ext_resource type="Script" uid="uid://5ne0bxw7dsyh" path="res://scripts/nodes/bobbing_node_2d.gd" id="2_8lloh"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_rsh8a"]
 [ext_resource type="Texture2D" uid="uid://wrlbxa2rl2n4" path="res://assets/graphics/proto/icon_proto_life.png" id="3_thcw2"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_v38mn"]
+[ext_resource type="AudioStream" uid="uid://d13g71wx7loqn" path="res://assets/audio/sfx/pickup_life_small.wav" id="4_4en5s"]
 [ext_resource type="Script" uid="uid://ddbkyy847ju51" path="res://scripts/nodes/hitbox_detector.gd" id="4_twbv5"]
+
+[sub_resource type="Resource" id="Resource_i578y"]
+script = ExtResource("3_v38mn")
+stream = ExtResource("4_4en5s")
+volume_linear = 1.0
+min_pitch = 1.1
+max_pitch = 1.3
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_440g3"]
+script = ExtResource("2_rsh8a")
+sound_list = Dictionary[StringName, ExtResource("3_v38mn")]({
+&"pickup": SubResource("Resource_i578y")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rsh8a"]
 radius = 4.0
@@ -11,6 +29,7 @@ radius = 4.0
 [node name="PickupLife" type="CharacterBody2D"]
 collision_layer = 0
 script = ExtResource("1_k2qte")
+sound_sheet = SubResource("Resource_440g3")
 metadata/_custom_type_script = "uid://dmslhe2vyvl8v"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
