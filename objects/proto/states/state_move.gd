@@ -23,6 +23,10 @@ func enter(payload : Variant = null) -> void:
 	if actor == null:
 		pop()
 		return
+	
+	# This identifies if entering this state is due to an action or
+	# if it was RETURNED_TO by another state (such as the hurt state).
+	var returned_to : bool = typeof(payload) == TYPE_BOOL and payload == true
 
 	var wep : Weapon = actor.get_weapon()
 	if not wep.reloaded.is_connected(_on_reloaded):
@@ -30,6 +34,8 @@ func enter(payload : Variant = null) -> void:
 	
 	if typeof(payload) == TYPE_VECTOR2:
 		_move_direction = payload
+	elif returned_to:
+		_move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
 func exit() -> void:
 	if actor == null: return

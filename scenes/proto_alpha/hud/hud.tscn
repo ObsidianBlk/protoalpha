@@ -1,27 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://d05nd38n0uwiq"]
+[gd_scene load_steps=5 format=3 uid="uid://d05nd38n0uwiq"]
 
 [ext_resource type="Script" uid="uid://5aqrmx0br1ip" path="res://scenes/proto_alpha/hud/hud.gd" id="1_7s1mr"]
 [ext_resource type="Theme" uid="uid://cebftabff28vi" path="res://assets/hud.theme" id="1_kxqsr"]
 [ext_resource type="Texture2D" uid="uid://wrlbxa2rl2n4" path="res://assets/graphics/proto/icon_proto_life.png" id="3_nvkao"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nk46r"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45v0f"]
-content_margin_left = 1.0
-content_margin_top = 1.0
-content_margin_right = 1.0
-content_margin_bottom = 1.0
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7s1mr"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7upun"]
-bg_color = Color(0.580392, 0.878431, 0.537255, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kxqsr"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvkao"]
-bg_color = Color(0.721569, 0.411765, 0.384314, 1)
+[ext_resource type="Script" uid="uid://bteufeeth0iks" path="res://scripts/nodes/controls/grower.gd" id="4_nk46r"]
 
 [node name="HUD" type="MarginContainer"]
 texture_filter = 3
@@ -44,7 +26,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_nk46r")
+theme_type_variation = &"HUDPanel"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PlayerInfo/LifeTracker"]
 layout_mode = 2
@@ -66,31 +48,39 @@ text = "0"
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_45v0f")
+theme_type_variation = &"HUDPanel"
 
 [node name="HealthProgress" type="ProgressBar" parent="PlayerInfo/HealthBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(8, 64)
+custom_minimum_size = Vector2(8, 40)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_styles/background = SubResource("StyleBoxEmpty_7s1mr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7upun")
-value = 61.98
+theme_type_variation = &"HUDPlayerHP"
+step = 10.0
+value = 50.0
 fill_mode = 3
 show_percentage = false
 
 [node name="BossBar" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 16)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme_type_variation = &"HUDPanel"
 
 [node name="BossProgress" type="ProgressBar" parent="BossBar"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 8)
 layout_mode = 2
 size_flags_vertical = 1
-theme_override_styles/background = SubResource("StyleBoxEmpty_kxqsr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_nvkao")
+theme_type_variation = &"HUDBossHP"
+step = 1.0
 value = 50.0
 show_percentage = false
+
+[node name="Grower" type="Control" parent="BossBar" node_paths=PackedStringArray("ref_control")]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("4_nk46r")
+ref_control = NodePath("../BossProgress")
+metadata/_custom_type_script = "uid://bteufeeth0iks"

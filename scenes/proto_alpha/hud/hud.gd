@@ -9,6 +9,7 @@ extends MarginContainer
 
 @onready var _boss_bar: PanelContainer = %BossBar
 @onready var _boss_progress: ProgressBar = %BossProgress
+@onready var _grower: Grower = %Grower
 
 
 # ------------------------------------------------------------------------------
@@ -35,10 +36,11 @@ func _on_health_changed(health : int, max_health : int, is_boss : bool = false) 
 		if not _boss_bar.visible:
 			var max_f : float = float(max_health)
 			_boss_progress.max_value = max_f
-			_boss_bar.visible = true
+			_grower.open()
 		_boss_progress.value = health_f
 	else:
 		_health_progress.value = health_f
 
 func _on_boss_dead() -> void:
-	_boss_bar.visible = false
+	_grower.close()
+	#_boss_bar.visible = false

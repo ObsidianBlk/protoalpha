@@ -14,6 +14,7 @@ func enter(payload : Variant = null) -> void:
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
 	actor.set_tree_param(APARAM_ONCE_HURT, ONCE_FIRE)
+	actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
 
 
 func exit() -> void:
@@ -27,4 +28,4 @@ func exit() -> void:
 # ------------------------------------------------------------------------------
 func _on_animation_finished(anim_name : StringName) -> void:
 	if anim_name == ANIM_HURT_GROUND or anim_name == ANIM_HURT_AIR:
-		pop()
+		pop(false, true)

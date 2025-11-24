@@ -151,7 +151,7 @@ func pop_state(ignore_default : bool = false, payload : Variant = null) -> int:
 		var state : State = _stack.pop_back()
 		if state != null: state.exit()
 		if _stack.size() > 0:
-			_stack[-1].enter(host)
+			_stack[-1].enter(payload)
 	if _stack.size() <= 0 and not (ignore_default or _default == null):
 		_stack.append(_default)
 		_stack[-1].enter(payload)

@@ -858,7 +858,7 @@ metadata/_custom_type_script = "uid://b51ttt7nf66dg"
 shape = SubResource("RectangleShape2D_bof24")
 
 [node name="DebugPosition" type="Marker2D" parent="." groups=["DebugPosition"]]
-position = Vector2(104, -512)
+position = Vector2(472, -992)
 
 [connection signal="entered" from="SegA" to="SegA/Lazer" method="set_disabled" binds= [false]]
 [connection signal="entered" from="SegA" to="SegA/Lazer2" method="set_disabled" binds= [false]]

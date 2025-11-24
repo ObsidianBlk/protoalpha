@@ -44,6 +44,14 @@ func enter(payload : Variant = null) -> void:
 	var wep : Weapon = actor.get_weapon()
 	Game.Connect_Signals(wep, _weapon_signals)
 	actor.velocity = Vector2.ZERO
+	if typeof(payload) == TYPE_BOOL and payload == true:
+		# This is a bit combersom but fuck it.
+		var move_direction : Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		if not is_equal_approx(move_direction.length_squared(), 0.0):
+			if not is_equal_approx(move_direction.y, 0.0) and actor.is_on_ladder():
+				swap_to.call_deferred(state_climb)
+			else:
+				swap_to.call_deferred(state_move, move_direction)
 
 func exit() -> void:
 	if actor == null: return
