@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://bho47owrq31dg"]
+
+[ext_resource type="Script" uid="uid://4p64023xy5li" path="res://scenes/input_focus_manager/input_focus_manager.gd" id="1_mo715"]
+[ext_resource type="Script" uid="uid://b56xn8kwao8rs" path="res://addons/OBSControlLibrary/AnimatedTextureRect/animated_texture_rect.gd" id="2_wfn0m"]
+[ext_resource type="Texture2D" uid="uid://bt7jlulcqd7fb" path="res://assets/graphics/faux_pointer.png" id="3_4so0n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7q5mq"]
+atlas = ExtResource("3_4so0n")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dttjv"]
+atlas = ExtResource("3_4so0n")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg1y3"]
+atlas = ExtResource("3_4so0n")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mo715"]
+atlas = ExtResource("3_4so0n")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r4luh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7q5mq")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dttjv")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_bg1y3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mo715")
+}],
+"loop": false,
+"name": &"pressed",
+"speed": 12.0
+}]
+
+[node name="InputFocusManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_mo715")
+
+[node name="PointerSprite" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("2_wfn0m")
+sprite_frames = SubResource("SpriteFrames_r4luh")
+frame = 1
+frame_progress = 1.0166666666666666
+auto_play = true
+metadata/_custom_type_script = "uid://b56xn8kwao8rs"
+
+[connection signal="animation_finished" from="PointerSprite" to="." method="_on_pointer_sprite_animation_finished"]

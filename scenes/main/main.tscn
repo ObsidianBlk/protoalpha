@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=40 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cyawkb7mwvu77" path="res://assets/graphics/tv/tv_ctrl_panel.png" id="6_7smn1"]
 [ext_resource type="Texture2D" uid="uid://bx4xestmcewyb" path="res://assets/graphics/tv/tv_grill_pattern.png" id="6_raeie"]
 [ext_resource type="Texture2D" uid="uid://ckxtl24abbjhs" path="res://assets/graphics/tv/console_body.png" id="13_th5th"]
+[ext_resource type="PackedScene" uid="uid://bho47owrq31dg" path="res://scenes/input_focus_manager/input_focus_manager.tscn" id="14_7smn1"]
 [ext_resource type="PackedScene" uid="uid://opjjoh6tsx4v" path="res://scenes/main/static_effect/static_effect.tscn" id="15_m4h2d"]
 [ext_resource type="PackedScene" uid="uid://d4govvu6ee7ds" path="res://scenes/tv_channels/tv_channels.tscn" id="15_p8abn"]
 [ext_resource type="PackedScene" uid="uid://d4g38v5ho1jt1" path="res://scenes/main/crt_effect/crt_effect.tscn" id="15_r4lks"]
@@ -458,6 +459,8 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.1
 mouse_filter = 2
 
+[node name="InputFocusManager" parent="GameLayer" instance=ExtResource("14_7smn1")]
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
 
@@ -467,3 +470,5 @@ stream = SubResource("AudioStreamPolyphonic_hujxm")
 [connection signal="fullscreen_toggled" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_fullscreen_toggled"]
 [connection signal="open_game" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]
 [connection signal="quit_application" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_quit_application"]
+[connection signal="focus_game" from="GameLayer/InputFocusManager" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="enable_input" binds= [true]]
+[connection signal="focus_tv" from="GameLayer/InputFocusManager" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="enable_input" binds= [false]]

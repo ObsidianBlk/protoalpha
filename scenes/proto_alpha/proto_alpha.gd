@@ -28,6 +28,8 @@ var _game_running : bool = false
 var _input_record : Array[String] = []
 var _input_timestamp : float = 0.0
 
+var _input_blocked : bool = false
+
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
@@ -65,6 +67,10 @@ func _ready() -> void:
 	_ui.register_action_handler(Game.UI_ACTION_RESUME, _ResumeGame)
 
 func _input(event: InputEvent) -> void:
+	if _input_blocked:
+		get_viewport().set_input_as_handled()
+		return
+	
 	if _level != null:
 		if event.is_action_pressed("start"):
 			if _ui.is_ui_active(level_select_menu):
@@ -262,6 +268,9 @@ func close_game() -> void:
 
 func is_open() -> bool:
 	return _level != null or _ui.ui_active()
+
+func enable_input(enable : bool) -> void:
+	_input_blocked = not enable
 
 
 # ------------------------------------------------------------------------------
