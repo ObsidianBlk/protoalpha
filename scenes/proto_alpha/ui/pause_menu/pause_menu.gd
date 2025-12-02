@@ -10,7 +10,8 @@ extends UIControl
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
-	_btn_resume.grab_focus()
+	#_btn_resume.grab_focus()
+	refocus_input(_btn_resume)
 	super._on_reveal()
 
 # ------------------------------------------------------------------------------

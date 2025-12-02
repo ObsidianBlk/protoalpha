@@ -271,6 +271,8 @@ func is_open() -> bool:
 
 func enable_input(enable : bool) -> void:
 	_input_blocked = not enable
+	if enable:
+		_ui.refocus_ui()
 
 
 # ------------------------------------------------------------------------------

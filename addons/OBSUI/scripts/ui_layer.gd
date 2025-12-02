@@ -35,7 +35,6 @@ var _registered_actions : Dictionary[StringName, Array] = {}
 var _uigroup : UIGroup = UIGroup.new()
 
 
-
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
@@ -144,6 +143,15 @@ func ui_active() -> bool:
 		func(info : ActiveInfo): return info.is_open
 	)
 	return active_open.size() > 0
+
+func refocus_ui() -> void:
+	var active_open : Array[ActiveInfo] = _active.filter(
+		func(info : ActiveInfo): return info.is_open
+	)
+	if active_open.size() > 0:
+		var ui_name : StringName = active_open[-1].ui_name
+		_ui_children[ui_name].refocus_input()
+		
 
 # ------------------------------------------------------------------------------
 # Handler Methods

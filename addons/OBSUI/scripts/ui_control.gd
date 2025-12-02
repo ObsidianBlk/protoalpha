@@ -32,6 +32,7 @@ const OPTION_PREVIOUS_UI : StringName = &"prev_ui"
 # Variables
 # ------------------------------------------------------------------------------
 var _prev_ui : StringName = &""
+var _focused : Control = null
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -50,6 +51,18 @@ func _ready() -> void:
 		#hide_ui(true)
 	else:
 		reveal_ui(true)
+
+func _enter_tree() -> void:
+	var vp : Viewport = get_viewport()
+	if vp != null:
+		if not vp.gui_focus_changed.is_connected(_on_gui_changed):
+			vp.gui_focus_changed.connect(_on_gui_changed)
+
+func _exit_tree() -> void:
+	var vp : Viewport = get_viewport()
+	if vp != null:
+		if vp.gui_focus_changed.is_connected(_on_gui_changed):
+			vp.gui_focus_changed.disconnect(_on_gui_changed)
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -89,6 +102,12 @@ func _on_reveal() -> void:
 func _on_hide() -> void:
 	ui_hidden.emit()
 
+func _on_gui_changed(node : Control) -> void:
+	print(name, " Handling GUI Change")
+	if is_ancestor_of(node):
+		print(name, " Setting Focus")
+		_focused = node
+
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
@@ -115,10 +134,8 @@ func swap_back(immediate : bool = false, options : Dictionary = {}) -> void:
 	else:
 		await swap_to(_prev_ui, immediate, options)
 
-#func pop_ui(immediate : bool = false, options : Dictionary = {}) -> void:
-	#if _prev_ui.is_empty():
-		#close_ui(name, immediate)
-		#if not immediate:
-			#await ui_hidden
-	#else:
-		#swap_ui(_prev_ui, immediate, options)
+func refocus_input(default : Control = null) -> void:
+	if _focused != null:
+		_focused.grab_focus()
+	elif default != null:
+		default.grab_focus()

@@ -15,7 +15,8 @@ extends UIControl
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
-	_btn_start.grab_focus()
+	#_btn_start.grab_focus()
+	refocus_input(_btn_start)
 	if music_list != null:
 		music_list.stop_non_local()
 		music_list.play_default(fade_duration)
