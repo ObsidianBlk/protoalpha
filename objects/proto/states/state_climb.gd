@@ -47,6 +47,8 @@ func physics_update(_delta : float) -> void:
 	
 	actor.velocity.y = _move_direction.y * actor.speed * 0.5
 	actor.move_and_slide()
+	if actor.is_crushed():
+		actor.die()
 
 func handle_input(event : InputEvent) -> void:
 	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):

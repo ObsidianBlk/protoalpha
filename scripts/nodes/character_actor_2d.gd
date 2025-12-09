@@ -121,6 +121,15 @@ func is_on_ladder() -> bool:
 func is_on_surface() -> bool:
 	return is_on_floor() or is_on_ladder()
 
+func is_crushed() -> bool:
+	var collision_count : int = get_slide_collision_count()
+	if collision_count > 0:
+		for idx : int in range(collision_count):
+			var collision : KinematicCollision2D = get_slide_collision(idx)
+			if collision.get_depth() >= 1.0:
+				return true
+	return false
+
 func is_dead() -> bool:
 	return not alive
 

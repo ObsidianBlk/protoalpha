@@ -75,7 +75,9 @@ func physics_update(_delta : float) -> void:
 	else: actor.velocity.y = 0.0
 	
 	actor.move_and_slide()
-	if not actor.is_on_surface():
+	if actor.is_crushed():
+		actor.die()
+	elif not actor.is_on_surface():
 		if not state_fall.is_empty():
 			swap_to(state_fall)
 

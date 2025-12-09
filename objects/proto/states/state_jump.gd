@@ -83,6 +83,8 @@ func physics_update(delta : float) -> void:
 		actor.velocity.y = min(actor.velocity.y + (g_actual * delta), g_actual)
 	
 	actor.move_and_slide()
+	if actor.is_crushed():
+		actor.die()
 
 func handle_input(event : InputEvent) -> void:
 	if actor == null: return

@@ -1571,6 +1571,7 @@ position = Vector2(-0.5, -10)
 shape = SubResource("RectangleShape2D_bg1mb")
 
 [node name="EnergyExplosion" parent="." instance=ExtResource("25_bg1mb")]
+position = Vector2(0, -10)
 
 [connection signal="dead" from="." to="StateMachine" method="transition_state" binds= [&"Dead"]]
 [connection signal="request_state" from="." to="StateMachine" method="swap_state"]

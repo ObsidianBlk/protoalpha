@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://d2sly1lgmrmg6"]
+[gd_scene load_steps=8 format=4 uid="uid://d2sly1lgmrmg6"]
 
 [ext_resource type="Script" uid="uid://bhbi6f2woh6pw" path="res://scenes/levels/level.gd" id="1_005fm"]
 [ext_resource type="Script" uid="uid://iseo8u8frf3w" path="res://scripts/nodes/map_segment.gd" id="2_0kshx"]
 [ext_resource type="TileSet" uid="uid://guqkyefalo5p" path="res://assets/graphics/tilesets/tileset.tres" id="3_vs6ma"]
 [ext_resource type="Script" uid="uid://b7nn8ybn2tmlb" path="res://scripts/nodes/checkpoint.gd" id="4_4mn80"]
 [ext_resource type="PackedScene" uid="uid://d3jrep7k7mc8x" path="res://objects/frag_block/frag_block.tscn" id="5_vs6ma"]
+[ext_resource type="Script" uid="uid://6ryrp56hxe4c" path="res://objects/frag_block/frag_block_crusher.gd" id="6_4mn80"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_at8xp"]
 size = Vector2(20, 53)
@@ -41,7 +42,12 @@ position = Vector2(0, -26.5)
 shape = SubResource("RectangleShape2D_at8xp")
 
 [node name="FragBlock" parent="MapSegments/SegA" instance=ExtResource("5_vs6ma")]
-position = Vector2(112, 80)
+position = Vector2(112, 16)
+
+[node name="FragBlockCrusher" type="Node" parent="MapSegments/SegA/FragBlock"]
+script = ExtResource("6_4mn80")
+direction = 1
+metadata/_custom_type_script = "uid://6ryrp56hxe4c"
 
 [node name="BossContainer" type="Node2D" parent="."]
 

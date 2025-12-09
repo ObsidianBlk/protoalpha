@@ -14,7 +14,8 @@ func enter(payload : Variant = null) -> void:
 		pop()
 		return
 	
-	if actor.is_on_surface():
+	var crushed : bool = actor.is_crushed()
+	if not crushed and actor.is_on_surface():
 		if not actor.animation_finished.is_connected(_on_animation_finished):
 			actor.animation_finished.connect(_on_animation_finished)
 		actor.set_tree_param(APARAM_ONCE_SPAWN, ONCE_FIRE)

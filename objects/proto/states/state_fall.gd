@@ -27,7 +27,9 @@ func enter(payload : Variant = null) -> void:
 func update(_delta : float) -> void:
 	if actor == null: return
 	
-	if actor.is_on_surface():
+	if actor.is_crushed():
+		actor.die()
+	elif actor.is_on_surface():
 		play_sfx(AUDIO_LAND)
 		if is_equal_approx(_move_direction.x, 0.0):
 			swap_to(state_idle)
