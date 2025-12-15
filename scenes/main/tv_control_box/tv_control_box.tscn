@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://lq2t4d33t4ng"]
+[gd_scene load_steps=5 format=3 uid="uid://lq2t4d33t4ng"]
 
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="1_pal1k"]
 [ext_resource type="Script" uid="uid://b0b1fsmftkooo" path="res://scenes/main/tv_control_box/tv_control_box.gd" id="2_6o00b"]
 [ext_resource type="PackedScene" uid="uid://8wm8hlochlv4" path="res://scenes/main/tv_control_box/key_pad/key_pad.tscn" id="3_ajjg8"]
+[ext_resource type="Script" uid="uid://bdhq8wyy4p7y5" path="res://scripts/nodes/controls/slider_joy_interpreter.gd" id="4_d8irx"]
 
 [node name="TVControlBox" type="PanelContainer"]
 theme = ExtResource("1_pal1k")
@@ -63,6 +64,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 step = 0.1
 
+[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_Master"]
+script = ExtResource("4_d8irx")
+value_per_second = 50.0
+metadata/_custom_type_script = "uid://bdhq8wyy4p7y5"
+
 [node name="VSLIDER_Music" type="VSlider" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 96)
@@ -71,6 +77,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 step = 0.1
 
+[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_Music"]
+script = ExtResource("4_d8irx")
+value_per_second = 50.0
+metadata/_custom_type_script = "uid://bdhq8wyy4p7y5"
+
 [node name="VSLIDER_SFX" type="VSlider" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 96)
@@ -78,6 +89,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
 step = 0.1
+
+[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_SFX"]
+script = ExtResource("4_d8irx")
+value_per_second = 50.0
+metadata/_custom_type_script = "uid://bdhq8wyy4p7y5"
 
 [connection signal="coded" from="HBoxContainer/PanelContainer/VBoxContainer/KeyPad" to="." method="_on_key_pad_coded"]
 [connection signal="power_cycled" from="HBoxContainer/PanelContainer/VBoxContainer/KeyPad" to="." method="_on_key_pad_power_cycled"]
