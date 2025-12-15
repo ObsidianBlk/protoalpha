@@ -383,7 +383,6 @@ blend_point_4/pos = Vector2(0, -0.5)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_raqhs"]
-graph_offset = Vector2(-413.79114, -43.8497)
 nodes/output/position = Vector2(600, 140)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_kqeua")
 nodes/Animation/position = Vector2(40, 340)
@@ -394,7 +393,7 @@ nodes/effect_shot/position = Vector2(380, 120)
 node_connections = [&"output", 0, &"effect_shot", &"effect_shot", 0, &"movement", &"effect_shot", 1, &"Animation"]
 
 [node name="FragBlock" type="AnimatableBody2D"]
-collision_layer = 16
+collision_layer = 8
 sync_to_physics = false
 script = ExtResource("1_kqeua")
 

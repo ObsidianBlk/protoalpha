@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=43 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bx4xestmcewyb" path="res://assets/graphics/tv/tv_grill_pattern.png" id="6_raeie"]
 [ext_resource type="Texture2D" uid="uid://ckxtl24abbjhs" path="res://assets/graphics/tv/console_body.png" id="13_th5th"]
 [ext_resource type="PackedScene" uid="uid://bho47owrq31dg" path="res://scenes/input_focus_manager/input_focus_manager.tscn" id="14_7smn1"]
+[ext_resource type="Script" uid="uid://b8t25bs4mvuwy" path="res://scenes/main/full_screen_game.gd" id="15_hxu8e"]
 [ext_resource type="PackedScene" uid="uid://opjjoh6tsx4v" path="res://scenes/main/static_effect/static_effect.tscn" id="15_m4h2d"]
 [ext_resource type="PackedScene" uid="uid://d4govvu6ee7ds" path="res://scenes/tv_channels/tv_channels.tscn" id="15_p8abn"]
 [ext_resource type="PackedScene" uid="uid://d4g38v5ho1jt1" path="res://scenes/main/crt_effect/crt_effect.tscn" id="15_r4lks"]
@@ -133,6 +134,12 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 shadow_color = Color(0.5785, 0.89, 0, 0.6)
 shadow_size = 6
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7smn1"]
+viewport_path = NodePath("GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport")
+
+[sub_resource type="Resource" id="Resource_raeie"]
+script = ExtResource("17_p8abn")
 
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_hujxm"]
 
@@ -461,14 +468,48 @@ mouse_filter = 2
 
 [node name="InputFocusManager" parent="GameLayer" instance=ExtResource("14_7smn1")]
 
+[node name="FullScreenGame" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("15_hxu8e")
+
+[node name="ColorRect" type="ColorRect" parent="FullScreenGame"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="FullGameRect" type="TextureRect" parent="FullScreenGame"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("ViewportTexture_7smn1")
+stretch_mode = 5
+
+[node name="CRT_Effect" parent="FullScreenGame" instance=ExtResource("15_r4lks")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+settings = SubResource("Resource_raeie")
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
 
 [connection signal="start_game" from="." to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]
 [connection signal="close_game" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="close_game"]
 [connection signal="coded" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/Channels/TVChannels" method="show_channel"]
+[connection signal="coded" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="FullScreenGame" method="coded"]
 [connection signal="fullscreen_toggled" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_fullscreen_toggled"]
 [connection signal="open_game" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]
 [connection signal="quit_application" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_quit_application"]
 [connection signal="focus_game" from="GameLayer/InputFocusManager" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="enable_input" binds= [true]]
+[connection signal="focus_game" from="GameLayer/InputFocusManager" to="FullScreenGame" method="enable_game_fullscreen" binds= [true]]
 [connection signal="focus_tv" from="GameLayer/InputFocusManager" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/SubViewportContainer/GameViewport/ProtoAlpha" method="enable_input" binds= [false]]
+[connection signal="focus_tv" from="GameLayer/InputFocusManager" to="FullScreenGame" method="enable_game_fullscreen" binds= [false]]

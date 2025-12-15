@@ -1417,7 +1417,7 @@ size = Vector2(7, 10)
 
 [node name="Proto" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree", "ladder_detector", "weapon")]
 collision_layer = 2
-collision_mask = 17
+collision_mask = 9
 floor_block_on_wall = false
 script = ExtResource("1_7jw1q")
 speed = 80.0
