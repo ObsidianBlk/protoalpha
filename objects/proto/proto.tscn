@@ -1467,7 +1467,7 @@ unique_name_in_owner = true
 position = Vector2(5, -11)
 script = ExtResource("3_qpscq")
 weapon_def = ExtResource("4_yd1xd")
-collision_mask = 4113
+collision_mask = 4105
 metadata/_custom_type_script = "uid://wjm481jeg5t0"
 
 [node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]

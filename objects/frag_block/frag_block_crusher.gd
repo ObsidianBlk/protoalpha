@@ -2,6 +2,12 @@ extends Node
 class_name FragBlockCrusher
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal fallen()
+signal reset()
+
+# ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const _DIR_UP : int = 0
@@ -20,6 +26,8 @@ const METHOD_TRIGGER_EFFECT : StringName = &"trigger_effect"
 @export var acceleration : float = 10.0
 @export var rest_duration : float = 3.0
 @export var reset_duration : float = 1.0
+@export var auto_fall : bool = true
+@export var auto_reset : bool = true
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -31,6 +39,8 @@ var _fall_speed : float = 0.0
 var _rest_duration = 0.0
 var _tween : Tween = null
 
+var _trigger : bool = false
+
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
@@ -40,9 +50,15 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if _tween == null:
 		if _rest_duration <= 0.0:
-			_ProcessFalling(delta)
+			if _fall_speed > 0.0 or auto_fall or _trigger:
+				_trigger = false
+				_ProcessFalling(delta)
 		else:
-			_rest_duration -= delta
+			if auto_reset:
+				_rest_duration -= delta
+			elif _trigger:
+				_rest_duration = 0.0
+			
 			if _rest_duration <= 0.0:
 				_fall_speed = 0.0
 				_ResetPosition()
@@ -88,9 +104,11 @@ func _ProcessFalling(delta : float) -> void:
 			if cobj is PhysicsBody2D:
 				if cobj.collision_layer & body.collision_mask > 0:
 					_rest_duration = rest_duration
+					fallen.emit()
 			elif cobj is TileMapLayer:
 				# We'll just assume that a TileMapLayer collision is automatically floor
 				_rest_duration = reset_duration
+				fallen.emit()
 
 
 func _ResetPosition() -> void:
@@ -113,7 +131,11 @@ func _ResetPosition() -> void:
 	
 	await _tween.finished
 	_tween = null
+	reset.emit()
 
 # ------------------------------------------------------------------------------
-# Handler Methods
+# Public Methods
 # ------------------------------------------------------------------------------
+func trigger(enabled : bool) -> void:
+	if enabled:
+		_trigger = true
