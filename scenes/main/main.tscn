@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=44 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://opjjoh6tsx4v" path="res://scenes/main/static_effect/static_effect.tscn" id="15_m4h2d"]
 [ext_resource type="PackedScene" uid="uid://d4govvu6ee7ds" path="res://scenes/tv_channels/tv_channels.tscn" id="15_p8abn"]
 [ext_resource type="PackedScene" uid="uid://d4g38v5ho1jt1" path="res://scenes/main/crt_effect/crt_effect.tscn" id="15_r4lks"]
+[ext_resource type="Script" uid="uid://cgn3dt0lj8cnd" path="res://scripts/nodes/controls/ratio_spacer.gd" id="16_hxu8e"]
 [ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
 [ext_resource type="Script" uid="uid://dgbmsxanfwao6" path="res://scripts/resource/crt_effect_resource.gd" id="17_p8abn"]
 
@@ -176,7 +177,6 @@ size_flags_vertical = 3
 [node name="TV_Screen" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.27
 theme_override_styles/panel = SubResource("StyleBoxEmpty_nvumn")
 
 [node name="Screen_Main" type="VBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen"]
@@ -473,6 +473,7 @@ visible = false
 script = ExtResource("15_hxu8e")
 
 [node name="ColorRect" type="ColorRect" parent="FullScreenGame"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -491,13 +492,52 @@ mouse_filter = 2
 texture = SubResource("ViewportTexture_7smn1")
 stretch_mode = 5
 
-[node name="CRT_Effect" parent="FullScreenGame" instance=ExtResource("15_r4lks")]
+[node name="VBoxContainer" type="VBoxContainer" parent="FullScreenGame"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="ColorRect2" type="ColorRect" parent="FullScreenGame/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 1, 0.049999952, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FullScreenGame/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ColorRect" type="ColorRect" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 0, 0, 1)
+
+[node name="RatioSpacer" type="Control" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(770.6667, 578)
+layout_mode = 2
+script = ExtResource("16_hxu8e")
+metadata/_custom_type_script = "uid://cgn3dt0lj8cnd"
+
+[node name="CRT_Effect" parent="FullScreenGame/VBoxContainer/HBoxContainer/RatioSpacer" instance=ExtResource("15_r4lks")]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 settings = SubResource("Resource_raeie")
+
+[node name="ColorRect2" type="ColorRect" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="FullScreenGame/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 1, 0.049999952, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
