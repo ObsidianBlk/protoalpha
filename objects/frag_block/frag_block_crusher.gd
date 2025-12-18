@@ -28,6 +28,7 @@ const METHOD_TRIGGER_EFFECT : StringName = &"trigger_effect"
 @export var reset_duration : float = 1.0
 @export var auto_fall : bool = true
 @export var auto_reset : bool = true
+@export var start_resting : bool = false
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -46,6 +47,8 @@ var _trigger : bool = false
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	_GetBody()
+	if start_resting and auto_fall:
+		_rest_duration = rest_duration
 
 func _physics_process(delta: float) -> void:
 	if _tween == null:
@@ -115,6 +118,9 @@ func _ResetPosition() -> void:
 	if _tween != null: return
 	var body : AnimatableBody2D = _GetBody()
 	if body == null: return
+	
+	if body.global_position.is_equal_approx(_initial_position):
+		return
 	
 	_tween = create_tween()
 	_tween.pause()

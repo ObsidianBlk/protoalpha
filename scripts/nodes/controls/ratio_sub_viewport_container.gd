@@ -1,12 +1,14 @@
 @tool
-extends Control
-class_name RatioSpacer
+extends SubViewportContainer
+class_name RatioSubViewportContainer
 
 
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var ratio : Vector2i = Vector2i(4,3):		set=set_ratio
+@export var relative_screen_scale : float = 0.5:	set=set_relative_screen_scale
+
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -21,12 +23,16 @@ func set_ratio(r : Vector2i) -> void:
 		ratio = r
 		_CalculateMinimumSize.call_deferred()
 
+func set_relative_screen_scale(rss : float) -> void:
+	rss = clampf(rss, 0.0, 1.0)
+	if not is_equal_approx(rss, relative_screen_scale):
+		relative_screen_scale = rss
+		_CalculateMinimumSize.call_deferred()
+		
+
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
-func _ready() -> void:
-	pass
-
 func _enter_tree() -> void:
 	var vp : Viewport = get_viewport()
 	if vp != null:
@@ -46,13 +52,13 @@ func _exit_tree() -> void:
 func _CalculateMinimumSize() -> void:
 	var min_size : Vector2 = Vector2.ZERO
 	var target_ratio : float = float(ratio.x) / float(ratio.y)
+	var screen_size : Vector2 = _screen_size * relative_screen_scale
 	
-	var w : float = _screen_size.y * target_ratio
-	var h : float = _screen_size.y
-	var rscale : float = min(_screen_size.x / w, _screen_size.y / h)
+	var w : float = screen_size.y * target_ratio
+	var h : float = screen_size.y
+	var rscale : float = min(screen_size.x / w, screen_size.y / h)
 	
 	min_size = Vector2(w * rscale, h * rscale)
-	print("Minimum Size: ", min_size)
 	custom_minimum_size = min_size
 
 # ------------------------------------------------------------------------------
