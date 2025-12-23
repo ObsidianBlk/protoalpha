@@ -1,10 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://3hpweo30ryty"]
 
 [ext_resource type="Script" uid="uid://qvif777vdc70" path="res://scenes/proto_alpha/ui/level_select/level_select.gd" id="1_daoap"]
+[ext_resource type="Theme" uid="uid://c4lk81a4r3ren" path="res://assets/game.theme" id="1_iewmd"]
 [ext_resource type="PackedScene" uid="uid://dotnqb68bu7in" path="res://scenes/proto_alpha/ui/level_select/level_select_button/level_select_button.tscn" id="2_u4l1b"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_daoap"]
-bg_color = Color(0.25098, 0.192157, 0.552941, 1)
 
 [node name="LevelSelect" type="PanelContainer"]
 anchors_preset = 15
@@ -12,7 +10,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_daoap")
+theme = ExtResource("1_iewmd")
+theme_type_variation = &"PanelContainerPurple"
 script = ExtResource("1_daoap")
 
 [node name="GridContainer" type="GridContainer" parent="."]
@@ -42,7 +41,6 @@ level_number = 4
 [node name="BTN_CENTER" parent="GridContainer" instance=ExtResource("2_u4l1b")]
 unique_name_in_owner = true
 layout_mode = 2
-level_number = 0
 
 [node name="BTN_Level5" parent="GridContainer" instance=ExtResource("2_u4l1b")]
 layout_mode = 2

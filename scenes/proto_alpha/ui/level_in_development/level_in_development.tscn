@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://0ho0ypek6rjb"]
+
+[ext_resource type="Theme" uid="uid://c4lk81a4r3ren" path="res://assets/game.theme" id="1_sdbs8"]
+[ext_resource type="Script" uid="uid://tytw316ku65g" path="res://scenes/proto_alpha/ui/level_in_development/level_in_development.gd" id="2_5rxkh"]
+
+[node name="LevelInDevelopment" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_sdbs8")
+theme_type_variation = &"PanelContainerBlack"
+script = ExtResource("2_5rxkh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "This level is not yet complete!
+The level may be unbeatable."
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "
+Continue to Level?"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="BTN_Play" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Play"
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BTN_Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/BTN_Play" to="." method="_on_btn_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/BTN_Cancel" to="." method="_on_btn_cancel_pressed"]

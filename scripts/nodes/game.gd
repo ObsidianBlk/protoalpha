@@ -22,6 +22,10 @@ enum MobFacingH {LEFT=-1, RIGHT=1}
 ## [br][code]UP=-1[/code] and [code]DOWN=1[/code]
 enum MobFacingV {UP=-1, DOWN=1}
 
+## A Level Development State enum mostly used during active game development.
+## [br]Identifies if a level is ready, in active development, or not yet available.
+enum LevelDevState {NOT_AVAILABLE=-1, ACTIVE_DEV=0, READY=1}
+
 # ------------------------------------------------------------------------------
 # Classes
 # ------------------------------------------------------------------------------
@@ -100,38 +104,47 @@ const COLLISION_LAYER_PLAYER_HITBOX : int = 0x0100 #256
 
 const _LEVEL_PATH : StringName = &"path"
 const _LEVEL_ICON : StringName = &"icon"
+const _LEVEL_STATE : StringName = &"state"
 const LEVELS : Dictionary[int, Dictionary] = {
 	GameState.LEVEL_1: {
 		_LEVEL_PATH:"res://scenes/levels/level_01/level_01.tscn",
-		_LEVEL_ICON:"res://assets/graphics/bosses/seg_fault/Seg_Fault_Portrait.png"
+		_LEVEL_ICON:"res://assets/graphics/bosses/seg_fault/Seg_Fault_Portrait.png",
+		_LEVEL_STATE: LevelDevState.READY
 	},
 	GameState.LEVEL_2: {
 		_LEVEL_PATH:"res://scenes/levels/level_02/level_02.tscn",
-		_LEVEL_ICON:"res://assets/graphics/bosses/defrag/Defrag_Portrait.png"
+		_LEVEL_ICON:"res://assets/graphics/bosses/defrag/Defrag_Portrait.png",
+		_LEVEL_STATE: LevelDevState.ACTIVE_DEV
 	},
 	GameState.LEVEL_3: {
 		_LEVEL_PATH:"",
-		_LEVEL_ICON:""
+		_LEVEL_ICON:"",
+		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_4: {
 		_LEVEL_PATH:"",
-		_LEVEL_ICON:""
+		_LEVEL_ICON:"",
+		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_5: {
 		_LEVEL_PATH:"",
-		_LEVEL_ICON:""
+		_LEVEL_ICON:"",
+		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_6: {
 		_LEVEL_PATH:"",
-		_LEVEL_ICON:""
+		_LEVEL_ICON:"",
+		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_7: {
 		_LEVEL_PATH:"",
-		_LEVEL_ICON:""
+		_LEVEL_ICON:"",
+		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_8: {
 		_LEVEL_PATH:"",
-		_LEVEL_ICON:""
+		_LEVEL_ICON:"",
+		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 }
 
@@ -205,6 +218,11 @@ static func Get_Level_Path(level_id : int) -> String:
 	if level_id in LEVELS:
 		return LEVELS[level_id][_LEVEL_PATH]
 	return ""
+
+static func Get_Level_State(level_id : int) -> LevelDevState:
+	if level_id in LEVELS:
+		return LEVELS[level_id][_LEVEL_STATE]
+	return LevelDevState.NOT_AVAILABLE
 
 
 static func Node_Has_Properties(n : Node, properties : Array[String]) -> bool:

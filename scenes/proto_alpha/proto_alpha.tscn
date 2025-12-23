@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dn33mh2f5g1je"]
+[gd_scene load_steps=20 format=3 uid="uid://dn33mh2f5g1je"]
 
 [ext_resource type="Script" uid="uid://ui3ghe0wf23a" path="res://scenes/proto_alpha/proto_alpha.gd" id="1_q6vex"]
 [ext_resource type="Script" uid="uid://bmot2xnxfcohb" path="res://scripts/nodes/chase_camera.gd" id="2_fchvx"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_xh1g3"]
 [ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="10_1423w"]
 [ext_resource type="PackedScene" uid="uid://3hpweo30ryty" path="res://scenes/proto_alpha/ui/level_select/level_select.tscn" id="13_2rg54"]
+[ext_resource type="PackedScene" uid="uid://0gy8q7hqmqsr" path="res://scenes/proto_alpha/ui/level_unavailable/level_unavailable.tscn" id="14_kwc6g"]
+[ext_resource type="PackedScene" uid="uid://0ho0ypek6rjb" path="res://scenes/proto_alpha/ui/level_in_development/level_in_development.tscn" id="15_bg22g"]
 
 [sub_resource type="Resource" id="Resource_hxu8e"]
 script = ExtResource("7_kwc6g")
@@ -78,3 +80,9 @@ default_ui = true
 [node name="PauseMenu" parent="UILayer" instance=ExtResource("6_flgcp")]
 
 [node name="LevelSelect" parent="UILayer" instance=ExtResource("13_2rg54")]
+unavailable = &"LevelUnavailable"
+development = &"LevelInDevelopment"
+
+[node name="LevelUnavailable" parent="UILayer" instance=ExtResource("14_kwc6g")]
+
+[node name="LevelInDevelopment" parent="UILayer" instance=ExtResource("15_bg22g")]
