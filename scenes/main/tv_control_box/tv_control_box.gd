@@ -13,8 +13,13 @@ signal quit_application()
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
+const KEYPAD_CODE_TV_VIEW : int = 3
+const KEYPAD_CODE_FULL_VIEW : int = 2
 const KEYPAD_CODE_TOGGLE_CRT : int = 42
 const KEYPAD_CODE_TOGGLE_FULLSCREEN : int = 0
+
+const SETTINGS_SECTION : String = "General"
+const SETTINGS_KEY : String = "default_channel"
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -29,6 +34,9 @@ const KEYPAD_CODE_TOGGLE_FULLSCREEN : int = 0
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	Settings.loaded.connect(_on_settings_loaded)
+	Settings.reset.connect(_on_settings_reset)
+	Settings.value_changed.connect(_on_settings_value_changed)
 	AudioBoard.volume_changed.connect(_on_audio_board_volume_changed)
 
 # ------------------------------------------------------------------------------
@@ -41,6 +49,20 @@ func _AudioBoardToVolumeSlider(bus : StringName, slider : VSlider) -> void:
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
+func _on_settings_loaded() -> void:
+	var c : Variant = Settings.load_value(SETTINGS_SECTION, SETTINGS_KEY, KeyPad.DEFAULT_CODE)
+	if typeof(c) == TYPE_INT:
+		_key_pad.set_default_code(c)
+
+func _on_settings_reset() -> void:
+	Settings.set_value(SETTINGS_SECTION, SETTINGS_KEY, KeyPad.DEFAULT_CODE)
+	_key_pad.set_default_code(KeyPad.DEFAULT_CODE)
+
+func _on_settings_value_changed(section : String, key : String, value : Variant) -> void:
+	if section == SETTINGS_SECTION and key == SETTINGS_KEY:
+		if typeof(value) == TYPE_INT:
+			_key_pad.set_default_code(value)
+
 func _on_audio_board_volume_changed(bus : StringName) -> void:
 	match bus:
 		AudioBoard.BUS_MASTER:
@@ -64,16 +86,20 @@ func _on_vslider_sfx_value_changed(value: float) -> void:
 
 func _on_key_pad_coded(value: int) -> void:
 	match value:
+		KEYPAD_CODE_TV_VIEW, KEYPAD_CODE_FULL_VIEW:
+			_key_pad.set_default_code(value)
+			Settings.set_value(SETTINGS_SECTION, SETTINGS_KEY, value)
+			print(Settings.get_value(SETTINGS_SECTION, SETTINGS_KEY, 55))
 		KEYPAD_CODE_TOGGLE_CRT:
 			var crt : CRTEffect = CRTEffect.Get()
 			if crt != null:
 				crt.enabled = not crt.enabled
 			_key_pad.reset()
-			value = _key_pad.DEFAULT_CODE
+			value = _key_pad.get_default_code()
 		KEYPAD_CODE_TOGGLE_FULLSCREEN:
 			fullscreen_toggled.emit()
 			_key_pad.reset()
-			value = _key_pad.DEFAULT_CODE
+			value = _key_pad.get_default_code()
 	coded.emit(value)
 
 func _on_key_pad_power_cycled(power_on: bool) -> void:

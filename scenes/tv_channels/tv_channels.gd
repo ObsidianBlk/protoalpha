@@ -25,6 +25,7 @@ const RESERVED : Array[int] = [
 # ------------------------------------------------------------------------------
 var _channels : Dictionary[int, TVChannel] = {}
 var _current : int = CHANNEL_GAME
+var _default_channel : int = CHANNEL_GAME
 
 # ------------------------------------------------------------------------------
 # Private Static Methods
@@ -122,20 +123,21 @@ func hide_smpte() -> void:
 func show_channel(channel : int) -> void:
 	if _current == channel: return
 	
+	if channel < 0: channel = _default_channel
+	
 	if _current in _channels:
 		_channels[_current].exit()
 	
 	match channel:
 		CHANNEL_GAME_DISTORTED, CHANNEL_GAME:
-			if channel == CHANNEL_GAME_DISTORTED:
-				pass
+			_default_channel = channel
 			AudioBoard.mute(&"GameSFX", false)
 			AudioBoard.mute(&"GameMusic", false)
 			hide_smpte()
 			StaticEffect.Set_Effect(0.0, 0.0)
 		CHANNEL_CRT:
 			# Override the channel. The effect for this channel is handled elsewhere.
-			show_channel(CHANNEL_GAME)
+			#show_channel(_default_channel)
 			return
 		_:
 			AudioBoard.mute(&"GameSFX", true)

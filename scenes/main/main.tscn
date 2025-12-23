@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene load_steps=46 format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://cgn3dt0lj8cnd" path="res://scripts/nodes/controls/ratio_spacer.gd" id="16_hxu8e"]
 [ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
 [ext_resource type="Script" uid="uid://dgbmsxanfwao6" path="res://scripts/resource/crt_effect_resource.gd" id="17_p8abn"]
+[ext_resource type="Texture2D" uid="uid://bxwerljngj41a" path="res://assets/graphics/marquee/marquee_logo_right.png" id="19_necax"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nvumn"]
 
@@ -511,10 +512,13 @@ color = Color(0, 1, 0.049999952, 1)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="ColorRect" type="ColorRect" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-color = Color(1, 0, 0, 1)
+texture = ExtResource("19_necax")
+expand_mode = 1
+flip_h = true
+flip_v = true
 
 [node name="RatioSpacer" type="Control" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(770.6667, 578)
@@ -531,10 +535,11 @@ grow_horizontal = 2
 grow_vertical = 2
 settings = SubResource("Resource_raeie")
 
-[node name="ColorRect2" type="ColorRect" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-color = Color(1, 0, 0, 1)
+texture = ExtResource("19_necax")
+expand_mode = 1
 
 [node name="ColorRect" type="ColorRect" parent="FullScreenGame/VBoxContainer"]
 layout_mode = 2

@@ -22,6 +22,7 @@ const COLOR_POWER_OFF : Color = Color.DARK_RED
 # Variables
 # ------------------------------------------------------------------------------
 var _code : String = ""
+var _default_code : int = DEFAULT_CODE
 var _active_code : int = DEFAULT_CODE
 var _submit_delay : float = 0.0
 
@@ -89,8 +90,15 @@ func _PowerCycle() -> void:
 # Public Methods
 # ------------------------------------------------------------------------------
 func reset() -> void:
-	_active_code = DEFAULT_CODE
+	_active_code = _default_code
 	_UpdateReadout()
+
+func set_default_code(default_code : int) -> void:
+	if default_code >= 0:
+		_default_code = default_code
+
+func get_default_code() -> int:
+	return _default_code
 
 func is_powered() -> bool:
 	return _power_on
