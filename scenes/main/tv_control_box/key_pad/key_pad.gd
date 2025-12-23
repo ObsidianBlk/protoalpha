@@ -124,7 +124,7 @@ func _on_btn_down_pressed() -> void:
 
 func _on_btn_power_pressed() -> void:
 	if _tween != null: return
-	_active_code = DEFAULT_CODE
+	_active_code = _default_code
 	_UpdateReadout()
 	coded.emit(_active_code)
 	power_pressed.emit()

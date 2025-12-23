@@ -53,10 +53,14 @@ func _on_settings_loaded() -> void:
 	var c : Variant = Settings.load_value(SETTINGS_SECTION, SETTINGS_KEY, KeyPad.DEFAULT_CODE)
 	if typeof(c) == TYPE_INT:
 		_key_pad.set_default_code(c)
+		_key_pad.reset()
+		coded.emit(_key_pad.get_default_code())
 
 func _on_settings_reset() -> void:
 	Settings.set_value(SETTINGS_SECTION, SETTINGS_KEY, KeyPad.DEFAULT_CODE)
 	_key_pad.set_default_code(KeyPad.DEFAULT_CODE)
+	_key_pad.reset()
+	coded.emit(_key_pad.get_default_code())
 
 func _on_settings_value_changed(section : String, key : String, value : Variant) -> void:
 	if section == SETTINGS_SECTION and key == SETTINGS_KEY:
