@@ -230,6 +230,12 @@ static func Node_Has_Properties(n : Node, properties : Array[String]) -> bool:
 		if not property in n: return false
 	return true
 
+static func Send_Action(action_name : StringName, pressed : bool = true) -> void:
+	var event : InputEventAction = InputEventAction.new()
+	event.action = action_name
+	event.pressed = pressed
+	Input.parse_input_event(event)
+
 #static func Create_Level_Instance(level_id : int) -> Level:
 	#if level_id in LEVELS:
 		#if not LEVELS[level_id][_LEVEL_PATH].is_empty():

@@ -69,6 +69,11 @@ func _input(event: InputEvent) -> void:
 			_joypad_device = -1
 		else: _mouse_warping = false
 	
+	if event.is_action_pressed("start") and Input.is_action_pressed("select"):
+		Game.Send_Action("focus_toggle")
+	elif event.is_action_pressed("select") and Input.is_action_pressed("start"):
+		Game.Send_Action("focus_toggle")
+	
 	if event.is_action_pressed("focus_toggle"):
 		_pointer_sprite.visible = not _pointer_sprite.visible
 		if _pointer_sprite.visible:
