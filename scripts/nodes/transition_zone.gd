@@ -7,13 +7,12 @@ class_name TransitionZone
 # Constants and ENUMs
 # ------------------------------------------------------------------------------
 
-
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var scroll_axis : Game.ScrollAxis = Game.ScrollAxis.HORIZONTAL:		set=set_scroll_axis
-@export var pixels_per_second : float = 10.0:								set=set_pixels_per_second
-@export var offset : int = 0:												set=set_offset
+@export var pixels_per_second : float = 120.0:								set=set_pixels_per_second
+@export var offset : int = 16:												set=set_offset
 @export var segment_a : MapSegment = null:									set=set_segment_a
 @export var segment_b : MapSegment = null:									set=set_segment_b
 
@@ -34,7 +33,7 @@ func set_pixels_per_second(pps : float) -> void:
 	if pps > 0.0 and not is_equal_approx(pixels_per_second, pps):
 		pixels_per_second = pps
 
-func set_offset(o : float) -> void:
+func set_offset(o : int) -> void:
 	if o >= 0 and offset != o:
 		offset = o
 		queue_redraw()
@@ -51,6 +50,7 @@ func set_segment_b(s : MapSegment) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	collision_mask |= Game.COLLISION_LAYER_PLAYER
 	body_entered.connect(_on_body_entered)
 
 func _draw() -> void:

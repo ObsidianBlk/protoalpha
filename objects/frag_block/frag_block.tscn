@@ -1,8 +1,9 @@
-[gd_scene load_steps=41 format=3 uid="uid://d3jrep7k7mc8x"]
+[gd_scene load_steps=42 format=3 uid="uid://d3jrep7k7mc8x"]
 
 [ext_resource type="Script" uid="uid://war2ef3cy0e5" path="res://objects/frag_block/frag_block.gd" id="1_kqeua"]
 [ext_resource type="Texture2D" uid="uid://18tlmn8x24q0" path="res://assets/graphics/environment/frag_block.png" id="1_xp6wr"]
 [ext_resource type="Script" uid="uid://gg0uxpt06y26" path="res://scripts/nodes/anim_sprite_player.gd" id="3_0lih7"]
+[ext_resource type="Texture2D" uid="uid://b4ibmyvanm8j1" path="res://assets/graphics/environment/frag_block_symbols.png" id="3_lw0ir"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cuw1n"]
 atlas = ExtResource("1_xp6wr")
@@ -400,6 +401,12 @@ script = ExtResource("1_kqeua")
 [node name="ASprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vn6yp")
 autoplay = "default"
+
+[node name="Symbol" type="Sprite2D" parent="ASprite"]
+unique_name_in_owner = true
+texture = ExtResource("3_lw0ir")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_xp6wr")
