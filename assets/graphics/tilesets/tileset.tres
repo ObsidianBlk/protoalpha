@@ -723,6 +723,14 @@ texture = ExtResource("1_06gt1")
 27:10/0 = 0
 28:10/0 = 0
 29:10/0 = 0
+21:4/animation_speed = 0.25
+21:4/animation_mode = 1
+21:4/animation_frame_0/duration = 1.0
+21:4/animation_frame_1/duration = 1.0
+21:4/animation_frame_2/duration = 1.0
+21:4/animation_frame_3/duration = 1.0
+21:4/0 = 0
+21:4/0/custom_data_3 = true
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4tiyv"]
 resource_name = "FloorSpikes"
@@ -751,6 +759,8 @@ custom_data_layer_1/name = "Platform"
 custom_data_layer_1/type = 2
 custom_data_layer_2/name = "Shiftable"
 custom_data_layer_2/type = 1
+custom_data_layer_3/name = "ShiftableSlot"
+custom_data_layer_3/type = 1
 sources/0 = SubResource("TileSetAtlasSource_4tiyv")
 sources/1 = SubResource("TileSetScenesCollectionSource_4tiyv")
 pattern_0 = SubResource("TileMapPattern_6x2bp")
