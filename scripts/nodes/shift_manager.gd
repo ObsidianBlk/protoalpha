@@ -1,6 +1,12 @@
+@tool
 extends Node
 class_name ShiftManager
 
+
+# TODO:
+#	1) Finish for One-Tile-to-Slot shifts.
+#   2) Define a sub-region from which to pull the shiftables tiles
+#   3) Figure out a method to triggering this as a "weapon"
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -51,7 +57,7 @@ class ShiftableData extends RefCounted:
 			var ts : TileSet = tile_set
 			var source : TileSetSource = ts.get_source(source_id)
 			if source is TileSetAtlasSource:
-				var tdata : TileData = source.get_tile_data(atlas_coord)
+				var tdata : TileData = source.get_tile_data(atlas_coord, 0)
 				if tdata != null:
 					if tdata.has_custom_data(SHIFTABLE_DATA_LAYER_NAME):
 						return ts.get_custom_data_layer_by_name(SHIFTABLE_DATA_LAYER_NAME)
@@ -97,8 +103,10 @@ class ShiftableData extends RefCounted:
 # ------------------------------------------------------------------------------
 # Shiftable Tile Data Layer ID
 var _shiftable_dlid : int = -1
-# Slot Tile ID
+# Slot Tile Data Layer ID
 var _slot_dlid : int = -1
+
+var _slot_tile : ShiftableData = null
 
 var _original : Dictionary[Vector2i, ShiftableData] = {}
 var _available : Dictionary[Vector2i, ShiftableData] = {}
@@ -132,6 +140,7 @@ func set_tilemap(map : TileMapLayer) -> void:
 			_ResetTilemap()
 		
 		tilemap = map
+		_slot_tile = _GetSlotShiftableData(map.tile_set, _slot_dlid)
 		_ScanTiles()
 
 
@@ -143,8 +152,10 @@ func _ready() -> void:
 		var tm : TileMapLayer = _GetTileMapParent()
 		if tm != null:
 			tilemap = tm
+	set_process(false)
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint(): return
 	_heartbeat -= delta
 	if _heartbeat <= 0.0:
 		var variance : float = spawn_heartbeat * spawn_heartbeat_variance
@@ -167,6 +178,26 @@ func _GetTileSetDataLayerID(tile_set : TileSet, layer_name : String, layer_data_
 		if id >= 0 and tile_set.get_custom_data_layer_type(id) == layer_data_type:
 			return id
 	return -1
+
+func _GetSlotShiftableData(tile_set : TileSet, data_layer_id : int) -> ShiftableData:
+	if tile_set != null:
+		for source_idx : int in range(tile_set.get_source_count()):
+			var source_id : int = tile_set.get_source_id(source_idx)
+			if source_id < 0: continue
+			var source : TileSetSource = tile_set.get_source(source_id)
+			if source is TileSetAtlasSource:
+				var atlas_grid : Vector2i = source.get_atlas_grid_size()
+				for y : int in range(atlas_grid.y):
+					for x : int in range(atlas_grid.x):
+						var acoord : Vector2i = Vector2i(x,y)
+						if not source.has_tile(acoord): continue
+						
+						var tdata : TileData = source.get_tile_data(acoord, 0)
+						if tdata == null: continue
+						
+						if tdata.get_custom_data_by_layer_id(data_layer_id) == true:
+							return ShiftableData.new(tile_set, source_id, acoord)
+	return null
 
 func _GetAvailableSlots() -> Array[Vector2i]:
 	return _available.keys().filter(
@@ -215,8 +246,26 @@ func _ScanTiles() -> void:
 	_ResetTilemap(true)
 
 func _SpawnShiftable(from_coord : Vector2i, to_coord : Vector2i) -> void:
-	# TODO: Spawn the actual ShiftingTile node!!
-	pass
+	if tilemap == null or tilemap.tile_set == null: return
+	var atlas_coord : Vector2i = tilemap.get_cell_atlas_coords(from_coord)
+	var source_id : int = tilemap.get_cell_source_id(from_coord)
+	var source : TileSetSource = tilemap.tile_set.get_source(source_id)
+	if source is TileSetAtlasSource:
+		var texture : Texture2D = source.get_runtime_texture()
+		#var region : Rect2i = source.get_tile_texture_region(atlas_coord)
+		var region : Rect2i = source.get_runtime_tile_texture_region(atlas_coord, 0)
+		var st : ShiftingTile = ShiftingTile.new()
+		st.texture = texture
+		st.region = region
+		tilemap.add_child(st)
+		st.travel_completed.connect(
+			_on_shifting_tile_travel_complete.bind(st, to_coord, source_id, atlas_coord)
+		)
+		st.travel.call_deferred(
+			tilemap.map_to_local(from_coord),
+			tilemap.map_to_local(to_coord)
+		)
+		_active.append(st)
 
 func _Spawn(count : int) -> void:
 	var total_space : int = spawn_maximum - _active.size()
@@ -225,26 +274,27 @@ func _Spawn(count : int) -> void:
 	var shiftables : Array[Vector2i] = _GetAvailableShiftables()
 	var slots : Array[Vector2i] = _GetAvailableSlots()
 	
-	# --------------
-	# TODO: I'm NOT handling placing "slots" down where shiftables are moving.
-	#  MUST FIGURE THIS OUT!!
-	# --------------
-	
 	while count > 0:
 		if slots.size() <= 0:
 			if count >= 2 and total_space >= 2 and shiftables.size() >= 2:
-				var idx_a : int = randi_range(0, shiftables.size())
+				var idx_a : int = randi_range(0, shiftables.size() - 1)
 				var coord_a : Vector2i = shiftables[idx_a]
 				shiftables.remove_at(idx_a)
 				_available.erase(coord_a)
 				
-				var idx_b : int = randi_range(0, shiftables.size())
+				var idx_b : int = randi_range(0, shiftables.size() - 1)
 				var coord_b : Vector2i = shiftables[idx_b]
 				shiftables.remove_at(idx_b)
 				_available.erase(coord_b)
 				
 				_SpawnShiftable(coord_a, coord_b)
 				_SpawnShiftable(coord_b, coord_a)
+				
+				# NOTE: We do NOT add an "available" slot to the list
+				#  as the Shiftables are swapping with each other
+				if _slot_tile != null:
+					tilemap.set_cell(coord_a, _slot_tile.source_id, _slot_tile.atlas_coord)
+					tilemap.set_cell(coord_b, _slot_tile.source_id, _slot_tile.atlas_coord)
 				
 				count -= 2
 				total_space -= 2
@@ -258,12 +308,22 @@ func _Spawn(count : int) -> void:
 			var slot_idx : int = randi_range(0, slots.size())
 			var to_coord : Vector2i = slots[slot_idx]
 			slots.remove_at(slot_idx)
+			# TODO: Add a new available slot where this Shiftable is
+			#  leaving from
 			_SpawnShiftable(from_coord, to_coord)
 
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
+func start() -> void:
+	if Engine.is_editor_hint(): return
+	_heartbeat = spawn_delay_from_start
+	set_process(true)
 
+func stop() -> void:
+	if Engine.is_editor_hint(): return
+	set_process(false)
+	_ResetTilemap()
 
 # ------------------------------------------------------------------------------
 # Handler Methods
@@ -271,6 +331,7 @@ func _Spawn(count : int) -> void:
 func _on_shifting_tile_travel_complete(st : ShiftingTile, dst_coord : Vector2i, dst_source_id : int, dst_atlas_coords : Vector2i) -> void:
 	if st == null or tilemap == null: return
 	tilemap.set_cell(dst_coord, dst_source_id, dst_atlas_coords)
+	_available[dst_coord] = ShiftableData.new(tilemap.tile_set, dst_source_id, dst_atlas_coords)
 	var idx : int = _active.find(st)
 	if idx >= 0:
 		_active.remove_at(idx)

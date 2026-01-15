@@ -156,6 +156,7 @@ func _HoverFocusSnap() -> void:
 			#" | Owner: ",
 			#"Null" if fowner == null else fowner.name
 		#)
+		print(ctrl)
 		ctrl.grab_focus()
 
 func _ReleaseViewportControl() -> void:
