@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://tfm2jtgj2is3"]
+[gd_scene load_steps=15 format=3 uid="uid://tfm2jtgj2is3"]
 
 [ext_resource type="Texture2D" uid="uid://dyxasmtccw6qi" path="res://assets/graphics/enemies/enemy_glob.png" id="1_cgff3"]
 [ext_resource type="Script" uid="uid://ctfac6m006vw8" path="res://objects/enemies/glob/glob.gd" id="1_srvs0"]
 [ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="3_j365v"]
+[ext_resource type="Script" uid="uid://bjpqs600eysog" path="res://scripts/nodes/component_off_screen_despawner.gd" id="3_n0rjc"]
 [ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="3_srvs0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qyuou"]
@@ -89,6 +90,13 @@ script = ExtResource("3_srvs0")
 max_health = 1
 health = 1
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
+
+[node name="ComponentOffScreenDespawner" type="Node" parent="." node_paths=PackedStringArray("host")]
+script = ExtResource("3_n0rjc")
+host = NodePath("..")
+offset = Vector2(-4, -8)
+size = Vector2(8, 8)
+metadata/_custom_type_script = "uid://bjpqs600eysog"
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
 collision_layer = 4096

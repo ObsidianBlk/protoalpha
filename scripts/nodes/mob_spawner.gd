@@ -2,6 +2,8 @@
 extends Node2D
 class_name MobSpawner
 
+# TODO: Update pick-up spawns so they only spawn when a monster is killed by the
+#  player... HA! Easy! (that's a lie)
 
 # ------------------------------------------------------------------------------
 # Constants

@@ -1,5 +1,5 @@
 @tool
-extends Node
+extends Node2D
 class_name ShiftManager
 
 
@@ -59,9 +59,12 @@ class ShiftableData extends RefCounted:
 			if source is TileSetAtlasSource:
 				var tdata : TileData = source.get_tile_data(atlas_coord, 0)
 				if tdata != null:
-					if tdata.has_custom_data(SHIFTABLE_DATA_LAYER_NAME):
+					var val : Variant = tdata.get_custom_data(SHIFTABLE_DATA_LAYER_NAME)
+					if typeof(val) == TYPE_BOOL and val == true:
 						return ts.get_custom_data_layer_by_name(SHIFTABLE_DATA_LAYER_NAME)
-					elif tdata.has_custom_data(SLOT_DATA_LAYER_NAME):
+					
+					val = tdata.get_custom_data(SLOT_DATA_LAYER_NAME)
+					if typeof(val) == TYPE_BOOL and val == true:
 						return ts.get_custom_data_layer_by_name(SLOT_DATA_LAYER_NAME)
 		return -1
 	
@@ -74,9 +77,9 @@ class ShiftableData extends RefCounted:
 ## [TileMapLayer] in which to find shiftable tiles.
 @export var tilemap : TileMapLayer = null:			set=set_tilemap
 
-@export_subgroup("Blank Tile", "blank_")
-@export var blank_source_id : int = -1
-@export var blank_atlas_coord : Vector2i = INVALID_ATLAS_COORD
+@export_subgroup("Sub Region", "subregion_")
+@export var subregion_whole_tilemap : bool = false:			set=set_subregion_whole_tilemap
+@export var subregion_region : Rect2i = Rect2i(0,0,0,0):	set=set_subregion_region
 
 @export_subgroup("Spawn Rate", "spawn_")
 ## The maximum number of shiftable tiles that can be active at any time.
@@ -96,6 +99,8 @@ class ShiftableData extends RefCounted:
 @export_range(0.0, 1.0) var spawn_heartbeat_variance : float = 0.2
 ## The amount of time (in seconds) before the first heartbeat
 @export var spawn_delay_from_start : float = 0.0
+@export var spawn_speed_pps : int = 20
+@export var spawn_speed_variance : float = 0.25
 
 
 # ------------------------------------------------------------------------------
@@ -140,9 +145,30 @@ func set_tilemap(map : TileMapLayer) -> void:
 			_ResetTilemap()
 		
 		tilemap = map
+		
+		if tilemap != null:
+			if subregion_whole_tilemap or not subregion_region.has_area():
+				var whole : bool = subregion_whole_tilemap
+				subregion_whole_tilemap = false
+				subregion_region = tilemap.get_used_rect()
+				subregion_whole_tilemap = whole
+			queue_redraw()
+		
 		_slot_tile = _GetSlotShiftableData(map.tile_set, _slot_dlid)
-		_ScanTiles()
+		#_ScanTiles()
 
+func set_subregion_whole_tilemap(w : bool) -> void:
+	if w != subregion_whole_tilemap:
+		if w and tilemap != null:
+			subregion_region = tilemap.get_used_rect()
+		subregion_whole_tilemap = w
+
+func set_subregion_region(r : Rect2) -> void:
+	if subregion_whole_tilemap: return
+	if r.has_area():
+		subregion_region = r
+		if tilemap != null:
+			queue_redraw()
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -153,6 +179,23 @@ func _ready() -> void:
 		if tm != null:
 			tilemap = tm
 	set_process(false)
+
+func _draw() -> void:
+	if not Engine.is_editor_hint() or tilemap == null: return
+	
+	var tile_size : Vector2 = Vector2(tilemap.tile_set.tile_size)
+	var hts : Vector2 = tile_size * 0.5
+	var region_position : Vector2 = tilemap.map_to_local(subregion_region.position) - hts
+	var region_size : Vector2 = (Vector2(subregion_region.size) * tile_size)
+	var region : Rect2 = Rect2(
+		region_position,
+		region_size
+	)
+	
+	var color : Color = Color.AQUA
+	color.a = 0.5
+	draw_rect(region, color, true)
+	draw_rect(region, Color.AQUA, false, 1.0)
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
@@ -237,6 +280,7 @@ func _ScanTiles() -> void:
 	#_shiftables.clear()
 	var used : Array[Vector2i] = tilemap.get_used_cells()
 	for coord : Vector2i in used:
+		if not subregion_region.has_point(coord): continue
 		var tdata : TileData = tilemap.get_cell_tile_data(coord)
 		if tdata.has_custom_data(SHIFTABLE_DATA_LAYER_NAME) or tdata.has_custom_data(SLOT_DATA_LAYER_NAME):
 			if tdata.get_custom_data(SHIFTABLE_DATA_LAYER_NAME) or tdata.get_custom_data(SLOT_DATA_LAYER_NAME):
@@ -244,6 +288,10 @@ func _ScanTiles() -> void:
 				var atlas_coord : Vector2i = tilemap.get_cell_atlas_coords(coord)
 				_original[coord] = ShiftableData.new(tilemap.tile_set, source_id, atlas_coord)
 	_ResetTilemap(true)
+
+func _GenerateShiftableSpeed() -> int:
+	var variance : int = floor(float(spawn_speed_pps) * spawn_speed_variance)
+	return spawn_speed_pps + randi_range(-variance, variance)
 
 func _SpawnShiftable(from_coord : Vector2i, to_coord : Vector2i) -> void:
 	if tilemap == null or tilemap.tile_set == null: return
@@ -257,6 +305,7 @@ func _SpawnShiftable(from_coord : Vector2i, to_coord : Vector2i) -> void:
 		var st : ShiftingTile = ShiftingTile.new()
 		st.texture = texture
 		st.region = region
+		st.speed_pps = _GenerateShiftableSpeed()
 		tilemap.add_child(st)
 		st.travel_completed.connect(
 			_on_shifting_tile_travel_complete.bind(st, to_coord, source_id, atlas_coord)
@@ -299,24 +348,28 @@ func _Spawn(count : int) -> void:
 				count -= 2
 				total_space -= 2
 			else: count = 0 # Kicks out of the while loop
-		else:
-			var shift_idx : int = randi_range(0, shiftables.size())
+		elif shiftables.size() > 0:
+			var shift_idx : int = randi_range(0, shiftables.size() - 1)
 			var from_coord : Vector2i = shiftables[shift_idx]
 			shiftables.remove_at(shift_idx)
 			_available.erase(from_coord)
 			
-			var slot_idx : int = randi_range(0, slots.size())
+			var slot_idx : int = randi_range(0, slots.size() - 1)
 			var to_coord : Vector2i = slots[slot_idx]
 			slots.remove_at(slot_idx)
-			# TODO: Add a new available slot where this Shiftable is
-			#  leaving from
+			_available.erase(to_coord)
+			
 			_SpawnShiftable(from_coord, to_coord)
+			_available[from_coord] = ShiftableData.new(tilemap.tile_set, _slot_tile.source_id, _slot_tile.atlas_coord)
+			tilemap.set_cell(from_coord, _slot_tile.source_id, _slot_tile.atlas_coord)
+		else: count = 0
 
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
 func start() -> void:
 	if Engine.is_editor_hint(): return
+	_ScanTiles()
 	_heartbeat = spawn_delay_from_start
 	set_process(true)
 
