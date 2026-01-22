@@ -299,7 +299,6 @@ texture = ExtResource("1_06gt1")
 16:7/0 = 0
 16:7/0/terrain_set = 0
 16:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-16:7/0/custom_data_2 = true
 16:8/0 = 0
 16:8/0/terrain_set = 0
 16:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -731,6 +730,14 @@ texture = ExtResource("1_06gt1")
 21:4/animation_frame_3/duration = 1.0
 21:4/0 = 0
 21:4/0/custom_data_3 = true
+15:7/0 = 0
+15:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:7/0/custom_data_2 = true
+15:8/0 = 0
+15:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:8/0/custom_data_2 = true
+31:4/0 = 0
+31:5/0 = 0
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4tiyv"]
 resource_name = "FloorSpikes"

@@ -1,0 +1,148 @@
+[gd_scene load_steps=20 format=3 uid="uid://d0bhx86ge88m6"]
+
+[ext_resource type="Script" uid="uid://diem3ho7a4423" path="res://objects/enemies/bombie/bombie.gd" id="1_ibrus"]
+[ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="1_mpea5"]
+[ext_resource type="Texture2D" uid="uid://yvq4ltwhsl7v" path="res://assets/graphics/enemies/bombie/Bombie.png" id="1_ppeyd"]
+[ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="2_22665"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22665"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpea5"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibrus"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqqf6"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msr38"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw5d7"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5teof"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amiqs"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6ca6"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_op4qm"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0enj4"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gn14g"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jiyha"]
+atlas = ExtResource("1_ppeyd")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_abf4m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22665")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpea5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibrus")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqqf6")
+}],
+"loop": true,
+"name": &"hover",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_msr38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xw5d7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5teof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amiqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6ca6")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_op4qm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0enj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gn14g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jiyha")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mpea5"]
+radius = 5.0
+
+[node name="Bombie" type="Node2D"]
+script = ExtResource("1_ibrus")
+
+[node name="ComponentHealth" type="Node" parent="."]
+script = ExtResource("1_mpea5")
+max_health = 8
+health = 1
+metadata/_custom_type_script = "uid://bk46f3unrl4vx"
+
+[node name="ASprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_abf4m")
+animation = &"spawn"
+autoplay = "spawn"
+frame = 8
+frame_progress = 1.0
+
+[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+unique_name_in_owner = true
+collision_layer = 4096
+collision_mask = 256
+script = ExtResource("2_22665")
+health = NodePath("../ComponentHealth")
+damage = 15
+continuous = true
+disabled_on_start = true
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_mpea5")
+
+[connection signal="dead" from="ComponentHealth" to="." method="_on_component_health_dead"]
+[connection signal="animation_finished" from="ASprite" to="." method="_on_sprite_animation_finished"]
+[connection signal="hitbox_damaged" from="HitBox" to="." method="_on_hitbox_damaged"]

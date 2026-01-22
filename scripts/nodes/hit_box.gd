@@ -5,16 +5,27 @@ class_name HitBox
 # ------------------------------------------------------------------------------
 # Signal
 # ------------------------------------------------------------------------------
+## Emitted when this [HitBox] collides with another.
+signal hitbox_collided(hitbox : HitBox)
+## Emitted when this [HitBox] damages another
+signal hitbox_damaged(hitbox : HitBox)
+## Emitted when the state of this [HitBox] vulnerability changes.
 signal invulnerability_changed(enabled : bool)
 
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+## [ComponentHealth] node. 
 @export var health : ComponentHealth = null
+## The amount of damage dealt to detected colliding [HitBox]
 @export var damage : int = 0
+## If [code]true[/code] damage will be dealt every [property invulnerability_time] seconds.
 @export var continuous : bool = false
+## The amount of time (in seconds) this [HitBox] will not take damage after being hit.
 @export var invulnerability_time : float = 1.0
+## If [code]true[/code] this [HitBox] start disabled.
 @export var disabled_on_start : bool = false
+## If [code]true[/code] this [HitBox] will print out debug messages to console.
 @export var debug_verbose : bool = false
 
 # ------------------------------------------------------------------------------
@@ -43,7 +54,9 @@ func _DebugPrint(msg : String) -> void:
 
 func _HurtIfWithin(hb : HitBox) -> void:
 	if damage <= 0 or not hb.name in _hitboxes: return
-	hb.hurt(damage)
+	if not hb.is_invulnerable():
+		hb.hurt(damage)
+		hitbox_damaged.emit(hb)
 	if continuous:
 		get_tree().create_timer(hb.invulnerability_time).timeout.connect(
 				_HurtIfWithin.bind(hb), CONNECT_ONE_SHOT
@@ -88,9 +101,11 @@ func disable_mask(disable : bool = true) -> void:
 func disable_hitbox(disable : bool = true) -> void:
 	for child : Node in get_children():
 		if child is CollisionShape2D:
-			child.disabled = disable
+			child.set_deferred("disabled", disable)
+			#child.disabled = disable
 		if child is CollisionPolygon2D:
-			child.disabled = disable
+			child.set_deferred("disabled", disable)
+			#child.disabled = disable
 
 # ------------------------------------------------------------------------------
 # Handler Methods
@@ -99,6 +114,7 @@ func _on_area_entered(area : Area2D) -> void:
 	if damage > 0 and area is HitBox:
 		_hitboxes[area.name] = area
 		_HurtIfWithin(area)
+		hitbox_collided.emit(area)
 
 func _on_area_exited(area : Area2D) -> void:
 	if area.name in _hitboxes:

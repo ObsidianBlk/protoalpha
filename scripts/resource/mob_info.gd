@@ -6,11 +6,22 @@ class_name MobInfo
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+## The Mob's name
 @export var mob_name : String = "":								set=set_mob_name
+## A short description of the Mob
 @export_multiline var description : String = "":				set=set_description
+## The [PackedScene] which defines this Mob.
 @export_file("*.scn", "*.tscn") var mob_scene : String = "":	set=set_mob_scene
+## The 2D sprite image used by the [MobSpawner]
+## [br][b]NOTE:[/b] Reference sprites are drawn with their origin at the
+## bottom-center of the image
 @export var sprite_reference : Texture2D = null:				set=set_sprite_reference
+## The offset (in pixels) the [MobSpawner] should offset the displayed sprite.
+@export var sprite_offset : Vector2 = Vector2.ZERO
+## The icon image to use in any [Control] node.
 @export var icon : Texture2D = null:							set=set_icon
+## A [code]Dictionary[StringName, Variant][/code] of properties defined in
+## the [property mob_scene] scene to be overrided when spawned.
 @export var properties : Dictionary[StringName, Variant] = {}
 
 # ------------------------------------------------------------------------------

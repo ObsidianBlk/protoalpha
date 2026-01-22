@@ -33,12 +33,30 @@ const _PICKUP_LUT : Dictionary[StringName, Dictionary] = {
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+## The [MobInfo] resource defining what mob type to spawn from this [MobSpawner]
 @export var mob_info : MobInfo = null:		set=set_mob_info
+## The [MapSegment] node to listen for player to enter or exit.[br]
+## Spawner will not spawn mobs until the player has entered the assigned [MapSegment].
+## When a player leaves the assigned [MapSegment], all spawned mobs are freed.
 @export var segment : MapSegment = null
+## The [Node2D] in which to add the spawned mob(s)
 @export var mob_container : Node2D = null
+## Number of mobs spawned by the spawner.[br]
+## If [property continuous] is [code]true[/code] spawner will wait to spawn
+## additional mobs until one or more of it's existing mobs are killed.
 @export var count : int = 1
+## If [property continuous] is [code]true[/code], the time (in seconds) to wait
+## between mob spawns.
 @export var spawn_delay : float = 3.0
+## The time (in seconds) after [MobSpawner] is active in which to start spawning.
+@export var first_spawn_delay : float = 0.0
+## Spawner always spawns up to [property count] number of mobs. If [code]true[/code]
+## will continue to spawn more mobs up to [property count] as previous mobs are
+## killed.
 @export var continuous : bool = false
+## If [code]true[/code] spawner is actively spawning.[br]
+## [b]NOTE:[/b] Even if active is [code]false[/code] spawner will continue to track
+## already spawned mobs.
 @export var active : bool = true:			set=set_active
 
 
@@ -66,7 +84,13 @@ func set_active(a : bool) -> void:
 		active = a
 		if active:
 			if is_physics_processing():
-				_SpawnMob()
+				## TODO: This first_spawn_delay code is kinda a hack
+				##   and almost duplicated in the _on_segment_entered() code.
+				##   Come up with a better solution? Maybe?
+				if _spawned > 0 or first_spawn_delay <= 0.0:
+					_SpawnMob()
+				elif first_spawn_delay > 0.0:
+					_delay = first_spawn_delay
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -100,7 +124,7 @@ func _physics_process(delta: float) -> void:
 # ------------------------------------------------------------------------------
 func _draw_sprite_ref() -> void:
 	var size : Vector2i = mob_info.sprite_reference.get_size()
-	var pos : Vector2 = Vector2(-(size.x * 0.5), -size.y)
+	var pos : Vector2 = Vector2(-(size.x * 0.5), -size.y) + mob_info.sprite_offset
 	draw_texture(mob_info.sprite_reference, pos)
 
 func _draw_editor_display() -> void:
@@ -186,7 +210,10 @@ func _on_mob_info_changed() -> void:
 
 func _on_segment_entered() -> void:
 	set_physics_process(true)
-	_SpawnMob.call_deferred()
+	if first_spawn_delay > 0.0:
+		_delay = first_spawn_delay
+	else:
+		_SpawnMob.call_deferred()
 
 func _on_segment_exited() -> void:
 	set_physics_process(false)
