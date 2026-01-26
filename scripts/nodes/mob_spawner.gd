@@ -54,6 +54,10 @@ const _PICKUP_LUT : Dictionary[StringName, Dictionary] = {
 ## will continue to spawn more mobs up to [property count] as previous mobs are
 ## killed.
 @export var continuous : bool = false
+## If [code]true[/code] [MobSpawner] will actively spawn mobs even if not visible
+## in the camera view.[br][br]
+## [b]NOTE:[/b] Existing mobs will [i]not[/i] despawn when [MobSpawner] is out of view.
+@export var active_outside_camera : bool = false
 ## If [code]true[/code] spawner is actively spawning.[br]
 ## [b]NOTE:[/b] Even if active is [code]false[/code] spawner will continue to track
 ## already spawned mobs.
@@ -113,6 +117,7 @@ func _draw() -> void:
 	_draw_editor_display()
 
 func _physics_process(delta: float) -> void:
+	if not _IsInCamera(): return
 	if _delay > 0.0:
 		_delay -= delta
 		if _delay <= 0.0:
@@ -169,7 +174,8 @@ func _GetContainer() -> Node2D:
 	return null
 
 func _SpawnMob() -> void:
-	if not active or mob_info == null or mob_info.mob_scene == null: return
+	var true_active : bool = active and _IsInCamera()
+	if not true_active or mob_info == null or mob_info.mob_scene == null: return
 	var container : Node2D = _GetContainer()
 	if container == null: return
 	
@@ -197,6 +203,15 @@ func _SpawnPickup(pickup_position : Vector2) -> void:
 	container.add_child(pickup)
 	pickup.velocity.y = -100
 	pickup.global_position = pickup_position
+
+func _IsInCamera() -> bool:
+	var vpr : Rect2 = get_viewport_rect()
+	var half : Vector2 = vpr.size * 0.5
+	var cam : Camera2D = get_viewport().get_camera_2d()
+	if cam != null:
+		var rect : Rect2 = Rect2(cam.get_screen_center_position() - half, vpr.size)
+		return rect.has_point(global_position)
+	return false
 
 # ------------------------------------------------------------------------------
 # Public Methods
