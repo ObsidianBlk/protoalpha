@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponDef" load_steps=5 format=3 uid="uid://w7fk7rhct13v"]
+[gd_resource type="Resource" script_class="WeaponDef" format=3 uid="uid://w7fk7rhct13v"]
 
 [ext_resource type="Texture2D" uid="uid://cl511iy864v3m" path="res://assets/graphics/bosses/seg_fault/Sef_Fault_Bullet.png" id="1_s3m7j"]
 [ext_resource type="PackedScene" uid="uid://cd8ohi7glhch6" path="res://objects/seg_fault/seg_fault_bullet/seg_fault_bullet.tscn" id="2_5wm4w"]

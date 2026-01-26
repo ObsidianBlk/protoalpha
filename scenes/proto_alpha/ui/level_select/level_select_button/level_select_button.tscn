@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dotnqb68bu7in"]
+[gd_scene format=3 uid="uid://dotnqb68bu7in"]
 
 [ext_resource type="Script" uid="uid://dqqlc8nui27nr" path="res://scenes/proto_alpha/ui/level_select/level_select_button/level_select_button.gd" id="1_4dsca"]
 [ext_resource type="Script" uid="uid://cvyaeabf016yc" path="res://addons/OBSControlLibrary/AnimatedTextureButton/animated_texture_button.gd" id="2_4dsca"]
@@ -81,20 +81,19 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="LevelSelectButton" type="PanelContainer"]
+[node name="LevelSelectButton" type="PanelContainer" unique_id=1494495532]
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0x4wn")
 script = ExtResource("1_4dsca")
 
-[node name="IconTexture" type="TextureRect" parent="."]
+[node name="IconTexture" type="TextureRect" parent="." unique_id=605327978]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("2_y16rj")
 expand_mode = 1
 
-[node name="ATBtn" type="BaseButton" parent="."]
-_import_path = NodePath("")
+[node name="ATBtn" type="BaseButton" parent="." unique_id=334809870]
 unique_name_in_owner = true
 process_mode = 0
 process_priority = 0
@@ -135,9 +134,18 @@ focus_neighbor_bottom = NodePath("")
 focus_next = NodePath("")
 focus_previous = NodePath("")
 focus_mode = 2
+focus_behavior_recursive = 0
 mouse_filter = 0
+mouse_behavior_recursive = 0
 mouse_force_pass_scroll_events = true
 mouse_default_cursor_shape = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
 theme = null
 theme_type_variation = &""
 disabled = false

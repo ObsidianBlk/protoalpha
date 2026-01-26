@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://d05nd38n0uwiq"]
+[gd_scene format=3 uid="uid://d05nd38n0uwiq"]
 
 [ext_resource type="Script" uid="uid://5aqrmx0br1ip" path="res://scenes/proto_alpha/hud/hud.gd" id="1_7s1mr"]
 [ext_resource type="Theme" uid="uid://cebftabff28vi" path="res://assets/hud.theme" id="1_kxqsr"]
 [ext_resource type="Texture2D" uid="uid://wrlbxa2rl2n4" path="res://assets/graphics/proto/icon_proto_life.png" id="3_nvkao"]
 [ext_resource type="Script" uid="uid://bteufeeth0iks" path="res://scripts/nodes/controls/grower.gd" id="4_nk46r"]
 
-[node name="HUD" type="MarginContainer"]
+[node name="HUD" type="MarginContainer" unique_id=1936641839]
 texture_filter = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,38 +19,38 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 script = ExtResource("1_7s1mr")
 
-[node name="PlayerInfo" type="VBoxContainer" parent="."]
+[node name="PlayerInfo" type="VBoxContainer" parent="." unique_id=615918221]
 layout_mode = 2
 
-[node name="LifeTracker" type="PanelContainer" parent="PlayerInfo"]
+[node name="LifeTracker" type="PanelContainer" parent="PlayerInfo" unique_id=1884505939]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_type_variation = &"HUDPanel"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInfo/LifeTracker"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInfo/LifeTracker" unique_id=1640939312]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="PlayerInfo/LifeTracker/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="PlayerInfo/LifeTracker/HBoxContainer" unique_id=1816212358]
 layout_mode = 2
 texture = ExtResource("3_nvkao")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="LBL_Lives" type="Label" parent="PlayerInfo/LifeTracker/HBoxContainer"]
+[node name="LBL_Lives" type="Label" parent="PlayerInfo/LifeTracker/HBoxContainer" unique_id=1172074940]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "0"
 
-[node name="HealthBar" type="PanelContainer" parent="PlayerInfo"]
+[node name="HealthBar" type="PanelContainer" parent="PlayerInfo" unique_id=173511450]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_type_variation = &"HUDPanel"
 
-[node name="HealthProgress" type="ProgressBar" parent="PlayerInfo/HealthBar"]
+[node name="HealthProgress" type="ProgressBar" parent="PlayerInfo/HealthBar" unique_id=307390286]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(8, 40)
 layout_mode = 2
@@ -61,14 +61,14 @@ value = 50.0
 fill_mode = 3
 show_percentage = false
 
-[node name="BossBar" type="PanelContainer" parent="."]
+[node name="BossBar" type="PanelContainer" parent="." unique_id=377628386]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_type_variation = &"HUDPanel"
 
-[node name="BossProgress" type="ProgressBar" parent="BossBar"]
+[node name="BossProgress" type="ProgressBar" parent="BossBar" unique_id=2022371017]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 8)
 layout_mode = 2
@@ -78,7 +78,7 @@ step = 1.0
 value = 50.0
 show_percentage = false
 
-[node name="Grower" type="Control" parent="BossBar" node_paths=PackedStringArray("ref_control")]
+[node name="Grower" type="Control" parent="BossBar" unique_id=129419654 node_paths=PackedStringArray("ref_control")]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("4_nk46r")

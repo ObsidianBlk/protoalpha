@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dnpa4mhjjxvtj"]
+[gd_scene format=3 uid="uid://dnpa4mhjjxvtj"]
 
 [ext_resource type="Script" uid="uid://dcl10pip1ps2d" path="res://objects/enemies/tp_gun/tp_gun.gd" id="1_bronq"]
 [ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="1_xgtog"]
@@ -178,32 +178,32 @@ height = 8.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1hsj5"]
 size = Vector2(5, 8.5)
 
-[node name="TPGun" type="Node2D"]
+[node name="TPGun" type="Node2D" unique_id=1996674363]
 script = ExtResource("1_bronq")
 weapon_def = ExtResource("4_m82lr")
 
-[node name="ComponentHealth" type="Node" parent="."]
+[node name="ComponentHealth" type="Node" parent="." unique_id=2015124494]
 script = ExtResource("1_xgtog")
 max_health = 3
 health = 3
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
-[node name="Viz" type="Node2D" parent="."]
+[node name="Viz" type="Node2D" parent="." unique_id=366847433]
 unique_name_in_owner = true
 
-[node name="ASprite" type="AnimatedSprite2D" parent="Viz"]
+[node name="ASprite" type="AnimatedSprite2D" parent="Viz" unique_id=2059184272]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_vh0ky")
 animation = &"idle"
 
-[node name="Weapon" type="Node2D" parent="Viz"]
+[node name="Weapon" type="Node2D" parent="Viz" unique_id=509289623]
 unique_name_in_owner = true
 script = ExtResource("3_bronq")
 weapon_def = ExtResource("4_m82lr")
 collision_mask = 256
 metadata/_custom_type_script = "uid://wjm481jeg5t0"
 
-[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="HitBox" type="Area2D" parent="." unique_id=811292146 node_paths=PackedStringArray("health")]
 unique_name_in_owner = true
 collision_layer = 4096
 collision_mask = 0
@@ -212,10 +212,10 @@ health = NodePath("../ComponentHealth")
 disabled_on_start = true
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=304329017]
 shape = SubResource("CapsuleShape2D_q78ra")
 
-[node name="ExplosionFire" parent="." instance=ExtResource("7_m82lr")]
+[node name="ExplosionFire" parent="." unique_id=491613303 instance=ExtResource("7_m82lr")]
 unique_name_in_owner = true
 spawn_area = SubResource("RectangleShape2D_1hsj5")
 

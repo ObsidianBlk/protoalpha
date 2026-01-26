@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4govvu6ee7ds"]
+[gd_scene format=3 uid="uid://d4govvu6ee7ds"]
 
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="1_41ats"]
 [ext_resource type="Texture2D" uid="uid://cl03kgboxrixt" path="res://assets/graphics/tv/SMPTE_Pattern_001.png" id="2_py6fu"]
@@ -9,14 +9,12 @@
 script = ExtResource("3_q80oc")
 message = "Please Stand By"
 static_intensity = 0.5
-static_bleed = 0.0
 metadata/_custom_type_script = "uid://cdbxv3snwf0s"
 
 [sub_resource type="Resource" id="Resource_4568u"]
 script = ExtResource("3_q80oc")
 message = "EMERGENCY ALERT"
 static_intensity = 0.85
-static_bleed = 0.0
 metadata/_custom_type_script = "uid://cdbxv3snwf0s"
 
 [sub_resource type="Resource" id="Resource_q80oc"]
@@ -27,7 +25,7 @@ static_intensity = 0.8
 static_bleed = 0.4
 metadata/_custom_type_script = "uid://cdbxv3snwf0s"
 
-[node name="TVChannels" type="MarginContainer"]
+[node name="TVChannels" type="MarginContainer" unique_id=2105845404]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -42,18 +40,18 @@ smpte_channels = Dictionary[int, ExtResource("3_q80oc")]({
 69: SubResource("Resource_q80oc")
 })
 
-[node name="SMPTE" type="MarginContainer" parent="."]
+[node name="SMPTE" type="MarginContainer" parent="." unique_id=1101727054]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="SMPTE"]
+[node name="TextureRect" type="TextureRect" parent="SMPTE" unique_id=1689258250]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("2_py6fu")
 
-[node name="SMPTE_Message" type="Label" parent="SMPTE"]
+[node name="SMPTE_Message" type="Label" parent="SMPTE" unique_id=1520577936]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4

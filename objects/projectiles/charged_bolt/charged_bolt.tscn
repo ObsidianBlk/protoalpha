@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfoxdetpiysud"]
+[gd_scene format=3 uid="uid://bfoxdetpiysud"]
 
 [ext_resource type="Script" uid="uid://jejiprc5138i" path="res://scripts/nodes/projectile.gd" id="1_s7qmn"]
 [ext_resource type="Texture2D" uid="uid://cerxj7dxak3ah" path="res://assets/graphics/bullets/bullet_charged_bolt.png" id="2_ex7ch"]
@@ -35,7 +35,7 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="ChargedBolt" type="Area2D" node_paths=PackedStringArray("visual_node")]
+[node name="ChargedBolt" type="Area2D" unique_id=679132320 node_paths=PackedStringArray("visual_node")]
 collision_layer = 0
 collision_mask = 32
 script = ExtResource("1_s7qmn")
@@ -44,10 +44,10 @@ dmg = 8
 visual_node = NodePath("AnimatedSprite2D")
 metadata/_custom_type_script = "uid://jejiprc5138i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=668913783]
 shape = SubResource("CircleShape2D_ex7ch")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1333574136]
 sprite_frames = SubResource("SpriteFrames_3rnp2")
 autoplay = "default"
 frame_progress = 0.507198

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdu2rmkbkl0vo"]
+[gd_scene format=3 uid="uid://cdu2rmkbkl0vo"]
 
 [ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="1_jmt0u"]
 [ext_resource type="Texture2D" uid="uid://badjmgla7vg1t" path="res://assets/graphics/environment/lazer/lazer.png" id="2_th0yn"]
@@ -28,18 +28,18 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="HitBox" type="Area2D"]
+[node name="HitBox" type="Area2D" unique_id=44261723]
 collision_layer = 0
 collision_mask = 256
 script = ExtResource("1_jmt0u")
 damage = 100
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2127159630]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_4dfhx")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1875613821]
 sprite_frames = SubResource("SpriteFrames_mcc3r")
 autoplay = "default"
 frame_progress = 0.40491214

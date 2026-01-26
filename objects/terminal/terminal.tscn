@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cospnyybfrr3e"]
+[gd_scene format=3 uid="uid://cospnyybfrr3e"]
 
 [ext_resource type="Texture2D" uid="uid://ca0nbmy8ytl44" path="res://assets/graphics/environment/terminal.png" id="1_ugsui"]
 [ext_resource type="Script" uid="uid://hirrues78v7n" path="res://objects/terminal/terminal.gd" id="1_w4gef"]
@@ -41,24 +41,24 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w4gef"]
 size = Vector2(12, 10)
 
-[node name="Terminal" type="Node2D"]
+[node name="Terminal" type="Node2D" unique_id=348278549]
 script = ExtResource("1_w4gef")
 
-[node name="ASprite" type="AnimatedSprite2D" parent="."]
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=1657140210]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_06yku")
 animation = &"inactive"
-frame_progress = 1.0
+frame_progress = 0.27682945
 offset = Vector2(0, -8)
 
-[node name="TriggerArea" type="Area2D" parent="."]
+[node name="TriggerArea" type="Area2D" parent="." unique_id=1460571138]
 unique_name_in_owner = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=1236037608]
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_w4gef")
 
-[node name="Interactable" type="Node" parent="TriggerArea"]
+[node name="Interactable" type="Node" parent="TriggerArea" unique_id=652212157]
 script = ExtResource("2_2374n")
 metadata/_custom_type_script = "uid://bg7xpsd2h4n4j"
 

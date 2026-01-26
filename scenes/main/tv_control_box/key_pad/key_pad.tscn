@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://8wm8hlochlv4"]
+[gd_scene format=3 uid="uid://8wm8hlochlv4"]
 
 [ext_resource type="Script" uid="uid://bywgkwncwibdr" path="res://scenes/main/tv_control_box/key_pad/key_pad.gd" id="1_2os4x"]
 [ext_resource type="FontFile" uid="uid://be60jvab5bvpd" path="res://assets/fonts/E1234/E1234-Regular.otf" id="1_lq5np"]
@@ -18,19 +18,19 @@ border_color = Color(0.313726, 0, 0, 1)
 content_margin_left = 1.0
 content_margin_top = 4.0
 
-[node name="KeyPad" type="PanelContainer"]
+[node name="KeyPad" type="PanelContainer" unique_id=374784975]
 offset_right = 62.0
 offset_bottom = 164.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_lq5np")
 script = ExtResource("1_2os4x")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=629710367]
 layout_mode = 2
 
-[node name="DigitalDisplay" type="MarginContainer" parent="VBoxContainer"]
+[node name="DigitalDisplay" type="MarginContainer" parent="VBoxContainer" unique_id=683233311]
 layout_mode = 2
 
-[node name="DigiDisplayBase" type="Label" parent="VBoxContainer/DigitalDisplay"]
+[node name="DigiDisplayBase" type="Label" parent="VBoxContainer/DigitalDisplay" unique_id=495396478]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.313726, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_lq5np")
@@ -38,7 +38,7 @@ theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_2os4x")
 text = "888"
 
-[node name="DigiReadout" type="Label" parent="VBoxContainer/DigitalDisplay"]
+[node name="DigiReadout" type="Label" parent="VBoxContainer/DigitalDisplay" unique_id=774331111]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0, 0, 1)
@@ -47,92 +47,92 @@ theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jhg78")
 text = "000"
 
-[node name="KeyPad" type="GridContainer" parent="VBoxContainer"]
+[node name="KeyPad" type="GridContainer" parent="VBoxContainer" unique_id=2131525173]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 3
 
-[node name="BTN_7" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_7" type="Button" parent="VBoxContainer/KeyPad" unique_id=1973851344]
 layout_mode = 2
 text = "7"
 
-[node name="BTN_8" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_8" type="Button" parent="VBoxContainer/KeyPad" unique_id=956395817]
 layout_mode = 2
 text = "8"
 
-[node name="BTN_9" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_9" type="Button" parent="VBoxContainer/KeyPad" unique_id=1743476424]
 layout_mode = 2
 text = "9"
 
-[node name="BTN_4" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_4" type="Button" parent="VBoxContainer/KeyPad" unique_id=1263112678]
 layout_mode = 2
 text = "4"
 
-[node name="BTN_5" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_5" type="Button" parent="VBoxContainer/KeyPad" unique_id=633750193]
 layout_mode = 2
 text = "5"
 
-[node name="BTN_6" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_6" type="Button" parent="VBoxContainer/KeyPad" unique_id=518685245]
 layout_mode = 2
 text = "6"
 
-[node name="BTN_1" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_1" type="Button" parent="VBoxContainer/KeyPad" unique_id=195867587]
 layout_mode = 2
 text = "1"
 
-[node name="BTN_2" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_2" type="Button" parent="VBoxContainer/KeyPad" unique_id=1962047270]
 layout_mode = 2
 text = "2"
 
-[node name="BTN_3" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_3" type="Button" parent="VBoxContainer/KeyPad" unique_id=804903399]
 layout_mode = 2
 text = "3"
 
-[node name="BTN_Up" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_Up" type="Button" parent="VBoxContainer/KeyPad" unique_id=2093828377]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
 text = "/\\"
 
-[node name="BTN_0" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_0" type="Button" parent="VBoxContainer/KeyPad" unique_id=1630934360]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
 text = "0"
 
-[node name="BTN_Down" type="Button" parent="VBoxContainer/KeyPad"]
+[node name="BTN_Down" type="Button" parent="VBoxContainer/KeyPad" unique_id=1440920954]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
 text = "\\/"
 
-[node name="Label_Spacer" type="Label" parent="VBoxContainer"]
+[node name="Label_Spacer" type="Label" parent="VBoxContainer" unique_id=54471511]
 layout_mode = 2
 text = " "
 
-[node name="Power" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Power" type="HBoxContainer" parent="VBoxContainer" unique_id=918551571]
 layout_mode = 2
 
-[node name="BTN_Power" type="Button" parent="VBoxContainer/Power"]
+[node name="BTN_Power" type="Button" parent="VBoxContainer/Power" unique_id=718628071]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "PWR"
 
-[node name="PowerLight" type="VBoxContainer" parent="VBoxContainer/Power"]
+[node name="PowerLight" type="VBoxContainer" parent="VBoxContainer/Power" unique_id=360783856]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="Spacer_01" type="Control" parent="VBoxContainer/Power/PowerLight"]
+[node name="Spacer_01" type="Control" parent="VBoxContainer/Power/PowerLight" unique_id=1782802028]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CRECT_PowerLight" type="ColorRect" parent="VBoxContainer/Power/PowerLight"]
+[node name="CRECT_PowerLight" type="ColorRect" parent="VBoxContainer/Power/PowerLight" unique_id=75272027]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color(0.0500001, 1, 0, 1)
 
-[node name="Spacer_02" type="Control" parent="VBoxContainer/Power/PowerLight"]
+[node name="Spacer_02" type="Control" parent="VBoxContainer/Power/PowerLight" unique_id=2104771173]
 layout_mode = 2
 size_flags_vertical = 3
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://b1rbu87qlnwo6"]
+[gd_scene format=3 uid="uid://b1rbu87qlnwo6"]
 
 [ext_resource type="Script" uid="uid://d1je67bseaejq" path="res://objects/seg_fault/seg_fault.gd" id="1_6dxb4"]
 [ext_resource type="Script" uid="uid://cwjk0b6j3hspo" path="res://scripts/nodes/component_relay.gd" id="2_cspb4"]
@@ -1012,28 +1012,28 @@ nodes/teleport/node = SubResource("AnimationNodeTransition_rnv8l")
 nodes/teleport/position = Vector2(-400, 600)
 node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"facing", &"Add2", 1, &"hurt", &"a2se", 0, &"Animation 7", &"a2se", 1, &"Animation 8", &"a2shot", 0, &"Animation 6", &"a2shot", 1, &"a2se", &"attack_type", 0, &"Animation 3", &"attack_type", 1, &"a2shot", &"hurt", 0, &"state", &"hurt", 1, &"Animation 4", &"state", 0, &"Movement", &"state", 1, &"teleport", &"state", 2, &"attack_type", &"state", 3, &"Animation 5", &"teleport", 0, &"Animation", &"teleport", 1, &"Animation 2"]
 
-[node name="SegFault" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree", "weapon")]
+[node name="SegFault" type="CharacterBody2D" unique_id=192004136 node_paths=PackedStringArray("animation_tree", "weapon")]
 collision_layer = 32
 script = ExtResource("1_6dxb4")
 animation_tree = NodePath("AnimationTree")
 weapon = NodePath("Body/Weapon")
 metadata/_custom_type_script = "uid://bjpqvif0m723a"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=474456669]
 position = Vector2(0, -10.5)
 shape = SubResource("CapsuleShape2D_72kkf")
 
-[node name="ComponentRelay" type="Node" parent="."]
+[node name="ComponentRelay" type="Node" parent="." unique_id=117477795]
 script = ExtResource("2_cspb4")
 metadata/_custom_type_script = "uid://cwjk0b6j3hspo"
 
-[node name="ComponentHealth" type="Node" parent="."]
+[node name="ComponentHealth" type="Node" parent="." unique_id=762948024]
 script = ExtResource("2_uxyan")
 max_health = 15
 health = 15
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
-[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="HitBox" type="Area2D" parent="." unique_id=842841771 node_paths=PackedStringArray("health")]
 collision_layer = 4096
 collision_mask = 256
 script = ExtResource("3_uxyan")
@@ -1042,13 +1042,13 @@ damage = 5
 invulnerability_time = 2.0
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1105068837]
 position = Vector2(0, -10.5)
 shape = SubResource("CapsuleShape2D_uxyan")
 
-[node name="Body" type="Node2D" parent="."]
+[node name="Body" type="Node2D" parent="." unique_id=742902335]
 
-[node name="Weapon" type="Node2D" parent="Body"]
+[node name="Weapon" type="Node2D" parent="Body" unique_id=757156743]
 unique_name_in_owner = true
 position = Vector2(1, -12)
 script = ExtResource("4_a2v8v")
@@ -1056,7 +1056,7 @@ weapon_def = ExtResource("5_6dxb4")
 collision_mask = 256
 metadata/_custom_type_script = "uid://wjm481jeg5t0"
 
-[node name="HitBox_Streak" type="Area2D" parent="Body"]
+[node name="HitBox_Streak" type="Area2D" parent="Body" unique_id=1487604929]
 position = Vector2(0, -10)
 collision_layer = 0
 collision_mask = 256
@@ -1064,36 +1064,34 @@ script = ExtResource("3_uxyan")
 damage = 15
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBox_Streak"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBox_Streak" unique_id=643226631]
 position = Vector2(8, 0)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_la6sf")
 
-[node name="Detector" type="Area2D" parent="."]
+[node name="Detector" type="Area2D" parent="." unique_id=653494454]
 position = Vector2(0, -10)
 collision_layer = 0
 collision_mask = 1048576
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" unique_id=1834288524]
 shape = SubResource("CircleShape2D_la6sf")
 
-[node name="ASprite" type="AnimatedSprite2D" parent="."]
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=140736958]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_cdyep")
 animation = &"idle"
 autoplay = "idle"
 offset = Vector2(0, -10.5)
 
-[node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
-libraries = {
-&"": SubResource("AnimationLibrary_165qf")
-}
+[node name="AnimSpritePlayer" type="AnimationPlayer" parent="." unique_id=476098395 node_paths=PackedStringArray("animated_sprite")]
+libraries/ = SubResource("AnimationLibrary_165qf")
 script = ExtResource("7_mu864")
 animated_sprite = NodePath("../ASprite")
 target_animation = &"attack2_active"
 metadata/_custom_type_script = "uid://gg0uxpt06y26"
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1366254049]
 tree_root = SubResource("AnimationNodeBlendTree_bhfqv")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimSpritePlayer")
@@ -1117,13 +1115,13 @@ parameters/teleport/current_state = ""
 parameters/teleport/transition_request = "in"
 parameters/teleport/current_index = -1
 
-[node name="AFSM" type="Node" parent="." node_paths=PackedStringArray("animation_tree", "host")]
+[node name="AFSM" type="Node" parent="." unique_id=2145024912 node_paths=PackedStringArray("animation_tree", "host")]
 script = ExtResource("8_wg0kf")
 animation_tree = NodePath("../AnimationTree")
 host = NodePath("..")
 metadata/_custom_type_script = "uid://b865x7ayjvbki"
 
-[node name="Idle" type="Node" parent="AFSM"]
+[node name="Idle" type="Node" parent="AFSM" unique_id=1563101249]
 script = ExtResource("9_i3ypb")
 max_idle_time = 0.5
 state_move = &"Move"
@@ -1132,7 +1130,7 @@ state_fall = &"Fall"
 default = true
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
-[node name="Move" type="Node" parent="AFSM"]
+[node name="Move" type="Node" parent="AFSM" unique_id=590016372]
 script = ExtResource("10_i3ypb")
 state_idle = &"Idle"
 state_teleport = &"Teleport"
@@ -1140,34 +1138,34 @@ state_fall = &"Fall"
 state_attack_streak = &"AttackStreak"
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
-[node name="Teleport" type="Node" parent="AFSM"]
+[node name="Teleport" type="Node" parent="AFSM" unique_id=993388517]
 script = ExtResource("11_57mec")
 state_attack = &"Attack"
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
-[node name="Attack" type="Node" parent="AFSM"]
+[node name="Attack" type="Node" parent="AFSM" unique_id=1265517365]
 script = ExtResource("12_sjfpj")
 state_idle = &"Idle"
 attack_count = 3
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
-[node name="AttackStreak" type="Node" parent="AFSM" node_paths=PackedStringArray("hitbox_primary", "hitbox_streak")]
+[node name="AttackStreak" type="Node" parent="AFSM" unique_id=796078812 node_paths=PackedStringArray("hitbox_primary", "hitbox_streak")]
 script = ExtResource("17_la6sf")
 hitbox_primary = NodePath("../../HitBox")
 hitbox_streak = NodePath("../../Body/HitBox_Streak")
 state_idle = &"Idle"
 metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 
-[node name="Fall" type="Node" parent="AFSM"]
+[node name="Fall" type="Node" parent="AFSM" unique_id=1386140705]
 script = ExtResource("13_bhfqv")
 state_idle = &"Idle"
 metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 
-[node name="Hurt" type="Node" parent="AFSM"]
+[node name="Hurt" type="Node" parent="AFSM" unique_id=1262814394]
 script = ExtResource("15_lhc8u")
 metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 
-[node name="Dead" type="Node" parent="AFSM"]
+[node name="Dead" type="Node" parent="AFSM" unique_id=1269930798]
 script = ExtResource("16_8igdd")
 metadata/_custom_type_script = "uid://bux0ntsxpcnhf"
 

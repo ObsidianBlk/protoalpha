@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://tfm2jtgj2is3"]
+[gd_scene format=3 uid="uid://tfm2jtgj2is3"]
 
 [ext_resource type="Texture2D" uid="uid://dyxasmtccw6qi" path="res://assets/graphics/enemies/enemy_glob.png" id="1_cgff3"]
 [ext_resource type="Script" uid="uid://ctfac6m006vw8" path="res://objects/enemies/glob/glob.gd" id="1_srvs0"]
@@ -81,24 +81,24 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="EnemyGlob" type="CharacterBody2D"]
+[node name="EnemyGlob" type="CharacterBody2D" unique_id=74423412]
 collision_layer = 32
 script = ExtResource("1_srvs0")
 
-[node name="ComponentHealth" type="Node" parent="."]
+[node name="ComponentHealth" type="Node" parent="." unique_id=1414195384]
 script = ExtResource("3_srvs0")
 max_health = 1
 health = 1
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
-[node name="ComponentOffScreenDespawner" type="Node" parent="." node_paths=PackedStringArray("host")]
+[node name="ComponentOffScreenDespawner" type="Node" parent="." unique_id=1006033171 node_paths=PackedStringArray("host")]
 script = ExtResource("3_n0rjc")
 host = NodePath("..")
 offset = Vector2(-4, -8)
 size = Vector2(8, 8)
 metadata/_custom_type_script = "uid://bjpqs600eysog"
 
-[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="HitBox" type="Area2D" parent="." unique_id=2040323172 node_paths=PackedStringArray("health")]
 collision_layer = 4096
 collision_mask = 256
 script = ExtResource("3_j365v")
@@ -107,11 +107,11 @@ damage = 5
 continuous = true
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1056485909]
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_qyuou")
 
-[node name="ASprite" type="AnimatedSprite2D" parent="."]
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=492834017]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_5ghdo")
 animation = &"land"
@@ -120,7 +120,7 @@ frame = 1
 frame_progress = 1.0
 offset = Vector2(0, -8)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1872647801]
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_qyuou")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://4ksc5l4guac3"]
+[gd_scene format=3 uid="uid://4ksc5l4guac3"]
 
 [ext_resource type="Script" uid="uid://bcmxgxeom0kt0" path="res://scenes/main/main.gd" id="1_k2fmo"]
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="2_ou6is"]
@@ -146,13 +146,13 @@ script = ExtResource("17_p8abn")
 
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_hujxm"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" unique_id=2128437766]
 script = ExtResource("1_k2fmo")
 
-[node name="GameLayer" type="CanvasLayer" parent="."]
+[node name="GameLayer" type="CanvasLayer" parent="." unique_id=1362342607]
 process_mode = 3
 
-[node name="TVSetup" type="VBoxContainer" parent="GameLayer"]
+[node name="TVSetup" type="VBoxContainer" parent="GameLayer" unique_id=2009095521]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -160,95 +160,95 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ou6is")
 
-[node name="SpacerTop" type="Control" parent="GameLayer/TVSetup"]
+[node name="SpacerTop" type="Control" parent="GameLayer/TVSetup" unique_id=1519574514]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="TV" type="AspectRatioContainer" parent="GameLayer/TVSetup"]
+[node name="TV" type="AspectRatioContainer" parent="GameLayer/TVSetup" unique_id=1406526684]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 12.0
 ratio = 1.628
 
-[node name="TVBody" type="HBoxContainer" parent="GameLayer/TVSetup/TV"]
+[node name="TVBody" type="HBoxContainer" parent="GameLayer/TVSetup/TV" unique_id=200656624]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TV_Screen" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody"]
+[node name="TV_Screen" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody" unique_id=1920606590]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_nvumn")
 
-[node name="Screen_Main" type="VBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen"]
+[node name="Screen_Main" type="VBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen" unique_id=479601299]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="TV_Top" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main"]
+[node name="TV_Top" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main" unique_id=1290154558]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TL_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Top"]
+[node name="TL_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Top" unique_id=1365127979]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 texture = SubResource("AtlasTexture_7smn1")
 
-[node name="Top_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Top"]
+[node name="Top_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Top" unique_id=952636213]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_raeie")
 expand_mode = 3
 stretch_mode = 1
 
-[node name="TR_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Top"]
+[node name="TR_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Top" unique_id=1855567932]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 texture = SubResource("AtlasTexture_hxu8e")
 
-[node name="TV_Center" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main"]
+[node name="TV_Center" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main" unique_id=457527529]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Left_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center"]
+[node name="Left_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center" unique_id=850294381]
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 texture = SubResource("AtlasTexture_nvumn")
 stretch_mode = 1
 
-[node name="RatioSubViewportContainer" type="SubViewportContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center"]
-custom_minimum_size = Vector2(593.6, 445.19998)
+[node name="RatioSubViewportContainer" type="SubViewportContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center" unique_id=1946008226]
+custom_minimum_size = Vector2(800.8, 600.6)
 layout_mode = 2
 stretch = true
 script = ExtResource("4_nvumn")
 relative_screen_scale = 0.7
 metadata/_custom_type_script = "uid://gvb3bw28lyip"
 
-[node name="GameViewport" type="SubViewport" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer"]
+[node name="GameViewport" type="SubViewport" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer" unique_id=792100757]
 disable_3d = true
 handle_input_locally = false
 snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(593, 445)
+size = Vector2i(800, 600)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="ProtoAlpha" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport" instance=ExtResource("4_blune")]
+[node name="ProtoAlpha" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport" unique_id=56786975 instance=ExtResource("4_blune")]
 
-[node name="Channels" type="CanvasLayer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport"]
+[node name="Channels" type="CanvasLayer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport" unique_id=70782458]
 layer = 20
 
-[node name="TVChannels" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/Channels" instance=ExtResource("15_p8abn")]
+[node name="TVChannels" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/Channels" unique_id=998566778 instance=ExtResource("15_p8abn")]
 
-[node name="BackgroundLayer" type="CanvasLayer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport"]
+[node name="BackgroundLayer" type="CanvasLayer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport" unique_id=480650874]
 layer = -10
 
-[node name="ColorRect" type="ColorRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/BackgroundLayer"]
+[node name="ColorRect" type="ColorRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/BackgroundLayer" unique_id=1100650799]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -256,37 +256,37 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Right_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center"]
+[node name="Right_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center" unique_id=946684663]
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 texture = SubResource("AtlasTexture_ou6is")
 stretch_mode = 1
 
-[node name="TV_Bottom" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main"]
+[node name="TV_Bottom" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main" unique_id=707810678]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="BL_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom"]
+[node name="BL_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom" unique_id=1859767884]
 layout_mode = 2
 texture = SubResource("AtlasTexture_necax")
 
-[node name="Bottom_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom"]
+[node name="Bottom_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom" unique_id=530860009]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_r4lks")
 stretch_mode = 1
 
-[node name="BR_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom"]
+[node name="BR_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Bottom" unique_id=269260512]
 layout_mode = 2
 texture = SubResource("AtlasTexture_pg34l")
 
-[node name="Static_Effect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen" instance=ExtResource("15_m4h2d")]
+[node name="Static_Effect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen" unique_id=1760043211 instance=ExtResource("15_m4h2d")]
 layout_mode = 2
 
-[node name="BackBufferCopy" type="BackBufferCopy" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen"]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen" unique_id=184831766]
 copy_mode = 2
 
-[node name="CRT_Effect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen" instance=ExtResource("15_r4lks")]
+[node name="CRT_Effect" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen" unique_id=249921813 instance=ExtResource("15_r4lks")]
 layout_mode = 2
 theme_override_constants/margin_left = 26
 theme_override_constants/margin_top = 26
@@ -294,109 +294,109 @@ theme_override_constants/margin_right = 26
 theme_override_constants/margin_bottom = 26
 settings = SubResource("Resource_s17dp")
 
-[node name="ScreenBoarder" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen"]
+[node name="ScreenBoarder" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen" unique_id=912804341]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_ou6is")
 
-[node name="TV_Controls" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody"]
+[node name="TV_Controls" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody" unique_id=2005811368]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
 theme_override_styles/panel = SubResource("StyleBoxTexture_hxu8e")
 
-[node name="Frame" type="VBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls"]
+[node name="Frame" type="VBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls" unique_id=711687850]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Top" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame"]
+[node name="Top" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame" unique_id=1784647129]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TL_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Top"]
+[node name="TL_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Top" unique_id=1791750124]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = SubResource("AtlasTexture_m4h2d")
 
-[node name="Top_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Top"]
+[node name="Top_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Top" unique_id=1392584192]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_p8abn")
 stretch_mode = 1
 
-[node name="TR_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Top"]
+[node name="TR_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Top" unique_id=689138425]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = SubResource("AtlasTexture_s17dp")
 
-[node name="Center" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame"]
+[node name="Center" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame" unique_id=1259945806]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Left_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Center"]
+[node name="Left_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Center" unique_id=1762509451]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 texture = SubResource("AtlasTexture_37hlw")
 stretch_mode = 1
 
-[node name="Spacer" type="Control" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Center"]
+[node name="Spacer" type="Control" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Center" unique_id=273163804]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Right_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Center"]
+[node name="Right_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Center" unique_id=1154860166]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 texture = SubResource("AtlasTexture_6llfj")
 stretch_mode = 1
 
-[node name="Bottom" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame"]
+[node name="Bottom" type="HBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame" unique_id=625675328]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="BL_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Bottom"]
+[node name="BL_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Bottom" unique_id=687942189]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = SubResource("AtlasTexture_0bhws")
 
-[node name="Bottom_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Bottom"]
+[node name="Bottom_Edge" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Bottom" unique_id=519811846]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_62atk")
 stretch_mode = 1
 
-[node name="BR_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Bottom"]
+[node name="BR_Corner" type="TextureRect" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Frame/Bottom" unique_id=606354903]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = SubResource("AtlasTexture_i7in8")
 
-[node name="Controls" type="VBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls"]
+[node name="Controls" type="VBoxContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls" unique_id=1581246675]
 layout_mode = 2
 
-[node name="Spacer" type="Control" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls"]
+[node name="Spacer" type="Control" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls" unique_id=1520374720]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
 
-[node name="ControlPlate" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls"]
+[node name="ControlPlate" type="PanelContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls" unique_id=683227169]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_7nlll")
 
-[node name="TVControlBox" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate" instance=ExtResource("16_nvumn")]
+[node name="TVControlBox" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate" unique_id=1311206521 instance=ExtResource("16_nvumn")]
 layout_mode = 2
 
-[node name="BottomSpacer" type="Control" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls"]
+[node name="BottomSpacer" type="Control" parent="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls" unique_id=573691630]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SpacerBottom" type="Control" parent="GameLayer/TVSetup"]
+[node name="SpacerBottom" type="Control" parent="GameLayer/TVSetup" unique_id=783308601]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="ConsoleSetup" type="VBoxContainer" parent="GameLayer"]
+[node name="ConsoleSetup" type="VBoxContainer" parent="GameLayer" unique_id=823418747]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -404,31 +404,31 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TopSpacer" type="Control" parent="GameLayer/ConsoleSetup"]
+[node name="TopSpacer" type="Control" parent="GameLayer/ConsoleSetup" unique_id=168827651]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Console" type="HBoxContainer" parent="GameLayer/ConsoleSetup"]
+[node name="Console" type="HBoxContainer" parent="GameLayer/ConsoleSetup" unique_id=1018466350]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.4
 
-[node name="SpacerLeft" type="Control" parent="GameLayer/ConsoleSetup/Console"]
+[node name="SpacerLeft" type="Control" parent="GameLayer/ConsoleSetup/Console" unique_id=1211016007]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ConsoleBody" type="PanelContainer" parent="GameLayer/ConsoleSetup/Console"]
+[node name="ConsoleBody" type="PanelContainer" parent="GameLayer/ConsoleSetup/Console" unique_id=1741482608]
 texture_filter = 3
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_7smn1")
 
-[node name="Content" type="Control" parent="GameLayer/ConsoleSetup/Console/ConsoleBody"]
+[node name="Content" type="Control" parent="GameLayer/ConsoleSetup/Console/ConsoleBody" unique_id=12867962]
 layout_mode = 2
 
-[node name="ConsoleLogo" type="PanelContainer" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content"]
+[node name="ConsoleLogo" type="PanelContainer" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content" unique_id=1344292316]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -441,12 +441,12 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_th5th")
 
-[node name="Label" type="Label" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content/ConsoleLogo"]
+[node name="Label" type="Label" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content/ConsoleLogo" unique_id=1060421478]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.694118, 0.14902, 0.113725, 1)
 text = "Eldrich Entertainment System"
 
-[node name="ConsoleButtons" type="HBoxContainer" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content"]
+[node name="ConsoleButtons" type="HBoxContainer" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content" unique_id=370599912]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.48
@@ -455,28 +455,28 @@ anchor_bottom = 0.48
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Button" type="Button" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content/ConsoleButtons"]
+[node name="Button" type="Button" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content/ConsoleButtons" unique_id=1812359637]
 layout_mode = 2
 text = "pwr"
 
-[node name="Button2" type="Button" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content/ConsoleButtons"]
+[node name="Button2" type="Button" parent="GameLayer/ConsoleSetup/Console/ConsoleBody/Content/ConsoleButtons" unique_id=623409152]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "mem"
 
-[node name="SpacerRight" type="Control" parent="GameLayer/ConsoleSetup/Console"]
+[node name="SpacerRight" type="Control" parent="GameLayer/ConsoleSetup/Console" unique_id=585225909]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.1
 mouse_filter = 2
 
-[node name="InputFocusManager" parent="GameLayer" instance=ExtResource("14_7smn1")]
+[node name="InputFocusManager" parent="GameLayer" unique_id=663583732 instance=ExtResource("14_7smn1")]
 
-[node name="FullScreenGame" type="CanvasLayer" parent="."]
+[node name="FullScreenGame" type="CanvasLayer" parent="." unique_id=1518418424]
 visible = false
 script = ExtResource("15_hxu8e")
 
-[node name="ColorRect" type="ColorRect" parent="FullScreenGame"]
+[node name="ColorRect" type="ColorRect" parent="FullScreenGame" unique_id=630132635]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -485,7 +485,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="FullGameRect" type="TextureRect" parent="FullScreenGame"]
+[node name="FullGameRect" type="TextureRect" parent="FullScreenGame" unique_id=968560730]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -495,7 +495,7 @@ mouse_filter = 2
 texture = SubResource("ViewportTexture_7smn1")
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="FullScreenGame"]
+[node name="VBoxContainer" type="VBoxContainer" parent="FullScreenGame" unique_id=431549920]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -503,16 +503,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="ColorRect2" type="ColorRect" parent="FullScreenGame/VBoxContainer"]
+[node name="ColorRect2" type="ColorRect" parent="FullScreenGame/VBoxContainer" unique_id=199684505]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0, 1, 0.049999952, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="FullScreenGame/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="FullScreenGame/VBoxContainer" unique_id=1287911016]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TextureRect2" type="TextureRect" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="FullScreenGame/VBoxContainer/HBoxContainer" unique_id=58516926]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("19_necax")
@@ -520,13 +520,13 @@ expand_mode = 1
 flip_h = true
 flip_v = true
 
-[node name="RatioSpacer" type="Control" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(848, 636)
+[node name="RatioSpacer" type="Control" parent="FullScreenGame/VBoxContainer/HBoxContainer" unique_id=781003081]
+custom_minimum_size = Vector2(1144, 858)
 layout_mode = 2
 script = ExtResource("16_hxu8e")
 metadata/_custom_type_script = "uid://cgn3dt0lj8cnd"
 
-[node name="CRT_Effect" parent="FullScreenGame/VBoxContainer/HBoxContainer/RatioSpacer" instance=ExtResource("15_r4lks")]
+[node name="CRT_Effect" parent="FullScreenGame/VBoxContainer/HBoxContainer/RatioSpacer" unique_id=1893601965 instance=ExtResource("15_r4lks")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -535,18 +535,18 @@ grow_horizontal = 2
 grow_vertical = 2
 settings = SubResource("Resource_raeie")
 
-[node name="TextureRect" type="TextureRect" parent="FullScreenGame/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="FullScreenGame/VBoxContainer/HBoxContainer" unique_id=1899868552]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("19_necax")
 expand_mode = 1
 
-[node name="ColorRect" type="ColorRect" parent="FullScreenGame/VBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="FullScreenGame/VBoxContainer" unique_id=982851496]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0, 1, 0.049999952, 1)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1993160923]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
 
 [connection signal="start_game" from="." to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]

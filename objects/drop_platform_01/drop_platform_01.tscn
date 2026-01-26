@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://h7qg8v1nfrg5"]
+[gd_scene format=3 uid="uid://h7qg8v1nfrg5"]
 
 [ext_resource type="Script" uid="uid://dl5jhjops7ere" path="res://objects/drop_platform_01/drop_platform_01.gd" id="1_jt5jf"]
 [ext_resource type="Texture2D" uid="uid://dwf52w2t0vccm" path="res://assets/graphics/environment/drop_platform_01.png" id="1_tyc87"]
@@ -120,6 +120,21 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_557dn"]
 size = Vector2(48, 2)
+
+[sub_resource type="Animation" id="Animation_wrbi4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StaticBody2D/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_7rgp2"]
 length = 0.41666666
@@ -254,21 +269,6 @@ tracks/1/keys = {
 "values": [0, 1]
 }
 
-[sub_resource type="Animation" id="Animation_wrbi4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("StaticBody2D/CollisionShape2D:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0gkg1"]
 _data = {
 &"RESET": SubResource("Animation_wrbi4"),
@@ -281,36 +281,34 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6nxc"]
 size = Vector2(48, 2)
 
-[node name="DropPlatform01" type="Node2D"]
+[node name="DropPlatform01" type="Node2D" unique_id=673612480]
 script = ExtResource("1_jt5jf")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1530008914]
 sprite_frames = SubResource("SpriteFrames_vebk2")
 animation = &"idle"
 offset = Vector2(0, 4)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=387459669]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=990507751]
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_557dn")
 one_way_collision = true
 
-[node name="AnimPlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
+[node name="AnimPlayer" type="AnimationPlayer" parent="." unique_id=1290164038 node_paths=PackedStringArray("animated_sprite")]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_0gkg1")
-}
-autoplay = "idle"
+libraries/ = SubResource("AnimationLibrary_0gkg1")
+autoplay = &"idle"
 script = ExtResource("2_jt5jf")
 animated_sprite = NodePath("../AnimatedSprite2D")
 metadata/_custom_type_script = "uid://gg0uxpt06y26"
 
-[node name="TriggerArea" type="Area2D" parent="."]
+[node name="TriggerArea" type="Area2D" parent="." unique_id=253897579]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=1282570102]
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_o6nxc")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://buxayrry4vrnx"]
+[gd_scene format=3 uid="uid://buxayrry4vrnx"]
 
 [ext_resource type="Texture2D" uid="uid://b8urtm6ebwdm7" path="res://assets/graphics/environment/teleport_pad_01.png" id="1_mjx1j"]
 [ext_resource type="Script" uid="uid://ybvummdbdatw" path="res://objects/teleport_pad/teleport_pad.gd" id="1_xxeaq"]
@@ -325,41 +325,38 @@ stream_7/stream = ExtResource("11_lny5j")
 stream_8/stream = ExtResource("12_ub8cr")
 stream_9/stream = ExtResource("13_0h8va")
 
-[node name="TeleportPad" type="Node2D"]
+[node name="TeleportPad" type="Node2D" unique_id=2007568362]
 script = ExtResource("1_xxeaq")
 sound_sheet = SubResource("Resource_xqpoj")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1088082102]
 sprite_frames = SubResource("SpriteFrames_xxeaq")
 animation = &"active"
-frame = 1
 offset = Vector2(0, -16)
 
-[node name="APlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
+[node name="APlayer" type="AnimationPlayer" parent="." unique_id=650032950 node_paths=PackedStringArray("animated_sprite")]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_rh666")
-}
-autoplay = "idle"
+libraries/ = SubResource("AnimationLibrary_rh666")
+autoplay = &"idle"
 script = ExtResource("2_vowlh")
 animated_sprite = NodePath("../AnimatedSprite2D")
 clear_existing_libraries = true
 metadata/_custom_type_script = "uid://gg0uxpt06y26"
 
-[node name="Detector" type="Area2D" parent="."]
+[node name="Detector" type="Area2D" parent="." unique_id=2143164545]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" unique_id=1196923604]
 position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_vowlh")
 
-[node name="AudioChirps" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioChirps" type="AudioStreamPlayer2D" parent="." unique_id=916711899]
 stream = SubResource("AudioStreamRandomizer_8vx58")
 max_distance = 200.0
 bus = &"GameSFX"
 
-[node name="Chirper" type="Node" parent="AudioChirps"]
+[node name="Chirper" type="Node" parent="AudioChirps" unique_id=590564946]
 unique_name_in_owner = true
 script = ExtResource("14_51fcj")
 

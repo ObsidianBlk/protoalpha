@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b0cf1q3ynw72e"]
+[gd_scene format=3 uid="uid://b0cf1q3ynw72e"]
 
 [ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="1_6kdc4"]
 [ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="1_cl7q1"]
@@ -205,21 +205,21 @@ _data = {
 &"step": SubResource("Animation_ib21r")
 }
 
-[node name="Blockie" type="Node2D"]
+[node name="Blockie" type="Node2D" unique_id=511315339]
 script = ExtResource("1_ib21r")
 sound_sheet = SubResource("Resource_6iyte")
 sound_explosion = &"explosion"
 
-[node name="ComponentHealth" type="Node" parent="."]
+[node name="ComponentHealth" type="Node" parent="." unique_id=482417167]
 script = ExtResource("1_cl7q1")
 max_health = 1
 health = 1
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
-[node name="Viz" type="Node2D" parent="."]
+[node name="Viz" type="Node2D" parent="." unique_id=1206526345]
 unique_name_in_owner = true
 
-[node name="Lower" type="Area2D" parent="Viz"]
+[node name="Lower" type="Area2D" parent="Viz" unique_id=467716321]
 unique_name_in_owner = true
 collision_layer = 36864
 collision_mask = 256
@@ -227,17 +227,17 @@ script = ExtResource("1_6kdc4")
 damage = 5
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Lower"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Lower" unique_id=1137755307]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_ib21r")
 
-[node name="Sprite2D" type="Sprite2D" parent="Viz/Lower"]
+[node name="Sprite2D" type="Sprite2D" parent="Viz/Lower" unique_id=1165619744]
 texture = ExtResource("2_cl7q1")
 offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
-[node name="Mid" type="Area2D" parent="Viz"]
+[node name="Mid" type="Area2D" parent="Viz" unique_id=418733776]
 unique_name_in_owner = true
 position = Vector2(0, -16)
 collision_layer = 36864
@@ -246,17 +246,17 @@ script = ExtResource("1_6kdc4")
 damage = 5
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Mid"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Mid" unique_id=1533906259]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_ib21r")
 
-[node name="Sprite2D" type="Sprite2D" parent="Viz/Mid"]
+[node name="Sprite2D" type="Sprite2D" parent="Viz/Mid" unique_id=769964848]
 texture = ExtResource("2_cl7q1")
 offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
-[node name="Face" type="Area2D" parent="Viz" node_paths=PackedStringArray("health")]
+[node name="Face" type="Area2D" parent="Viz" unique_id=1116988011 node_paths=PackedStringArray("health")]
 unique_name_in_owner = true
 position = Vector2(0, -32)
 collision_layer = 4096
@@ -266,21 +266,19 @@ health = NodePath("../../ComponentHealth")
 damage = 5
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Face"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Viz/Face" unique_id=270230218]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_ib21r")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Viz/Face"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Viz/Face" unique_id=1382417283]
 sprite_frames = SubResource("SpriteFrames_sva6x")
 autoplay = "default"
 frame_progress = 0.308064
 offset = Vector2(0, -8)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1144708172]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_pqucp")
-}
-autoplay = "step"
+libraries/ = SubResource("AnimationLibrary_pqucp")
+autoplay = &"step"
 
 [connection signal="dead" from="ComponentHealth" to="." method="_on_component_health_dead"]

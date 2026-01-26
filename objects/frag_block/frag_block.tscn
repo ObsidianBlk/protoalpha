@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://d3jrep7k7mc8x"]
+[gd_scene format=3 uid="uid://d3jrep7k7mc8x"]
 
 [ext_resource type="Script" uid="uid://war2ef3cy0e5" path="res://objects/frag_block/frag_block.gd" id="1_kqeua"]
 [ext_resource type="Texture2D" uid="uid://18tlmn8x24q0" path="res://assets/graphics/environment/frag_block.png" id="1_xp6wr"]
@@ -393,34 +393,32 @@ nodes/effect_shot/node = SubResource("AnimationNodeOneShot_0lih7")
 nodes/effect_shot/position = Vector2(380, 120)
 node_connections = [&"output", 0, &"effect_shot", &"effect_shot", 0, &"movement", &"effect_shot", 1, &"Animation"]
 
-[node name="FragBlock" type="AnimatableBody2D"]
+[node name="FragBlock" type="AnimatableBody2D" unique_id=654147512]
 collision_layer = 8
 sync_to_physics = false
 script = ExtResource("1_kqeua")
 
-[node name="ASprite" type="AnimatedSprite2D" parent="."]
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=728330039]
 sprite_frames = SubResource("SpriteFrames_vn6yp")
 autoplay = "default"
 
-[node name="Symbol" type="Sprite2D" parent="ASprite"]
+[node name="Symbol" type="Sprite2D" parent="ASprite" unique_id=2005965930]
 unique_name_in_owner = true
 texture = ExtResource("3_lw0ir")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=612786860]
 shape = SubResource("RectangleShape2D_xp6wr")
 
-[node name="AnimSpritePlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
-libraries = {
-&"": SubResource("AnimationLibrary_raqhs")
-}
-autoplay = "default"
+[node name="AnimSpritePlayer" type="AnimationPlayer" parent="." unique_id=896811225 node_paths=PackedStringArray("animated_sprite")]
+libraries/ = SubResource("AnimationLibrary_raqhs")
+autoplay = &"default"
 script = ExtResource("3_0lih7")
 animated_sprite = NodePath("../ASprite")
 metadata/_custom_type_script = "uid://gg0uxpt06y26"
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1175330793]
 unique_name_in_owner = true
 root_node = NodePath("%AnimationTree/..")
 tree_root = SubResource("AnimationNodeBlendTree_raqhs")

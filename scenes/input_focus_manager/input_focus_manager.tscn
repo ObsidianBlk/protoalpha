@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bho47owrq31dg"]
+[gd_scene format=3 uid="uid://bho47owrq31dg"]
 
 [ext_resource type="Script" uid="uid://4p64023xy5li" path="res://scenes/input_focus_manager/input_focus_manager.gd" id="1_mo715"]
 [ext_resource type="Script" uid="uid://b56xn8kwao8rs" path="res://addons/OBSControlLibrary/AnimatedTextureRect/animated_texture_rect.gd" id="2_wfn0m"]
@@ -45,7 +45,7 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="InputFocusManager" type="Control"]
+[node name="InputFocusManager" type="Control" unique_id=69227166]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -55,7 +55,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_mo715")
 
-[node name="PointerSprite" type="Control" parent="."]
+[node name="PointerSprite" type="Control" parent="." unique_id=1841900991]
 unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
@@ -63,8 +63,7 @@ offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("2_wfn0m")
 sprite_frames = SubResource("SpriteFrames_r4luh")
-frame = 1
-frame_progress = 1.0014536666666667
+frame_progress = 0.8572222222222221
 auto_play = true
 metadata/_custom_type_script = "uid://b56xn8kwao8rs"
 

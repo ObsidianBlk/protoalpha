@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://d4lr2wjl887jl"]
+[gd_scene format=3 uid="uid://d4lr2wjl887jl"]
 
 [ext_resource type="Script" uid="uid://varc22t8cyy4" path="res://objects/enemies/skullie/skullie.gd" id="1_2y7vl"]
 [ext_resource type="Texture2D" uid="uid://cafaugi5qvumr" path="res://assets/graphics/enemies/skullie/skullie.png" id="1_3v21g"]
@@ -207,24 +207,24 @@ radius = 6.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rufso"]
 size = Vector2(100, 320)
 
-[node name="Skullie" type="Node2D" node_paths=PackedStringArray("weapon")]
+[node name="Skullie" type="Node2D" unique_id=543029266 node_paths=PackedStringArray("weapon")]
 script = ExtResource("1_2y7vl")
 weapon = NodePath("Weapon")
 
-[node name="ASprite" type="AnimatedSprite2D" parent="."]
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=480603608]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_76xy2")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.273665
 
-[node name="ComponentHealth" type="Node" parent="."]
+[node name="ComponentHealth" type="Node" parent="." unique_id=258901371]
 script = ExtResource("2_o4y2t")
 max_health = 1
 health = 1
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
-[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="HitBox" type="Area2D" parent="." unique_id=1342938015 node_paths=PackedStringArray("health")]
 position = Vector2(0, -2)
 collision_layer = 4096
 collision_mask = 256
@@ -235,17 +235,17 @@ continuous = true
 invulnerability_time = 0.1
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=988532410]
 shape = SubResource("CircleShape2D_2y7vl")
 
-[node name="PlayerDetector" type="Area2D" parent="."]
+[node name="PlayerDetector" type="Area2D" parent="." unique_id=1788990860]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=679461514]
 shape = SubResource("RectangleShape2D_rufso")
 
-[node name="Weapon" type="Node2D" parent="."]
+[node name="Weapon" type="Node2D" parent="." unique_id=1128870312]
 position = Vector2(-3, 2)
 script = ExtResource("5_p64tw")
 weapon_def = ExtResource("6_rufso")

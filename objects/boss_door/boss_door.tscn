@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ojbp6siu8aak"]
+[gd_scene format=3 uid="uid://ojbp6siu8aak"]
 
 [ext_resource type="Script" uid="uid://1n8whgfwlci5" path="res://objects/boss_door/boss_door.gd" id="1_k1181"]
 [ext_resource type="Texture2D" uid="uid://b08rhqu7x7gha" path="res://assets/graphics/bosses/boss_door_segment.png" id="2_34e4t"]
@@ -9,7 +9,6 @@
 [sub_resource type="Resource" id="Resource_yu280"]
 script = ExtResource("3_da15y")
 stream = ExtResource("4_da15y")
-volume_db = 0.0
 volume_linear = 1.0
 min_pitch = 0.8
 max_pitch = 1.2
@@ -32,98 +31,98 @@ size = Vector2(8, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_34e4t"]
 size = Vector2(8, 32)
 
-[node name="BossDoor" type="Node2D"]
+[node name="BossDoor" type="Node2D" unique_id=1054559194]
 script = ExtResource("1_k1181")
 sound_sheet = SubResource("Resource_do3im")
 
-[node name="Segment_1" type="StaticBody2D" parent="."]
+[node name="Segment_1" type="StaticBody2D" parent="." unique_id=426325040]
 position = Vector2(0, -2)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_1" unique_id=1328475961]
 shape = SubResource("RectangleShape2D_ojne0")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment_1"]
+[node name="Sprite2D" type="Sprite2D" parent="Segment_1" unique_id=1486734059]
 texture = ExtResource("2_34e4t")
 
-[node name="Segment_2" type="StaticBody2D" parent="."]
+[node name="Segment_2" type="StaticBody2D" parent="." unique_id=616982856]
 position = Vector2(0, -6)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_2" unique_id=783588217]
 shape = SubResource("RectangleShape2D_ojne0")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment_2"]
+[node name="Sprite2D" type="Sprite2D" parent="Segment_2" unique_id=1342855166]
 texture = ExtResource("2_34e4t")
 
-[node name="Segment_3" type="StaticBody2D" parent="."]
+[node name="Segment_3" type="StaticBody2D" parent="." unique_id=1986088333]
 position = Vector2(0, -10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_3" unique_id=2082379184]
 shape = SubResource("RectangleShape2D_ojne0")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment_3"]
+[node name="Sprite2D" type="Sprite2D" parent="Segment_3" unique_id=1575580814]
 texture = ExtResource("2_34e4t")
 
-[node name="Segment_4" type="StaticBody2D" parent="."]
+[node name="Segment_4" type="StaticBody2D" parent="." unique_id=1488881525]
 position = Vector2(0, -14)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_4" unique_id=1767023128]
 shape = SubResource("RectangleShape2D_ojne0")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment_4"]
+[node name="Sprite2D" type="Sprite2D" parent="Segment_4" unique_id=1450094511]
 texture = ExtResource("2_34e4t")
 
-[node name="Segment_5" type="StaticBody2D" parent="."]
+[node name="Segment_5" type="StaticBody2D" parent="." unique_id=1098283104]
 position = Vector2(0, -18)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_5" unique_id=1709870494]
 shape = SubResource("RectangleShape2D_ojne0")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment_5"]
+[node name="Sprite2D" type="Sprite2D" parent="Segment_5" unique_id=1835211199]
 texture = ExtResource("2_34e4t")
 
-[node name="Segment_6" type="StaticBody2D" parent="."]
+[node name="Segment_6" type="StaticBody2D" parent="." unique_id=1254037645]
 position = Vector2(0, -22)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_6" unique_id=1822167958]
 shape = SubResource("RectangleShape2D_ojne0")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment_6"]
+[node name="Sprite2D" type="Sprite2D" parent="Segment_6" unique_id=865330148]
 texture = ExtResource("2_34e4t")
 
-[node name="Segment_7" type="StaticBody2D" parent="."]
+[node name="Segment_7" type="StaticBody2D" parent="." unique_id=956305758]
 position = Vector2(0, -26)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_7" unique_id=45086637]
 shape = SubResource("RectangleShape2D_ojne0")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment_7"]
+[node name="Sprite2D" type="Sprite2D" parent="Segment_7" unique_id=1925790692]
 texture = ExtResource("2_34e4t")
 
-[node name="Segment_8" type="StaticBody2D" parent="."]
+[node name="Segment_8" type="StaticBody2D" parent="." unique_id=186240028]
 position = Vector2(0, -30)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_8"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment_8" unique_id=1377780721]
 shape = SubResource("RectangleShape2D_ojne0")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment_8"]
+[node name="Sprite2D" type="Sprite2D" parent="Segment_8" unique_id=1219655192]
 texture = ExtResource("2_34e4t")
 
-[node name="LeftDetector" type="Area2D" parent="."]
+[node name="LeftDetector" type="Area2D" parent="." unique_id=1409454971]
 unique_name_in_owner = true
 position = Vector2(-16, 0)
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDetector" unique_id=250088777]
 position = Vector2(4, -16)
 shape = SubResource("RectangleShape2D_k1181")
 
-[node name="RightDetector" type="Area2D" parent="."]
+[node name="RightDetector" type="Area2D" parent="." unique_id=1253001888]
 unique_name_in_owner = true
 position = Vector2(16, 0)
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightDetector" unique_id=1592099133]
 position = Vector2(-4, -16)
 shape = SubResource("RectangleShape2D_34e4t")

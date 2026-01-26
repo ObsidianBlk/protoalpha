@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://shvtybqewtlo"]
+[gd_scene format=3 uid="uid://shvtybqewtlo"]
 
 [ext_resource type="Texture2D" uid="uid://bwl5rdh2jjgnu" path="res://assets/graphics/tilesets/Tileset.png" id="1_kgh4w"]
 [ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="2_7l5mq"]
@@ -10,12 +10,12 @@ region = Rect2(0, 240, 16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rroch"]
 size = Vector2(16, 9)
 
-[node name="FloorSpikeTile" type="Node2D"]
+[node name="FloorSpikeTile" type="Node2D" unique_id=415806811]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1186642572]
 texture = SubResource("AtlasTexture_u8fjd")
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." unique_id=1443581420]
 collision_layer = 0
 collision_mask = 256
 script = ExtResource("2_7l5mq")
@@ -23,6 +23,6 @@ damage = 5
 continuous = true
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=562968609]
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_rroch")

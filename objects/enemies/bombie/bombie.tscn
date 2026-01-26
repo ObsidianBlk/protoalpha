@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0bhx86ge88m6"]
+[gd_scene format=3 uid="uid://d0bhx86ge88m6"]
 
 [ext_resource type="Script" uid="uid://diem3ho7a4423" path="res://objects/enemies/bombie/bombie.gd" id="1_ibrus"]
 [ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="1_mpea5"]
@@ -112,16 +112,16 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_mpea5"]
 radius = 5.0
 
-[node name="Bombie" type="Node2D"]
+[node name="Bombie" type="Node2D" unique_id=340799257]
 script = ExtResource("1_ibrus")
 
-[node name="ComponentHealth" type="Node" parent="."]
+[node name="ComponentHealth" type="Node" parent="." unique_id=760180104]
 script = ExtResource("1_mpea5")
 max_health = 8
 health = 1
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
-[node name="ASprite" type="AnimatedSprite2D" parent="."]
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=1655899028]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_abf4m")
 animation = &"spawn"
@@ -129,7 +129,7 @@ autoplay = "spawn"
 frame = 8
 frame_progress = 1.0
 
-[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="HitBox" type="Area2D" parent="." unique_id=237314433 node_paths=PackedStringArray("health")]
 unique_name_in_owner = true
 collision_layer = 4096
 collision_mask = 256
@@ -140,7 +140,7 @@ continuous = true
 disabled_on_start = true
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1219026637]
 shape = SubResource("CircleShape2D_mpea5")
 
 [connection signal="dead" from="ComponentHealth" to="." method="_on_component_health_dead"]

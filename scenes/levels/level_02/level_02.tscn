@@ -118,14 +118,10 @@ speed_scale = 1.5
 [node name="Lazer" parent="MapSegments/SegA" unique_id=1373452907 instance=ExtResource("8_dwiqe")]
 position = Vector2(184, 8)
 length = 10
-locked = false
-lock_on_toggled = false
 
 [node name="Lazer2" parent="MapSegments/SegA" unique_id=1661746185 instance=ExtResource("8_dwiqe")]
 position = Vector2(184, 57)
 length = 11
-locked = false
-lock_on_toggled = false
 
 [node name="SegB" type="Area2D" parent="MapSegments" unique_id=1094853718 node_paths=PackedStringArray("layer")]
 collision_layer = 0
@@ -178,8 +174,6 @@ metadata/_custom_type_script = "uid://6ryrp56hxe4c"
 position = Vector2(343, 312)
 orientation = 1
 length = 6
-locked = false
-lock_on_toggled = false
 
 [node name="MobSpawner" type="Node2D" parent="MapSegments/SegB" unique_id=1164339641 node_paths=PackedStringArray("segment", "mob_container")]
 position = Vector2(184, 184)

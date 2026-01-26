@@ -1,62 +1,62 @@
-[gd_scene load_steps=5 format=3 uid="uid://lq2t4d33t4ng"]
+[gd_scene format=3 uid="uid://lq2t4d33t4ng"]
 
 [ext_resource type="Theme" uid="uid://3ap6y54ts4bh" path="res://assets/tv.theme" id="1_pal1k"]
 [ext_resource type="Script" uid="uid://b0b1fsmftkooo" path="res://scenes/main/tv_control_box/tv_control_box.gd" id="2_6o00b"]
 [ext_resource type="PackedScene" uid="uid://8wm8hlochlv4" path="res://scenes/main/tv_control_box/key_pad/key_pad.tscn" id="3_ajjg8"]
 [ext_resource type="Script" uid="uid://bdhq8wyy4p7y5" path="res://scripts/nodes/controls/slider_joy_interpreter.gd" id="4_d8irx"]
 
-[node name="TVControlBox" type="PanelContainer"]
+[node name="TVControlBox" type="PanelContainer" unique_id=1429822212]
 theme = ExtResource("1_pal1k")
 theme_type_variation = &"TVControlPanelA"
 script = ExtResource("2_6o00b")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=890825559]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1289100707]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TVControlPanelB"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer" unique_id=461422349]
 layout_mode = 2
 
-[node name="KeyPad" parent="HBoxContainer/PanelContainer/VBoxContainer" instance=ExtResource("3_ajjg8")]
+[node name="KeyPad" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=299258018 instance=ExtResource("3_ajjg8")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="VolumeCTRLs" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VolumeCTRLs" type="VBoxContainer" parent="HBoxContainer" unique_id=1729884548]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VolumeCTRLs"]
+[node name="Label" type="Label" parent="HBoxContainer/VolumeCTRLs" unique_id=2054220313]
 layout_mode = 2
 text = "Vol."
 horizontal_alignment = 1
 
-[node name="HBC" type="HBoxContainer" parent="HBoxContainer/VolumeCTRLs"]
+[node name="HBC" type="HBoxContainer" parent="HBoxContainer/VolumeCTRLs" unique_id=45376893]
 layout_mode = 2
 
-[node name="VolGrid" type="GridContainer" parent="HBoxContainer/VolumeCTRLs/HBC"]
+[node name="VolGrid" type="GridContainer" parent="HBoxContainer/VolumeCTRLs/HBC" unique_id=2050020847]
 layout_mode = 2
 columns = 3
 
-[node name="LBL_Master" type="Label" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid"]
+[node name="LBL_Master" type="Label" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid" unique_id=1442037916]
 layout_mode = 2
 text = "O"
 horizontal_alignment = 1
 
-[node name="LBL_Music" type="Label" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid"]
+[node name="LBL_Music" type="Label" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid" unique_id=929874957]
 layout_mode = 2
 text = "M"
 horizontal_alignment = 1
 
-[node name="LBL_SFX" type="Label" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid"]
+[node name="LBL_SFX" type="Label" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid" unique_id=640901805]
 layout_mode = 2
 text = "S"
 horizontal_alignment = 1
 
-[node name="VSLIDER_Master" type="VSlider" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid"]
+[node name="VSLIDER_Master" type="VSlider" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid" unique_id=554920011]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
@@ -64,12 +64,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 step = 0.1
 
-[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_Master"]
+[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_Master" unique_id=1874576015]
 script = ExtResource("4_d8irx")
 value_per_second = 50.0
 metadata/_custom_type_script = "uid://bdhq8wyy4p7y5"
 
-[node name="VSLIDER_Music" type="VSlider" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid"]
+[node name="VSLIDER_Music" type="VSlider" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid" unique_id=852871704]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
@@ -77,12 +77,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 step = 0.1
 
-[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_Music"]
+[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_Music" unique_id=590947167]
 script = ExtResource("4_d8irx")
 value_per_second = 50.0
 metadata/_custom_type_script = "uid://bdhq8wyy4p7y5"
 
-[node name="VSLIDER_SFX" type="VSlider" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid"]
+[node name="VSLIDER_SFX" type="VSlider" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid" unique_id=871607148]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
@@ -90,7 +90,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 step = 0.1
 
-[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_SFX"]
+[node name="SliderJoyInterpreter" type="Node" parent="HBoxContainer/VolumeCTRLs/HBC/VolGrid/VSLIDER_SFX" unique_id=1162193303]
 script = ExtResource("4_d8irx")
 value_per_second = 50.0
 metadata/_custom_type_script = "uid://bdhq8wyy4p7y5"

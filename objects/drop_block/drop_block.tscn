@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://rlowofogbrxr"]
+[gd_scene format=3 uid="uid://rlowofogbrxr"]
 
 [ext_resource type="Script" uid="uid://dpmkx2mofbqor" path="res://objects/drop_block/drop_block.gd" id="1_aloe8"]
 [ext_resource type="Texture2D" uid="uid://c86rmeapn2wa1" path="res://assets/graphics/environment/drop_block.png" id="1_vn8xr"]
@@ -412,37 +412,35 @@ _data = {
 &"inactive": SubResource("Animation_f624b")
 }
 
-[node name="DropBlock" type="Node2D"]
+[node name="DropBlock" type="Node2D" unique_id=1963110289]
 script = ExtResource("1_aloe8")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=662518124]
 
-[node name="CS_TL" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CS_TL" type="CollisionShape2D" parent="StaticBody2D" unique_id=1930806537]
 position = Vector2(-4, -4)
 shape = SubResource("RectangleShape2D_dq05l")
 
-[node name="CS_TR" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CS_TR" type="CollisionShape2D" parent="StaticBody2D" unique_id=1154646652]
 position = Vector2(4, -4)
 shape = SubResource("RectangleShape2D_dq05l")
 
-[node name="CS_BR" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CS_BR" type="CollisionShape2D" parent="StaticBody2D" unique_id=2075736885]
 position = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_dq05l")
 
-[node name="CS_BL" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CS_BL" type="CollisionShape2D" parent="StaticBody2D" unique_id=1172761784]
 position = Vector2(-4, 4)
 shape = SubResource("RectangleShape2D_dq05l")
 
-[node name="ASprite" type="AnimatedSprite2D" parent="."]
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=134153997]
 sprite_frames = SubResource("SpriteFrames_1c8id")
 animation = &"activated"
 autoplay = "activated"
 
-[node name="AnimPlayer" type="AnimationPlayer" parent="." node_paths=PackedStringArray("animated_sprite")]
+[node name="AnimPlayer" type="AnimationPlayer" parent="." unique_id=239737762 node_paths=PackedStringArray("animated_sprite")]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_fb8vg")
-}
+libraries/ = SubResource("AnimationLibrary_fb8vg")
 script = ExtResource("2_aloe8")
 animated_sprite = NodePath("../ASprite")
 metadata/_custom_type_script = "uid://gg0uxpt06y26"

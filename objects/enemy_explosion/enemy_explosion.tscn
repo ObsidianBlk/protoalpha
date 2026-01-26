@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://nj2tagnipopm"]
+[gd_scene format=3 uid="uid://nj2tagnipopm"]
 
 [ext_resource type="Texture2D" uid="uid://8lp3tbtgmte3" path="res://assets/graphics/enemies/explode_particle_001.png" id="1_osubk"]
 [ext_resource type="Script" uid="uid://dti3v8dfulve5" path="res://objects/enemy_explosion/enemy_explosion.gd" id="2_x8xhe"]
@@ -20,7 +20,7 @@ linear_accel_max = -2.23517e-06
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
-[node name="EnemyExplosion" type="GPUParticles2D"]
+[node name="EnemyExplosion" type="GPUParticles2D" unique_id=1306982944]
 material = SubResource("CanvasItemMaterial_x8xhe")
 emitting = false
 amount = 6

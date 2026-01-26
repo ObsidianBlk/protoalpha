@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://boypmn503f4aq"]
+[gd_scene format=3 uid="uid://boypmn503f4aq"]
 
 [ext_resource type="Texture2D" uid="uid://cgcij8io5hx57" path="res://assets/graphics/environment/particles/pixel_fire.png" id="1_7jnby"]
 [ext_resource type="Script" uid="uid://deyr00mxq8ieo" path="res://objects/explosion_fire/explosion_fire.gd" id="1_xibaa"]
@@ -20,10 +20,10 @@ initial_velocity_max = 15.0
 gravity = Vector3(0, 0, 0)
 color_initial_ramp = SubResource("GradientTexture1D_0bylb")
 
-[node name="ExplosionFire" type="Node2D"]
+[node name="ExplosionFire" type="Node2D" unique_id=440702693]
 script = ExtResource("1_xibaa")
 
-[node name="ExpFire" type="GPUParticles2D" parent="."]
+[node name="ExpFire" type="GPUParticles2D" parent="." unique_id=1387577799]
 unique_name_in_owner = true
 emitting = false
 texture = ExtResource("1_7jnby")

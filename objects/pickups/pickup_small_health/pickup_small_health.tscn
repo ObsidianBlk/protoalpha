@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ddd6ucx7yhx1u"]
+[gd_scene format=3 uid="uid://ddd6ucx7yhx1u"]
 
 [ext_resource type="Texture2D" uid="uid://dr5jnn8ptd5es" path="res://assets/graphics/pickups/health_pickup_small.png" id="1_j2v4p"]
 [ext_resource type="Script" uid="uid://ko16ejkhcv1s" path="res://objects/pickups/pickup_small_health/pickup_small_health.gd" id="1_wg3qu"]
@@ -49,35 +49,35 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="PickupSmallHealth" type="CharacterBody2D"]
+[node name="PickupSmallHealth" type="CharacterBody2D" unique_id=1946710865]
 collision_layer = 0
 script = ExtResource("1_wg3qu")
 sound_sheet = SubResource("Resource_uw7fb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1431181625]
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_wg3qu")
 
-[node name="BobbingNode2D" type="Node2D" parent="."]
+[node name="BobbingNode2D" type="Node2D" parent="." unique_id=1565531106]
 script = ExtResource("5_p4unv")
 transition = 1
 metadata/_custom_type_script = "uid://5ne0bxw7dsyh"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BobbingNode2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BobbingNode2D" unique_id=110204931]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_vf3pb")
 autoplay = "default"
 frame_progress = 0.7597929
 offset = Vector2(0, -2)
 
-[node name="Detector" type="Area2D" parent="BobbingNode2D"]
+[node name="Detector" type="Area2D" parent="BobbingNode2D" unique_id=520453585]
 position = Vector2(0, -4)
 collision_layer = 0
 collision_mask = 256
 script = ExtResource("6_uw7fb")
 metadata/_custom_type_script = "uid://ddbkyy847ju51"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BobbingNode2D/Detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BobbingNode2D/Detector" unique_id=1454988061]
 shape = SubResource("CircleShape2D_wg3qu")
 
 [connection signal="falling" from="." to="BobbingNode2D" method="set_disabled" binds= [true]]

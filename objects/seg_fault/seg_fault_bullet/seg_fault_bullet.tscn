@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cd8ohi7glhch6"]
+[gd_scene format=3 uid="uid://cd8ohi7glhch6"]
 
 [ext_resource type="Script" uid="uid://jejiprc5138i" path="res://scripts/nodes/projectile.gd" id="1_5wbky"]
 [ext_resource type="Texture2D" uid="uid://cl511iy864v3m" path="res://assets/graphics/bosses/seg_fault/Sef_Fault_Bullet.png" id="2_4op1i"]
@@ -28,18 +28,18 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_y0ogu"]
 radius = 2.0
 
-[node name="SegFaultBullet" type="Area2D" node_paths=PackedStringArray("visual_node")]
+[node name="SegFaultBullet" type="Area2D" unique_id=1825261796 node_paths=PackedStringArray("visual_node")]
 script = ExtResource("1_5wbky")
 lifetime = 1.0
 dmg = 15
 visual_node = NodePath("ASprite")
 metadata/_custom_type_script = "uid://jejiprc5138i"
 
-[node name="ASprite" type="AnimatedSprite2D" parent="."]
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=1376164122]
 sprite_frames = SubResource("SpriteFrames_fk8a1")
 autoplay = "default"
 frame_progress = 0.750683
 offset = Vector2(0.5, -0.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1824481478]
 shape = SubResource("CircleShape2D_y0ogu")

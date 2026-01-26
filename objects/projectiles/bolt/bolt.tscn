@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://xfj4a2moijg2"]
+[gd_scene format=3 uid="uid://xfj4a2moijg2"]
 
 [ext_resource type="Script" uid="uid://jejiprc5138i" path="res://scripts/nodes/projectile.gd" id="1_0bvj7"]
 [ext_resource type="Texture2D" uid="uid://fmxjsbiuie4f" path="res://assets/graphics/bullets/bullet_small.png" id="2_wsni8"]
@@ -28,17 +28,17 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="Bolt" type="Area2D" node_paths=PackedStringArray("visual_node")]
+[node name="Bolt" type="Area2D" unique_id=1864670926 node_paths=PackedStringArray("visual_node")]
 collision_layer = 0
 collision_mask = 33
 script = ExtResource("1_0bvj7")
 speed = 100.0
 visual_node = NodePath("AnimatedSprite2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=224724584]
 shape = SubResource("CircleShape2D_ofkrt")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=105166099]
 sprite_frames = SubResource("SpriteFrames_b7usj")
 autoplay = "default"
 frame_progress = 0.989597
