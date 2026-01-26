@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=21 format=3 uid="uid://guqkyefalo5p"]
+[gd_resource type="TileSet" format=3 uid="uid://guqkyefalo5p"]
 
 [ext_resource type="Texture2D" uid="uid://bwl5rdh2jjgnu" path="res://assets/graphics/tilesets/Tileset.png" id="1_06gt1"]
 [ext_resource type="PackedScene" uid="uid://shvtybqewtlo" path="res://objects/spike_tiles/floor_spike_tile.tscn" id="2_3g1sd"]

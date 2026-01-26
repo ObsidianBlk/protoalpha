@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponDef" load_steps=12 format=3 uid="uid://p0vcbjdbc78t"]
+[gd_resource type="Resource" script_class="WeaponDef" format=3 uid="uid://p0vcbjdbc78t"]
 
 [ext_resource type="Texture2D" uid="uid://fmxjsbiuie4f" path="res://assets/graphics/bullets/bullet_small.png" id="1_ytbac"]
 [ext_resource type="PackedScene" uid="uid://xfj4a2moijg2" path="res://objects/projectiles/bolt/bolt.tscn" id="2_vmhm0"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MobInfo" load_steps=4 format=3 uid="uid://dt14yjdjvlyd4"]
+[gd_resource type="Resource" script_class="MobInfo" format=3 uid="uid://dt14yjdjvlyd4"]
 
 [ext_resource type="Script" uid="uid://c4pup75630mxb" path="res://scripts/resource/mob_info.gd" id="1_asm1d"]
 [ext_resource type="Texture2D" uid="uid://d1v0kv6muf6wl" path="res://assets/graphics/enemies/blockie/blockie.png" id="2_u6psj"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MobInfo" load_steps=4 format=3 uid="uid://1nk16vgguts7"]
+[gd_resource type="Resource" script_class="MobInfo" format=3 uid="uid://1nk16vgguts7"]
 
 [ext_resource type="Script" uid="uid://c4pup75630mxb" path="res://scripts/resource/mob_info.gd" id="1_r4m5q"]
 [ext_resource type="Texture2D" uid="uid://buh3upxycg57n" path="res://assets/graphics/enemies/shellie/Shellie.png" id="2_6mi67"]

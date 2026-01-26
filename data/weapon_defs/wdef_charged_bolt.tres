@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponDef" load_steps=12 format=3 uid="uid://cjxpcqqqetplo"]
+[gd_resource type="Resource" script_class="WeaponDef" format=3 uid="uid://cjxpcqqqetplo"]
 
 [ext_resource type="Texture2D" uid="uid://cerxj7dxak3ah" path="res://assets/graphics/bullets/bullet_charged_bolt.png" id="1_62502"]
 [ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="2_buccd"]
