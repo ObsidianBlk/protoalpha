@@ -26,6 +26,10 @@ Settings="*res://scripts/autos/settings.gd"
 Relay="*res://scripts/autos/relay.gd"
 AudioBoard="*res://scripts/autos/audio_board.gd"
 
+[display]
+
+window/stretch/aspect="ignore"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/OBSControlLibrary/plugin.cfg", "res://addons/OBSUI/plugin.cfg")
@@ -153,5 +157,6 @@ focus_toggle={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=3
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true

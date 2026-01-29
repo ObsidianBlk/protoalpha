@@ -23,6 +23,7 @@ enum Facing {RIGHT, DOWN, LEFT, UP}
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+@export var segment : MapSegment = null:				set=set_segment
 @export var orientation : Facing = Facing.RIGHT:		set=set_orientation
 @export var length : int = 2:							set=set_length
 @export var travel_speed : float = 12.0:				set=set_travel_speed
@@ -48,6 +49,12 @@ var _audio_id : int = -1
 # ------------------------------------------------------------------------------
 # Setters
 # ------------------------------------------------------------------------------
+func set_segment(seg : MapSegment) -> void:
+	if seg != segment:
+		_DisconnectSegment()
+		segment = seg
+		_ConnectSegment()
+
 func set_orientation(o : Facing) -> void:
 	if o != orientation:
 		orientation = o
@@ -79,6 +86,10 @@ func set_disabled(d : bool) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	if segment == null:
+		segment = _FindSegment()
+	else: _ConnectSegment()
+	
 	_UpdateFacing()
 	if not Engine.is_editor_hint():
 		if start_on and not disabled:
@@ -108,6 +119,26 @@ func _process(delta: float) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _ConnectSegment() -> void:
+	if segment == null: return
+	if not segment.entered.is_connected(set_disabled.bind(false)):
+		segment.entered.connect(set_disabled.bind(false))
+	if not segment.exited.is_connected(set_disabled.bind(true)):
+		segment.exited.connect(set_disabled.bind(true))
+
+func _DisconnectSegment() -> void:
+	if segment == null: return
+	if segment.entered.is_connected(set_disabled.bind(false)):
+		segment.entered.disconnect(set_disabled.bind(false))
+	if segment.exited.is_connected(set_disabled.bind(true)):
+		segment.exited.disconnect(set_disabled.bind(true))
+
+func _FindSegment() -> MapSegment:
+	var parent : Node = get_parent()
+	if parent is MapSegment:
+		return parent
+	return null
+
 func _UpdateFacing() -> void:
 	if _body != null:
 		match orientation:

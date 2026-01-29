@@ -32,7 +32,8 @@ animations = [{
 collision_layer = 0
 collision_mask = 256
 script = ExtResource("1_jmt0u")
-damage = 100
+damage = -1
+continuous = true
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2127159630]

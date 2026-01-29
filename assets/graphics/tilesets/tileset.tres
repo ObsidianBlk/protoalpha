@@ -738,6 +738,8 @@ texture = ExtResource("1_06gt1")
 15:8/0/custom_data_2 = true
 31:4/0 = 0
 31:5/0 = 0
+30:10/0 = 0
+31:10/0 = 0
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4tiyv"]
 resource_name = "FloorSpikes"

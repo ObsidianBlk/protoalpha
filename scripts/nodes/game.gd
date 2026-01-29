@@ -142,9 +142,9 @@ const LEVELS : Dictionary[int, Dictionary] = {
 		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_8: {
-		_LEVEL_PATH:"",
-		_LEVEL_ICON:"",
-		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
+		_LEVEL_PATH:"res://scenes/levels/test_level/test_level.tscn",
+		_LEVEL_ICON:"res://assets/graphics/bosses/defrag/Defrag_Portrait.png",
+		_LEVEL_STATE: LevelDevState.READY
 	},
 }
 

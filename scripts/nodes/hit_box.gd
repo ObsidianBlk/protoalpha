@@ -17,7 +17,10 @@ signal invulnerability_changed(enabled : bool)
 # ------------------------------------------------------------------------------
 ## [ComponentHealth] node. 
 @export var health : ComponentHealth = null
-## The amount of damage dealt to detected colliding [HitBox]
+## The amount of damage dealt to detected colliding [HitBox][br][br]
+## A value of [code]-1[/code] will trigger an instant death to the colliding
+## [HitBox] object (if that [HitBox] object has an assigned [ComponentHealth]
+## object.
 @export var damage : int = 0
 ## If [code]true[/code] damage will be dealt every [property invulnerability_time] seconds.
 @export var continuous : bool = false
@@ -53,10 +56,12 @@ func _DebugPrint(msg : String) -> void:
 	print(msg)
 
 func _HurtIfWithin(hb : HitBox) -> void:
-	if damage <= 0 or not hb.name in _hitboxes: return
-	if not hb.is_invulnerable():
+	if damage == 0 or not hb.name in _hitboxes: return
+	if damage > 0 and not hb.is_invulnerable():
 		hb.hurt(damage)
 		hitbox_damaged.emit(hb)
+	elif damage < 0:
+		hb.hurt(-1)
 	if continuous:
 		get_tree().create_timer(hb.invulnerability_time).timeout.connect(
 				_HurtIfWithin.bind(hb), CONNECT_ONE_SHOT
@@ -66,9 +71,12 @@ func _HurtIfWithin(hb : HitBox) -> void:
 # Public Methods
 # ------------------------------------------------------------------------------
 func hurt(amount : int) -> void:
-	if health != null and not _is_invulnerable:
-		health.hurt(amount)
-		trigger_invulnerability(invulnerability_time)
+	if health != null:
+		if amount > 0 and not _is_invulnerable:
+			health.hurt(amount)
+			trigger_invulnerability(invulnerability_time)
+		elif amount < 0:
+			health.hurt(health.max_health * 2) # Why times 2? BECAUSE!
 
 func heal(amount : int) -> void:
 	if health != null:
@@ -111,7 +119,7 @@ func disable_hitbox(disable : bool = true) -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_area_entered(area : Area2D) -> void:
-	if damage > 0 and area is HitBox:
+	if damage != 0 and area is HitBox:
 		_hitboxes[area.name] = area
 		_HurtIfWithin(area)
 		hitbox_collided.emit(area)
