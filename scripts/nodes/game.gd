@@ -230,19 +230,22 @@ static func Node_Has_Properties(n : Node, properties : Array[String]) -> bool:
 		if not property in n: return false
 	return true
 
+## Determines if the given [Node2D] object is inside of the viewport's
+## active [Camera2D] view.
+static func Node_In_Camera_View(n : Node2D) -> bool:
+	if n != null:
+		var vpr : Rect2 = n.get_viewport_rect()
+		var half : Vector2 = vpr.size * 0.5
+		var vp : Viewport = n.get_viewport()
+		if vp != null:
+			var cam : Camera2D = vp.get_camera_2d()
+			if cam != null:
+				var rect : Rect2 = Rect2(cam.get_screen_center_position() - half, vpr.size)
+				return rect.has_point(n.global_position)
+	return false
+
 static func Send_Action(action_name : StringName, pressed : bool = true) -> void:
 	var event : InputEventAction = InputEventAction.new()
 	event.action = action_name
 	event.pressed = pressed
 	Input.parse_input_event(event)
-
-#static func Create_Level_Instance(level_id : int) -> Level:
-	#if level_id in LEVELS:
-		#if not LEVELS[level_id][_LEVEL_PATH].is_empty():
-			#var scene : PackedScene = load(LEVELS[level_id][_LEVEL_PATH])
-			#if scene != null:
-				#var lvl : Node = scene.instantiate()
-				#if lvl is Level:
-					#return lvl
-				#lvl.queue_free()
-	#return null

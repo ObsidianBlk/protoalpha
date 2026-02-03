@@ -76,6 +76,7 @@ class ShiftableData extends RefCounted:
 # ------------------------------------------------------------------------------
 ## [TileMapLayer] in which to find shiftable tiles.
 @export var tilemap : TileMapLayer = null:			set=set_tilemap
+@export var verbose : bool = false
 
 @export_subgroup("Sub Region", "subregion_")
 @export var subregion_whole_tilemap : bool = false:			set=set_subregion_whole_tilemap

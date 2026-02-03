@@ -171,12 +171,14 @@ script = ExtResource("7_a7arc")
 connections = [NodePath("..")]
 metadata/_custom_type_script = "uid://biyvft8gmrpou"
 
-[node name="Lazer" parent="SegA" unique_id=1788379501 instance=ExtResource("7_lb6o6")]
+[node name="Lazer" parent="SegA" unique_id=1788379501 node_paths=PackedStringArray("segment") instance=ExtResource("7_lb6o6")]
 position = Vector2(40, -7)
+segment = NodePath("..")
 disabled = true
 
-[node name="Lazer2" parent="SegA" unique_id=1983960951 instance=ExtResource("7_lb6o6")]
+[node name="Lazer2" parent="SegA" unique_id=1983960951 node_paths=PackedStringArray("segment") instance=ExtResource("7_lb6o6")]
 position = Vector2(7, 56)
+segment = NodePath("..")
 orientation = 1
 length = 3
 disabled = true
@@ -190,6 +192,7 @@ weapon_def = ExtResource("10_pqr1j")
 projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
+verbose = null
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="SegB" type="Area2D" parent="." unique_id=1316299679 node_paths=PackedStringArray("layer")]
@@ -240,6 +243,7 @@ projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
 continuous = true
+verbose = null
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="MS_TPGun_Pit" type="Node2D" parent="SegB" unique_id=2018761892 node_paths=PackedStringArray("projectile_container", "segment")]
@@ -252,6 +256,7 @@ projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
 continuous = true
+verbose = null
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="MobSpawnerTPGun" type="Node2D" parent="SegB" unique_id=378479581 node_paths=PackedStringArray("projectile_container", "segment")]
@@ -263,15 +268,18 @@ weapon_def = ExtResource("10_pqr1j")
 projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
+verbose = true
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
-[node name="Lazer_H_Top" parent="SegB" unique_id=508211239 instance=ExtResource("7_lb6o6")]
+[node name="Lazer_H_Top" parent="SegB" unique_id=508211239 node_paths=PackedStringArray("segment") instance=ExtResource("7_lb6o6")]
 position = Vector2(-88, -279)
+segment = NodePath("..")
 length = 6
 disabled = true
 
-[node name="Lazer_V_Exit" parent="SegB" unique_id=2105162131 instance=ExtResource("7_lb6o6")]
+[node name="Lazer_V_Exit" parent="SegB" unique_id=2105162131 node_paths=PackedStringArray("segment") instance=ExtResource("7_lb6o6")]
 position = Vector2(-169, -264)
+segment = NodePath("..")
 orientation = 1
 length = 3
 disabled = true
@@ -359,8 +367,9 @@ metadata/_custom_type_script = "uid://b7nn8ybn2tmlb"
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_n50fv")
 
-[node name="Lazer" parent="SegC" unique_id=1956117429 instance=ExtResource("7_lb6o6")]
+[node name="Lazer" parent="SegC" unique_id=1956117429 node_paths=PackedStringArray("segment") instance=ExtResource("7_lb6o6")]
 position = Vector2(-488, -282)
+segment = NodePath("..")
 length = 15
 disabled = true
 
@@ -371,8 +380,9 @@ script = ExtResource("16_s4sw7")
 start_triggered = true
 metadata/_custom_type_script = "uid://dy1nabork34tn"
 
-[node name="Lazer2" parent="SegC" unique_id=1954659167 instance=ExtResource("7_lb6o6")]
+[node name="Lazer2" parent="SegC" unique_id=1954659167 node_paths=PackedStringArray("segment") instance=ExtResource("7_lb6o6")]
 position = Vector2(-232, -489)
+segment = NodePath("..")
 orientation = 2
 length = 14
 disabled = true
@@ -417,6 +427,7 @@ position = Vector2(-262, -374)
 script = ExtResource("18_jnghj")
 mob_info = ExtResource("19_p2akj")
 segment = NodePath("..")
+verbose = null
 metadata/_custom_type_script = "uid://d01br3p7hnkj0"
 
 [node name="PickupLife" parent="SegC" unique_id=47933510 instance=ExtResource("25_1thri")]
@@ -431,6 +442,7 @@ weapon_def = ExtResource("13_x8ff0")
 projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
+verbose = null
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="SegC2" type="Area2D" parent="." unique_id=1925745328 node_paths=PackedStringArray("layer")]
@@ -450,6 +462,7 @@ script = ExtResource("18_jnghj")
 orientation = -1
 mob_info = ExtResource("19_p2akj")
 segment = NodePath("..")
+verbose = null
 metadata/_custom_type_script = "uid://d01br3p7hnkj0"
 
 [node name="SegD" type="Area2D" parent="." unique_id=274497996 node_paths=PackedStringArray("layer")]
@@ -510,6 +523,7 @@ mob_info = ExtResource("21_cw2fx")
 segment = NodePath("..")
 mob_container = NodePath("..")
 continuous = true
+verbose = null
 metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 
 [node name="SkullieSpawner2" type="Node2D" parent="SegD" unique_id=1311227729 node_paths=PackedStringArray("segment", "mob_container")]
@@ -519,6 +533,7 @@ mob_info = ExtResource("21_cw2fx")
 segment = NodePath("..")
 mob_container = NodePath("..")
 continuous = true
+verbose = null
 metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 
 [node name="PickupLife" parent="SegD" unique_id=814423649 instance=ExtResource("25_1thri")]
@@ -576,8 +591,9 @@ position = Vector2(408, -704)
 triggered = true
 trigger_layer = 4
 
-[node name="Lazer" parent="SegE" unique_id=442470586 instance=ExtResource("7_lb6o6")]
+[node name="Lazer" parent="SegE" unique_id=442470586 node_paths=PackedStringArray("segment") instance=ExtResource("7_lb6o6")]
 position = Vector2(200, -695)
+segment = NodePath("..")
 length = 5
 lock_on_toggled = true
 disabled = true

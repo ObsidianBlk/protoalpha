@@ -30,6 +30,8 @@ const _PICKUP_LUT : Dictionary[StringName, Dictionary] = {
 	},
 }
 
+const _MIN_DELAY : float = 0.0001
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
@@ -62,6 +64,7 @@ const _PICKUP_LUT : Dictionary[StringName, Dictionary] = {
 ## [b]NOTE:[/b] Even if active is [code]false[/code] spawner will continue to track
 ## already spawned mobs.
 @export var active : bool = true:			set=set_active
+@export var verbose : bool = false
 
 
 # ------------------------------------------------------------------------------
@@ -174,10 +177,12 @@ func _GetContainer() -> Node2D:
 	return null
 
 func _SpawnMob() -> void:
+	var has_mob : bool = mob_info != null and mob_info.mob_scene != null
 	var true_active : bool = active and _IsInCamera()
-	if not true_active or mob_info == null or mob_info.mob_scene == null: return
 	var container : Node2D = _GetContainer()
-	if container == null: return
+	if not (true_active and has_mob and container != null):
+		_delay = _MIN_DELAY
+		return
 	
 	if (_spawned < count and not continuous) or (continuous and _spawns.size() < count):
 		var mob_instance : Node2D = mob_info.get_scene_instance()
@@ -205,13 +210,8 @@ func _SpawnPickup(pickup_position : Vector2) -> void:
 	pickup.global_position = pickup_position
 
 func _IsInCamera() -> bool:
-	var vpr : Rect2 = get_viewport_rect()
-	var half : Vector2 = vpr.size * 0.5
-	var cam : Camera2D = get_viewport().get_camera_2d()
-	if cam != null:
-		var rect : Rect2 = Rect2(cam.get_screen_center_position() - half, vpr.size)
-		return rect.has_point(global_position)
-	return false
+	if active_outside_camera: return true
+	return Game.Node_In_Camera_View(self)
 
 # ------------------------------------------------------------------------------
 # Public Methods
