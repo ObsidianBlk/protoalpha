@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b2gpyio4ccjrw"]
+
+[ext_resource type="Script" uid="uid://dtypv0mj2ioax" path="res://objects/crushers/crusher_tile/crusher_tile.gd" id="1_hp1ub"]
+[ext_resource type="Texture2D" uid="uid://bwl5rdh2jjgnu" path="res://assets/graphics/tilesets/Tileset.png" id="2_bq3vu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hp1ub"]
+size = Vector2(16, 16)
+
+[node name="CrusherTile" type="CharacterBody2D" unique_id=1571349332]
+script = ExtResource("1_hp1ub")
+metadata/_custom_type_script = "uid://cm54y7hl6xas2"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1361704115]
+unique_name_in_owner = true
+texture = ExtResource("2_bq3vu")
+region_enabled = true
+region_rect = Rect2(256, 112, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=732759793]
+shape = SubResource("RectangleShape2D_hp1ub")
