@@ -92,6 +92,17 @@ const GUIDE_COLOR_MATCHING_AXIS : Color = Color.AQUAMARINE
 ## Guide color for apposing axis (used primarily by in-editor guides)
 const GUIDE_COLOR_APPOSING_AXIS : Color = Color.BROWN
 
+const PICKUP_NONE : StringName = &"pickup_none"
+const PICKUP_HEALTH : StringName = &"pickup_health"
+const PICKUP_HEALTH_LARGE : StringName = &"pickup_health_large"
+const PICKUP_LIFE : StringName = &"pickup_life"
+const PICKUP_LUT : Dictionary[StringName, String] = {
+	PICKUP_NONE : "",
+	PICKUP_HEALTH : "uid://ddd6ucx7yhx1u",
+	PICKUP_HEALTH_LARGE : "uid://baw6apsyn4rpx",
+	PICKUP_LIFE : "uid://bv3pmtfjy40p8"
+}
+
 ## The "Player" Group
 const GROUP_PLAYER : StringName = &"player"
 ## The "Boss" Group

@@ -36,8 +36,14 @@ enum Direction {LEFT=0, RIGHT=1, UP=2, DOWN=3}
 ## The amount of time (in seconds) the crusher will wait after a collision before
 ## moving again.
 @export var rest_time : float = 1.0:					set=set_rest_time
-## If [code]true[/code] the crusher will wait the [property rest_time] seconds
-## before starting to move on and initial spawn or after a reset.
+## The amount of time (in seconds) the crusher will rest after a [method reset].[br]
+## [b]NOTE:[/b] This value has effect if set to [code]0.0[/code] or if
+## [property start_resting] is [code]false[/code].
+@export var initial_rest_time : float = 0.0:			set=set_initial_rest_time
+## If [code]true[/code] the crusher will wait the duration of either
+## [property initial_rest_time] seconds, if greater than [code]0.0[/code], otherwise
+## for [property rest_time] seconds before starting to move on and initial spawn or
+## after a reset.
 @export var start_resting : bool = false
 ## If [code]true[/code] crusher will continue to be active even when outside
 ## camera view.
@@ -66,6 +72,10 @@ func set_segment(s : MapSegment) -> void:
 func set_rest_time(t : float) -> void:
 	if t > 0.0:
 		rest_time = t
+
+func set_initial_rest_time(t : float) -> void:
+	if t >= 0.0:
+		initial_rest_time = t
 
 func set_active(a : bool) -> void:
 	active = a
@@ -164,5 +174,7 @@ func trigger_effect(_dir : Direction) -> void:
 func reset() -> void:
 	if Engine.is_editor_hint(): return
 	global_position = _initial_position
-	_rest = rest_time if start_resting else 0.0
+	_rest = 0.0
+	if start_resting:
+		_rest = initial_rest_time if initial_rest_time > 0.0 else rest_time
 	set_physics_process(active)

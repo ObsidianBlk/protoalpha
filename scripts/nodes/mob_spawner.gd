@@ -11,20 +11,21 @@ class_name MobSpawner
 const _LUTKEY_WEIGHT : String = "weight"
 const _LUTKEY_SCENE : String = "scene"
 
-const PICKUP_SMALL_HEALTH : StringName = &"small_health"
-const PICKUP_LARGE_HEALTH : StringName = &"large_health"
-const PICKUP_LIFE : StringName = &"life"
 
 const _PICKUP_LUT : Dictionary[StringName, Dictionary] = {
-	PICKUP_LIFE : {
+	Game.PICKUP_NONE : {
+		_LUTKEY_WEIGHT: 20.0,
+		_LUTKEY_SCENE: null
+	},
+	Game.PICKUP_LIFE : {
 		_LUTKEY_WEIGHT: 1.0,
 		_LUTKEY_SCENE: preload("uid://bv3pmtfjy40p8")
 	},
-	PICKUP_SMALL_HEALTH : {
+	Game.PICKUP_HEALTH : {
 		_LUTKEY_WEIGHT:20.0,
 		_LUTKEY_SCENE: preload("uid://ddd6ucx7yhx1u")
 	},
-	PICKUP_LARGE_HEALTH : {
+	Game.PICKUP_HEALTH_LARGE : {
 		_LUTKEY_WEIGHT:15.0,
 		_LUTKEY_SCENE: preload("uid://baw6apsyn4rpx")
 	},
@@ -161,7 +162,7 @@ func _BuildPickupCollection() -> void:
 
 func _GetRandomPickup() -> PickupBody2D:
 	var id : Variant = _pickup_collection.get_random()
-	if id in _PICKUP_LUT:
+	if id in _PICKUP_LUT and _PICKUP_LUT[id][_LUTKEY_SCENE] is PackedScene:
 		var scene : PackedScene = _PICKUP_LUT[id][_LUTKEY_SCENE]
 		var pickup : Node = scene.instantiate()
 		if pickup is PickupBody2D:

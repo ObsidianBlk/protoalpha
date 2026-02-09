@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeightedPickupCollection" format=3 uid="uid://rxpf7cavwvkf"]
+
+[ext_resource type="Script" uid="uid://kmjcdxe5lhnk" path="res://scripts/resource/weighted_pickup_collection.gd" id="1_6o0dr"]
+
+[resource]
+script = ExtResource("1_6o0dr")
+collection = Dictionary[StringName, float]({
+&"pickup_health": 20.0,
+&"pickup_health_large": 10.0,
+&"pickup_life": 1.0,
+&"pickup_none": 20.0
+})
+metadata/_custom_type_script = "uid://kmjcdxe5lhnk"
