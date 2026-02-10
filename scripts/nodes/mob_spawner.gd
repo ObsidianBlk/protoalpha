@@ -11,26 +11,6 @@ class_name MobSpawner
 const _LUTKEY_WEIGHT : String = "weight"
 const _LUTKEY_SCENE : String = "scene"
 
-
-const _PICKUP_LUT : Dictionary[StringName, Dictionary] = {
-	Game.PICKUP_NONE : {
-		_LUTKEY_WEIGHT: 20.0,
-		_LUTKEY_SCENE: null
-	},
-	Game.PICKUP_LIFE : {
-		_LUTKEY_WEIGHT: 1.0,
-		_LUTKEY_SCENE: preload("uid://bv3pmtfjy40p8")
-	},
-	Game.PICKUP_HEALTH : {
-		_LUTKEY_WEIGHT:20.0,
-		_LUTKEY_SCENE: preload("uid://ddd6ucx7yhx1u")
-	},
-	Game.PICKUP_HEALTH_LARGE : {
-		_LUTKEY_WEIGHT:15.0,
-		_LUTKEY_SCENE: preload("uid://baw6apsyn4rpx")
-	},
-}
-
 const _MIN_DELAY : float = 0.0001
 
 # ------------------------------------------------------------------------------
@@ -38,6 +18,7 @@ const _MIN_DELAY : float = 0.0001
 # ------------------------------------------------------------------------------
 ## The [MobInfo] resource defining what mob type to spawn from this [MobSpawner]
 @export var mob_info : MobInfo = null:		set=set_mob_info
+@export var pickup_distribution : WeightedPickupCollection = null
 ## The [MapSegment] node to listen for player to enter or exit.[br]
 ## Spawner will not spawn mobs until the player has entered the assigned [MapSegment].
 ## When a player leaves the assigned [MapSegment], all spawned mobs are freed.
@@ -76,8 +57,6 @@ var _spawned : int = 0
 var _spawns : Array[Node2D] = []
 var _delay : float = 0.0
 
-var _pickup_collection : WeightedRandomCollection = WeightedRandomCollection.new()
-
 # ------------------------------------------------------------------------------
 # Setters
 # ------------------------------------------------------------------------------
@@ -104,7 +83,7 @@ func set_active(a : bool) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	_BuildPickupCollection()
+	#_BuildPickupCollection()
 	set_physics_process(false)
 	if segment == null:
 		var parent : Node = get_parent()
@@ -155,18 +134,20 @@ func _DisconnectMobInfo() -> void:
 	if mob_info.changed.is_connected(_on_mob_info_changed):
 		mob_info.changed.disconnect(_on_mob_info_changed)
 
-func _BuildPickupCollection() -> void:
-	_pickup_collection.clear()
-	for key : StringName in _PICKUP_LUT.keys():
-		_pickup_collection.add_entry(key, _PICKUP_LUT[key][_LUTKEY_WEIGHT])
+#func _BuildPickupCollection() -> void:
+	#_pickup_collection.clear()
+	#for key : StringName in _PICKUP_LUT.keys():
+		#_pickup_collection.add_entry(key, _PICKUP_LUT[key][_LUTKEY_WEIGHT])
 
 func _GetRandomPickup() -> PickupBody2D:
-	var id : Variant = _pickup_collection.get_random()
-	if id in _PICKUP_LUT and _PICKUP_LUT[id][_LUTKEY_SCENE] is PackedScene:
-		var scene : PackedScene = _PICKUP_LUT[id][_LUTKEY_SCENE]
-		var pickup : Node = scene.instantiate()
-		if pickup is PickupBody2D:
-			return pickup
+	if pickup_distribution != null:
+		var id : StringName = pickup_distribution.rand_item()
+		if not Game.PICKUP_LUT[id].is_empty():
+			var scene : PackedScene = load(Game.PICKUP_LUT[id])
+			if scene != null:
+				var pickup : Node = scene.instantiate()
+				if pickup is PickupBody2D:
+					return pickup
 	return null
 
 func _GetContainer() -> Node2D:

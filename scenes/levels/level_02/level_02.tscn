@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://cg0i33i1aytqg" path="res://scripts/nodes/shift_manager.gd" id="12_75xhx"]
 [ext_resource type="Resource" uid="uid://cm74psg11vlhh" path="res://objects/enemies/bombie/bombie_info.tres" id="12_ljole"]
 [ext_resource type="PackedScene" uid="uid://buxayrry4vrnx" path="res://objects/teleport_pad/teleport_pad.tscn" id="13_353uq"]
+[ext_resource type="Resource" uid="uid://rxpf7cavwvkf" path="res://data/pickup_dist_standard.tres" id="13_e07yy"]
 [ext_resource type="PackedScene" uid="uid://cospnyybfrr3e" path="res://objects/terminal/terminal.tscn" id="14_8fk3t"]
 [ext_resource type="PackedScene" uid="uid://bxrpuc6p7i18g" path="res://objects/crushers/crusher_big/crusher_big.tscn" id="15_8fk3t"]
 [ext_resource type="PackedScene" uid="uid://b2gpyio4ccjrw" path="res://objects/crushers/crusher_tile/crusher_tile.tscn" id="16_yee4g"]
@@ -197,6 +198,7 @@ length = 6
 position = Vector2(184, 184)
 script = ExtResource("10_n0ft0")
 mob_info = ExtResource("12_ljole")
+pickup_distribution = ExtResource("13_e07yy")
 segment = NodePath("..")
 mob_container = NodePath("..")
 first_spawn_delay = 5.0
@@ -230,6 +232,7 @@ tile_set = ExtResource("3_vs6ma")
 position = Vector2(488, 376)
 script = ExtResource("10_n0ft0")
 mob_info = ExtResource("12_ljole")
+pickup_distribution = ExtResource("13_e07yy")
 segment = NodePath("..")
 mob_container = NodePath("..")
 spawn_delay = 4.0
@@ -241,6 +244,7 @@ metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 position = Vector2(552, 376)
 script = ExtResource("10_n0ft0")
 mob_info = ExtResource("12_ljole")
+pickup_distribution = ExtResource("13_e07yy")
 segment = NodePath("..")
 mob_container = NodePath("..")
 spawn_delay = 4.0
@@ -252,6 +256,7 @@ metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 position = Vector2(616, 376)
 script = ExtResource("10_n0ft0")
 mob_info = ExtResource("12_ljole")
+pickup_distribution = ExtResource("13_e07yy")
 segment = NodePath("..")
 mob_container = NodePath("..")
 spawn_delay = 4.0
@@ -263,6 +268,7 @@ metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 position = Vector2(856, 264)
 script = ExtResource("10_n0ft0")
 mob_info = ExtResource("12_ljole")
+pickup_distribution = ExtResource("13_e07yy")
 segment = NodePath("..")
 mob_container = NodePath("..")
 spawn_delay = 4.0
@@ -274,6 +280,7 @@ metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 position = Vector2(936, 312)
 script = ExtResource("10_n0ft0")
 mob_info = ExtResource("12_ljole")
+pickup_distribution = ExtResource("13_e07yy")
 segment = NodePath("..")
 mob_container = NodePath("..")
 spawn_delay = 4.0
@@ -285,6 +292,7 @@ metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 position = Vector2(1000, 376)
 script = ExtResource("10_n0ft0")
 mob_info = ExtResource("12_ljole")
+pickup_distribution = ExtResource("13_e07yy")
 segment = NodePath("..")
 mob_container = NodePath("..")
 spawn_delay = 4.0
@@ -486,7 +494,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapSegments/RightPath/Seg_RP_B/CrusherTileCheat/BottomStop" unique_id=397261351]
 shape = SubResource("RectangleShape2D_wphuu")
 
-[node name="MobSpawnerTPGun" type="Node2D" parent="MapSegments/RightPath/Seg_RP_B" unique_id=397851651 node_paths=PackedStringArray("projectile_container", "segment", "mob_container")]
+[node name="TPGunSpawner" type="Node2D" parent="MapSegments/RightPath/Seg_RP_B" unique_id=397851651 node_paths=PackedStringArray("projectile_container", "segment", "mob_container")]
 position = Vector2(809, -236)
 script = ExtResource("17_e07yy")
 weapon_angle = 90.0

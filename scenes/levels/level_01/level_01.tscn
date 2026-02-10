@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://ojbp6siu8aak" path="res://objects/boss_door/boss_door.tscn" id="21_hbx02"]
 [ext_resource type="PackedScene" uid="uid://buxayrry4vrnx" path="res://objects/teleport_pad/teleport_pad.tscn" id="22_alecm"]
 [ext_resource type="Script" uid="uid://bk3uspbhs6g0p" path="res://scripts/nodes/boss_spawner.gd" id="22_vlhjx"]
+[ext_resource type="Resource" uid="uid://rxpf7cavwvkf" path="res://data/pickup_dist_standard.tres" id="23_p8hkg"]
 [ext_resource type="PackedScene" uid="uid://baw6apsyn4rpx" path="res://objects/pickups/pickup_large_health/pickup_large_health.tscn" id="24_q7ocn"]
 [ext_resource type="PackedScene" uid="uid://bv3pmtfjy40p8" path="res://objects/pickups/pickup_life/pickup_life.tscn" id="25_1thri"]
 
@@ -192,7 +193,6 @@ weapon_def = ExtResource("10_pqr1j")
 projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
-verbose = null
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="SegB" type="Area2D" parent="." unique_id=1316299679 node_paths=PackedStringArray("layer")]
@@ -243,7 +243,6 @@ projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
 continuous = true
-verbose = null
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="MS_TPGun_Pit" type="Node2D" parent="SegB" unique_id=2018761892 node_paths=PackedStringArray("projectile_container", "segment")]
@@ -256,7 +255,6 @@ projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
 continuous = true
-verbose = null
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="MobSpawnerTPGun" type="Node2D" parent="SegB" unique_id=378479581 node_paths=PackedStringArray("projectile_container", "segment")]
@@ -427,7 +425,6 @@ position = Vector2(-262, -374)
 script = ExtResource("18_jnghj")
 mob_info = ExtResource("19_p2akj")
 segment = NodePath("..")
-verbose = null
 metadata/_custom_type_script = "uid://d01br3p7hnkj0"
 
 [node name="PickupLife" parent="SegC" unique_id=47933510 instance=ExtResource("25_1thri")]
@@ -442,7 +439,6 @@ weapon_def = ExtResource("13_x8ff0")
 projectile_container = NodePath("..")
 mob_info = ExtResource("11_pqr1j")
 segment = NodePath("..")
-verbose = null
 metadata/_custom_type_script = "uid://cl3se2utwqe6u"
 
 [node name="SegC2" type="Area2D" parent="." unique_id=1925745328 node_paths=PackedStringArray("layer")]
@@ -462,7 +458,6 @@ script = ExtResource("18_jnghj")
 orientation = -1
 mob_info = ExtResource("19_p2akj")
 segment = NodePath("..")
-verbose = null
 metadata/_custom_type_script = "uid://d01br3p7hnkj0"
 
 [node name="SegD" type="Area2D" parent="." unique_id=274497996 node_paths=PackedStringArray("layer")]
@@ -520,20 +515,20 @@ shape = SubResource("RectangleShape2D_cw2fx")
 position = Vector2(6, -549)
 script = ExtResource("20_1thri")
 mob_info = ExtResource("21_cw2fx")
+pickup_distribution = ExtResource("23_p8hkg")
 segment = NodePath("..")
 mob_container = NodePath("..")
 continuous = true
-verbose = null
 metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 
 [node name="SkullieSpawner2" type="Node2D" parent="SegD" unique_id=1311227729 node_paths=PackedStringArray("segment", "mob_container")]
 position = Vector2(305, -439)
 script = ExtResource("20_1thri")
 mob_info = ExtResource("21_cw2fx")
+pickup_distribution = ExtResource("23_p8hkg")
 segment = NodePath("..")
 mob_container = NodePath("..")
 continuous = true
-verbose = null
 metadata/_custom_type_script = "uid://b0goixsc0lgyu"
 
 [node name="PickupLife" parent="SegD" unique_id=814423649 instance=ExtResource("25_1thri")]
@@ -862,22 +857,10 @@ shape = SubResource("RectangleShape2D_bof24")
 [node name="DebugPosition" type="Marker2D" parent="." unique_id=145156651 groups=["DebugPosition"]]
 position = Vector2(472, -992)
 
-[connection signal="entered" from="SegA" to="SegA/Lazer" method="set_disabled" binds= [false]]
-[connection signal="entered" from="SegA" to="SegA/Lazer2" method="set_disabled" binds= [false]]
-[connection signal="exited" from="SegA" to="SegA/Lazer" method="set_disabled" binds= [true]]
-[connection signal="exited" from="SegA" to="SegA/Lazer2" method="set_disabled" binds= [true]]
 [connection signal="trigger_state_changed" from="SegA/Terminal/LogicNot" to="SegA/Lazer" method="activate"]
 [connection signal="trigger_state_changed" from="SegA/Terminal2/LogicNot" to="SegA/Lazer2" method="activate"]
-[connection signal="entered" from="SegB" to="SegB/Lazer_H_Top" method="set_disabled" binds= [false]]
-[connection signal="entered" from="SegB" to="SegB/Lazer_V_Exit" method="set_disabled" binds= [false]]
-[connection signal="exited" from="SegB" to="SegB/Lazer_H_Top" method="set_disabled" binds= [true]]
-[connection signal="exited" from="SegB" to="SegB/Lazer_V_Exit" method="set_disabled" binds= [true]]
 [connection signal="trigger_state_changed" from="SegB/Terminal_H_Top" to="SegB/Lazer_H_Top" method="activate"]
 [connection signal="trigger_state_changed" from="SegB/Terminal_V_Exit" to="SegB/Lazer_V_Exit" method="activate"]
-[connection signal="entered" from="SegC" to="SegC/Lazer" method="set_disabled" binds= [false]]
-[connection signal="entered" from="SegC" to="SegC/Lazer2" method="set_disabled" binds= [false]]
-[connection signal="exited" from="SegC" to="SegC/Lazer" method="set_disabled" binds= [true]]
-[connection signal="exited" from="SegC" to="SegC/Lazer2" method="set_disabled" binds= [true]]
 [connection signal="transitioning" from="SegC/DropBlockChain01/DropBlock" to="SegC/DropBlockChain01/DropBlock2" method="trigger_toggle"]
 [connection signal="trigger_state_changed" from="SegC/DropBlockChain01/DropBlock/LogicPlayerTrigger" to="SegC/DropBlockChain01/DropBlock" method="trigger" binds= [1]]
 [connection signal="transitioning_inactive" from="SegC/DropBlockChain02/DropBlock" to="SegC/DropBlockChain02/DropBlock2" method="trigger_activate" binds= [0.2]]
@@ -885,8 +868,6 @@ position = Vector2(472, -992)
 [connection signal="transitioning_active" from="SegC/DropBlockChain02/DropBlock2" to="SegC/DropBlockChain02/DropBlock3" method="trigger_activate" binds= [0.1]]
 [connection signal="trigger_state_changed" from="SegC/Lazer/LogicToggleTimer" to="SegC/Lazer" method="activate"]
 [connection signal="trigger_state_changed" from="SegC/Lazer2/LogicToggleTimer" to="SegC/Lazer2" method="activate"]
-[connection signal="entered" from="SegE" to="SegE/Lazer" method="set_disabled" binds= [false]]
-[connection signal="exited" from="SegE" to="SegE/Lazer" method="set_disabled" binds= [true]]
 [connection signal="trigger_state_changed" from="SegE/Term_Lazer" to="SegE/Lazer" method="activate"]
 [connection signal="trigger_state_changed" from="SegE/Term_Teleport" to="SegE/TeleportPad" method="set_active"]
 [connection signal="closed_boss" from="SegBossRoom/BossDoor" to="SegBossRoom/BossSpawner" method="spawn"]
