@@ -32,8 +32,7 @@ func set_symbol(s : int) -> void:
 	s = clampi(s, 0, 2)
 	if s != symbol:
 		symbol = s
-		if _symbol != null:
-			_symbol.region_rect.position = Vector2(symbol * SYMBOL_REGION_SIZE, 0.0)
+		_UpdateSymbol()
 
 
 # ------------------------------------------------------------------------------
@@ -41,11 +40,15 @@ func set_symbol(s : int) -> void:
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	super._ready()
+	_UpdateSymbol()
 	_last_position = global_position
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _UpdateSymbol() -> void:
+	if _symbol != null:
+		_symbol.region_rect.position = Vector2(symbol * SYMBOL_REGION_SIZE, 0.0)
 
 # ------------------------------------------------------------------------------
 # "Virtual" Public Methods
