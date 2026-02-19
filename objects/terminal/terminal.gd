@@ -23,6 +23,7 @@ const ANIM_ACTIVE : StringName = &"active"
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
+var _initial_trigger_state : bool = false
 var _reset_timer : float = 0.0
 
 # ------------------------------------------------------------------------------
@@ -65,6 +66,7 @@ func set_trigger_layer(tl : int) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	_initial_trigger_state = triggered
 	_trigger_area.collision_layer = trigger_layer
 	_sprite.play(ANIM_ACTIVE if triggered else ANIM_INACTIVE)
 	if triggered:
@@ -75,7 +77,7 @@ func _process(delta: float) -> void:
 	if _reset_timer > 0.0:
 		_reset_timer -= delta
 		if _reset_timer <= 0.0:
-			triggered = false
+			triggered = _initial_trigger_state
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -96,5 +98,5 @@ func _on_interactable_focus_exited() -> void:
 func _on_interactable_interacted() -> void:
 	if not locked:
 		triggered = not triggered
-		if triggered:
+		if triggered != _initial_trigger_state:
 			_reset_timer = trigger_reset_timer

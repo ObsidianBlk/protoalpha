@@ -1,6 +1,19 @@
 extends CharacterBody2D
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+## Emitted when platform reaches a dead-end
+## [br]NOTE: Signal will not emit if platform path is circularly connected.
+signal path_completed()
+## Emitted when platform reaches a dead-end while traveling RIGHT or DOWN
+## [br]NOTE: Signal will not emit if platform path is circularly connected.
+signal path_completed_high()
+## Emitted when platform reaches a dead-end while traveling LEFT or UP
+## [br]NOTE: Signal will not emit if platform path is circularly connected.
+signal path_completed_low()
+
+# ------------------------------------------------------------------------------
 # Constants and ENUMs
 # ------------------------------------------------------------------------------
 const TILE_CUSTOM_DATA_NAME : String = "Platform"
@@ -16,17 +29,31 @@ enum Rail {
 	TOP_RIGHT=6,
 	CROSS=7
 }
-enum Travel {LOW=-1, HIGH=1}
+enum Travel { ## Platform travel direction.
+	LOW=-1, ## Platform traveling LEFT or UP (depending on the track)
+	HIGH=1  ## Platform traveling RIGHT or DOWN (depending on the track)
+}
 enum Axis {HORIZONTAL=0, VERTICAL=1}
 
 
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+## The [MapSegment] the platform node will listen to in order to detect it's
+## default enable state.
 @export var segment : MapSegment = null:						set=set_segment
+## The [TileMapLayer] this platform will read to detect it's track.
+## [br][b]NOTE:[/b] Platform node [i]must[/i] have it's origin inside of a track
+## tile in order to work.
 @export var map_layer : TileMapLayer = null
+## The initial travel direction of the platform.
 @export var initial_direction : Travel = Travel.HIGH
+## A scale multiplier adjusting platform speed across the tracks.
+## at a [property speed_scale] of [code]1.0[/code] (default) the platform
+## travels at a speed of one tile per second.
 @export_range(0.0, 4.0) var speed_scale : float = 1.0
+## If [code]true[/code] platform will travel across it's track while the
+## assigned [property segment] is active.
 @export var enabled : bool = true:								set=set_enabled
 
 # ------------------------------------------------------------------------------
@@ -231,6 +258,11 @@ func _UpdateCoords(skips : int) -> void:
 			rail = Rail.NONE
 		
 		if rail == Rail.NONE:
+			if _direction == Travel.LOW:
+				path_completed_low.emit()
+			else: path_completed_high.emit()
+			path_completed.emit()
+			
 			_direction = _FlipDirection(_direction)
 			_progress = 1.0 - _progress
 		else:

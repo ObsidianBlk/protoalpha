@@ -55,6 +55,7 @@ enum Direction {LEFT=0, RIGHT=1, UP=2, DOWN=3}
 # Variables
 # ------------------------------------------------------------------------------
 var _initial_position : Vector2 = Vector2.ZERO
+var _initial_active_state : bool = true
 var _direction : Direction = Direction.LEFT
 var _rest : float = 0.0
 
@@ -86,6 +87,7 @@ func set_active(a : bool) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	_initial_active_state = active
 	if segment == null:
 		var parent : Node = get_parent()
 		if parent is MapSegment:
@@ -175,6 +177,7 @@ func reset() -> void:
 	if Engine.is_editor_hint(): return
 	global_position = _initial_position
 	_rest = 0.0
+	active = _initial_active_state
 	if start_resting:
 		_rest = initial_rest_time if initial_rest_time > 0.0 else rest_time
 	set_physics_process(active)

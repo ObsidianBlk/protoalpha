@@ -210,6 +210,10 @@ func _process(delta: float) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _VerbosePrint(msg : String) -> void:
+	if verbose:
+		print(msg)
+
 func _GetTileMapParent() -> TileMapLayer:
 	var parent : Node = get_parent()
 	if parent is TileMapLayer:
@@ -318,6 +322,7 @@ func _SpawnShiftable(from_coord : Vector2i, to_coord : Vector2i) -> void:
 		_active.append(st)
 
 func _Spawn(count : int) -> void:
+	_VerbosePrint("Maximum: %d | Current: %d"%[spawn_maximum, _active.size()])
 	var total_space : int = spawn_maximum - _active.size()
 	if total_space <= 0: return
 	
@@ -363,6 +368,7 @@ func _Spawn(count : int) -> void:
 			_SpawnShiftable(from_coord, to_coord)
 			_available[from_coord] = ShiftableData.new(tilemap.tile_set, _slot_tile.source_id, _slot_tile.atlas_coord)
 			tilemap.set_cell(from_coord, _slot_tile.source_id, _slot_tile.atlas_coord)
+			count -= 1
 		else: count = 0
 
 # ------------------------------------------------------------------------------
