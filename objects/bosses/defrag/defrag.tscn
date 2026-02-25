@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://co5sd0citwx1"]
+
+[ext_resource type="Script" uid="uid://bb0p7883l7w2a" path="res://objects/bosses/defrag/defrag.gd" id="1_7rpsr"]
+[ext_resource type="Texture2D" uid="uid://dqsk3eleqpy2l" path="res://assets/graphics/bosses/defrag/DeFrag.png" id="2_7rpsr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7rpsr"]
+radius = 5.0
+height = 20.0
+
+[node name="defrag" type="CharacterBody2D" unique_id=1631192305]
+collision_layer = 32
+script = ExtResource("1_7rpsr")
+metadata/_custom_type_script = "uid://bjpqvif0m723a"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1621582560]
+texture = ExtResource("2_7rpsr")
+offset = Vector2(0, -10.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1238165533]
+position = Vector2(-1, -10)
+shape = SubResource("CapsuleShape2D_7rpsr")

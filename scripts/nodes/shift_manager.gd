@@ -9,6 +9,13 @@ class_name ShiftManager
 #   3) Figure out a method to triggering this as a "weapon"
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+## Emitted when all [ShiftingTile]s complete their transitions.[br]
+## NOTE: Will only trigger when [method finish] is called.
+signal tile_shift_completed()
+
+# ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const INVALID_ATLAS_COORD : Vector2i = Vector2i(-1, -1)
@@ -111,6 +118,8 @@ class ShiftableData extends RefCounted:
 var _shiftable_dlid : int = -1
 # Slot Tile Data Layer ID
 var _slot_dlid : int = -1
+
+var _finish : bool = false
 
 var _slot_tile : ShiftableData = null
 
@@ -324,7 +333,7 @@ func _SpawnShiftable(from_coord : Vector2i, to_coord : Vector2i) -> void:
 func _Spawn(count : int) -> void:
 	_VerbosePrint("Maximum: %d | Current: %d"%[spawn_maximum, _active.size()])
 	var total_space : int = spawn_maximum - _active.size()
-	if total_space <= 0: return
+	if total_space <= 0 or _finish: return
 	
 	var shiftables : Array[Vector2i] = _GetAvailableShiftables()
 	var slots : Array[Vector2i] = _GetAvailableSlots()
@@ -384,6 +393,14 @@ func stop() -> void:
 	if Engine.is_editor_hint(): return
 	set_process(false)
 	_ResetTilemap()
+	if _finish:
+		_finish = false
+		tile_shift_completed.emit()
+
+func finish() -> void:
+	if Engine.is_editor_hint(): return
+	if not is_processing(): return
+	_finish = true
 
 # ------------------------------------------------------------------------------
 # Handler Methods
@@ -396,3 +413,5 @@ func _on_shifting_tile_travel_complete(st : ShiftingTile, dst_coord : Vector2i, 
 	if idx >= 0:
 		_active.remove_at(idx)
 	st.queue_free()
+	if _active.size() <= 0 and _finish:
+		stop.call_deferred()

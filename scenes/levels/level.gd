@@ -139,6 +139,15 @@ func _PlayerToDebugPosition() -> void:
 		player.global_position = dbp.global_position
 
 # ------------------------------------------------------------------------------
+# "Virtual" Private Methods
+# ------------------------------------------------------------------------------
+func _boss_spawned(_boss : CharacterActor2D) -> void:
+	pass
+
+func _boss_despawning(_boss : CharacterActor2D) -> void:
+	pass
+
+# ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
 func spawn_player(level_start : bool = false) -> void:
@@ -179,6 +188,7 @@ func _on_child_entered(child : Node) -> void:
 		if not child.dead.is_connected(_on_boss_dead):
 			child.dead.connect(_on_boss_dead)
 		_boss_defeated = false
+		_boss_spawned(child)
 
 func _on_child_exiting(child : Node) -> void:
 	if not child is CharacterActor2D or _despawning: return
@@ -192,6 +202,7 @@ func _on_child_exiting(child : Node) -> void:
 	elif child.is_in_group(Game.GROUP_BOSS):
 		if child.dead.is_connected(_on_boss_dead):
 			child.dead.disconnect(_on_boss_dead)
+		_boss_despawning(child)
 		if _boss_defeated:
 			# TODO: Call a Victory screen animation!
 			completed.emit()

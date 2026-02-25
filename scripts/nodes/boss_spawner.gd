@@ -55,6 +55,8 @@ func _GetSpawnContainer() -> Node2D:
 # ------------------------------------------------------------------------------
 func reset() -> void:
 	if Engine.is_editor_hint(): return
+	# TODO: Was I intending to actually do something at this point?
+	#  Future Me, figure this out! -Past You
 
 func spawn() -> void:
 	if boss_path.is_empty():
