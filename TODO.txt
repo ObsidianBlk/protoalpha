@@ -1,3 +1,4 @@
 * Animate Defrag?
 * Defrag moves by turning into a block and "shifts" to a target position, then turns back into boss.
-* Use SpriteTile2D and create a Node-Object that the Defrag boss can "shoot" at the player!
+
+* BUG: Boss room (Level 2) does not properly reset on player death.

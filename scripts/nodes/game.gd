@@ -107,6 +107,7 @@ const PICKUP_LUT : Dictionary[StringName, String] = {
 const GROUP_PLAYER : StringName = &"player"
 ## The "Boss" Group
 const GROUP_BOSS : StringName = &"boss"
+const GROUP_BOSS_MAP_WEAPON : StringName = &"boss_map_weapon"
 
 ## The "Player"'s primary collision layer
 const COLLISION_LAYER_PLAYER : int = 0x0002 # 2

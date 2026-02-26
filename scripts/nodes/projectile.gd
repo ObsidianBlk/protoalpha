@@ -113,6 +113,12 @@ func _IsDeflecting() -> bool:
 	#return false
 
 # ------------------------------------------------------------------------------
+# "Virtual" Private Methods
+# ------------------------------------------------------------------------------
+func _projectile_exploded() -> void:
+	pass
+
+# ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
 func die() -> void:
@@ -120,13 +126,13 @@ func die() -> void:
 		_dead = true
 		if visual_node != null:
 			visual_node.visible = false
-		# TODO: Maybe spawn a small explosion sprite?
+		_projectile_exploded()
 		queue_free()
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_body_entered(body : Node2D) -> void:
+func _on_body_entered(_body : Node2D) -> void:
 	if not (Engine.is_editor_hint() or _dead):
 		if _IsDeflecting():
 			_Deflect(_ray.get_collision_normal())

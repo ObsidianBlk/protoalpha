@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponDef" format=3 uid="uid://b6j88o2u8nw8r"]
+
+[ext_resource type="Texture2D" uid="uid://bwl5rdh2jjgnu" path="res://assets/graphics/tilesets/Tileset.png" id="1_sdvch"]
+[ext_resource type="PackedScene" uid="uid://d3t1ehcfyebug" path="res://objects/bosses/defrag/projectile_block/projectile_block.tscn" id="2_4mwnw"]
+[ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="3_6barn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4884"]
+atlas = ExtResource("1_sdvch")
+region = Rect2(336, 64, 16, 16)
+
+[resource]
+script = ExtResource("3_6barn")
+name = &"Projectile Block"
+icon = SubResource("AtlasTexture_v4884")
+projectile = ExtResource("2_4mwnw")
+metadata/_custom_type_script = "uid://dvj7a56df3qol"

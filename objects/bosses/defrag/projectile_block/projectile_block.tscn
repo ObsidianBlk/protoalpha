@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d3t1ehcfyebug"]
+
+[ext_resource type="Script" uid="uid://dftplj3ifxo7j" path="res://objects/bosses/defrag/projectile_block/projectile_block.gd" id="1_pxuf6"]
+[ext_resource type="Texture2D" uid="uid://bwl5rdh2jjgnu" path="res://assets/graphics/tilesets/Tileset.png" id="2_1mtev"]
+[ext_resource type="Script" uid="uid://ba8loof3i00o" path="res://scripts/nodes/sprite_tile_2d.gd" id="3_1qo3a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxuf6"]
+size = Vector2(16, 16)
+
+[node name="ProjectileBlock" type="Area2D" unique_id=693008718]
+script = ExtResource("1_pxuf6")
+speed = 160.0
+lifetime = 5.0
+dmg = 15
+metadata/_custom_type_script = "uid://jejiprc5138i"
+
+[node name="SpriteTile2D" type="Sprite2D" parent="." unique_id=1536584579]
+unique_name_in_owner = true
+texture = ExtResource("2_1mtev")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+script = ExtResource("3_1qo3a")
+metadata/_custom_type_script = "uid://ba8loof3i00o"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1084959323]
+shape = SubResource("RectangleShape2D_pxuf6")

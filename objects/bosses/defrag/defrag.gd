@@ -37,9 +37,10 @@ func _process(delta: float) -> void:
 		_toggle_timer = TOGGLE_TIME - wrapf(_toggle_timer, 0.0, delta)
 		toggle_room_shift.emit()
 		_Pulse(3, PULSE_SEGMENT_DURATION)
+		_FireMapWeapon(1)#randi_range(1, 6))
 
 # ------------------------------------------------------------------------------
-# Public Methods
+# Private Methods
 # ------------------------------------------------------------------------------
 func _Pulse(segments : int, seg_duration : float) -> void:
 	if _tween != null or _sprite == null: return
@@ -54,3 +55,27 @@ func _Pulse(segments : int, seg_duration : float) -> void:
 		_tween.tween_interval(PULSE_IDLE_DURATION)
 	await _tween.finished
 	_tween = null
+
+
+func _FireMapWeapon(count : int) -> void:
+	var player : CharacterActor2D = get_player()
+	if player == null: return
+	
+	var mwarr : Array[Node] = get_tree().get_nodes_in_group(Game.GROUP_BOSS_MAP_WEAPON)
+	for i : int in range(count):
+		if mwarr.size() <= 0: break
+		var idx : int = randi_range(0, mwarr.size() - 1)
+		if mwarr[idx].has_method(&"shoot_target"):
+			mwarr[idx].shoot_target(player)
+		mwarr.remove_at(idx)
+	
+
+# ------------------------------------------------------------------------------
+# Public Methods
+# ------------------------------------------------------------------------------
+func get_player() -> CharacterActor2D:
+	var parr : Array[Node] = get_tree().get_nodes_in_group(Game.GROUP_PLAYER)
+	for player : Node in parr:
+		if player is CharacterActor2D:
+			return player
+	return null

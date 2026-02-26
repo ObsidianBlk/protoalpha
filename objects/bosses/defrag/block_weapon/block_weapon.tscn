@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://1t1wah151qwe"]
+
+[ext_resource type="Script" uid="uid://cxtujrqmg6vg5" path="res://objects/bosses/defrag/block_weapon/block_weapon.gd" id="1_bxf7b"]
+[ext_resource type="Texture2D" uid="uid://bwl5rdh2jjgnu" path="res://assets/graphics/tilesets/Tileset.png" id="2_css1k"]
+[ext_resource type="Shader" uid="uid://mqpd3v8fb2jm" path="res://shader/patterned_dissolve.gdshader" id="3_kmhjt"]
+[ext_resource type="Script" uid="uid://ba8loof3i00o" path="res://scripts/nodes/sprite_tile_2d.gd" id="3_s8x2d"]
+[ext_resource type="Texture2D" uid="uid://c1aufmnddchdl" path="res://assets/graphics/environment/fade_patterns/fade_pattern_01.png" id="4_kmhjt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmhjt"]
+atlas = ExtResource("2_css1k")
+region = Rect2(336, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxf7b"]
+atlas = ExtResource("2_css1k")
+region = Rect2(352, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpn7s"]
+atlas = ExtResource("2_css1k")
+region = Rect2(368, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gad6a"]
+atlas = ExtResource("2_css1k")
+region = Rect2(384, 64, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rfgbk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmhjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxf7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpn7s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gad6a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxf7b"]
+shader = ExtResource("3_kmhjt")
+shader_parameter/pattern_tex = ExtResource("4_kmhjt")
+shader_parameter/tile_pixel_size = 16
+shader_parameter/progress = 0.0
+
+[node name="BlockWeapon" type="Node2D" unique_id=1842456052]
+script = ExtResource("1_bxf7b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=719530335]
+sprite_frames = SubResource("SpriteFrames_rfgbk")
+autoplay = "default"
+frame_progress = 0.5937494
+
+[node name="BlockSprite" type="Sprite2D" parent="." unique_id=204503951]
+unique_name_in_owner = true
+texture_filter = 3
+material = SubResource("ShaderMaterial_bxf7b")
+texture = ExtResource("2_css1k")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+script = ExtResource("3_s8x2d")
+metadata/_custom_type_script = "uid://ba8loof3i00o"
