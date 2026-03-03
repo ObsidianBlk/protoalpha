@@ -1,4 +1,2 @@
 * Animate Defrag?
 * Defrag moves by turning into a block and "shifts" to a target position, then turns back into boss.
-
-* BUG: Boss room (Level 2) does not properly reset on player death.

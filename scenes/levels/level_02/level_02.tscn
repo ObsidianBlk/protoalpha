@@ -923,5 +923,6 @@ position = Vector2(425, -209)
 [connection signal="timeout" from="MapSegments/RightPath/Seg_RP_BossCorridor/CrusherMiddle/Timer" to="MapSegments/RightPath/Seg_RP_BossCorridor/CrusherBig_Top" method="set_active" binds= [true]]
 [connection signal="collided" from="MapSegments/RightPath/Seg_RP_BossCorridor/CrusherBig_Top" to="MapSegments/RightPath/Seg_RP_BossCorridor/CrusherMiddle/PairedTrigger" method="trigger_b"]
 [connection signal="collided" from="MapSegments/RightPath/Seg_RP_BossCorridor/CrusherBig_Top" to="MapSegments/RightPath/Seg_RP_BossCorridor/CrusherBig_Top" method="set_active" binds= [false]]
+[connection signal="exited" from="MapSegments/BossRoom" to="MapSegments/BossRoom/TileMapLayer/ShiftManager_BossRoom" method="stop"]
 [connection signal="closed_boss" from="MapSegments/BossRoom/BossDoor_Right" to="MapSegments/BossRoom/BossSpawner" method="spawn"]
 [connection signal="closed_boss" from="MapSegments/BossRoom/BossDoor_Left" to="MapSegments/BossRoom/BossSpawner" method="spawn"]
