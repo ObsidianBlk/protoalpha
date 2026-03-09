@@ -20,6 +20,7 @@ func enter(payload : Variant = null) -> void:
 		pop()
 		return
 	actor.change_action(actor.CORE_ACTION_HURT)
+	play_sfx(actor.AUDIO_HURT)
 	_duration = hurt_duration
 
 func exit() -> void:

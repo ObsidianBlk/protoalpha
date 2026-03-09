@@ -92,8 +92,13 @@ func _ready() -> void:
 	
 	_UpdateFacing()
 	if not Engine.is_editor_hint():
-		if start_on and not disabled:
-			_AllBeams()
+		var in_segment : bool = true
+		if segment != null:
+			in_segment = segment.player_in_segment()
+		if in_segment:
+			if start_on and not disabled:
+				_AllBeams()
+		else: disabled = true
 
 func _process(delta: float) -> void:
 	if _sprite == null or _body == null: return
@@ -201,10 +206,12 @@ func _Activate(on : bool) -> void:
 	
 	if on:
 		_sprite.play(ANIM_CHARGING)
+		print("Starting audio for ", name)
 		_PlaySFX(AUDIO_CHARGING)
 	else:
 		_sprite.play(ANIM_INACTIVE)
 		if disabled:
+			print("Stopping audio for ", name)
 			_StopSFX()
 			_RemoveAllBeams()
 

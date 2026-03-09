@@ -2,14 +2,52 @@
 
 [ext_resource type="Script" uid="uid://bb0p7883l7w2a" path="res://objects/bosses/defrag/defrag.gd" id="1_7rpsr"]
 [ext_resource type="Texture2D" uid="uid://dqsk3eleqpy2l" path="res://assets/graphics/bosses/defrag/DeFrag.png" id="2_7rpsr"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_cj3sh"]
 [ext_resource type="Script" uid="uid://bk46f3unrl4vx" path="res://scripts/nodes/component_health.gd" id="2_d1urw"]
 [ext_resource type="Script" uid="uid://cwjk0b6j3hspo" path="res://scripts/nodes/component_relay.gd" id="2_v7asv"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_cbsr2"]
 [ext_resource type="Script" uid="uid://gg0uxpt06y26" path="res://scripts/nodes/anim_sprite_player.gd" id="3_xy0od"]
 [ext_resource type="Script" uid="uid://b865x7ayjvbki" path="res://scripts/fsm/actor_state_machine.gd" id="4_a3cwc"]
+[ext_resource type="AudioStream" uid="uid://whhxhvwirah4" path="res://assets/audio/sfx/explosions/explosion_001.wav" id="4_v854h"]
 [ext_resource type="Script" uid="uid://bh60t2e18nc40" path="res://objects/bosses/defrag/states/defrag_state_idle.gd" id="5_50dpf"]
+[ext_resource type="AudioStream" uid="uid://j037f3ac04gv" path="res://assets/audio/sfx/explosions/explosion_002.wav" id="5_yb8sd"]
 [ext_resource type="Script" uid="uid://mgmqb7qrt424" path="res://objects/bosses/defrag/states/defrag_state_hurt.gd" id="6_b30a8"]
+[ext_resource type="AudioStream" uid="uid://bqcrj6drdgown" path="res://assets/audio/sfx/explosions/explosion_003.wav" id="6_mr5jq"]
+[ext_resource type="AudioStream" uid="uid://ugebyh7fcoi" path="res://assets/audio/sfx/explosions/explosion_004.wav" id="7_ehbb4"]
 [ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="7_r6jwc"]
+[ext_resource type="AudioStream" uid="uid://bfllnpgjfkld5" path="res://assets/audio/sfx/defrag/shock.wav" id="8_wnxyd"]
 [ext_resource type="Script" uid="uid://bnj4756de2kg0" path="res://objects/bosses/defrag/states/defrag_state_dead.gd" id="10_1l2oy"]
+[ext_resource type="Script" uid="uid://786bip6wtq02" path="res://objects/bosses/defrag/states/defrag_state_travel.gd" id="16_cbsr2"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uq1yx"]
+random_pitch = 1.0594631
+random_volume_offset_db = 3.0
+streams_count = 4
+stream_0/stream = ExtResource("4_v854h")
+stream_1/stream = ExtResource("5_yb8sd")
+stream_2/stream = ExtResource("6_mr5jq")
+stream_3/stream = ExtResource("7_ehbb4")
+
+[sub_resource type="Resource" id="Resource_3ipp1"]
+script = ExtResource("3_cbsr2")
+stream = SubResource("AudioStreamRandomizer_uq1yx")
+volume_linear = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_bwxl0"]
+script = ExtResource("3_cbsr2")
+stream = ExtResource("8_wnxyd")
+volume_linear = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_0cv7q"]
+script = ExtResource("2_cj3sh")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("3_cbsr2")]({
+&"explosion": SubResource("Resource_3ipp1"),
+&"hurt": SubResource("Resource_bwxl0")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7rpsr"]
 radius = 5.0
@@ -814,6 +852,7 @@ node_connections = [&"output", 0, &"Cast", &"Cast", 0, &"Core", &"Cast", 1, &"Ca
 collision_layer = 32
 script = ExtResource("1_7rpsr")
 animation_tree = NodePath("AnimationTree")
+sound_sheet = SubResource("Resource_0cv7q")
 metadata/_custom_type_script = "uid://bjpqvif0m723a"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1238165533]
@@ -847,7 +886,7 @@ shape = SubResource("RectangleShape2D_r6jwc")
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_namoy")
 animation = &"idle"
-frame = 2
+frame = 1
 offset = Vector2(0, -10.5)
 
 [node name="AnimSpritePlayer" type="AnimationPlayer" parent="." unique_id=828478622 node_paths=PackedStringArray("animated_sprite")]
@@ -877,7 +916,13 @@ metadata/_custom_type_script = "uid://b865x7ayjvbki"
 
 [node name="Idle" type="Node" parent="AFSM" unique_id=1349115687]
 script = ExtResource("5_50dpf")
+state_travel = &"Travel"
 default = true
+metadata/_custom_type_script = "uid://cut78krhqfdxv"
+
+[node name="Travel" type="Node" parent="AFSM" unique_id=1255821468]
+script = ExtResource("16_cbsr2")
+state_idle = &"Idle"
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
 [node name="Hurt" type="Node" parent="AFSM" unique_id=2119122870]
@@ -894,5 +939,6 @@ metadata/_custom_type_script = "uid://cut78krhqfdxv"
 [connection signal="dead" from="." to="ComponentRelay" method="boss_dead"]
 [connection signal="dead" from="." to="AFSM" method="transition_state" binds= [&"Dead"]]
 [connection signal="tree_exiting" from="." to="ComponentRelay" method="boss_removed"]
+[connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed" binds= [true]]
 [connection signal="hit" from="ComponentHealth" to="AFSM" method="transition_state" binds= [&"Hurt"]]

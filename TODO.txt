@@ -1,2 +1,3 @@
 * Animate Defrag?
 * Defrag moves by turning into a block and "shifts" to a target position, then turns back into boss.
+* Defrag: Automatically switch to "Travel" mode if player gets within a target distance

@@ -32,6 +32,17 @@ const ANIM_FACE_AWAY : StringName = &"face_away"
 const ANIM_FACE_TOWARD : StringName = &"face_toward"
 const ANIM_CAST : StringName = &"cast"
 
+const AUDIO_EXPLOSION : StringName = &"explosion"
+const AUDIO_HURT : StringName = &"hurt"
+
+# ------------------------------------------------------------------------------
+# Export Variables
+# ------------------------------------------------------------------------------
+## The group to use for finding target travel locations ([Node2D])
+@export var travel_target_group : StringName = &""
+## Travel speed in pixels per second.
+@export var travel_speed : float = 120.0
+
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
@@ -91,7 +102,6 @@ func room_shift_toggle(pulse_segments : int, seg_duration : float) -> void:
 
 func change_action(action : String) -> void:
 	if animation_tree == null: return
-	print("Attempting to set action to: ", action)
 	animation_tree.set(ATREE_CORE_TRANSITION, action)
 	if action == CORE_ACTION_BRICK:
 		_brick_mode = true
