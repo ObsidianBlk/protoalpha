@@ -5,6 +5,7 @@ extends CharacterActor2D
 # Signals
 # ------------------------------------------------------------------------------
 signal toggle_room_shift()
+signal player_closeness_changed(close : bool)
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -21,6 +22,7 @@ const CORE_ACTION_IDLE : String = "Idle"
 const CORE_ACTION_WALK : String = "Walk"
 const CORE_ACTION_HURT : String = "Hurt"
 const CORE_ACTION_BRICK : String = "Brick"
+const CORE_ACTION_CAST : String = "Cast"
 
 const ANIM_IDLE : StringName = &"idle"
 const ANIM_HURT : StringName = &"hurt"
@@ -49,6 +51,9 @@ const AUDIO_HURT : StringName = &"hurt"
 var _tween : Tween = null
 var _brick_mode : bool = false
 
+var _player : WeakRef = weakref(null)
+var _player_close : bool = false
+
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
@@ -66,12 +71,32 @@ var _brick_mode : bool = false
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
+func is_player_close() -> bool:
+	return _player_close
+
+func is_flipped() -> bool:
+	if _sprite != null:
+		return _sprite.flip_h
+	return false
+
+func flip(flip_h : bool) -> void:
+	if _sprite != null:
+		_sprite.flip_h = flip_h
+
 func get_player() -> CharacterActor2D:
-	var parr : Array[Node] = get_tree().get_nodes_in_group(Game.GROUP_PLAYER)
-	for player : Node in parr:
-		if player is CharacterActor2D:
-			return player
-	return null
+	var player : CharacterBody2D = _player.get_ref()
+	if player == null:
+		var parr : Array[Node] = get_tree().get_nodes_in_group(Game.GROUP_PLAYER)
+		for p : Node in parr:
+			if p is CharacterActor2D:
+				player = p
+				_player = weakref(p)
+	return player
+
+func face_player() -> void:
+	var player : CharacterBody2D = get_player()
+	if player != null and _sprite != null:
+		_sprite.flip_h = player.global_position.x < global_position.x
 
 func fire_map_weapon(count : int) -> void:
 	var player : CharacterActor2D = get_player()
@@ -109,10 +134,17 @@ func change_action(action : String) -> void:
 func end_brick_mode() -> void:
 	_brick_mode = false
 
-func cast() -> void:
-	if animation_tree == null: return
-	animation_tree.set(ATREE_CAST, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+#func cast() -> void:
+	#if animation_tree == null: return
+	#animation_tree.set(ATREE_CAST, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
+func _on_player_detector_body_entered(_body: Node2D) -> void:
+	_player_close = true
+	player_closeness_changed.emit(_player_close)
+
+func _on_player_detector_body_exited(_body: Node2D) -> void:
+	_player_close = false
+	player_closeness_changed.emit(_player_close)

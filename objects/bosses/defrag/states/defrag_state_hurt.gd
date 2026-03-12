@@ -5,7 +5,7 @@ extends ActorState
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var hurt_duration : float = 1.0
-@export var idle_state : StringName = &""
+@export var state_travel : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -28,5 +28,5 @@ func exit() -> void:
 
 func update(delta : float) -> void:
 	_duration -= delta
-	if _duration <= 0.0:
-		swap_to(idle_state)
+	if _duration <= 0.0 and not state_travel.is_empty():
+		swap_to(state_travel, true)

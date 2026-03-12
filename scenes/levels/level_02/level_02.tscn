@@ -872,6 +872,21 @@ boss_path = "uid://co5sd0citwx1"
 spawn_container = NodePath("../../../BossContainer")
 metadata/_custom_type_script = "uid://bk3uspbhs6g0p"
 
+[node name="TravelPoint_01" type="Marker2D" parent="MapSegments/BossRoom" unique_id=1689838155 groups=["defrag_travel_point"]]
+position = Vector2(74, -256)
+
+[node name="TravelPoint_02" type="Marker2D" parent="MapSegments/BossRoom" unique_id=486594602 groups=["defrag_travel_point"]]
+position = Vector2(240, -256)
+
+[node name="TravelPoint_03" type="Marker2D" parent="MapSegments/BossRoom" unique_id=165975246 groups=["defrag_travel_point"]]
+position = Vector2(265, -368)
+
+[node name="TravelPoint_04" type="Marker2D" parent="MapSegments/BossRoom" unique_id=1020978022 groups=["defrag_travel_point"]]
+position = Vector2(54, -368)
+
+[node name="TravelPoint_05" type="Marker2D" parent="MapSegments/BossRoom" unique_id=1912828998 groups=["defrag_travel_point"]]
+position = Vector2(161, -352)
+
 [node name="BossContainer" type="Node2D" parent="." unique_id=964313841]
 
 [node name="PlayerContainer" type="Node2D" parent="." unique_id=1997573751]

@@ -18,6 +18,8 @@
 [ext_resource type="AudioStream" uid="uid://bfllnpgjfkld5" path="res://assets/audio/sfx/defrag/shock.wav" id="8_wnxyd"]
 [ext_resource type="Script" uid="uid://bnj4756de2kg0" path="res://objects/bosses/defrag/states/defrag_state_dead.gd" id="10_1l2oy"]
 [ext_resource type="Script" uid="uid://786bip6wtq02" path="res://objects/bosses/defrag/states/defrag_state_travel.gd" id="16_cbsr2"]
+[ext_resource type="Script" uid="uid://cnndxk017rqhx" path="res://objects/bosses/defrag/states/defrag_state_shift.gd" id="17_v854h"]
+[ext_resource type="Script" uid="uid://bnekqolqfe173" path="res://objects/bosses/defrag/states/defrag_state_attack.gd" id="18_yb8sd"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uq1yx"]
 random_pitch = 1.0594631
@@ -55,6 +57,12 @@ height = 20.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r6jwc"]
 size = Vector2(8, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cbsr2"]
+size = Vector2(7, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yb8sd"]
+size = Vector2(48, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vu6uj"]
 atlas = ExtResource("2_7rpsr")
@@ -772,6 +780,9 @@ animation = &"idle"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mgott"]
 animation = &"walk"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yb8sd"]
+animation = &"cast"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xy0od"]
 animation = &"brick"
 
@@ -790,7 +801,7 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d1urw"]
 advance_mode = 2
-advance_condition = &"not _brick_mode"
+advance_expression = "not _brick_mode"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_v7asv"]
 switch_mode = 2
@@ -823,9 +834,13 @@ input_3/name = "Brick"
 input_3/auto_advance = false
 input_3/break_loop_at_end = false
 input_3/reset = true
+input_4/name = "Cast"
+input_4/auto_advance = false
+input_4/break_loop_at_end = false
+input_4/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vrg18"]
-graph_offset = Vector2(-684.9628, 139.46793)
+graph_offset = Vector2(-579.7249, 78.28406)
 nodes/AnimIdle/node = SubResource("AnimationNodeAnimation_f1qaq")
 nodes/AnimIdle/position = Vector2(-420, -20)
 nodes/AnimWalk/node = SubResource("AnimationNodeAnimation_mgott")
@@ -836,21 +851,24 @@ nodes/Transition/node = SubResource("AnimationNodeTransition_fqqha")
 nodes/Transition/position = Vector2(-40, 220)
 nodes/BrickState/node = SubResource("AnimationNodeStateMachine_1l2oy")
 nodes/BrickState/position = Vector2(-500, 520)
-node_connections = [&"output", 0, &"Transition", &"Transition", 0, &"AnimIdle", &"Transition", 1, &"AnimWalk", &"Transition", 2, &"AnimHurt", &"Transition", 3, &"BrickState"]
+nodes/Animation/node = SubResource("AnimationNodeAnimation_yb8sd")
+nodes/Animation/position = Vector2(-260, 680)
+node_connections = [&"output", 0, &"Transition", &"Transition", 0, &"AnimIdle", &"Transition", 1, &"AnimWalk", &"Transition", 2, &"AnimHurt", &"Transition", 3, &"BrickState", &"Transition", 4, &"Animation"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ibbgm"]
-graph_offset = Vector2(-799.22534, 56.20395)
+graph_offset = Vector2(-851.3471, 25.801636)
 nodes/Cast/node = SubResource("AnimationNodeOneShot_lxk3g")
-nodes/Cast/position = Vector2(-260, 240)
+nodes/Cast/position = Vector2(-240, 400)
 nodes/CastFlow/node = SubResource("AnimationNodeStateMachine_uwqxd")
 nodes/CastFlow/position = Vector2(-640, 460)
 nodes/Core/node = SubResource("AnimationNodeBlendTree_vrg18")
 nodes/Core/position = Vector2(-640, 180)
-node_connections = [&"output", 0, &"Cast", &"Cast", 0, &"Core", &"Cast", 1, &"CastFlow"]
+node_connections = [&"output", 0, &"Core", &"Cast", 1, &"CastFlow"]
 
 [node name="defrag" type="CharacterBody2D" unique_id=1631192305 node_paths=PackedStringArray("animation_tree")]
 collision_layer = 32
 script = ExtResource("1_7rpsr")
+travel_target_group = &"defrag_travel_point"
 animation_tree = NodePath("AnimationTree")
 sound_sheet = SubResource("Resource_0cv7q")
 metadata/_custom_type_script = "uid://bjpqvif0m723a"
@@ -865,8 +883,8 @@ metadata/_custom_type_script = "uid://cwjk0b6j3hspo"
 
 [node name="ComponentHealth" type="Node" parent="." unique_id=626638493]
 script = ExtResource("2_d1urw")
-max_health = 2
-health = 2
+max_health = 20
+health = 20
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
 
 [node name="HitBox" type="Area2D" parent="." unique_id=285009415 node_paths=PackedStringArray("health")]
@@ -881,6 +899,26 @@ metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1794951057]
 position = Vector2(-1, -9.5)
 shape = SubResource("RectangleShape2D_r6jwc")
+
+[node name="HitBoxBrick" type="Area2D" parent="." unique_id=750026514]
+collision_layer = 0
+collision_mask = 256
+script = ExtResource("7_r6jwc")
+damage = 15
+disabled_on_start = true
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxBrick" unique_id=1137693601]
+position = Vector2(-0.5, -10.5)
+shape = SubResource("RectangleShape2D_cbsr2")
+
+[node name="PlayerDetector" type="Area2D" parent="." unique_id=2027417024]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=771754419]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_yb8sd")
 
 [node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=359973157]
 unique_name_in_owner = true
@@ -907,7 +945,6 @@ parameters/Cast/request = 0
 parameters/Core/Transition/current_state = "Idle"
 parameters/Core/Transition/transition_request = ""
 parameters/Core/Transition/current_index = 0
-"parameters/Core/BrickState/conditions/not _brick_mode" = false
 
 [node name="AFSM" type="Node" parent="." unique_id=1872643 node_paths=PackedStringArray("host")]
 script = ExtResource("4_a3cwc")
@@ -917,18 +954,32 @@ metadata/_custom_type_script = "uid://b865x7ayjvbki"
 [node name="Idle" type="Node" parent="AFSM" unique_id=1349115687]
 script = ExtResource("5_50dpf")
 state_travel = &"Travel"
+state_attack_block = &"Attack"
+state_shift = &"Shift"
 default = true
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
-[node name="Travel" type="Node" parent="AFSM" unique_id=1255821468]
+[node name="Travel" type="Node" parent="AFSM" unique_id=1255821468 node_paths=PackedStringArray("hitbox_primary", "hitbox_travel")]
 script = ExtResource("16_cbsr2")
+hitbox_primary = NodePath("../../HitBox")
+hitbox_travel = NodePath("../../HitBoxBrick")
+state_idle = &"Idle"
+metadata/_custom_type_script = "uid://cut78krhqfdxv"
+
+[node name="Shift" type="Node" parent="AFSM" unique_id=954193172]
+script = ExtResource("17_v854h")
+state_idle = &"Idle"
+metadata/_custom_type_script = "uid://cut78krhqfdxv"
+
+[node name="Attack" type="Node" parent="AFSM" unique_id=33757793]
+script = ExtResource("18_yb8sd")
 state_idle = &"Idle"
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
 [node name="Hurt" type="Node" parent="AFSM" unique_id=2119122870]
 script = ExtResource("6_b30a8")
 hurt_duration = 2.0
-idle_state = &"Idle"
+state_travel = &"Travel"
 metadata/_custom_type_script = "uid://cut78krhqfdxv"
 
 [node name="Dead" type="Node" parent="AFSM" unique_id=874650869]
@@ -942,3 +993,5 @@ metadata/_custom_type_script = "uid://cut78krhqfdxv"
 [connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed" binds= [true]]
 [connection signal="hit" from="ComponentHealth" to="AFSM" method="transition_state" binds= [&"Hurt"]]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
