@@ -50,3 +50,12 @@ func physics_update(_delta : float) -> void:
 func handle_input(event : InputEvent) -> void:
 	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+	elif event.is_action(&"shoot"):
+		var wep : Weapon = actor.get_weapon()
+		if event.is_pressed():
+			actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
+			wep.press_trigger(actor.get_parent())
+		else:
+			if wep.can_shoot() and actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
+				actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+			wep.release_trigger()

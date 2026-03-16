@@ -35,10 +35,9 @@ var _cooldown_shift : float = 0.0
 # -------------------------------------------------------------------------
 func _ready() -> void:
 	_actions = WeightedCollection.new()
-	_actions.insert(ACTION_TRAVEL, 1.0)
+	_actions.insert(ACTION_TRAVEL, 2.0)
 	_actions.insert(ACTION_ATTACK, 5.0)
 	_actions.insert(ACTION_NONE, 1.0)
-	_actions.insert(ACTION_SHIFT, 2.0)
 
 # -------------------------------------------------------------------------
 # Private Methods

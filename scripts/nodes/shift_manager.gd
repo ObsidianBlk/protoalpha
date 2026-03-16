@@ -209,6 +209,7 @@ func _draw() -> void:
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
+	_VerbosePrint("Heartbeat: %d"%[_heartbeat])
 	_heartbeat -= delta
 	if _heartbeat <= 0.0:
 		var variance : float = spawn_heartbeat * spawn_heartbeat_variance
@@ -296,6 +297,7 @@ func _ScanTiles() -> void:
 	for coord : Vector2i in used:
 		if not subregion_region.has_point(coord): continue
 		var tdata : TileData = tilemap.get_cell_tile_data(coord)
+		if tdata == null: continue
 		if tdata.has_custom_data(SHIFTABLE_DATA_LAYER_NAME) or tdata.has_custom_data(SLOT_DATA_LAYER_NAME):
 			if tdata.get_custom_data(SHIFTABLE_DATA_LAYER_NAME) or tdata.get_custom_data(SLOT_DATA_LAYER_NAME):
 				var source_id : int = tilemap.get_cell_source_id(coord)
