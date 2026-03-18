@@ -1,3 +1,16 @@
-* Animate Defrag?
-* Defrag moves by turning into a block and "shifts" to a target position, then turns back into boss.
-* Defrag: Automatically switch to "Travel" mode if player gets within a target distance
+* Add more weapons
+* Add system for player to obtain new weapons
+* Energy bar for weapons (beyond basic)
+* Build out the "Password" system
+* Boss spawning animation/intro
+* Boss defeated Victory animation/outtro
+
+* New tile that has a charge-up animation when stepped on, and charge-down when not
+  stepped on.
+  * While player is standing on it, will charge the player's energy bar.
+  * If energy bar fully charged, will "overload" the energy bar. If fully overloaded
+    energy bar will discharge hurting the player (massively?)
+
+-- Perpretuals --
+* New Mobs
+* More tilesets
