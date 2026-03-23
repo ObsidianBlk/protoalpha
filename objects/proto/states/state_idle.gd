@@ -24,6 +24,7 @@ var _weighted_action : WeightedRandomCollection = null
 var _weapon_signals : Array[Game.SigDef] = [
 	Game.SigDef.new(&"reloaded", _on_reloaded)
 ]
+var _alt_firing : bool = false
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -97,14 +98,20 @@ func handle_input(event : InputEvent) -> void:
 			interactor.interact()
 		else:
 			var wep : Weapon = actor.get_weapon()
-			if event.is_pressed():
-				if wep.can_shoot():
-					actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
-					wep.press_trigger(actor.get_parent())
-			else:
-				if actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
-					actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
-				wep.release_trigger()
+			if wep != null:
+				if event.is_pressed():
+					if wep.can_shoot():
+						actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
+						wep.press_trigger(actor.get_parent())
+						if actor.enable_alt_fire(true):
+							_alt_firing = true
+							wep.press_trigger(actor.get_parent())
+				else:
+					if actor.is_tree_param(APARAM_TRANSITION_CURRENT, TRANS_ATTACK):
+						actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+					wep.release_trigger()
+					actor.enable_alt_fire(false)
+					_alt_firing = false
 
 
 # ------------------------------------------------------------------------------
@@ -112,4 +119,5 @@ func handle_input(event : InputEvent) -> void:
 # ------------------------------------------------------------------------------
 func _on_reloaded() -> void:
 	if actor == null: return
-	actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+	if not _alt_firing:
+		actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)

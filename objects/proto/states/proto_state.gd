@@ -27,6 +27,7 @@ const TRANS_CLIMB : String = "climb"
 const ONCE_FIRE : int = 1
 
 const APARAM_TRANSITION : String = "parameters/transition/transition_request"
+const APARAM_TRANSITION_CURRENT : String = "parameters/transition/current_state"
 const APARAM_ONCE_HURT : String = "parameters/hurt/request"
 const APARAM_ONCE_SPAWN : String = "parameters/spawn_dead/request"
 const APARAM_ONCE_TELEPORT : String = "parameters/teleport_override/request"

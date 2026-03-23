@@ -160,6 +160,14 @@ const LEVELS : Dictionary[int, Dictionary] = {
 	},
 }
 
+
+## Lookup Table Dictionary that takes the weapon name defined in [GameState] as the key
+## and the value is the resource object's UID path.
+const WEAPON_LUT : Dictionary[StringName, String] = {
+	GameState.WEAPON_BOLT : "uid://p0vcbjdbc78t",
+	GameState.WEAPON_CHARGED_BOLT: "uid://cjxpcqqqetplo",
+}
+
 # ------------------------------------------------------------------------------
 # Static Variables
 # ------------------------------------------------------------------------------
@@ -236,6 +244,15 @@ static func Get_Level_State(level_id : int) -> LevelDevState:
 		return LEVELS[level_id][_LEVEL_STATE]
 	return LevelDevState.NOT_AVAILABLE
 
+static func Is_Valid_Weapon(weapon_name : StringName) -> bool:
+	return weapon_name in WEAPON_LUT
+
+static func Get_Weapon_Resource(weapon_name : StringName) -> WeaponDef:
+	if weapon_name in WEAPON_LUT:
+		var wdef : Resource = load(WEAPON_LUT[weapon_name])
+		if wdef is WeaponDef:
+			return wdef
+	return null
 
 static func Node_Has_Properties(n : Node, properties : Array[String]) -> bool:
 	for property : String in properties:

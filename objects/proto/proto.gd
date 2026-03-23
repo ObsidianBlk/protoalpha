@@ -19,6 +19,11 @@ const STATE_TELEPORT : StringName = &"Teleport"
 @export var fall_multiplier : float = 1.4
 
 # ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
+var _secondary_weapon : StringName = GameState.WEAPON_CHARGED_BOLT
+
+# ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _sprite: AnimatedSprite2D = %ASprite
@@ -41,7 +46,28 @@ func _ready() -> void:
 # Public Methods
 # ------------------------------------------------------------------------------
 func get_weapon() -> Weapon:
+	# TODO: Really, if this is supposed to exist, it should be in CharacterActor2D,
+	# NOT here!
 	return weapon
+
+func set_secondary_weapon(weapon_name : StringName) -> void:
+	if weapon == null: return
+	if Game.Is_Valid_Weapon(weapon_name):
+		_secondary_weapon = weapon_name
+		if _secondary_weapon == GameState.WEAPON_CHARGED_BOLT:
+			weapon.weapon_def = Game.Get_Weapon_Resource(GameState.WEAPON_BOLT)
+		else:
+			weapon.weapon_def = Game.Get_Weapon_Resource(_secondary_weapon)
+
+func enable_alt_fire(enable : bool) -> bool:
+	if weapon != null:
+		if _secondary_weapon == GameState.WEAPON_CHARGED_BOLT:
+			if enable:
+				weapon.weapon_def = Game.Get_Weapon_Resource(GameState.WEAPON_CHARGED_BOLT)
+			else:
+				weapon.weapon_def = Game.Get_Weapon_Resource(GameState.WEAPON_BOLT)
+			return true
+	return false
 
 func spawn_at(spawn_position : Vector2, payload : Dictionary = {}) -> void:
 	super.spawn_at(spawn_position, payload)

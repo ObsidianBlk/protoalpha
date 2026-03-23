@@ -29,6 +29,17 @@ const LEVEL_8 : int = 0x80
 
 const ALL_LEVELS : int = LEVEL_1 | LEVEL_2 | LEVEL_3 | LEVEL_4 | LEVEL_5 | LEVEL_6 | LEVEL_7 | LEVEL_8
 
+const WEAPON_BOLT : StringName = &"blaster"
+const WEAPON_CHARGED_BOLT : StringName = &"charged_blaster"
+
+# A stupid lookup table that takes the weapon name as key and the value is the
+# LEVEL_* that unlocks that weapon.
+# NOTE: A value of 0 is always unlocked.
+const _WEAPON_LUT : Dictionary[StringName, int] = {
+	WEAPON_BOLT: 0,
+	WEAPON_CHARGED_BOLT: 0
+}
+
 const MAX_ENERGY : int = 255
 const INITIAL_PLAYER_LIVES : int = 3
 
@@ -42,22 +53,21 @@ const CHEAT_DEBUG_POSITION : StringName = &"move_up_move_left_move_down_move_rig
 # ------------------------------------------------------------------------------
 @export var unlimited : bool = false:				set=set_unlimited
 @export var lives : int = INITIAL_PLAYER_LIVES:		set=set_lives
+## Determines which levels are "unlocked" and available for the player to play
 @export var unlocked_levels : int = ALL_LEVELS:		set=set_unlocked_levels
-@export var energy : Dictionary[int, int] = {
-	LEVEL_1: MAX_ENERGY,
-	LEVEL_2: MAX_ENERGY,
-	LEVEL_3: MAX_ENERGY,
-	LEVEL_4: MAX_ENERGY,
-	LEVEL_5: MAX_ENERGY,
-	LEVEL_6: MAX_ENERGY,
-	LEVEL_7: MAX_ENERGY,
-	LEVEL_8: MAX_ENERGY
+@export var energy : Dictionary[StringName, int] = {
+	WEAPON_BOLT: MAX_ENERGY,
+	WEAPON_CHARGED_BOLT: MAX_ENERGY,
 }:													set=set_energy
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _lock_change_emit : int = 0
+var _energy : Dictionary[StringName, int] = {
+	WEAPON_BOLT: MAX_ENERGY,
+	WEAPON_CHARGED_BOLT: MAX_ENERGY,
+}
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -85,12 +95,12 @@ func set_unlocked_levels(ul : int) -> void:
 		if _lock_change_emit <= 0:
 			changed.emit()
 
-func set_energy(e : Dictionary[int, int]) -> void:
+func set_energy(e : Dictionary[StringName, int]) -> void:
 	var echanged : bool = false
-	for l : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
-		if l in e and e[l] != energy[l]:
+	for key : StringName in e:
+		if key in energy and energy[key] != e[key]:
+			energy[key] = e[key]
 			echanged = true
-			energy[l] = e[l]
 	if echanged and _lock_change_emit <= 0:
 		changed.emit()
 
@@ -102,30 +112,22 @@ func reset() -> void:
 	unlimited = false
 	lives = INITIAL_PLAYER_LIVES
 	unlocked_levels = ALL_LEVELS
-	energy = {
-		LEVEL_1: MAX_ENERGY,
-		LEVEL_2: MAX_ENERGY,
-		LEVEL_3: MAX_ENERGY,
-		LEVEL_4: MAX_ENERGY,
-		LEVEL_5: MAX_ENERGY,
-		LEVEL_6: MAX_ENERGY,
-		LEVEL_7: MAX_ENERGY,
-		LEVEL_8: MAX_ENERGY
-	}
+	for weapon : StringName in energy:
+		energy[weapon] = MAX_ENERGY
 	_lock_change_emit -= 1
 	if _lock_change_emit <= 0:
 		changed.emit()
 
 
-func get_energy_level(l : int) -> int:
-	if l in energy:
-		return energy[l]
+func get_energy_level(weapon : StringName) -> int:
+	if weapon in energy:
+		return energy[weapon]
 	return -1
 
-func set_energy_level(l : int, level : int) -> void:
-	level = clampi(level, 0, 255)
-	if l in energy and energy[l] != level:
-		energy[l] = level
+func set_energy_level(weapon : StringName, energy_level : int) -> void:
+	energy_level = clampi(energy_level, 0, 255)
+	if weapon in energy and energy[weapon] != energy_level:
+		energy[weapon] = energy_level
 		if _lock_change_emit <= 0:
 			changed.emit()
 
@@ -136,10 +138,14 @@ func set_level_unlocked(level : int, unlock : bool = true) -> void:
 		else:
 			unlocked_levels = unlocked_levels & (~level)
 
+## Returns [code]true[/code] is [param level] id is marked as unlocked.
+## Otherwise [code]false[/code] is returned.
+## [br][br]
+## [b]Note:[/b] Special level id [code]0[/code] always returns [code]true[/code]
 func is_level_unlocked(level : int) -> bool:
 	if level in [LEVEL_1,LEVEL_2,LEVEL_3,LEVEL_4,LEVEL_5,LEVEL_6,LEVEL_7,LEVEL_8]:
 		return (level & unlocked_levels) > 0
-	return false
+	return level == 0
 
 func activate_cheat(code : StringName) -> bool:
 	match code:

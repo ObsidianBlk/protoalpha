@@ -11,6 +11,9 @@
   * If energy bar fully charged, will "overload" the energy bar. If fully overloaded
     energy bar will discharge hurting the player (massively?)
 
+-- UI --
+* Better TV-UI -> Game flow
+
 -- Perpretuals --
 * New Mobs
 * More tilesets
