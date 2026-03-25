@@ -1,5 +1,9 @@
 extends ProtoState
 
+# ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal special_triggered(triggered : bool)
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -28,9 +32,9 @@ func enter(payload : Variant = null) -> void:
 	# if it was RETURNED_TO by another state (such as the hurt state).
 	var returned_to : bool = typeof(payload) == TYPE_BOOL and payload == true
 
-	var wep : Weapon = actor.get_weapon()
-	if not wep.reloaded.is_connected(_on_reloaded):
-		wep.reloaded.connect(_on_reloaded)
+	#var wep : Weapon = actor.get_weapon()
+	#if not wep.reloaded.is_connected(_on_reloaded):
+		#wep.reloaded.connect(_on_reloaded)
 	
 	if typeof(payload) == TYPE_VECTOR2:
 		_move_direction = payload
@@ -39,9 +43,9 @@ func enter(payload : Variant = null) -> void:
 
 func exit() -> void:
 	if actor == null: return
-	var wep : Weapon = actor.get_weapon()
-	if wep.reloaded.is_connected(_on_reloaded):
-		wep.reloaded.disconnect(_on_reloaded)
+	#var wep : Weapon = actor.get_weapon()
+	#if wep.reloaded.is_connected(_on_reloaded):
+		#wep.reloaded.disconnect(_on_reloaded)
 
 func update(_delta : float) -> void:
 	pass
@@ -76,20 +80,21 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action_pressed(&"jump"):
 		swap_to(state_jump)
 	elif event.is_action(&"shoot"):
-		var wep : Weapon = actor.get_weapon()
-		if event.is_pressed():
-			if wep.can_shoot():
-				wep.press_trigger(actor.get_parent())
-				actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
-		else:
-			if wep.can_shoot() and actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
-				actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
-			wep.release_trigger()
+		special_triggered.emit(event.is_pressed())
+		#var wep : Weapon = actor.get_weapon()
+		#if event.is_pressed():
+			#if wep.can_shoot():
+				#wep.press_trigger(actor.get_parent())
+				#actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
+		#else:
+			#if wep.can_shoot() and actor.is_tree_param(APARAM_TRANSITION, TRANS_ATTACK):
+				#actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+			#wep.release_trigger()
 
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_reloaded() -> void:
-	if actor != null:
-		actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+#func _on_reloaded() -> void:
+	#if actor != null:
+		#actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)

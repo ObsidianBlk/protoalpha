@@ -21,7 +21,7 @@ const STATE_TELEPORT : StringName = &"Teleport"
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _secondary_weapon : StringName = GameState.WEAPON_CHARGED_BOLT
+var _special : StringName = GameState.WEAPON_CHARGED_BOLT
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -50,18 +50,21 @@ func get_weapon() -> Weapon:
 	# NOT here!
 	return weapon
 
-func set_secondary_weapon(weapon_name : StringName) -> void:
+func get_special() -> StringName:
+	return _special
+
+func set_special(special_name : StringName) -> void:
 	if weapon == null: return
-	if Game.Is_Valid_Weapon(weapon_name):
-		_secondary_weapon = weapon_name
-		if _secondary_weapon == GameState.WEAPON_CHARGED_BOLT:
+	if Game.Is_Valid_Weapon(special_name):
+		_special = special_name
+		if _special == GameState.WEAPON_CHARGED_BOLT:
 			weapon.weapon_def = Game.Get_Weapon_Resource(GameState.WEAPON_BOLT)
 		else:
-			weapon.weapon_def = Game.Get_Weapon_Resource(_secondary_weapon)
+			weapon.weapon_def = Game.Get_Weapon_Resource(special_name)
 
 func enable_alt_fire(enable : bool) -> bool:
 	if weapon != null:
-		if _secondary_weapon == GameState.WEAPON_CHARGED_BOLT:
+		if _special == GameState.WEAPON_CHARGED_BOLT:
 			if enable:
 				weapon.weapon_def = Game.Get_Weapon_Resource(GameState.WEAPON_CHARGED_BOLT)
 			else:

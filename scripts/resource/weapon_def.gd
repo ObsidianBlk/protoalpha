@@ -31,7 +31,8 @@ enum Type {PROJECTILE=0, BEAM=1}
 ## Determins if a weapon is semi-automatic ([code]false[/code], trigger must be pressed for each shot)
 ## [br]or automatic ([code]true[/code], projectiles will be emitted based on [rate_of_fire]).
 @export var automatic : bool = false:						set=set_automatic
-
+## The [WeaponDef] for an alternate firing mode.
+@export var alt_fire : WeaponDef = null
 
 # ------------------------------------------------------------------------------
 # Setters

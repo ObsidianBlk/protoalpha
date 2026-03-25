@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="WeaponDef" format=3 uid="uid://p0vcbjdbc78t"]
 
+[ext_resource type="Resource" uid="uid://cjxpcqqqetplo" path="res://data/weapon_defs/wdef_charged_bolt.tres" id="1_5ysna"]
 [ext_resource type="Texture2D" uid="uid://fmxjsbiuie4f" path="res://assets/graphics/bullets/bullet_small.png" id="1_ytbac"]
 [ext_resource type="PackedScene" uid="uid://xfj4a2moijg2" path="res://objects/projectiles/bolt/bolt.tscn" id="2_vmhm0"]
 [ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="3_80e0t"]
@@ -40,4 +41,5 @@ icon = SubResource("AtlasTexture_fid0d")
 sound_sheet = SubResource("Resource_v22gl")
 projectile = ExtResource("2_vmhm0")
 rate_of_fire = 0.2
+alt_fire = ExtResource("1_5ysna")
 metadata/_custom_type_script = "uid://dvj7a56df3qol"

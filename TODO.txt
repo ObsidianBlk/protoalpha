@@ -1,4 +1,7 @@
-* Add more weapons
+-- TODO --
+* Streamline/Refactor Weapon System
+* Update Game & GameState to have BOTH a WEAPON and SPECIAL LUT
+* Add more weapons (AKA Special Abilities)
 * Add system for player to obtain new weapons
 * Energy bar for weapons (beyond basic)
 * Build out the "Password" system
@@ -13,6 +16,12 @@
 
 -- UI --
 * Better TV-UI -> Game flow
+
+-- Special Ability Ideas --
+* Charged Bolt (Default Special)
+* Short Range Burst Movement (from SegFault [Arrow Attack])
+* Short Term Shield
+* Grenades (?)
 
 -- Perpretuals --
 * New Mobs

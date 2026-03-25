@@ -1,4 +1,4 @@
-@tool
+#@tool
 extends ActorState
 class_name ProtoState
 

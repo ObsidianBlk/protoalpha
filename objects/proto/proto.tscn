@@ -26,6 +26,7 @@
 [ext_resource type="Script" uid="uid://b865x7ayjvbki" path="res://scripts/fsm/actor_state_machine.gd" id="13_jl3in"]
 [ext_resource type="Script" uid="uid://csi3w2wjrro17" path="res://objects/proto/states/state_hurt.gd" id="14_l84w6"]
 [ext_resource type="Script" uid="uid://b3kbun32ck0px" path="res://objects/proto/states/state_dead.gd" id="15_f3qg8"]
+[ext_resource type="Script" uid="uid://d0uegpojp7qe7" path="res://objects/proto/special_handler.gd" id="17_j6iy6"]
 [ext_resource type="Script" uid="uid://bprt11s6lcv8p" path="res://objects/proto/states/state_teleport.gd" id="24_fql2o"]
 [ext_resource type="Script" uid="uid://db7mt4i5smbni" path="res://scripts/nodes/interactor_2d.gd" id="24_l6vdm"]
 [ext_resource type="PackedScene" uid="uid://nj2tagnipopm" path="res://objects/enemy_explosion/enemy_explosion.tscn" id="25_bg1mb"]
@@ -1381,7 +1382,7 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mh7ni"]
-graph_offset = Vector2(-809.18286, 76.11185)
+graph_offset = Vector2(-565.5386, 165.6897)
 nodes/output/position = Vector2(1240, 120)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(300, 60)
@@ -1499,6 +1500,10 @@ parameters/teleport_override/request = 0
 script = ExtResource("13_jl3in")
 metadata/_custom_type_script = "uid://huvqh0h46t6l"
 
+[node name="SpecialHandler" type="Node" parent="StateMachine" unique_id=2142463196 node_paths=PackedStringArray("weapon")]
+script = ExtResource("17_j6iy6")
+weapon = NodePath("../../Body/Weapon")
+
 [node name="Idle" type="Node" parent="StateMachine" unique_id=981379399 node_paths=PackedStringArray("interactor")]
 script = ExtResource("3_ida5t")
 state_move = &"Move"
@@ -1576,5 +1581,9 @@ position = Vector2(0, -10)
 [connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed"]
 [connection signal="hit" from="ComponentHealth" to="StateMachine" method="transition_state" binds= [&"Hurt"]]
+[connection signal="special_triggered" from="StateMachine/Idle" to="StateMachine/SpecialHandler" method="handle"]
+[connection signal="special_triggered" from="StateMachine/Move" to="StateMachine/SpecialHandler" method="handle"]
+[connection signal="special_triggered" from="StateMachine/Fall" to="StateMachine/SpecialHandler" method="handle"]
+[connection signal="special_triggered" from="StateMachine/Jump" to="StateMachine/SpecialHandler" method="handle"]
 [connection signal="explode" from="StateMachine/Dead" to="EnergyExplosion" method="set_emitting" binds= [true]]
 [connection signal="finished" from="EnergyExplosion" to="StateMachine/Dead" method="_on_explosion_finished"]

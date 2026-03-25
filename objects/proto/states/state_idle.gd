@@ -1,6 +1,11 @@
 extends ProtoState
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal special_triggered(triggered : bool)
+
+# ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const ACTION_NONE : StringName = &"None"
@@ -21,9 +26,9 @@ const FRAME_IDLE_B : int = 1
 # Variables
 # ------------------------------------------------------------------------------
 var _weighted_action : WeightedRandomCollection = null
-var _weapon_signals : Array[Game.SigDef] = [
-	Game.SigDef.new(&"reloaded", _on_reloaded)
-]
+#var _weapon_signals : Array[Game.SigDef] = [
+	#Game.SigDef.new(&"reloaded", _on_reloaded)
+#]
 var _alt_firing : bool = false
 
 # ------------------------------------------------------------------------------
@@ -42,8 +47,6 @@ func enter(payload : Variant = null) -> void:
 		pop()
 		return
 	
-	var wep : Weapon = actor.get_weapon()
-	Game.Connect_Signals(wep, _weapon_signals)
 	actor.velocity = Vector2.ZERO
 	if typeof(payload) == TYPE_BOOL and payload == true:
 		# This is a bit combersom but fuck it.
@@ -56,10 +59,6 @@ func enter(payload : Variant = null) -> void:
 
 func exit() -> void:
 	if actor == null: return
-	
-	var wep : Weapon = actor.get_weapon()
-	if wep == null: return
-	Game.Disconnect_Signals(wep, _weapon_signals)
 
 func update(_delta : float) -> void:
 	if actor == null: return
@@ -96,28 +95,24 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action(&"shoot"):
 		if event.is_pressed() and interactor != null and interactor.interactable_count() > 0:
 			interactor.interact()
-		else:
-			var wep : Weapon = actor.get_weapon()
-			if wep != null:
-				if event.is_pressed():
-					if wep.can_shoot():
-						actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
-						wep.press_trigger(actor.get_parent())
-						if actor.enable_alt_fire(true):
-							_alt_firing = true
-							wep.press_trigger(actor.get_parent())
-				else:
-					if actor.is_tree_param(APARAM_TRANSITION_CURRENT, TRANS_ATTACK):
-						actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
-					wep.release_trigger()
-					actor.enable_alt_fire(false)
-					_alt_firing = false
+		else: special_triggered.emit(event.is_pressed())
+		
+		#var wep : Weapon = actor.get_weapon()
+		#if wep == null: return
+		#
+		#if event.is_pressed():
+			#if wep.can_shoot():
+				#actor.set_tree_param(APARAM_TRANSITION, TRANS_ATTACK)
+				#wep.press_trigger(actor.get_parent())
+				#if actor.enable_alt_fire(true):
+					#wep.press_trigger(actor.get_parent())
+		#else:
+			#if actor.is_tree_param(APARAM_TRANSITION_CURRENT, TRANS_ATTACK):
+				#actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+			#wep.release_trigger()
+			#actor.enable_alt_fire(false)
 
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_reloaded() -> void:
-	if actor == null: return
-	if not _alt_firing:
-		actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
