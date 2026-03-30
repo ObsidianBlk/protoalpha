@@ -1,6 +1,6 @@
 -- TODO --
-* Streamline/Refactor Weapon System
-* Update Game & GameState to have BOTH a WEAPON and SPECIAL LUT
+* Finish the FaultDash state in Proto!
+
 * Add more weapons (AKA Special Abilities)
 * Add system for player to obtain new weapons
 * Energy bar for weapons (beyond basic)

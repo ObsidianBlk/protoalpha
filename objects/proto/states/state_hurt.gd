@@ -13,7 +13,9 @@ func enter(payload : Variant = null) -> void:
 	play_sfx(AUDIO_HURT)
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
-	actor.set_tree_param(APARAM_ONCE_HURT, ONCE_FIRE)
+	#actor.set_tree_param(APARAM_ONCE_HURT, ONCE_FIRE)
+	actor.set_tree_param(APARAM_TRANS_ACTION, TRANS_ACTION_HURT)
+	actor.set_tree_param(APARAM_ONCE_INTERRUPT, ONCE_FIRE)
 	actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
 
 

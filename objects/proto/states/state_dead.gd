@@ -18,7 +18,9 @@ func enter(payload : Variant = null) -> void:
 	if not crushed and actor.is_on_surface():
 		if not actor.animation_finished.is_connected(_on_animation_finished):
 			actor.animation_finished.connect(_on_animation_finished)
-		actor.set_tree_param(APARAM_ONCE_SPAWN, ONCE_FIRE)
+		actor.set_tree_param(APARAM_TRANS_ACTION, TRANS_ACTION_DEAD_SPAWN)
+		actor.set_tree_param(APARAM_ONCE_INTERRUPT, ONCE_FIRE)
+		#actor.set_tree_param(APARAM_ONCE_SPAWN, ONCE_FIRE)
 	else:
 		actor.hide_sprite(true)
 		explode.emit()

@@ -163,9 +163,8 @@ const LEVELS : Dictionary[int, Dictionary] = {
 
 ## Lookup Table Dictionary that takes the weapon name defined in [GameState] as the key
 ## and the value is the resource object's UID path.
-const WEAPON_LUT : Dictionary[StringName, String] = {
-	GameState.WEAPON_BOLT : "uid://p0vcbjdbc78t",
-	GameState.WEAPON_CHARGED_BOLT: "uid://cjxpcqqqetplo",
+const WEAPON_LUT : Dictionary[GameState.Special, String] = {
+	GameState.Special.CHARGED_BLASTER : "uid://p0vcbjdbc78t",
 }
 
 # ------------------------------------------------------------------------------
@@ -244,12 +243,12 @@ static func Get_Level_State(level_id : int) -> LevelDevState:
 		return LEVELS[level_id][_LEVEL_STATE]
 	return LevelDevState.NOT_AVAILABLE
 
-static func Is_Valid_Weapon(weapon_name : StringName) -> bool:
-	return weapon_name in WEAPON_LUT
+static func Is_Valid_Weapon(special : GameState.Special) -> bool:
+	return special in WEAPON_LUT
 
-static func Get_Weapon_Resource(weapon_name : StringName) -> WeaponDef:
-	if weapon_name in WEAPON_LUT:
-		var wdef : Resource = load(WEAPON_LUT[weapon_name])
+static func Get_Weapon_Resource(special : GameState.Special) -> WeaponDef:
+	if special in WEAPON_LUT:
+		var wdef : Resource = load(WEAPON_LUT[special])
 		if wdef is WeaponDef:
 			return wdef
 	return null

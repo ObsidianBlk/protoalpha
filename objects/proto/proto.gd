@@ -21,7 +21,7 @@ const STATE_TELEPORT : StringName = &"Teleport"
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _special : StringName = GameState.WEAPON_CHARGED_BOLT
+var _special : GameState.Special = GameState.Special.CHARGED_BLASTER
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -50,27 +50,16 @@ func get_weapon() -> Weapon:
 	# NOT here!
 	return weapon
 
-func get_special() -> StringName:
+func get_special() -> GameState.Special:
 	return _special
 
-func set_special(special_name : StringName) -> void:
-	if weapon == null: return
-	if Game.Is_Valid_Weapon(special_name):
-		_special = special_name
-		if _special == GameState.WEAPON_CHARGED_BOLT:
-			weapon.weapon_def = Game.Get_Weapon_Resource(GameState.WEAPON_BOLT)
-		else:
-			weapon.weapon_def = Game.Get_Weapon_Resource(special_name)
-
-func enable_alt_fire(enable : bool) -> bool:
-	if weapon != null:
-		if _special == GameState.WEAPON_CHARGED_BOLT:
-			if enable:
-				weapon.weapon_def = Game.Get_Weapon_Resource(GameState.WEAPON_CHARGED_BOLT)
-			else:
-				weapon.weapon_def = Game.Get_Weapon_Resource(GameState.WEAPON_BOLT)
-			return true
-	return false
+func set_special(special : GameState.Special) -> void:
+	if Game.State.is_special_unlocked(special):
+		_special = special
+		if weapon != null:
+			if Game.Is_Valid_Weapon(special):
+				weapon.weapon_def = Game.Get_Weapon_Resource(special)
+			else: weapon.weapon_def = null
 
 func spawn_at(spawn_position : Vector2, payload : Dictionary = {}) -> void:
 	super.spawn_at(spawn_position, payload)

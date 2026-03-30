@@ -4,34 +4,41 @@ extends ProtoState
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+## The speed of the Fault Dash special ability in pixels per second
+@export var dash_speed : int = 320
+## The length of time (in seconds) the dash should be active
+@export var duration : float = 1.0
+@export_subgroup("States")
 @export var state_idle : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _destination : Vector2 = Vector2.ZERO
+var _dashing : bool = false
+var _current_duration : float = 0.0
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
 # ------------------------------------------------------------------------------
 func enter(payload : Variant = null) -> void:
-	if actor == null or typeof(payload) != TYPE_VECTOR2:
+	if actor == null:
 		pop()
 		return
-
-	_destination = payload
+	
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
-	#actor.set_tree_param(APARAM_ONCE_TELEPORT, ONCE_FIRE)
-	actor.set_tree_param(APARAM_TRANS_ACTION, TRANS_ACTION_TELEPORT)
+	actor.set_tree_param(APARAM_TRANS_ACTION, TRANS_ACTION_SPECIAL_FAULT_DASH)
 	actor.set_tree_param(APARAM_ONCE_INTERRUPT, ONCE_FIRE)
-	play_sfx(AUDIO_TELEPORT)
 
-
-func exit() -> void:
-	if actor != null:
-		if actor.animation_finished.is_connected(_on_animation_finished):
-			actor.animation_finished.disconnect(_on_animation_finished)
+func update(delta : float) -> void:
+	if _current_duration > 0.0:
+		_current_duration -= delta
+		if _current_duration <= 0.0:
+			pass # Exit the dashing
+		else:
+			pass # Update position.
+			# TODO: Need to know which way Proto is facing
+			# TODO: Need a raycast to stop the dash if it will hit a wall.
 
 
 # ------------------------------------------------------------------------------
@@ -39,7 +46,8 @@ func exit() -> void:
 # ------------------------------------------------------------------------------
 func _on_animation_finished(anim_name : StringName) -> void:
 	match anim_name:
-		ANIM_TELEPORT_OUT:
-			actor.global_position = _destination
-		ANIM_TELEPORT_IN:
-			swap_to(state_idle)
+		ANIM_FAULT_DASH_FORM:
+			_dashing = true
+		ANIM_FAULT_DASH_EXIT:
+			if not state_idle.is_empty():
+				swap_to.call_deferred(state_idle)
