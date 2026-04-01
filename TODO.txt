@@ -16,6 +16,9 @@
 
 -- UI --
 * Better TV-UI -> Game flow
+* Clean up Level Select Menu
+  * Add icons for non-existing levels and defeated levels.
+  * Block user from selecting level that has already been defeated.
 
 -- Special Ability Ideas --
 * Charged Bolt (Default Special)

@@ -96,7 +96,12 @@ func handle_input(event : InputEvent) -> void:
 		if event.is_pressed() and interactor != null and interactor.interactable_count() > 0:
 			interactor.interact()
 		else: special_triggered.emit(event.is_pressed())
-		
+	elif Game.Event_One_Of(event, [&"special_1", &"special_2"]):
+		if Game.State.are_specials_from_keyboard_allowed():
+			if event.is_action(&"special_1"):
+				actor.set_special(GameState.Special.CHARGED_BLASTER)
+			elif event.is_action(&"special_2"):
+				actor.set_special(GameState.Special.FAULT_DASH)
 		#var wep : Weapon = actor.get_weapon()
 		#if wep == null: return
 		#

@@ -187,7 +187,8 @@ func _LoadLevelFromID(level_id : int) -> void:
 	await _ui.all_hidden
 	get_tree().paused = false
 	
-	if _LoadLevel(Game.Get_Level_Path(level_id)) == OK:
+	var is_level_available : bool = Game.State.is_level_unlocked(level_id)
+	if is_level_available and _LoadLevel(Game.Get_Level_Path(level_id)) == OK:
 		_hud.visible = true
 	else:
 		(func():
@@ -202,6 +203,7 @@ func _StartGame() -> void:
 	if _game_running: return
 	
 	Game.State.reset()
+	Game.State.set_level_unlocked(GameState.LEVEL_1, false)
 	_game_running = true
 	_ui.swap_to_ui(level_select_menu)
 
@@ -211,17 +213,6 @@ func _QuitLevel() -> void:
 	get_tree().paused = true
 	_hud.visible = false
 	_ui.swap_to_ui(level_select_menu)
-
-
-#func _StartGame() -> void:
-	#if _level != null: return
-	#_ui.close_all_ui()
-	#await _ui.all_hidden
-	#get_tree().paused = false
-	#Game.State.reset()
-	#_LoadLevel(LEVEL)
-	#_hud.visible = true
-	#Game.Game_Running = true
 
 func _PauseGame() -> void:
 	if not _game_running or get_tree().paused: return

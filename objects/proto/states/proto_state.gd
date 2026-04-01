@@ -38,6 +38,9 @@ const APARAM_TRANSITION_CURRENT : String = "parameters/transition/current_state"
 const APARAM_TRANS_ACTION : String = "parameters/actions/transition_request"
 const APARAM_TRANS_ACTION_CURRENT : String = "parameters/actions/current_state"
 const APARAM_ONCE_INTERRUPT : String = "parameters/interrupt/request"
+
+const APARAM_SPECIAL_FAULTDASH_INACTIVE : String = "parameters/fault_dash/conditions/fault_arrow_finished"
+
 #const APARAM_ONCE_HURT : String = "parameters/hurt/request"
 #const APARAM_ONCE_SPAWN : String = "parameters/spawn_dead/request"
 #const APARAM_ONCE_TELEPORT : String = "parameters/teleport_override/request"

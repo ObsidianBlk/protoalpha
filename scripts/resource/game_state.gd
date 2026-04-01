@@ -65,6 +65,7 @@ const CHEAT_INFINITE_LIVES : StringName = &"move_up_move_up_move_down_move_down_
 const CHEAT_CAN_DIE : StringName = &"select_select_select_start"
 const CHEAT_ADD_LIVES : StringName = &"move_up_move_up_shoot_shoot_select"
 const CHEAT_DEBUG_POSITION : StringName = &"move_up_move_left_move_down_move_right_select_select"
+const CHEAT_KEYBOARD_SPECIALS : StringName = &"move_up_move_up_move_up_select_select"
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -83,6 +84,7 @@ var _energy : Dictionary[Special, int] = {
 	Special.CHARGED_BLASTER : MAX_ENERGY,
 	Special.FAULT_DASH : MAX_ENERGY
 }
+var _allow_specials_from_keyboard : bool = false
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -211,6 +213,9 @@ func is_special_unlocked(special : Special) -> bool:
 		return not is_level_unlocked(level)
 	return false
 
+func are_specials_from_keyboard_allowed() -> bool:
+	return _allow_specials_from_keyboard
+
 func activate_cheat(code : StringName) -> bool:
 	match code:
 		CHEAT_INFINITE_LIVES:
@@ -224,6 +229,9 @@ func activate_cheat(code : StringName) -> bool:
 			print("Clear Unlimited Lives")
 		CHEAT_DEBUG_POSITION:
 			print("Teleport to debug position")
+		CHEAT_KEYBOARD_SPECIALS:
+			_allow_specials_from_keyboard = not _allow_specials_from_keyboard
+			print("Keyboard specials toggled: ", _allow_specials_from_keyboard)
 		_:
 			return false
 	cheat_activated.emit(code)

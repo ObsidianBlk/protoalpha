@@ -31,6 +31,7 @@
 [ext_resource type="Script" uid="uid://db7mt4i5smbni" path="res://scripts/nodes/interactor_2d.gd" id="24_l6vdm"]
 [ext_resource type="PackedScene" uid="uid://nj2tagnipopm" path="res://objects/enemy_explosion/enemy_explosion.tscn" id="25_bg1mb"]
 [ext_resource type="Script" uid="uid://c7knmpbe2pcra" path="res://objects/proto/states/state_special_fault_dash.gd" id="28_hdeo6"]
+[ext_resource type="Script" uid="uid://bovns44e3e22o" path="res://scripts/resource/hitbox_resource.gd" id="29_m7pd3"]
 
 [sub_resource type="Resource" id="Resource_m7pd3"]
 script = ExtResource("3_jl3in")
@@ -86,6 +87,10 @@ metadata/_custom_type_script = "uid://wbuewjeffa70"
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ymabh"]
 radius = 3.0
 height = 20.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m7pd3"]
+radius = 4.0
+height = 16.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t4jra"]
 atlas = ExtResource("1_2x067")
@@ -898,6 +903,23 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"CS_FaultDash"],
+"method": &"set_collision_shape_name"
+}, {
+"args": [&"CS_Main"],
+"method": &"set_collision_shape_name"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_g2yhf"]
 length = 0.41666666
@@ -925,9 +947,26 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"CS_Main"],
+"method": &"set_collision_shape_name"
+}, {
+"args": [&"CS_FaultDash"],
+"method": &"set_collision_shape_name"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_70ve8"]
-length = 0.25
+length = 0.001
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -952,6 +991,20 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 1, 2]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"CS_FaultDash"],
+"method": &"set_collision_shape_name"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_mh7ni"]
@@ -1615,7 +1668,6 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pktpj"]
-graph_offset = Vector2(-694.1832, 441.37866)
 nodes/output/position = Vector2(1240, 120)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(480, 260)
@@ -1642,6 +1694,14 @@ nodes/fault_dash/position = Vector2(-800, 1480)
 nodes/actions/node = SubResource("AnimationNodeTransition_j6iy6")
 nodes/actions/position = Vector2(-380, 1000)
 node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"facing", &"Add2", 1, &"interrupt", &"interrupt", 0, &"transition", &"interrupt", 1, &"actions", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2", &"actions", 0, &"hurt_states", &"actions", 1, &"spawn_dead_anims", &"actions", 2, &"Teleport", &"actions", 3, &"fault_dash"]
+
+[sub_resource type="Resource" id="Resource_osq81"]
+script = ExtResource("29_m7pd3")
+ignore_health = true
+damage = 15
+continuous = true
+invulnerability_time = 0.0
+metadata/_custom_type_script = "uid://bovns44e3e22o"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jw1q"]
 size = Vector2(2, 2)
@@ -1680,11 +1740,18 @@ collision_layer = 256
 collision_mask = 0
 script = ExtResource("3_wc0l2")
 health = NodePath("../ComponentHealth")
+collision_shape_name = &"CS_Main"
 metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=240799656]
+[node name="CS_Main" type="CollisionShape2D" parent="HitBox" unique_id=240799656]
 position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_ymabh")
+
+[node name="CS_FaultDash" type="CollisionShape2D" parent="HitBox" unique_id=968183126]
+position = Vector2(4, -9.5)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_m7pd3")
+disabled = true
 
 [node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=523036118]
 unique_name_in_owner = true
@@ -1703,6 +1770,11 @@ script = ExtResource("3_qpscq")
 weapon_def = ExtResource("4_yd1xd")
 collision_mask = 4105
 metadata/_custom_type_script = "uid://wjm481jeg5t0"
+
+[node name="RC_FaultDash" type="RayCast2D" parent="Body" unique_id=519758811]
+position = Vector2(5, -9)
+target_position = Vector2(10, 0)
+collision_mask = 9
 
 [node name="AnimSpritePlayer" type="AnimationPlayer" parent="." unique_id=1226739577 node_paths=PackedStringArray("animated_sprite")]
 libraries/ = SubResource("AnimationLibrary_6fgtv")
@@ -1734,6 +1806,7 @@ metadata/_custom_type_script = "uid://huvqh0h46t6l"
 [node name="SpecialHandler" type="Node" parent="StateMachine" unique_id=2142463196 node_paths=PackedStringArray("weapon")]
 script = ExtResource("17_j6iy6")
 weapon = NodePath("../../Body/Weapon")
+special_state_fault_dash = &"Special_FaultDash"
 
 [node name="Idle" type="Node" parent="StateMachine" unique_id=981379399 node_paths=PackedStringArray("interactor")]
 script = ExtResource("3_ida5t")
@@ -1785,8 +1858,13 @@ state_idle = &"Idle"
 [node name="Dead" type="Node" parent="StateMachine" unique_id=1333710152]
 script = ExtResource("15_f3qg8")
 
-[node name="Special_FaultDash" type="Node" parent="StateMachine" unique_id=1636339682]
+[node name="Special_FaultDash" type="Node" parent="StateMachine" unique_id=1636339682 node_paths=PackedStringArray("hitbox", "collision_ray")]
 script = ExtResource("28_hdeo6")
+duration = 0.25
+hitbox = NodePath("../../HitBox")
+hitbox_override = SubResource("Resource_osq81")
+collision_ray = NodePath("../../Body/RC_FaultDash")
+state_idle = &"Idle"
 metadata/_custom_type_script = "uid://cbj43nrmcod25"
 
 [node name="LadderDetector" type="Area2D" parent="." unique_id=249257466]
