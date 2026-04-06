@@ -105,6 +105,7 @@ size = Vector2(7, 32)
 script = ExtResource("1_gkyti")
 player_container = NodePath("PlayerContainer")
 boss_container = NodePath("BossContainer")
+level_id = 1
 
 [node name="SegA" type="Area2D" parent="." unique_id=1796425691 node_paths=PackedStringArray("layer")]
 collision_layer = 0

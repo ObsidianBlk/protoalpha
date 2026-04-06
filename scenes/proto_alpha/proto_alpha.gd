@@ -270,7 +270,7 @@ func enable_input(enable : bool) -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_level_completed() -> void:
-	_QuitGame.call_deferred()
+	_QuitLevel.call_deferred()
 
 func _on_level_defeated() -> void:
 	_QuitGame.call_deferred()

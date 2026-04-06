@@ -2,6 +2,11 @@ extends ProtoState
 
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal energy_changed(special : GameState.Special)
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var weapon : Weapon = null
@@ -45,12 +50,14 @@ func handle(triggered : bool) -> void:
 			if actor.is_tree_param(APARAM_TRANSITION_CURRENT, TRANS_ATTACK):
 				actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
 			weapon.release_trigger()
+		energy_changed.emit(actor.get_special())
 	else:
 		var special : GameState.Special = actor.get_special()
 		match special:
 			GameState.Special.FAULT_DASH:
 				if special_state_fault_dash.is_empty(): return
 				if Game.State.use_special(special):
+					energy_changed.emit(special)
 					swap_to(special_state_fault_dash)
 
 # ------------------------------------------------------------------------------

@@ -1729,6 +1729,7 @@ shape = SubResource("CapsuleShape2D_ymabh")
 
 [node name="ComponentRelay" type="Node" parent="." unique_id=582795213]
 script = ExtResource("2_7lxdh")
+relay_screen_rect = true
 metadata/_custom_type_script = "uid://cwjk0b6j3hspo"
 
 [node name="ComponentHealth" type="Node" parent="." unique_id=800337913]
@@ -1891,9 +1892,11 @@ position = Vector2(0, -10)
 
 [connection signal="dead" from="." to="StateMachine" method="transition_state" binds= [&"Dead"]]
 [connection signal="request_state" from="." to="StateMachine" method="swap_state"]
+[connection signal="special_changed" from="." to="ComponentRelay" method="energy_changed"]
 [connection signal="dead" from="ComponentHealth" to="." method="die"]
 [connection signal="health_changed" from="ComponentHealth" to="ComponentRelay" method="health_changed"]
 [connection signal="hit" from="ComponentHealth" to="StateMachine" method="transition_state" binds= [&"Hurt"]]
+[connection signal="energy_changed" from="StateMachine/SpecialHandler" to="ComponentRelay" method="energy_changed"]
 [connection signal="special_triggered" from="StateMachine/Idle" to="StateMachine/SpecialHandler" method="handle"]
 [connection signal="special_triggered" from="StateMachine/Move" to="StateMachine/SpecialHandler" method="handle"]
 [connection signal="special_triggered" from="StateMachine/Fall" to="StateMachine/SpecialHandler" method="handle"]

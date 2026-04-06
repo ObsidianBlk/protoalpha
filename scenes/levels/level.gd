@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 class_name Level
 
@@ -24,6 +25,7 @@ const _DEBUG_POSITION_GROUP : StringName = &"DebugPosition"
 # ------------------------------------------------------------------------------
 @export var player_container : Node2D = null:		set=set_player_container
 @export var boss_container : Node2D = null:			set=set_boss_container
+@export_enum("None:0") var level_id : int = 0
 @export var music_sheet : MusicSheet = null
 
 # ------------------------------------------------------------------------------
@@ -55,21 +57,37 @@ func set_boss_container(bc : Node2D) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	for child : Node in get_children():
 		if child is MapSegment:
 			_ConnectSegment(child)
 
 func _enter_tree() -> void:
+	if Engine.is_editor_hint(): return
 	if Game.State is GameState:
 		if not Game.State.cheat_activated.is_connected(_on_cheat_activated):
 			Game.State.cheat_activated.connect(_on_cheat_activated)
 
 func _exit_tree() -> void:
+	if Engine.is_editor_hint(): return
 	if music_sheet != null:
 		music_sheet.stop_all()
 	if Game.State is GameState:
 		if Game.State.cheat_activated.is_connected(_on_cheat_activated):
 			Game.State.cheat_activated.disconnect(_on_cheat_activated)
+
+func _validate_property(property: Dictionary) -> void:
+	if property.name == "level_id":
+		property.hint_string = "None:0,Level_1:%d,Level_2:%d,Level_3:%d,Level_4:%d,Level_5:%d,Level_6:%d,Level_7:%d,Level_8:%d"%[
+			GameState.LEVEL_1,
+			GameState.LEVEL_2,
+			GameState.LEVEL_3,
+			GameState.LEVEL_4,
+			GameState.LEVEL_5,
+			GameState.LEVEL_6,
+			GameState.LEVEL_7,
+			GameState.LEVEL_8,
+		]
 
 func _unhandled_input(event: InputEvent) -> void:
 	pass
@@ -77,6 +95,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		#pause_requested.emit()
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint(): return
 	if _player_respawn_timer > 0.0:
 		_player_respawn_timer -= delta
 		if _player_respawn_timer <= 0.0:
@@ -205,6 +224,7 @@ func _on_child_exiting(child : Node) -> void:
 		_boss_despawning(child)
 		if _boss_defeated:
 			# TODO: Call a Victory screen animation!
+			Game.State.set_level_unlocked(level_id, false)
 			completed.emit()
 
 func _on_segment_entered(segment : MapSegment) -> void:

@@ -1,9 +1,7 @@
 -- TODO --
-* Finish the FaultDash state in Proto!
+* Fix FaultDash movement when exiting dash.
 
 * Add more weapons (AKA Special Abilities)
-* Add system for player to obtain new weapons
-* Energy bar for weapons (beyond basic)
 * Build out the "Password" system
 * Boss spawning animation/intro
 * Boss defeated Victory animation/outtro
@@ -15,6 +13,7 @@
     energy bar will discharge hurting the player (massively?)
 
 -- UI --
+* Add Special ability select menu.
 * Better TV-UI -> Game flow
 * Clean up Level Select Menu
   * Add icons for non-existing levels and defeated levels.
@@ -22,7 +21,6 @@
 
 -- Special Ability Ideas --
 * Charged Bolt (Default Special)
-* Short Range Burst Movement (from SegFault [Arrow Attack])
 * Short Term Shield
 * Grenades (?)
 

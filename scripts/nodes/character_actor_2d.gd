@@ -100,6 +100,9 @@ func spawn_at(spawn_position : Vector2, _spawn_payload : Dictionary = {}) -> voi
 func hide_sprite(_hide : bool) -> void:
 	pass
 
+func get_size() -> Vector2:
+	return Vector2.ONE
+
 func die() -> void:
 	if alive:
 		alive = false
@@ -148,6 +151,18 @@ func is_tree_param(param : String, value : Variant) -> bool:
 		if typeof(tree_val) == typeof(value):
 			return tree_val == value
 	return false
+
+## Returns this [CharacterActor2D]'s screen position.[br]
+## NOTE: If [CharacterActor2D] is not in a scene tree with an active [Camera2D], then
+## [code]Vector2.ZERO[/code] is returned.
+func get_screen_position() -> Vector2:
+	var vp : Viewport = get_viewport()
+	if vp != null:
+		var camera : Camera2D = vp.get_camera_2d()
+		if camera != null:
+			var screen_tl : Vector2 = camera.get_screen_center_position() - (Game.SCREEN_RESOLUTION * 0.5)
+			return global_position - screen_tl
+	return Vector2.ZERO
 
 # ------------------------------------------------------------------------------
 # "Virtual" Handler Methods

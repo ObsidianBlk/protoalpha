@@ -132,6 +132,7 @@ script = ExtResource("1_gf26o")
 boss_shift_manager = NodePath("MapSegments/BossRoom/TileMapLayer/ShiftManager_BossRoom")
 player_container = NodePath("PlayerContainer")
 boss_container = NodePath("BossContainer")
+level_id = 2
 metadata/_custom_type_script = "uid://bhbi6f2woh6pw"
 
 [node name="MapSegments" type="Node2D" parent="." unique_id=1824494527]

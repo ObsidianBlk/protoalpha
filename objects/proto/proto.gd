@@ -3,7 +3,7 @@ extends CharacterActor2D
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
-#signal reloaded()
+signal special_changed(special : GameState.Special)
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -41,6 +41,7 @@ func _ready() -> void:
 		func():
 			animation_finished.emit(_sprite.animation)
 	)
+	special_changed.emit(_special)
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -60,11 +61,19 @@ func set_special(special : GameState.Special) -> void:
 			if Game.Is_Valid_Weapon(special):
 				weapon.weapon_def = Game.Get_Weapon_Resource(special)
 			else: weapon.weapon_def = null
+		special_changed.emit(_special)
 
 func spawn_at(spawn_position : Vector2, payload : Dictionary = {}) -> void:
 	super.spawn_at(spawn_position, payload)
 	if has_user_signal(&"spawn"):
 		emit_signal(&"spawn")
+
+func get_size() -> Vector2:
+	if _sprite != null and _sprite.sprite_frames != null:
+		var tex : Texture2D = _sprite.sprite_frames.get_frame_texture(_sprite.animation, _sprite.frame)
+		if tex != null:
+			return tex.get_size()
+	return Vector2.ZERO
 
 func hide_sprite(h : bool) -> void:
 	if _sprite != null:

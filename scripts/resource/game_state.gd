@@ -152,8 +152,8 @@ func get_energy_level(special : Special) -> int:
 ## [b]Note:[/b] [param energy_level] is clamped to the range [code]0 - 255[/code].
 func set_energy_level(special : Special, energy_level : int) -> void:
 	energy_level = clampi(energy_level, 0, 255)
-	if special in energy and energy[special] != energy_level:
-		energy[special] = energy_level
+	if special in _energy and _energy[special] != energy_level:
+		_energy[special] = energy_level
 		if _lock_change_emit <= 0:
 			changed.emit()
 
@@ -163,9 +163,9 @@ func set_energy_level(special : Special, energy_level : int) -> void:
 ## Regardless of the value of [param amount], the resulting energy level will
 ## always be between the values of [code]0 - 255[/code]
 func change_energy_level(special : Special, amount : int) -> void:
-	if special in energy:
+	if special in _energy:
 		if _SPECIAL_LUT[special][_SPECIAL_KEY_INF_ENERGY]: return
-		set_energy_level(special, energy[special] + amount)
+		set_energy_level(special, _energy[special] + amount)
 
 ## Reduces the energy level of [param special] by the amount of energy required to
 ## use [param special], if and only if the current energy level is greater than or
@@ -173,7 +173,7 @@ func change_energy_level(special : Special, amount : int) -> void:
 ## is returned, otherwise [code]false[/code] is returned.
 func use_special(special : Special) -> bool:
 	if special in energy:
-		if energy[special] >= _SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ]:
+		if _energy[special] >= _SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ]:
 			change_energy_level(special, -_SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ])
 			return true
 	return false
@@ -182,8 +182,8 @@ func use_special(special : Special) -> bool:
 ## or equal to the amount of energy required to use [param special]. Otherwise
 ## [code]false[/code] is returned.
 func can_use_special(special : Special) -> bool:
-	if special in energy:
-		return energy[special] >= _SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ]
+	if special in _energy:
+		return _energy[special] >= _SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ]
 	return false
 
 ## Sets the given [param level] to the [param unlock] state.
