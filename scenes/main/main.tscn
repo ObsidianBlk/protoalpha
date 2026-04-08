@@ -220,7 +220,7 @@ texture = SubResource("AtlasTexture_nvumn")
 stretch_mode = 1
 
 [node name="RatioSubViewportContainer" type="SubViewportContainer" parent="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center" unique_id=1946008226]
-custom_minimum_size = Vector2(537.6, 403.19998)
+custom_minimum_size = Vector2(586.13336, 439.6)
 layout_mode = 2
 stretch = true
 script = ExtResource("4_nvumn")
@@ -233,7 +233,7 @@ handle_input_locally = false
 snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(537, 432)
+size = Vector2i(586, 439)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
@@ -521,7 +521,7 @@ flip_h = true
 flip_v = true
 
 [node name="RatioSpacer" type="Control" parent="FullScreenGame/VBoxContainer/HBoxContainer" unique_id=781003081]
-custom_minimum_size = Vector2(768, 576)
+custom_minimum_size = Vector2(837.3333, 628)
 layout_mode = 2
 script = ExtResource("16_hxu8e")
 metadata/_custom_type_script = "uid://cgn3dt0lj8cnd"

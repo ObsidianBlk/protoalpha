@@ -1,5 +1,6 @@
 -- TODO --
 * Fix FaultDash movement when exiting dash.
+* FIX Energy not resetting after new level/game start.
 
 * Add more weapons (AKA Special Abilities)
 * Build out the "Password" system

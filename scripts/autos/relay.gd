@@ -4,6 +4,8 @@ extends Node
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
+signal special_selected(special : GameState.Special)
+
 signal health_changed(health : int, max_health : int)
 signal energy_changed(special_id : GameState.Special)
 signal player_rect_changed(rect : Rect2)

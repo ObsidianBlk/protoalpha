@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://6g5dwk58ojgk"]
+
+[ext_resource type="Theme" uid="uid://cebftabff28vi" path="res://assets/hud.theme" id="1_wsulm"]
+[ext_resource type="Script" uid="uid://ccxhep82usaum" path="res://scenes/proto_alpha/ui/specials_select_menu/specials_select_menu.gd" id="2_ykihv"]
+[ext_resource type="Texture2D" uid="uid://cr4ddyj68sq7f" path="res://assets/graphics/proto/specials_icon_0.tres" id="3_ykihv"]
+[ext_resource type="Texture2D" uid="uid://burv470jefr7y" path="res://assets/graphics/proto/specials_icon_1.tres" id="4_fqbrd"]
+
+[node name="SpecialsSelectMenu" type="MarginContainer" unique_id=1326436555]
+texture_filter = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 12.0
+grow_vertical = 2
+theme = ExtResource("1_wsulm")
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("2_ykihv")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1882912134]
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"HUDPanel2"
+
+[node name="VLayout" type="VBoxContainer" parent="PanelContainer" unique_id=56986864]
+layout_mode = 2
+
+[node name="BTN_ChargedBolt" type="Button" parent="PanelContainer/VLayout" unique_id=1390269218]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"ButtonSpecials"
+text = "Charged Bolt"
+icon = ExtResource("3_ykihv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VLayout" unique_id=492761124]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VLayout/HBoxContainer" unique_id=734582223]
+layout_mode = 2
+
+[node name="BTN_FaultDash" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer" unique_id=541636469]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonSpecials"
+text = "Fault Dash"
+icon = ExtResource("4_fqbrd")
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/VLayout/HBoxContainer" unique_id=1987247645]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VLayout/HBoxContainer" unique_id=661324562]
+layout_mode = 2
+
+[node name="BTN_PlaceHolder" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=901718257]
+layout_mode = 2
+theme_type_variation = &"ButtonSpecials"
+text = "Place Holder"
+icon = ExtResource("3_ykihv")

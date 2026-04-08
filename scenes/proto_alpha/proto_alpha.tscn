@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_xh1g3"]
 [ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="10_1423w"]
 [ext_resource type="PackedScene" uid="uid://3hpweo30ryty" path="res://scenes/proto_alpha/ui/level_select/level_select.tscn" id="13_2rg54"]
+[ext_resource type="PackedScene" uid="uid://6g5dwk58ojgk" path="res://scenes/proto_alpha/ui/specials_select_menu/specials_select_menu.tscn" id="13_xh1g3"]
 [ext_resource type="PackedScene" uid="uid://0gy8q7hqmqsr" path="res://scenes/proto_alpha/ui/level_unavailable/level_unavailable.tscn" id="14_kwc6g"]
 [ext_resource type="PackedScene" uid="uid://0ho0ypek6rjb" path="res://scenes/proto_alpha/ui/level_in_development/level_in_development.tscn" id="15_bg22g"]
 
@@ -48,6 +49,7 @@ metadata/_custom_type_script = "uid://wbuewjeffa70"
 process_mode = 3
 script = ExtResource("1_q6vex")
 pause_menu = &"PauseMenu"
+specials_select_menu = &"SpecialsSelectMenu"
 level_select_menu = &"LevelSelect"
 
 [node name="ChaseCamera" type="Camera2D" parent="." unique_id=244276403]
@@ -78,6 +80,9 @@ metadata/_custom_type_script = "uid://i1maoaaedj5"
 default_ui = true
 
 [node name="PauseMenu" parent="UILayer" unique_id=322752988 instance=ExtResource("6_flgcp")]
+
+[node name="SpecialsSelectMenu" parent="UILayer" unique_id=1326436555 instance=ExtResource("13_xh1g3")]
+offset_right = 196.0
 
 [node name="LevelSelect" parent="UILayer" unique_id=669032128 instance=ExtResource("13_2rg54")]
 unavailable = &"LevelUnavailable"

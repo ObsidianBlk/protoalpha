@@ -29,6 +29,17 @@ const LEVEL_8 : int = 0x80
 
 const ALL_LEVELS : int = LEVEL_1 | LEVEL_2 | LEVEL_3 | LEVEL_4 | LEVEL_5 | LEVEL_6 | LEVEL_7 | LEVEL_8
 
+# 0b21012_21102_22110_02121
+const _LEVEL_PASSWORD_BINARY : Dictionary[int, Array] = {
+	LEVEL_1: [0b01000_00000_00000_00000, 0b00000_00000_00000_00010],
+	LEVEL_2: [0b00010_00000_00000_00000, 0b00000_00000_00000_01000],
+	LEVEL_3: [0b00000_01000_00000_00000, 0b00000_00000_01000_00000],
+	LEVEL_4: [0b00000_00100_00000_00000, 0b00000_00000_10000_00000],
+	LEVEL_5: [0b00000_00000_00100_00000, 0b00000_00001_00000_00000],
+	LEVEL_6: [0b00000_00000_00010_00000, 0b00000_10000_00000_00000],
+	LEVEL_7: [0b00000_00000_00000_00100, 0b00001_00000_00000_00000],
+	LEVEL_8: [0b00000_00000_00000_00001, 0b10000_00000_00000_00000]
+}
 
 enum Special {
 	CHARGED_BLASTER=0,
@@ -212,6 +223,13 @@ func is_special_unlocked(special : Special) -> bool:
 		# A "Locked" level is a defeated level...
 		return not is_level_unlocked(level)
 	return false
+
+func get_password() -> int:
+	var password : int = 0
+	for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
+		var id : int = 0 if is_level_unlocked(level) else 1
+		password = password | _LEVEL_PASSWORD_BINARY[level][id]
+	return password
 
 func are_specials_from_keyboard_allowed() -> bool:
 	return _allow_specials_from_keyboard

@@ -17,6 +17,7 @@ const LEVEL : String = "res://scenes/levels/demo_level/demo_level.tscn"
 @export var HUD_layer : int = 1:					set=set_hud_layer
 @export var UI_layer : int = 10:					set=set_ui_layer
 @export var pause_menu : StringName = &""
+@export var specials_select_menu : StringName = &""
 @export var level_select_menu : StringName = &""
 
 # ------------------------------------------------------------------------------
@@ -78,7 +79,13 @@ func _input(event: InputEvent) -> void:
 			elif _ui.is_ui_active(pause_menu):
 				_ResumeGame()
 			elif not _CheckCheatCode(event):
-				_PauseGame()
+				_PauseGame(pause_menu)
+		elif event.is_action_pressed("select"):
+			if not _ui.ui_active():
+				if not _CheckCheatCode(event):
+					_PauseGame(specials_select_menu)
+			elif _ui.is_ui_active(specials_select_menu):
+				_ResumeGame()
 		else:
 			_CheckCheatCode(event)
 	else:
@@ -87,20 +94,6 @@ func _input(event: InputEvent) -> void:
 				await _ui.pop_ui()
 				_game_running = false
 				_ui.open_default_ui()
-	
-	#if event.is_action_pressed("start"):
-		#if _level != null:
-			#if _ui.is_ui_active(level_select_menu):
-				#_ui.swap_to_ui(pause_menu)
-			#elif _ui.is_ui_active(pause_menu):
-				#_ResumeGame()
-			#else:
-				#_PauseGame()
-		#else:
-			#if _ui.is_ui_active(level_select_menu):
-				#await _ui.pop_ui()
-				#_game_running = false
-				#_ui.open_default_ui()
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -214,13 +207,16 @@ func _QuitLevel() -> void:
 	_hud.visible = false
 	_ui.swap_to_ui(level_select_menu)
 
-func _PauseGame() -> void:
+func _PauseGame(menu : StringName = &"") -> void:
 	if not _game_running or get_tree().paused: return
+	if menu.is_empty():
+		menu = pause_menu
+	
 	if _ui.ui_active(): return
 	
-	if _ui.has_ui(pause_menu):
+	if _ui.has_ui(menu):
 		get_tree().paused = true
-		_ui.open_ui(pause_menu)
+		_ui.open_ui(menu)
 
 func _ResumeGame() -> void:
 	if not _game_running or not get_tree().paused: return

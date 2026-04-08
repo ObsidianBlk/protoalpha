@@ -126,7 +126,7 @@ const LEVELS : Dictionary[int, Dictionary] = {
 	GameState.LEVEL_2: {
 		_LEVEL_PATH:"res://scenes/levels/level_02/level_02.tscn",
 		_LEVEL_ICON:"res://assets/graphics/bosses/defrag/Defrag_Portrait.png",
-		_LEVEL_STATE: LevelDevState.ACTIVE_DEV
+		_LEVEL_STATE: LevelDevState.READY
 	},
 	GameState.LEVEL_3: {
 		_LEVEL_PATH:"",
@@ -158,6 +158,11 @@ const LEVELS : Dictionary[int, Dictionary] = {
 		_LEVEL_ICON:"res://assets/graphics/bosses/defrag/Defrag_Portrait.png",
 		_LEVEL_STATE: LevelDevState.READY
 	},
+}
+
+const SPECIALS_ICONS : Dictionary[GameState.Special, AtlasTexture] = {
+	GameState.Special.CHARGED_BLASTER : preload("uid://cr4ddyj68sq7f"),
+	GameState.Special.FAULT_DASH : preload("uid://burv470jefr7y"),
 }
 
 
@@ -251,6 +256,11 @@ static func Get_Weapon_Resource(special : GameState.Special) -> WeaponDef:
 		var wdef : Resource = load(WEAPON_LUT[special])
 		if wdef is WeaponDef:
 			return wdef
+	return null
+
+static func Get_Special_Icon(special : GameState.Special) -> AtlasTexture:
+	if special in SPECIALS_ICONS:
+		return SPECIALS_ICONS[special]
 	return null
 
 static func Node_Has_Properties(n : Node, properties : Array[String]) -> bool:

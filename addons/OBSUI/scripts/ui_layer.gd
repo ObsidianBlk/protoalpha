@@ -164,7 +164,7 @@ func _on_child_entered_tree(child : Node) -> void:
 	
 	_ui_children[child.name] = child
 	if child.visible:
-		_active.append(child.name)
+		_active.append(ActiveInfo.new(child.name))
 	
 	if not child.action_requested.is_connected(_on_action_requested):
 		child.action_requested.connect(_on_action_requested)

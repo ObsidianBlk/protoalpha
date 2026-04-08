@@ -103,9 +103,9 @@ func _on_hide() -> void:
 	ui_hidden.emit()
 
 func _on_gui_changed(node : Control) -> void:
-	print(name, " Handling GUI Change")
+	#print(name, " Handling GUI Change")
 	if is_ancestor_of(node):
-		print(name, " Setting Focus")
+		#print(name, " Setting Focus")
 		_focused = node
 
 # ------------------------------------------------------------------------------

@@ -19,6 +19,7 @@ const PLAYER_RESPAWN_TIMER : float = 1.0
 const MUSIC_CROSSFADE_DURATION : float = 1.0
 
 const _DEBUG_POSITION_GROUP : StringName = &"DebugPosition"
+const _PLAYER_SPECIAL_METHOD : StringName = &"set_special"
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -37,6 +38,8 @@ var _active_segments : Dictionary[StringName, MapSegment] = {}
 
 var _despawning : bool = false
 var _boss_defeated : bool = false
+
+var _player : WeakRef = weakref(null)
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -67,6 +70,8 @@ func _enter_tree() -> void:
 	if Game.State is GameState:
 		if not Game.State.cheat_activated.is_connected(_on_cheat_activated):
 			Game.State.cheat_activated.connect(_on_cheat_activated)
+		if not Relay.special_selected.is_connected(_on_special_selected):
+			Relay.special_selected.connect(_on_special_selected)
 
 func _exit_tree() -> void:
 	if Engine.is_editor_hint(): return
@@ -75,6 +80,8 @@ func _exit_tree() -> void:
 	if Game.State is GameState:
 		if Game.State.cheat_activated.is_connected(_on_cheat_activated):
 			Game.State.cheat_activated.disconnect(_on_cheat_activated)
+		if Relay.special_selected.is_connected(_on_special_selected):
+			Relay.special_selected.disconnect(_on_special_selected)
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "level_id":
@@ -181,6 +188,7 @@ func spawn_player(level_start : bool = false) -> void:
 		return
 	
 	var player : Node2D = PLAYER_SCENE.instantiate()
+	_player = weakref(player)
 	player.add_to_group(Game.GROUP_PLAYER)
 	camera.target = player
 	player.position = checkpoint.global_position
@@ -246,3 +254,8 @@ func _on_boss_dead() -> void:
 func _on_cheat_activated(code : StringName) -> void:
 	if code == GameState.CHEAT_DEBUG_POSITION:
 		_PlayerToDebugPosition.call_deferred()
+
+func _on_special_selected(special : GameState.Special) -> void:
+	var player : Node2D = _player.get_ref()
+	if player != null and player.has_method(_PLAYER_SPECIAL_METHOD):
+		player.call(_PLAYER_SPECIAL_METHOD, special)
