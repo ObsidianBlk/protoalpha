@@ -29,7 +29,7 @@ const LEVEL_8 : int = 0x80
 
 const ALL_LEVELS : int = LEVEL_1 | LEVEL_2 | LEVEL_3 | LEVEL_4 | LEVEL_5 | LEVEL_6 | LEVEL_7 | LEVEL_8
 
-# 0b21012_21102_22110_02121
+const _TOP_BIT : int = 0b10000_00000_00000_00000
 const _LEVEL_PASSWORD_BINARY : Dictionary[int, Array] = {
 	LEVEL_1: [0b01000_00000_00000_00000, 0b00000_00000_00000_00010],
 	LEVEL_2: [0b00010_00000_00000_00000, 0b00000_00000_00000_01000],
@@ -39,6 +39,14 @@ const _LEVEL_PASSWORD_BINARY : Dictionary[int, Array] = {
 	LEVEL_6: [0b00000_00000_00010_00000, 0b00000_10000_00000_00000],
 	LEVEL_7: [0b00000_00000_00000_00100, 0b00001_00000_00000_00000],
 	LEVEL_8: [0b00000_00000_00000_00001, 0b10000_00000_00000_00000]
+}
+
+const _LIFE_CODE : Dictionary[int, int] = {
+	0b10000 : 0,
+	0b01000 : 1,
+	0b00100 : 2,
+	0b00010 : 3,
+	0b00001 : 4
 }
 
 enum Special {
@@ -71,6 +79,7 @@ const _SPECIAL_LUT : Dictionary[Special, Dictionary] = {
 
 const MAX_ENERGY : int = 255
 const INITIAL_PLAYER_LIVES : int = 3
+const MAX_PLAYER_LIVES : int = 5
 
 const CHEAT_INFINITE_LIVES : StringName = &"move_up_move_up_move_down_move_down_move_left_move_right_move_left_move_right_select_start"
 const CHEAT_CAN_DIE : StringName = &"select_select_select_start"
@@ -81,10 +90,18 @@ const CHEAT_KEYBOARD_SPECIALS : StringName = &"move_up_move_up_move_up_select_se
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
+## If [code]true[/code] [property lives] will be unchangable, effectively giving
+## the player unlimited lives
 @export var unlimited : bool = false:				set=set_unlimited
-@export var lives : int = INITIAL_PLAYER_LIVES:		set=set_lives
+
+## The number of lives the player currently has.
+@export_range(0, MAX_PLAYER_LIVES, 1) var lives : int = INITIAL_PLAYER_LIVES:
+	set=set_lives
+
 ## Determines which levels are "unlocked" and available for the player to play
 @export var unlocked_levels : int = ALL_LEVELS:		set=set_unlocked_levels
+
+## The energy levels for each of the player's special abilities/weapons
 @export var energy : Dictionary[Special, int]:		set=set_energy, get=get_energy
 
 # ------------------------------------------------------------------------------
@@ -110,7 +127,7 @@ func set_unlimited(u : bool) -> void:
 			changed.emit()
 
 func set_lives(l : int) -> void:
-	if l >= 0 and l != lives:
+	if l >= 0 and l <= MAX_PLAYER_LIVES and l != lives:
 		if not unlimited:
 			lives = l
 		if _lock_change_emit <= 0:
@@ -136,6 +153,44 @@ func get_energy() -> Dictionary[Special, int]:
 	return _energy.duplicate()
 
 # ------------------------------------------------------------------------------
+# Private Methods
+# ------------------------------------------------------------------------------
+func _BitShiftFromLives(l : int) -> int:
+	# I'm just brute forcing this shiz!
+	l = clampi(l, 1, 32) - 1
+	if l > 0:
+		if l & 0x10 > 0: return 5
+		if l & 0x08 > 0: return 4
+		if l & 0x04 > 0: return 3
+		if l & 0x02 > 0: return 2
+		return 1
+	return 0
+
+func _RotateIntLeft(i : int, bits : int) -> int:
+	for _i : int in range(bits):
+		var v : int = i & 0x1
+		i = i >> 1
+		if v > 0:
+			i = i | _TOP_BIT
+	return i
+
+func _RotateIntRight(i : int, bits : int) -> int:
+	for _i : int in range(bits):
+		var v : int = i & _TOP_BIT
+		i = (i << 1) & 0x1FF
+		if v != 0:
+			i = i | 0x1
+	return i
+
+func _IsLevelCodeValid(pw : int, level : int) -> int:
+	if level in _LEVEL_PASSWORD_BINARY:
+		var locked : bool = (pw & _LEVEL_PASSWORD_BINARY[level][0]) > 0
+		var unlocked : bool = (pw & _LEVEL_PASSWORD_BINARY[level][1]) > 0
+		if locked != unlocked:
+			return 1 if locked else 0
+	return -1
+
+# ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
 func reset() -> void:
@@ -148,6 +203,22 @@ func reset() -> void:
 	_lock_change_emit -= 1
 	if _lock_change_emit <= 0:
 		changed.emit()
+
+func reset_from_password(pw : int) -> bool:
+	_lock_change_emit += 1
+	reset()
+	_lock_change_emit -= 1
+	
+	var lcode : int = (pw >> 20) & 0x1F
+	if not lcode in _LIFE_CODE: return false
+	lives = _LIFE_CODE[lcode] + 1
+	var pw_levels : int = _RotateIntRight(pw & 0x1FF, _LIFE_CODE[lcode])
+	for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
+		var code : int = _IsLevelCodeValid(pw_levels, level)
+		if code < 0:
+			return false
+		set_level_unlocked(level, code == 1)
+	return true
 
 ## Returns the current energy level ([code]0 - 255[/code]) for the given
 ## [param Special]
@@ -229,6 +300,12 @@ func get_password() -> int:
 	for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
 		var id : int = 0 if is_level_unlocked(level) else 1
 		password = password | _LEVEL_PASSWORD_BINARY[level][id]
+	
+	var shift = lives - 1
+	password = _RotateIntLeft(password, shift)
+	
+	var lcode : int = _LIFE_CODE.find_key(shift) << 20
+	password = lcode | password
 	return password
 
 func are_specials_from_keyboard_allowed() -> bool:

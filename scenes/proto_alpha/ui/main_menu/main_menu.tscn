@@ -61,4 +61,9 @@ signal_sounds = Dictionary[StringName, StringName]({
 })
 metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
+[node name="BTN_Password" type="Button" parent="VLayout" unique_id=2075716756]
+layout_mode = 2
+text = "Password"
+
 [connection signal="pressed" from="VLayout/BTN_Start" to="." method="_on_btn_start_pressed"]
+[connection signal="pressed" from="VLayout/BTN_Password" to="." method="_on_btn_password_pressed"]

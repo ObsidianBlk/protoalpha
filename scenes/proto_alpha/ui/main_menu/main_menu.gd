@@ -5,6 +5,7 @@ extends UIControl
 # ------------------------------------------------------------------------------
 @export var music_list : MusicSheet = null
 @export var fade_duration : float = 0.5
+@export var password_menu : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -34,3 +35,7 @@ func _on_btn_start_pressed() -> void:
 
 func _on_btn_quit_pressed() -> void:
 	request(Game.UI_ACTION_QUIT_APPLICATION)
+
+func _on_btn_password_pressed() -> void:
+	if not password_menu.is_empty():
+		swap_to(password_menu)
