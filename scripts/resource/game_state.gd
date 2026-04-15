@@ -177,7 +177,7 @@ func _RotateIntLeft(i : int, bits : int) -> int:
 func _RotateIntRight(i : int, bits : int) -> int:
 	for _i : int in range(bits):
 		var v : int = i & _TOP_BIT
-		i = (i << 1) & 0x1FF
+		i = (i << 1) & 0xFFFFF
 		if v != 0:
 			i = i | 0x1
 	return i
@@ -204,20 +204,34 @@ func reset() -> void:
 	if _lock_change_emit <= 0:
 		changed.emit()
 
-func reset_from_password(pw : int) -> bool:
+## Returns [code]true[/code] if the given [param password] successfully updated the
+## game state. If the [param password] is invalid, [code]false[/code] is returned
+## and the [GameState] is in an undetermined state.
+func reset_from_password(password : int) -> bool:
 	_lock_change_emit += 1
 	reset()
 	_lock_change_emit -= 1
 	
-	var lcode : int = (pw >> 20) & 0x1F
+	var lcode : int = (password >> 20) & 0x1F
 	if not lcode in _LIFE_CODE: return false
 	lives = _LIFE_CODE[lcode] + 1
-	var pw_levels : int = _RotateIntRight(pw & 0x1FF, _LIFE_CODE[lcode])
+	var pw_levels : int = _RotateIntRight(password & 0xFFFFF, _LIFE_CODE[lcode])
 	for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
 		var code : int = _IsLevelCodeValid(pw_levels, level)
 		if code < 0:
 			return false
 		set_level_unlocked(level, code == 1)
+	return true
+
+## Returns [code]true[/code] if given [param password] value is legal.
+## NOTE: [GameState] is [b]not[/b] modified by this call.
+func is_password_valid(password : int) -> bool:
+	var lcode : int = (password >> 20) & 0x1F
+	if not lcode in _LIFE_CODE: return false
+	var pw_levels : int = _RotateIntRight(password & 0xFFFFF, _LIFE_CODE[lcode])
+	for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
+		if _IsLevelCodeValid(pw_levels, level) < 0:
+			return false
 	return true
 
 ## Returns the current energy level ([code]0 - 255[/code]) for the given
@@ -299,6 +313,7 @@ func get_password() -> int:
 	var password : int = 0
 	for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
 		var id : int = 0 if is_level_unlocked(level) else 1
+		#print("Level ", level, " binary ID: ", id, " | ", String.num_uint64(_LEVEL_PASSWORD_BINARY[level][id], 2).lpad(20, "0"))
 		password = password | _LEVEL_PASSWORD_BINARY[level][id]
 	
 	var shift = lives - 1

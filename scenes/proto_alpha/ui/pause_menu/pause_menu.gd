@@ -2,6 +2,11 @@ extends UIControl
 
 
 # ------------------------------------------------------------------------------
+# Export Variables
+# ------------------------------------------------------------------------------
+@export var password_menu : StringName = &""
+
+# ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _btn_resume: Button = %BTN_Resume
@@ -22,7 +27,11 @@ func _on_btn_resume_pressed() -> void:
 	request(Game.UI_ACTION_RESUME)
 
 func _on_btn_password_pressed() -> void:
-	print("I don't do anything yet. Sorry.")
+	if not password_menu.is_empty():
+		swap_to(password_menu, false, {
+			&"password": Game.State.get_password(),
+			UIControl.OPTION_PREVIOUS_UI: self.name
+		})
 
 func _on_btn_quit_pressed() -> void:
 	request(Game.UI_ACTION_QUIT_GAME)

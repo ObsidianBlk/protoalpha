@@ -19,6 +19,7 @@ const LEVEL : String = "res://scenes/levels/demo_level/demo_level.tscn"
 @export var pause_menu : StringName = &""
 @export var specials_select_menu : StringName = &""
 @export var level_select_menu : StringName = &""
+@export var password_menu : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -86,6 +87,7 @@ func _input(event: InputEvent) -> void:
 					_PauseGame(specials_select_menu)
 			elif _ui.is_ui_active(specials_select_menu):
 				_ResumeGame()
+				_CheckCheatCode(event)
 		else:
 			_CheckCheatCode(event)
 	else:
@@ -189,14 +191,17 @@ func _LoadLevelFromID(level_id : int) -> void:
 			_ui.open_ui(level_select_menu)
 		).call_deferred()
 
-func _StartGame() -> void:
+func _StartGame(password : int = 0) -> void:
 	if level_select_menu.is_empty() or pause_menu.is_empty():
 		printerr("Missing names for Pause and/or Level Select menus.")
 		return
 	if _game_running: return
 	
-	Game.State.reset()
-	Game.State.set_level_unlocked(GameState.LEVEL_1, false)
+	if not Game.State.is_password_valid(password):
+		Game.State.reset()
+	else:
+		Game.State.reset_from_password(password)
+	#Game.State.set_level_unlocked(GameState.LEVEL_1, false)
 	_game_running = true
 	_ui.swap_to_ui(level_select_menu)
 
@@ -205,7 +210,12 @@ func _QuitLevel() -> void:
 	_CloseLevel()
 	get_tree().paused = true
 	_hud.visible = false
-	_ui.swap_to_ui(level_select_menu)
+	if not password_menu.is_empty():
+		_ui.swap_to_ui(password_menu, false, {
+			&"password": Game.State.get_password(),
+			&"locked": true
+		})
+	else: _ui.swap_to_ui(level_select_menu)
 
 func _PauseGame(menu : StringName = &"") -> void:
 	if not _game_running or get_tree().paused: return

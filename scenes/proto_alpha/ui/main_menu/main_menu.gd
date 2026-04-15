@@ -38,4 +38,4 @@ func _on_btn_quit_pressed() -> void:
 
 func _on_btn_password_pressed() -> void:
 	if not password_menu.is_empty():
-		swap_to(password_menu)
+		swap_to(password_menu, false, {UIControl.OPTION_PREVIOUS_UI: self.name})

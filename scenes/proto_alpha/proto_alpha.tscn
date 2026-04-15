@@ -52,6 +52,7 @@ script = ExtResource("1_q6vex")
 pause_menu = &"PauseMenu"
 specials_select_menu = &"SpecialsSelectMenu"
 level_select_menu = &"LevelSelect"
+password_menu = &"PasswordScreen"
 
 [node name="ChaseCamera" type="Camera2D" parent="." unique_id=244276403]
 script = ExtResource("2_fchvx")
@@ -82,8 +83,10 @@ password_menu = &"PasswordScreen"
 default_ui = true
 
 [node name="PauseMenu" parent="UILayer" unique_id=322752988 instance=ExtResource("6_flgcp")]
+password_menu = &"PasswordScreen"
 
 [node name="PasswordScreen" parent="UILayer" unique_id=2100102185 instance=ExtResource("13_1423w")]
+level_select_menu = &"LevelSelect"
 
 [node name="SpecialsSelectMenu" parent="UILayer" unique_id=1326436555 instance=ExtResource("13_xh1g3")]
 offset_right = 196.0
