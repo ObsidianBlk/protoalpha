@@ -136,7 +136,7 @@ func _on_password_button_toggled(toggled_on : bool, button_name : StringName) ->
 					_password = _password | mask
 				else:
 					_password = _password & (~mask)
-			print("Password: ", String.num_uint64(_password, 2).lpad(25, "0"))
+			#print("Password: ", String.num_uint64(_password, 2).lpad(25, "0"))
 
 func _on_btn_back_pressed() -> void:
 	swap_back()

@@ -21,7 +21,6 @@ const STATE_TELEPORT : StringName = &"Teleport"
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
-var _special : GameState.Special = GameState.Special.CHARGED_BLASTER
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -41,7 +40,9 @@ func _ready() -> void:
 		func():
 			animation_finished.emit(_sprite.animation)
 	)
-	special_changed.emit(_special)
+	print("Player Special: ", Game.State.get_special())
+	set_special(Game.State.get_special())
+	#special_changed.emit(Game.State.get_special())
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -52,16 +53,15 @@ func get_weapon() -> Weapon:
 	return weapon
 
 func get_special() -> GameState.Special:
-	return _special
+	return Game.State.get_special()
 
 func set_special(special : GameState.Special) -> void:
-	if Game.State.is_special_unlocked(special):
-		_special = special
+	if Game.State.set_special(special):
 		if weapon != null:
 			if Game.Is_Valid_Weapon(special):
 				weapon.weapon_def = Game.Get_Weapon_Resource(special)
 			else: weapon.weapon_def = null
-		special_changed.emit(_special)
+		special_changed.emit(special)
 
 func spawn_at(spawn_position : Vector2, payload : Dictionary = {}) -> void:
 	super.spawn_at(spawn_position, payload)

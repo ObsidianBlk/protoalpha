@@ -2,10 +2,15 @@ extends UIControl
 
 
 # ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const MODULATION_SPECIAL_ACTIVE : Color = Color.WHITE
+const MODULATION_SPECIAL_INACTIVE : Color = Color.TRANSPARENT
+
+# ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _button_lut : Dictionary[GameState.Special, Button] = {}
-var _current_special : GameState.Special = GameState.Special.CHARGED_BLASTER
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -28,9 +33,17 @@ func _ready() -> void:
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
-	if _current_special in _button_lut:
-		_button_lut[_current_special].grab_focus()
-		_button_lut[_current_special].set_pressed_no_signal(true)
+	for special : GameState.Special in _button_lut.keys():
+		if Game.State.is_special_unlocked(special):
+			_button_lut[special].modulate = MODULATION_SPECIAL_ACTIVE
+			_button_lut[special].focus_mode = Control.FOCUS_ALL
+		else:
+			_button_lut[special].modulate = MODULATION_SPECIAL_INACTIVE
+			_button_lut[special].focus_mode = Control.FOCUS_NONE
+		
+		if special == Game.State.get_special():
+			_button_lut[special].grab_focus()
+			_button_lut[special].set_pressed_no_signal(true)
 	super._on_reveal()
 
 
@@ -38,7 +51,6 @@ func _on_reveal() -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_special_button_pressed(special : GameState.Special) -> void:
-	if _current_special != special:
-		_current_special = special
+	if special != Game.State.get_special():
 		Relay.special_selected.emit(special)
-		request(Game.UI_ACTION_RESUME)
+	request(Game.UI_ACTION_RESUME)

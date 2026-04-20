@@ -195,22 +195,24 @@ func _StartGame(password : int = 0) -> void:
 	if level_select_menu.is_empty() or pause_menu.is_empty():
 		printerr("Missing names for Pause and/or Level Select menus.")
 		return
-	if _game_running: return
+	if _game_running and password == 0: return
 	
 	if not Game.State.is_password_valid(password):
 		Game.State.reset()
 	else:
+		if _level != null and _game_running:
+			_CloseLevel()
 		Game.State.reset_from_password(password)
 	#Game.State.set_level_unlocked(GameState.LEVEL_1, false)
 	_game_running = true
 	_ui.swap_to_ui(level_select_menu)
 
-func _QuitLevel() -> void:
+func _QuitLevel(show_password_screen : bool = false) -> void:
 	if not (_level != null and _game_running): return
 	_CloseLevel()
 	get_tree().paused = true
 	_hud.visible = false
-	if not password_menu.is_empty():
+	if not password_menu.is_empty() and show_password_screen:
 		_ui.swap_to_ui(password_menu, false, {
 			&"password": Game.State.get_password(),
 			&"locked": true
@@ -276,7 +278,7 @@ func enable_input(enable : bool) -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_level_completed() -> void:
-	_QuitLevel.call_deferred()
+	_QuitLevel.call_deferred(true)
 
 func _on_level_defeated() -> void:
 	_QuitGame.call_deferred()

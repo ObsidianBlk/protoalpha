@@ -18,6 +18,7 @@ extends ProtoState
 # Variables
 # ------------------------------------------------------------------------------
 var _current_duration : float = 0.0
+var _ended : bool = false
 
 var _source_hbo : HitboxResource = null
 
@@ -25,7 +26,9 @@ var _source_hbo : HitboxResource = null
 # Private Methods
 # ------------------------------------------------------------------------------
 func _EndDash() -> void:
-	actor.set_tree_param(APARAM_SPECIAL_FAULTDASH_INACTIVE, true)
+	if not _ended:
+		_ended = true
+		actor.set_tree_param(APARAM_SPECIAL_FAULTDASH_INACTIVE, _ended)
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
@@ -39,6 +42,7 @@ func enter(payload : Variant = null) -> void:
 		_source_hbo = hitbox.overrides
 		hitbox.overrides = hitbox_override
 	
+	_ended = false
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
 	actor.set_tree_param(APARAM_SPECIAL_FAULTDASH_INACTIVE, false)
@@ -53,16 +57,28 @@ func exit() -> void:
 		hitbox.overrides = _source_hbo
 		_source_hbo = null
 
+#func update(delta : float) -> void:
+	#if _current_duration > 0.0:
+		#_current_duration -= delta
+		#if _current_duration <= 0.0:
+			#_EndDash()
+		#else:
+			#if collision_ray != null and collision_ray.is_colliding():
+				#_EndDash()
+			#else:
+				#actor.move_and_slide()
+
 func update(delta : float) -> void:
 	if _current_duration > 0.0:
 		_current_duration -= delta
 		if _current_duration <= 0.0:
 			_EndDash()
-		else:
-			if collision_ray != null and collision_ray.is_colliding():
-				_EndDash()
-			else:
-				actor.move_and_slide()
+	if collision_ray != null and collision_ray.is_colliding():
+		actor.velocity.x = 0.0
+		_EndDash()
+	if _ended:
+		actor.velocity.x = lerpf(actor.velocity.x, 0.0, 0.1)
+	actor.move_and_slide()
 
 
 # ------------------------------------------------------------------------------
@@ -74,4 +90,4 @@ func _on_animation_finished(anim_name : StringName) -> void:
 			_current_duration = duration
 		ANIM_FAULT_DASH_EXIT:
 			if not state_idle.is_empty():
-				swap_to.call_deferred(state_idle)
+				swap_to.call_deferred(state_idle, true)

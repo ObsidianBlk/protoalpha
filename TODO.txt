@@ -1,9 +1,13 @@
 -- TODO --
-* Fix FaultDash movement when exiting dash.
-* FIX Energy not resetting after new level/game start.
+* Fix FaultDash movement.
+* Clean up Level Select Menu
+  * Add icons for non-existing levels and defeated levels.
+  * Block user from selecting level that has already been defeated.
+* (?) New (web) build
+
+* ADD ENERGY PICKUPS!!!
 
 * Add more weapons (AKA Special Abilities)
-* Build out the "Password" system
 * Boss spawning animation/intro
 * Boss defeated Victory animation/outtro
 
@@ -14,11 +18,7 @@
     energy bar will discharge hurting the player (massively?)
 
 -- UI --
-* Add Special ability select menu.
 * Better TV-UI -> Game flow
-* Clean up Level Select Menu
-  * Add icons for non-existing levels and defeated levels.
-  * Block user from selecting level that has already been defeated.
 
 -- Special Ability Ideas --
 * Charged Bolt (Default Special)

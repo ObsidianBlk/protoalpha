@@ -45,14 +45,64 @@ theme_type_variation = &"ButtonSpecials"
 text = "Fault Dash"
 icon = ExtResource("4_fqbrd")
 
+[node name="BTN_PlaceHolder1" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer" unique_id=1323336163]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonSpecials"
+text = "Place Holder"
+icon = ExtResource("3_ykihv")
+
+[node name="BTN_PlaceHolder2" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer" unique_id=255709988]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonSpecials"
+text = "Place Holder"
+icon = ExtResource("3_ykihv")
+
+[node name="BTN_PlaceHolder3" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer" unique_id=2026812454]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonSpecials"
+text = "Place Holder"
+icon = ExtResource("3_ykihv")
+
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/VLayout/HBoxContainer" unique_id=1987247645]
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VLayout/HBoxContainer" unique_id=661324562]
 layout_mode = 2
 
-[node name="BTN_PlaceHolder" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=901718257]
+[node name="BTN_PlaceHolder1" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=901718257]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonSpecials"
+text = "Place Holder"
+icon = ExtResource("3_ykihv")
+
+[node name="BTN_PlaceHolder2" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=784884045]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonSpecials"
+text = "Place Holder"
+icon = ExtResource("3_ykihv")
+
+[node name="BTN_PlaceHolder3" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=41766448]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonSpecials"
+text = "Place Holder"
+icon = ExtResource("3_ykihv")
+
+[node name="BTN_PlaceHolder4" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=1012933652]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_mode = 0
 theme_type_variation = &"ButtonSpecials"
 text = "Place Holder"
 icon = ExtResource("3_ykihv")

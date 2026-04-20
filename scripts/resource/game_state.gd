@@ -84,6 +84,7 @@ const MAX_PLAYER_LIVES : int = 5
 const CHEAT_INFINITE_LIVES : StringName = &"move_up_move_up_move_down_move_down_move_left_move_right_move_left_move_right_select_start"
 const CHEAT_CAN_DIE : StringName = &"select_select_select_start"
 const CHEAT_ADD_LIVES : StringName = &"move_up_move_up_shoot_shoot_select"
+const CHEAT_INFINITE_ENERGY : StringName = &"move_down_move_down_move_down_shoot_shoot_select"
 const CHEAT_DEBUG_POSITION : StringName = &"move_up_move_left_move_down_move_right_select_select"
 const CHEAT_KEYBOARD_SPECIALS : StringName = &"move_up_move_up_move_up_select_select"
 
@@ -112,7 +113,11 @@ var _energy : Dictionary[Special, int] = {
 	Special.CHARGED_BLASTER : MAX_ENERGY,
 	Special.FAULT_DASH : MAX_ENERGY
 }
+var _current_special : Special = Special.CHARGED_BLASTER
+
+# --- Cheat code states ---
 var _allow_specials_from_keyboard : bool = false
+var _unlimited_energy : bool = false
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -198,6 +203,7 @@ func reset() -> void:
 	unlimited = false
 	lives = INITIAL_PLAYER_LIVES
 	unlocked_levels = ALL_LEVELS
+	_current_special = Special.CHARGED_BLASTER
 	for special : Special in energy:
 		energy[special] = MAX_ENERGY
 	_lock_change_emit -= 1
@@ -238,7 +244,7 @@ func is_password_valid(password : int) -> bool:
 ## [param Special]
 func get_energy_level(special : Special) -> int:
 	if special in energy:
-		if _SPECIAL_LUT[special][_SPECIAL_KEY_INF_ENERGY]:
+		if _unlimited_energy or _SPECIAL_LUT[special][_SPECIAL_KEY_INF_ENERGY]:
 			return MAX_ENERGY
 		return energy[special]
 	return -1
@@ -247,6 +253,7 @@ func get_energy_level(special : Special) -> int:
 ## [br][br]
 ## [b]Note:[/b] [param energy_level] is clamped to the range [code]0 - 255[/code].
 func set_energy_level(special : Special, energy_level : int) -> void:
+	if _unlimited_energy: return
 	energy_level = clampi(energy_level, 0, 255)
 	if special in _energy and _energy[special] != energy_level:
 		_energy[special] = energy_level
@@ -269,6 +276,7 @@ func change_energy_level(special : Special, amount : int) -> void:
 ## is returned, otherwise [code]false[/code] is returned.
 func use_special(special : Special) -> bool:
 	if special in energy:
+		if _unlimited_energy: return true
 		if _energy[special] >= _SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ]:
 			change_energy_level(special, -_SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ])
 			return true
@@ -309,6 +317,15 @@ func is_special_unlocked(special : Special) -> bool:
 		return not is_level_unlocked(level)
 	return false
 
+func set_special(special : Special) -> bool:
+	if is_special_unlocked(special):
+		_current_special = special
+		return true
+	return false
+
+func get_special() -> Special:
+	return _current_special
+
 func get_password() -> int:
 	var password : int = 0
 	for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
@@ -331,6 +348,9 @@ func activate_cheat(code : StringName) -> bool:
 		CHEAT_INFINITE_LIVES:
 			unlimited = true
 			print("Unlimited Lives Cheat")
+		CHEAT_INFINITE_ENERGY:
+			_unlimited_energy = not _unlimited_energy
+			print("Unlimited Energy")
 		CHEAT_ADD_LIVES:
 			lives += 3
 			print("Add Lives Cheat")

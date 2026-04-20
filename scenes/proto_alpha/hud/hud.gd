@@ -50,6 +50,8 @@ func _on_player_rect_changed(pr : Rect2) -> void:
 		_player_info.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 
 func _on_special_selected(special : GameState.Special) -> void:
+	# TODO: This might be redundant as I'm doing this in the _on_energy_changed()
+	#   handler too.
 	_special_icon.texture = Game.Get_Special_Icon(special)
 
 func _on_health_changed(health : int, max_health : int, is_boss : bool = false) -> void:
@@ -65,6 +67,7 @@ func _on_health_changed(health : int, max_health : int, is_boss : bool = false) 
 
 func _on_energy_changed(special : GameState.Special) -> void:
 	if Game.State == null or _energy_progress == null: return
+	_special_icon.texture = Game.Get_Special_Icon(special)
 	var energy : int = Game.State.get_energy_level(special)
 	var eprog : float = (float(energy) / float(GameState.MAX_ENERGY)) * 100.0
 	_energy_progress.value = eprog
