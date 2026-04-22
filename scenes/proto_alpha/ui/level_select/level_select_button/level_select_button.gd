@@ -5,12 +5,14 @@ extends PanelContainer
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
+signal level_requested(level_id : int)
 signal pressed(level_id : int)
 
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const ICON_DEFAULT : Texture2D = preload("res://assets/graphics/ui/level_select_default_icon.png")
+const ICON_MISSING : Texture2D = preload("uid://druc8pb5ob1v1")
 const ANIM_PRESSED : StringName = &"pressed"
 
 const LLUT : Dictionary[int, int] = {
@@ -63,9 +65,13 @@ func _ready() -> void:
 func _UpdateIconTexture() -> void:
 	if _icon_texture == null: return
 	var icon : Texture2D = ICON_DEFAULT
-	if level_number in LLUT and Game.State.is_level_unlocked(LLUT[level_number]):
-		var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number])
-		icon = ICON_DEFAULT if ico == null else ico
+	if level_number in LLUT:
+		if Game.State.is_level_unlocked(LLUT[level_number]):
+			var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number])
+			icon = ICON_MISSING if ico == null else ico
+		else:
+			var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number], true)
+			icon = ICON_DEFAULT if ico == null else ico
 	_icon_texture.texture = icon
 
 # ------------------------------------------------------------------------------
@@ -78,10 +84,14 @@ func focus() -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_at_btn_pressed() -> void:
+	pressed.emit()
 	_btn_pressed = true
+
+func _on_at_btn_focus_entered() -> void:
+	focus_entered.emit()
 
 func _on_at_btn_animation_finished(anim_name: StringName) -> void:
 	if anim_name == ANIM_PRESSED and _btn_pressed:
 		_btn_pressed = false
 		if level_number in LLUT:
-			pressed.emit(LLUT[level_number])
+			level_requested.emit(LLUT[level_number])

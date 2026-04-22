@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://cebftabff28vi" path="res://assets/hud.theme" id="1_wsulm"]
 [ext_resource type="Script" uid="uid://ccxhep82usaum" path="res://scenes/proto_alpha/ui/specials_select_menu/specials_select_menu.gd" id="2_ykihv"]
 [ext_resource type="Texture2D" uid="uid://cr4ddyj68sq7f" path="res://assets/graphics/proto/specials_icon_0.tres" id="3_ykihv"]
+[ext_resource type="Script" uid="uid://bej08ed6q3dot" path="res://scripts/nodes/component_ui_sound.gd" id="4_ahdrs"]
 [ext_resource type="Texture2D" uid="uid://burv470jefr7y" path="res://assets/graphics/proto/specials_icon_1.tres" id="4_fqbrd"]
 
 [node name="SpecialsSelectMenu" type="MarginContainer" unique_id=1326436555]
@@ -32,6 +33,15 @@ theme_type_variation = &"ButtonSpecials"
 text = "Charged Bolt"
 icon = ExtResource("3_ykihv")
 
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/BTN_ChargedBolt" unique_id=2029436723]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VLayout" unique_id=492761124]
 layout_mode = 2
 
@@ -45,6 +55,15 @@ theme_type_variation = &"ButtonSpecials"
 text = "Fault Dash"
 icon = ExtResource("4_fqbrd")
 
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer/BTN_FaultDash" unique_id=1874044615]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_PlaceHolder1" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer" unique_id=1323336163]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -52,6 +71,15 @@ focus_mode = 0
 theme_type_variation = &"ButtonSpecials"
 text = "Place Holder"
 icon = ExtResource("3_ykihv")
+
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer/BTN_PlaceHolder1" unique_id=716273781]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [node name="BTN_PlaceHolder2" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer" unique_id=255709988]
 modulate = Color(1, 1, 1, 0)
@@ -61,6 +89,15 @@ theme_type_variation = &"ButtonSpecials"
 text = "Place Holder"
 icon = ExtResource("3_ykihv")
 
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer/BTN_PlaceHolder2" unique_id=1996805894]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_PlaceHolder3" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer" unique_id=2026812454]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -68,6 +105,15 @@ focus_mode = 0
 theme_type_variation = &"ButtonSpecials"
 text = "Place Holder"
 icon = ExtResource("3_ykihv")
+
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer/BTN_PlaceHolder3" unique_id=1811631642]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/VLayout/HBoxContainer" unique_id=1987247645]
 layout_mode = 2
@@ -83,6 +129,15 @@ theme_type_variation = &"ButtonSpecials"
 text = "Place Holder"
 icon = ExtResource("3_ykihv")
 
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2/BTN_PlaceHolder1" unique_id=1079403342]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_PlaceHolder2" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=784884045]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -90,6 +145,15 @@ focus_mode = 0
 theme_type_variation = &"ButtonSpecials"
 text = "Place Holder"
 icon = ExtResource("3_ykihv")
+
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2/BTN_PlaceHolder2" unique_id=106304260]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [node name="BTN_PlaceHolder3" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=41766448]
 modulate = Color(1, 1, 1, 0)
@@ -99,6 +163,15 @@ theme_type_variation = &"ButtonSpecials"
 text = "Place Holder"
 icon = ExtResource("3_ykihv")
 
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2/BTN_PlaceHolder3" unique_id=1011050376]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_PlaceHolder4" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=1012933652]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -106,3 +179,12 @@ focus_mode = 0
 theme_type_variation = &"ButtonSpecials"
 text = "Place Holder"
 icon = ExtResource("3_ykihv")
+
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2/BTN_PlaceHolder4" unique_id=1560492816]
+script = ExtResource("4_ahdrs")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"

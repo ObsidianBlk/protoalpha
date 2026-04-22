@@ -84,8 +84,6 @@ const UI_ACTION_QUIT_GAME : StringName = &"quit_game"
 const UI_ACTION_PAUSE : StringName = &"pause"
 ## UI Action - Resume Game (close menus and returns to game)
 const UI_ACTION_RESUME : StringName = &"unpause"
-## UI Action - Play sound effect
-const UI_ACTION_SOUND : StringName = &"sound"
 
 ## Guide color for matching axis (used primarily by in-editor guides)
 const GUIDE_COLOR_MATCHING_AXIS : Color = Color.AQUAMARINE
@@ -116,48 +114,63 @@ const COLLISION_LAYER_PLAYER_HITBOX : int = 0x0100 #256
 
 const _LEVEL_PATH : StringName = &"path"
 const _LEVEL_ICON : StringName = &"icon"
+const _LEVEL_DEFEATED_ICON : StringName = &"icon_defeat"
 const _LEVEL_STATE : StringName = &"state"
 const LEVELS : Dictionary[int, Dictionary] = {
 	GameState.LEVEL_1: {
 		_LEVEL_PATH:"res://scenes/levels/level_01/level_01.tscn",
 		_LEVEL_ICON:"res://assets/graphics/bosses/seg_fault/Seg_Fault_Portrait.png",
+		_LEVEL_DEFEATED_ICON: "res://assets/graphics/bosses/seg_fault/Seg_Fault_Defeated_Portrait.png",
 		_LEVEL_STATE: LevelDevState.READY
 	},
 	GameState.LEVEL_2: {
 		_LEVEL_PATH:"res://scenes/levels/level_02/level_02.tscn",
 		_LEVEL_ICON:"res://assets/graphics/bosses/defrag/Defrag_Portrait.png",
+		_LEVEL_DEFEATED_ICON: "res://assets/graphics/bosses/defrag/Defrag_Defeated_Portrait.png",
 		_LEVEL_STATE: LevelDevState.READY
 	},
 	GameState.LEVEL_3: {
 		_LEVEL_PATH:"",
 		_LEVEL_ICON:"",
+		_LEVEL_DEFEATED_ICON: "",
 		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_4: {
 		_LEVEL_PATH:"",
 		_LEVEL_ICON:"",
+		_LEVEL_DEFEATED_ICON: "",
 		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_5: {
 		_LEVEL_PATH:"",
 		_LEVEL_ICON:"",
+		_LEVEL_DEFEATED_ICON: "",
 		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_6: {
 		_LEVEL_PATH:"",
 		_LEVEL_ICON:"",
+		_LEVEL_DEFEATED_ICON: "",
 		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_7: {
 		_LEVEL_PATH:"",
 		_LEVEL_ICON:"",
+		_LEVEL_DEFEATED_ICON: "",
 		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
 	GameState.LEVEL_8: {
-		_LEVEL_PATH:"res://scenes/levels/test_level/test_level.tscn",
-		_LEVEL_ICON:"res://assets/graphics/bosses/defrag/Defrag_Portrait.png",
-		_LEVEL_STATE: LevelDevState.READY
+		_LEVEL_PATH:"",
+		_LEVEL_ICON:"",
+		_LEVEL_DEFEATED_ICON: "",
+		_LEVEL_STATE: LevelDevState.NOT_AVAILABLE
 	},
+	#GameState.LEVEL_8: {
+		#_LEVEL_PATH:"res://scenes/levels/test_level/test_level.tscn",
+		#_LEVEL_ICON:"res://assets/graphics/bosses/defrag/Defrag_Portrait.png",
+		#_LEVEL_DEFEATED_ICON: "",
+		#_LEVEL_STATE: LevelDevState.READY
+	#},
 }
 
 const SPECIALS_ICONS : Dictionary[GameState.Special, AtlasTexture] = {
@@ -230,12 +243,14 @@ static func Sync_Play_Animated_Sprite(asprite : AnimatedSprite2D, anim_name : St
 	else:
 		asprite.play(anim_name)
 
-static func Get_Level_Icon(level_id : int) -> Texture2D:
+static func Get_Level_Icon(level_id : int, defeated : bool = false) -> Texture2D:
 	if level_id in LEVELS:
-		if not LEVELS[level_id][_LEVEL_ICON].is_empty():
-			var ico : Texture2D = load(LEVELS[level_id][_LEVEL_ICON])
-			if ico != null:
-				return ico
+		var icon_path : String = LEVELS[level_id][_LEVEL_DEFEATED_ICON if defeated else _LEVEL_ICON]
+		if not icon_path.is_empty():
+			return load(icon_path)
+			#var ico : Texture2D = load(icon_path)
+			#if ico != null:
+				#return ico
 	return null
 
 static func Get_Level_Path(level_id : int) -> String:

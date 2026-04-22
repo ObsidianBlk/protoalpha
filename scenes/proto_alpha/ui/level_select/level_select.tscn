@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://qvif777vdc70" path="res://scenes/proto_alpha/ui/level_select/level_select.gd" id="1_daoap"]
 [ext_resource type="Theme" uid="uid://c4lk81a4r3ren" path="res://assets/game.theme" id="1_iewmd"]
 [ext_resource type="PackedScene" uid="uid://dotnqb68bu7in" path="res://scenes/proto_alpha/ui/level_select/level_select_button/level_select_button.tscn" id="2_u4l1b"]
+[ext_resource type="Script" uid="uid://bej08ed6q3dot" path="res://scripts/nodes/component_ui_sound.gd" id="4_pikrb"]
 
 [node name="LevelSelect" type="PanelContainer" unique_id=1308967431]
 anchors_preset = 15
@@ -26,43 +27,115 @@ columns = 3
 layout_mode = 2
 level_number = 1
 
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_Level1" unique_id=512722528]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_Level2" parent="GridContainer" unique_id=862798157 instance=ExtResource("2_u4l1b")]
 layout_mode = 2
 level_number = 2
+
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_Level2" unique_id=601518376]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [node name="BTN_Level3" parent="GridContainer" unique_id=1191703982 instance=ExtResource("2_u4l1b")]
 layout_mode = 2
 level_number = 3
 
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_Level3" unique_id=1377101693]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_Level4" parent="GridContainer" unique_id=639284332 instance=ExtResource("2_u4l1b")]
 layout_mode = 2
 level_number = 4
+
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_Level4" unique_id=647563439]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [node name="BTN_CENTER" parent="GridContainer" unique_id=1452906411 instance=ExtResource("2_u4l1b")]
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_CENTER" unique_id=292305551]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_Level5" parent="GridContainer" unique_id=1414175217 instance=ExtResource("2_u4l1b")]
 layout_mode = 2
 level_number = 5
+
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_Level5" unique_id=1523057190]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [node name="BTN_Level6" parent="GridContainer" unique_id=522401737 instance=ExtResource("2_u4l1b")]
 layout_mode = 2
 level_number = 6
 
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_Level6" unique_id=989863938]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_Level7" parent="GridContainer" unique_id=1986750626 instance=ExtResource("2_u4l1b")]
 layout_mode = 2
 level_number = 7
+
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_Level7" unique_id=917807700]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [node name="BTN_Level8" parent="GridContainer" unique_id=1728140706 instance=ExtResource("2_u4l1b")]
 layout_mode = 2
 level_number = 8
 
-[connection signal="pressed" from="GridContainer/BTN_Level1" to="." method="_on_level_pressed"]
-[connection signal="pressed" from="GridContainer/BTN_Level2" to="." method="_on_level_pressed"]
-[connection signal="pressed" from="GridContainer/BTN_Level3" to="." method="_on_level_pressed"]
-[connection signal="pressed" from="GridContainer/BTN_Level4" to="." method="_on_level_pressed"]
-[connection signal="pressed" from="GridContainer/BTN_Level5" to="." method="_on_level_pressed"]
-[connection signal="pressed" from="GridContainer/BTN_Level6" to="." method="_on_level_pressed"]
-[connection signal="pressed" from="GridContainer/BTN_Level7" to="." method="_on_level_pressed"]
-[connection signal="pressed" from="GridContainer/BTN_Level8" to="." method="_on_level_pressed"]
+[node name="ComponentUISound" type="Node" parent="GridContainer/BTN_Level8" unique_id=2049612766]
+script = ExtResource("4_pikrb")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_select_focused",
+&"pressed": &"btn_select_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
+[connection signal="level_requested" from="GridContainer/BTN_Level1" to="." method="_on_level_requested"]
+[connection signal="level_requested" from="GridContainer/BTN_Level2" to="." method="_on_level_requested"]
+[connection signal="level_requested" from="GridContainer/BTN_Level3" to="." method="_on_level_requested"]
+[connection signal="level_requested" from="GridContainer/BTN_Level4" to="." method="_on_level_requested"]
+[connection signal="level_requested" from="GridContainer/BTN_Level5" to="." method="_on_level_requested"]
+[connection signal="level_requested" from="GridContainer/BTN_Level6" to="." method="_on_level_requested"]
+[connection signal="level_requested" from="GridContainer/BTN_Level7" to="." method="_on_level_requested"]
+[connection signal="level_requested" from="GridContainer/BTN_Level8" to="." method="_on_level_requested"]

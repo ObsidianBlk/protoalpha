@@ -51,4 +51,4 @@ func _DisconnectSignals() -> void:
 # ------------------------------------------------------------------------------
 func _on_signaled(sound_name : StringName) -> void:
 	if owner is UIControl:
-		owner.request(Game.UI_ACTION_SOUND, [sound_name])
+		owner.request(ComponentUISoundHandler.UI_ACTION_SOUND, [sound_name])

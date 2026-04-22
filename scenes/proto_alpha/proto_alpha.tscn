@@ -12,6 +12,8 @@
 [ext_resource type="AudioStream" uid="uid://b3k4k0m4axsyg" path="res://assets/audio/sfx/ui/btn_focused.wav" id="8_bg22g"]
 [ext_resource type="AudioStream" uid="uid://c4omywqigyqsn" path="res://assets/audio/sfx/ui/btn_hover.wav" id="9_xh1g3"]
 [ext_resource type="AudioStream" uid="uid://b525f6ycskmqd" path="res://assets/audio/sfx/button_blip.wav" id="10_1423w"]
+[ext_resource type="AudioStream" uid="uid://cn6rxlebnj84b" path="res://assets/audio/sfx/ui/btn_generic_blip_03.wav" id="11_lyrna"]
+[ext_resource type="AudioStream" uid="uid://bogrwrh3iakmc" path="res://assets/audio/sfx/ui/btn_level_selected_01.wav" id="12_wtxq0"]
 [ext_resource type="PackedScene" uid="uid://3hpweo30ryty" path="res://scenes/proto_alpha/ui/level_select/level_select.tscn" id="13_2rg54"]
 [ext_resource type="PackedScene" uid="uid://cqtvv3s8dac4p" path="res://scenes/proto_alpha/ui/password_screen/password_screen.tscn" id="13_1423w"]
 [ext_resource type="PackedScene" uid="uid://6g5dwk58ojgk" path="res://scenes/proto_alpha/ui/specials_select_menu/specials_select_menu.tscn" id="13_xh1g3"]
@@ -36,13 +38,27 @@ stream = ExtResource("10_1423w")
 volume_linear = 1.0
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
+[sub_resource type="Resource" id="Resource_q3owj"]
+script = ExtResource("7_kwc6g")
+stream = ExtResource("11_lyrna")
+volume_linear = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_4uo8l"]
+script = ExtResource("7_kwc6g")
+stream = ExtResource("12_wtxq0")
+volume_linear = 1.0
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
 [sub_resource type="Resource" id="Resource_wwwwu"]
 script = ExtResource("6_2rg54")
 asp_group = &"Game"
 sound_list = Dictionary[StringName, ExtResource("7_kwc6g")]({
 &"btn_focused": SubResource("Resource_hxu8e"),
 &"btn_hover": SubResource("Resource_raeie"),
-&"btn_pressed": SubResource("Resource_nvumn")
+&"btn_pressed": SubResource("Resource_nvumn"),
+&"btn_select_focused": SubResource("Resource_q3owj"),
+&"btn_select_pressed": SubResource("Resource_4uo8l")
 })
 metadata/_custom_type_script = "uid://wbuewjeffa70"
 

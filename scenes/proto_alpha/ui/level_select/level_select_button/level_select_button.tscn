@@ -167,4 +167,5 @@ focused_animation = &"hover"
 metadata/_custom_type_script = "uid://cvyaeabf016yc"
 
 [connection signal="animation_finished" from="ATBtn" to="." method="_on_at_btn_animation_finished"]
+[connection signal="focus_entered" from="ATBtn" to="." method="_on_at_btn_focus_entered"]
 [connection signal="pressed" from="ATBtn" to="." method="_on_at_btn_pressed"]

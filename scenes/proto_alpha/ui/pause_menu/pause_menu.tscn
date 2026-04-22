@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c7ve6fw3ndl11" path="res://scenes/proto_alpha/ui/pause_menu/pause_menu.gd" id="1_kgchh"]
 [ext_resource type="Theme" uid="uid://c4lk81a4r3ren" path="res://assets/game.theme" id="1_rbnsh"]
+[ext_resource type="Script" uid="uid://bej08ed6q3dot" path="res://scripts/nodes/component_ui_sound.gd" id="3_pea7a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbnsh"]
 bg_color = Color(0.25098, 0.192157, 0.552941, 1)
@@ -34,17 +35,53 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Resume"
 
+[node name="ComponentUISound" type="Node" parent="VBoxContainer/BTN_Resume" unique_id=1165101137]
+script = ExtResource("3_pea7a")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_Password" type="Button" parent="VBoxContainer" unique_id=1678602404]
 layout_mode = 2
 text = "Password"
+
+[node name="ComponentUISound" type="Node" parent="VBoxContainer/BTN_Password" unique_id=770318799]
+script = ExtResource("3_pea7a")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [node name="BTN_LevelSelect" type="Button" parent="VBoxContainer" unique_id=326335913]
 layout_mode = 2
 text = "Level Select"
 
+[node name="ComponentUISound" type="Node" parent="VBoxContainer/BTN_LevelSelect" unique_id=942564677]
+script = ExtResource("3_pea7a")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
+
 [node name="BTN_Quit" type="Button" parent="VBoxContainer" unique_id=1636454815]
 layout_mode = 2
 text = "Quit"
+
+[node name="ComponentUISound" type="Node" parent="VBoxContainer/BTN_Quit" unique_id=58199211]
+script = ExtResource("3_pea7a")
+signal_sounds = Dictionary[StringName, StringName]({
+&"focus_entered": &"btn_focused",
+&"mouse_entered": &"btn_hover",
+&"pressed": &"btn_pressed"
+})
+metadata/_custom_type_script = "uid://bej08ed6q3dot"
 
 [connection signal="pressed" from="VBoxContainer/BTN_Resume" to="." method="_on_btn_resume_pressed"]
 [connection signal="pressed" from="VBoxContainer/BTN_Password" to="." method="_on_btn_password_pressed"]

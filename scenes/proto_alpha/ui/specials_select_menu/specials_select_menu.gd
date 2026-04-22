@@ -33,6 +33,7 @@ func _ready() -> void:
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
+	request(ComponentUISoundHandler.UI_ACTION_BLOCK_NEXT_SOUND)
 	for special : GameState.Special in _button_lut.keys():
 		if Game.State.is_special_unlocked(special):
 			_button_lut[special].modulate = MODULATION_SPECIAL_ACTIVE

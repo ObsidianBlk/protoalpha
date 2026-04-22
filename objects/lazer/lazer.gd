@@ -206,12 +206,12 @@ func _Activate(on : bool) -> void:
 	
 	if on:
 		_sprite.play(ANIM_CHARGING)
-		print("Starting audio for ", name)
+		#print("Starting audio for ", name)
 		_PlaySFX(AUDIO_CHARGING)
 	else:
 		_sprite.play(ANIM_INACTIVE)
 		if disabled:
-			print("Stopping audio for ", name)
+			#print("Stopping audio for ", name)
 			_StopSFX()
 			_RemoveAllBeams()
 

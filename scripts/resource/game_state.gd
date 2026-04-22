@@ -328,16 +328,17 @@ func get_special() -> Special:
 
 func get_password() -> int:
 	var password : int = 0
-	for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
-		var id : int = 0 if is_level_unlocked(level) else 1
-		#print("Level ", level, " binary ID: ", id, " | ", String.num_uint64(_LEVEL_PASSWORD_BINARY[level][id], 2).lpad(20, "0"))
-		password = password | _LEVEL_PASSWORD_BINARY[level][id]
-	
-	var shift = lives - 1
-	password = _RotateIntLeft(password, shift)
-	
-	var lcode : int = _LIFE_CODE.find_key(shift) << 20
-	password = lcode | password
+	if lives > 0:
+		for level : int in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8]:
+			var id : int = 0 if is_level_unlocked(level) else 1
+			#print("Level ", level, " binary ID: ", id, " | ", String.num_uint64(_LEVEL_PASSWORD_BINARY[level][id], 2).lpad(20, "0"))
+			password = password | _LEVEL_PASSWORD_BINARY[level][id]
+		
+		var shift = lives - 1
+		password = _RotateIntLeft(password, shift)
+		
+		var lcode : int = _LIFE_CODE.find_key(shift) << 20
+		password = lcode | password
 	return password
 
 func are_specials_from_keyboard_allowed() -> bool:

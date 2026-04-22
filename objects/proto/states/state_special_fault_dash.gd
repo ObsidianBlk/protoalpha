@@ -1,5 +1,9 @@
 extends ProtoState
 
+# ------------------------------------------------------------------------------
+# Constants and ENUMs
+# ------------------------------------------------------------------------------
+enum DashState {FORMING=0, DASHING=1, ENDED=2}
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -18,7 +22,8 @@ extends ProtoState
 # Variables
 # ------------------------------------------------------------------------------
 var _current_duration : float = 0.0
-var _ended : bool = false
+#var _ended : bool = false
+var _state : DashState = DashState.FORMING
 
 var _source_hbo : HitboxResource = null
 
@@ -26,14 +31,14 @@ var _source_hbo : HitboxResource = null
 # Private Methods
 # ------------------------------------------------------------------------------
 func _EndDash() -> void:
-	if not _ended:
-		_ended = true
-		actor.set_tree_param(APARAM_SPECIAL_FAULTDASH_INACTIVE, _ended)
+	if _state != DashState.ENDED:
+		_state = DashState.ENDED
+		actor.set_tree_param(APARAM_SPECIAL_FAULTDASH_INACTIVE, true)
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
 # ------------------------------------------------------------------------------
-func enter(payload : Variant = null) -> void:
+func enter(_payload : Variant = null) -> void:
 	if actor == null:
 		pop()
 		return
@@ -42,7 +47,7 @@ func enter(payload : Variant = null) -> void:
 		_source_hbo = hitbox.overrides
 		hitbox.overrides = hitbox_override
 	
-	_ended = false
+	_state = DashState.FORMING
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
 	actor.set_tree_param(APARAM_SPECIAL_FAULTDASH_INACTIVE, false)
@@ -76,9 +81,10 @@ func update(delta : float) -> void:
 	if collision_ray != null and collision_ray.is_colliding():
 		actor.velocity.x = 0.0
 		_EndDash()
-	if _ended:
+	if _state == DashState.ENDED:
 		actor.velocity.x = lerpf(actor.velocity.x, 0.0, 0.1)
-	actor.move_and_slide()
+	if _state != DashState.FORMING:
+		actor.move_and_slide()
 
 
 # ------------------------------------------------------------------------------
@@ -87,6 +93,7 @@ func update(delta : float) -> void:
 func _on_animation_finished(anim_name : StringName) -> void:
 	match anim_name:
 		ANIM_FAULT_DASH_FORM:
+			_state = DashState.DASHING
 			_current_duration = duration
 		ANIM_FAULT_DASH_EXIT:
 			if not state_idle.is_empty():

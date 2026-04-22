@@ -15,7 +15,7 @@ extends UIControl
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
-	#_btn_resume.grab_focus()
+	request(ComponentUISoundHandler.UI_ACTION_BLOCK_NEXT_SOUND)
 	refocus_input(_btn_resume)
 	super._on_reveal()
 

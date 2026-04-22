@@ -16,7 +16,7 @@ extends UIControl
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
-	#_btn_start.grab_focus()
+	request(ComponentUISoundHandler.UI_ACTION_BLOCK_NEXT_SOUND)
 	refocus_input(_btn_start)
 	if music_list != null:
 		music_list.stop_non_local()

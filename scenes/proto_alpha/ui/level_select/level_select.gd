@@ -19,6 +19,7 @@ extends UIControl
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
+	request(ComponentUISoundHandler.UI_ACTION_BLOCK_NEXT_SOUND)
 	_btn_center.focus()
 	#refocus_input(_btn_center)
 	super._on_reveal()
@@ -26,7 +27,7 @@ func _on_reveal() -> void:
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_level_pressed(id : int) -> void:
+func _on_level_requested(id : int) -> void:
 	var lstate : Game.LevelDevState = Game.Get_Level_State(id)
 	match lstate:
 		Game.LevelDevState.NOT_AVAILABLE:
