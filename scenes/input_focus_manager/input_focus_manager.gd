@@ -134,9 +134,10 @@ func _HandleMousePosition(delta : float) -> Vector2:
 			_Threshold(Input.get_joy_axis(_joypad_device, JOY_AXIS_RIGHT_X), JOY_DEAD_ZONE),
 			_Threshold(Input.get_joy_axis(_joypad_device, JOY_AXIS_RIGHT_Y), JOY_DEAD_ZONE)
 		)
-	pos += (stick * JOY_MOUSE_SENSITIVITY * delta)
-	_mouse_warping = true
-	Input.warp_mouse(pos)
+	if not stick.is_equal_approx(Vector2.ZERO):
+		pos += (stick * JOY_MOUSE_SENSITIVITY * delta)
+		_mouse_warping = true
+		Input.warp_mouse(pos)
 	return pos
 
 func _HoverFocusSnap() -> void:
@@ -150,14 +151,11 @@ func _HoverFocusSnap() -> void:
 	var ctrl : Control = vp.gui_get_hovered_control()
 	var fowner : Control = vp.gui_get_focus_owner()
 	if ctrl != null and ctrl != fowner:
-		#print(
-			#"Hover Focus: ",
-			#"Null" if ctrl == null else ctrl.name,
-			#" | Owner: ",
-			#"Null" if fowner == null else fowner.name
-		#)
-		print(ctrl)
-		ctrl.grab_focus()
+		if fowner != null:
+			fowner.release_focus()
+		#print(ctrl)
+		if not ctrl is SubViewportContainer:
+			ctrl.grab_focus()
 
 func _ReleaseViewportControl() -> void:
 	var vp : Viewport = get_viewport()

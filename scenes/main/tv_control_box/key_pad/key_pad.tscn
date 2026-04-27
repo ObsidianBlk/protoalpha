@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bywgkwncwibdr" path="res://scenes/main/tv_control_box/key_pad/key_pad.gd" id="1_2os4x"]
 [ext_resource type="FontFile" uid="uid://be60jvab5bvpd" path="res://assets/fonts/E1234/E1234-Regular.otf" id="1_lq5np"]
+[ext_resource type="Texture2D" uid="uid://dl8nwfhlhns3d" path="res://assets/graphics/tv/TV_VolUp_Icon.png" id="3_w1iey"]
+[ext_resource type="Texture2D" uid="uid://u3w5a72b8xw8" path="res://assets/graphics/tv/TV_VolDown_Icon.png" id="4_hb5ck"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lq5np"]
 
@@ -91,7 +93,8 @@ text = "3"
 [node name="BTN_Up" type="Button" parent="VBoxContainer/KeyPad" unique_id=2093828377]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
-text = "/\\"
+icon = ExtResource("3_w1iey")
+icon_alignment = 1
 
 [node name="BTN_0" type="Button" parent="VBoxContainer/KeyPad" unique_id=1630934360]
 custom_minimum_size = Vector2(34, 0)
@@ -101,7 +104,8 @@ text = "0"
 [node name="BTN_Down" type="Button" parent="VBoxContainer/KeyPad" unique_id=1440920954]
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
-text = "\\/"
+icon = ExtResource("4_hb5ck")
+icon_alignment = 1
 
 [node name="Label_Spacer" type="Label" parent="VBoxContainer" unique_id=54471511]
 layout_mode = 2

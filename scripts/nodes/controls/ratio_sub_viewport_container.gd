@@ -8,12 +8,14 @@ class_name RatioSubViewportContainer
 # ------------------------------------------------------------------------------
 @export var ratio : Vector2i = Vector2i(4,3):		set=set_ratio
 @export var relative_screen_scale : float = 0.5:	set=set_relative_screen_scale
-
+@export var disable_input : bool = false:			set=set_disable_input
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _screen_size : Vector2 = Vector2.ZERO
+
+var _main_viewport : WeakRef = weakref(null)
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -28,11 +30,18 @@ func set_relative_screen_scale(rss : float) -> void:
 	if not is_equal_approx(rss, relative_screen_scale):
 		relative_screen_scale = rss
 		_CalculateMinimumSize.call_deferred()
-		
+
+func set_disable_input(disabled : bool) -> void:
+	if disable_input != disabled:
+		disable_input = disabled
+		_UpdateSubViewportInput()
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
+func _ready() -> void:
+	_UpdateSubViewportInput()
+
 func _enter_tree() -> void:
 	var vp : Viewport = get_viewport()
 	if vp != null:
@@ -60,6 +69,22 @@ func _CalculateMinimumSize() -> void:
 	
 	min_size = Vector2(w * rscale, h * rscale)
 	custom_minimum_size = min_size
+
+func _GetMainSubViewport() -> SubViewport:
+	var vp : SubViewport = _main_viewport.get_ref()
+	if vp == null:
+		for child : Node in get_children():
+			if child is SubViewport:
+				vp = child
+				_main_viewport = weakref(child)
+				break
+	return vp
+
+func _UpdateSubViewportInput() -> void:
+	var svp : SubViewport = _GetMainSubViewport()
+	if svp != null:
+		svp.gui_disable_input = disable_input
+
 
 # ------------------------------------------------------------------------------
 # Handler Methods

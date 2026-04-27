@@ -1,9 +1,11 @@
 -- TODO --
-* Fix FaultDash movement.
+* (BUG) Password screen doesn't clear old password when opened from Pause menu!!
 * Clean up Level Select Menu
-  * Add icons for non-existing levels and defeated levels.
   * Block user from selecting level that has already been defeated.
-* (?) New (web) build
+
+* FaultDash - Make it last longer, and allow player to cancel at any time.
+*   Allow it to go through (some) walls???
+
 
 * ADD ENERGY PICKUPS!!!
 
@@ -15,7 +17,7 @@
   stepped on.
   * While player is standing on it, will charge the player's energy bar.
   * If energy bar fully charged, will "overload" the energy bar. If fully overloaded
-    energy bar will discharge hurting the player (massively?)
+	energy bar will discharge hurting the player (massively?)
 
 -- UI --
 * Better TV-UI -> Game flow

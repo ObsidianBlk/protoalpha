@@ -63,7 +63,8 @@ offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("2_wfn0m")
 sprite_frames = SubResource("SpriteFrames_r4luh")
-frame_progress = 0.8572222222222221
+frame = 1
+frame_progress = 1.0032676666666667
 auto_play = true
 metadata/_custom_type_script = "uid://b56xn8kwao8rs"
 
