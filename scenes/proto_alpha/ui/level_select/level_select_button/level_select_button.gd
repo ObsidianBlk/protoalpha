@@ -56,12 +56,16 @@ func set_level_number(n : int) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	Game.State.changed.connect(_UpdateIconTexture)
-	_UpdateIconTexture()
+	Game.State.changed.connect(_Update)
+	_Update()
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _Update() -> void:
+	_UpdateButton()
+	_UpdateIconTexture()
+
 func _UpdateIconTexture() -> void:
 	if _icon_texture == null: return
 	var icon : Texture2D = ICON_DEFAULT
@@ -73,6 +77,13 @@ func _UpdateIconTexture() -> void:
 			var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number], true)
 			icon = ICON_DEFAULT if ico == null else ico
 	_icon_texture.texture = icon
+
+func _UpdateButton() -> void:
+	if _btn == null: return
+	var unavailable : bool = true
+	if level_number in LLUT and not Game.Get_Level_Path(level_number).is_empty():
+		unavailable = not Game.State.is_level_unlocked(LLUT[level_number])
+	_btn.disabled = unavailable
 
 # ------------------------------------------------------------------------------
 # Public Methods

@@ -163,6 +163,7 @@ sprite_frames = SubResource("SpriteFrames_s20i2")
 normal_animation = &"normal"
 pressed_animation = &"pressed"
 hover_animation = &"hover"
+disabled_animation = &"normal"
 focused_animation = &"hover"
 metadata/_custom_type_script = "uid://cvyaeabf016yc"
 

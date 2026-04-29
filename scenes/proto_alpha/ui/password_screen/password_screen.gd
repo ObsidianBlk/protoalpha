@@ -31,6 +31,7 @@ var _password : int = 0
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _password_grid: GridContainer = %PasswordGrid
+@onready var _btn_continue: Button = %BTN_Continue
 
 @onready var _static_controls: PanelContainer = %StaticControls
 @onready var _entry_controls: VBoxContainer = %EntryControls
@@ -65,10 +66,11 @@ func _UpdateAvailableTicks() -> void:
 	else: _lbl_available_ticks.text = "%d"%[_available_ticks]
 
 func _UpdateFromPassword() -> void:
+	for btn : Button in _grid_buttons.values():
+		btn.set_pressed_no_signal(false)
+	_available_ticks = 9
+	
 	if _password == 0:
-		for btn : Button in _grid_buttons.values():
-			btn.set_pressed_no_signal(false)
-		_available_ticks = 9
 		return
 	var pass_str : String = String.num_uint64(_password, 2).lpad(25, "0")
 	var plen : int = pass_str.length()
@@ -95,10 +97,12 @@ func _UpdateFromPassword() -> void:
 # "Virtual" Methods
 # ------------------------------------------------------------------------------
 func _on_reveal() -> void:
-	if _INITIAL_BUTTON_NAME in _grid_buttons:
+	_static_controls.visible = _locked
+	if _locked:
+		_btn_continue.grab_focus()
+	elif _INITIAL_BUTTON_NAME in _grid_buttons:
 		_grid_buttons[_INITIAL_BUTTON_NAME].grab_focus()
 	_entry_controls.visible = not _locked
-	_static_controls.visible = _locked
 	_UpdateFromPassword()
 	_UpdateAvailableTicks()
 	super._on_reveal()
