@@ -529,6 +529,7 @@ color = Color(0, 1, 0.049999952, 1)
 stream = SubResource("AudioStreamPolyphonic_hujxm")
 
 [connection signal="start_game" from="." to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]
+[connection signal="game_focus_requested" from="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer" to="GameLayer/InputFocusManager" method="grab_game_focus"]
 [connection signal="close_game" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/ProtoAlpha" method="close_game"]
 [connection signal="coded" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/TVSetup/TV/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/Channels/TVChannels" method="show_channel"]
 [connection signal="coded" from="GameLayer/TVSetup/TV/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="FullScreenGame" method="coded"]

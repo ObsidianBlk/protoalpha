@@ -16,6 +16,11 @@ const JOY_MOUSE_SENSITIVITY : Vector2 = Vector2.ONE * 400.0
 const JOY_DEAD_ZONE : float = 0.5
 
 # ------------------------------------------------------------------------------
+# Export Variables
+# ------------------------------------------------------------------------------
+@export_enum("TV:0", "Game:1") var initial_focus : int = 0
+
+# ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _mouse_left_stick : bool = true
@@ -35,8 +40,15 @@ var _ignore_hover : bool = false
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	_pointer_sprite.visible = false
+	match initial_focus:
+		0: # TV
+			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+			_pointer_sprite.visible = true
+			focus_tv.emit.call_deferred()
+		1: # Game
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			_pointer_sprite.visible = false
+			focus_game.emit.call_deferred()
 
 func _enter_tree() -> void:
 	var vp : Viewport = get_viewport()
@@ -161,6 +173,22 @@ func _ReleaseViewportControl() -> void:
 	var vp : Viewport = get_viewport()
 	if vp != null:
 		vp.gui_release_focus()
+
+
+# ------------------------------------------------------------------------------
+# Public Methods
+# ------------------------------------------------------------------------------
+func grab_tv_focus() -> void:
+	if _pointer_sprite.visible: return
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	_pointer_sprite.visible = true
+	focus_tv.emit()
+
+func grab_game_focus() -> void:
+	if not _pointer_sprite.visible: return
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_pointer_sprite.visible = false
+	focus_game.emit()
 
 # ------------------------------------------------------------------------------
 # Handler Methods
