@@ -96,11 +96,15 @@ func _CalculateMinimumSize() -> void:
 	var target_ratio : float = float(ratio.x) / float(ratio.y)
 	var screen_size : Vector2 = _screen_size * relative_screen_scale
 	
-	var w : float = screen_size.y * target_ratio
-	var h : float = screen_size.y
+	var min_edge : float = min(screen_size.x, screen_size.y)
+	
+	#print("Actual Size: ", _screen_size, " | Target Size: ", screen_size, " | Shortest Edge: ", min_edge)
+	var w : float = min_edge# * target_ratio
+	var h : float = min_edge / target_ratio
 	var rscale : float = min(screen_size.x / w, screen_size.y / h)
 	
 	min_size = Vector2(w * rscale, h * rscale)
+	print("Result: ", min_size)
 	custom_minimum_size = min_size
 
 func _GetMainSubViewport() -> SubViewport:

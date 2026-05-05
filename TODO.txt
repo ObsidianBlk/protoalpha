@@ -1,4 +1,6 @@
 -- TODO --
+* "SHOOT" event double triggering for some reason!
+
 * Remove TVBody subtree and make it a top-level element.
   * Add code to calculate size and position upon a viewport size change.
 * Do the same for ConsoleBody subtree as above.

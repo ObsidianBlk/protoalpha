@@ -95,7 +95,10 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action(&"shoot"):
 		if event.is_pressed() and interactor != null and interactor.interactable_count() > 0:
 			interactor.interact()
-		else: special_triggered.emit(event.is_pressed())
+			print("Interaction done")
+		else:
+			print("Entering Special")
+			special_triggered.emit(event.is_pressed())
 	elif Game.Event_One_Of(event, [&"special_1", &"special_2"]):
 		if Game.State.are_specials_from_keyboard_allowed():
 			if event.is_action(&"special_1"):
