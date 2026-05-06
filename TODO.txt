@@ -1,9 +1,21 @@
 -- TODO --
 
+-- BUGS:
+* Web-build: Gamepad joy-stick not working correctly, but seems fine on desktop build
+* Web-build: TV screen sized funky in some states
+* Web-build: Gamepad's jump button, coded as Y, is actually X.
+  * Not a major issue, but strange
+
+-- ENHANCEMENTS:
 * FaultDash - Make it last longer, and allow player to cancel at any time.
 *   Allow it to go through (some) walls???
 
+* ** Create Special Ability for defeating level 2
 
+* Start on Level 3(?)
+  * What should the boss be?
+
+-- MISC:
 * ADD ENERGY PICKUPS!!!
 
 * Add more weapons (AKA Special Abilities)
@@ -17,7 +29,6 @@
 	energy bar will discharge hurting the player (massively?)
 
 -- UI --
-* Better TV-UI -> Game flow
 
 -- Special Ability Ideas --
 * Charged Bolt (Default Special)

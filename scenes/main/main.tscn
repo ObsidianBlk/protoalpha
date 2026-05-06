@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
 [ext_resource type="Script" uid="uid://dnsbol4curcv2" path="res://scenes/main/console_body.gd" id="16_r4lks"]
 [ext_resource type="Script" uid="uid://dgbmsxanfwao6" path="res://scripts/resource/crt_effect_resource.gd" id="17_p8abn"]
+[ext_resource type="PackedScene" uid="uid://tkx2amdgmxap" path="res://scenes/main/web_warning/web_warning.tscn" id="18_pg34l"]
 [ext_resource type="Texture2D" uid="uid://bxwerljngj41a" path="res://assets/graphics/marquee/marquee_logo_right.png" id="19_necax"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nvumn"]
@@ -369,12 +370,14 @@ size_flags_vertical = 3
 [node name="RelativeMargins" type="MarginContainer" parent="GameLayer/CenterContainer" unique_id=2100175968 node_paths=PackedStringArray("ctrl")]
 layout_mode = 2
 mouse_filter = 2
+theme_override_constants/margin_left = 268
+theme_override_constants/margin_top = 537
 script = ExtResource("13_necax")
 ctrl = NodePath("../TVBody")
 
 [node name="ConsoleBody" type="PanelContainer" parent="GameLayer/CenterContainer/RelativeMargins" unique_id=1741482608 node_paths=PackedStringArray("ctrl")]
 texture_filter = 3
-custom_minimum_size = Vector2(544, 196)
+custom_minimum_size = Vector2(537.6, 179.2)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
@@ -429,6 +432,9 @@ theme_type_variation = &"ConsoleButton"
 text = "mem"
 
 [node name="InputFocusManager" parent="GameLayer" unique_id=663583732 instance=ExtResource("14_7smn1")]
+
+[node name="WebWarning" parent="GameLayer" unique_id=524692136 instance=ExtResource("18_pg34l")]
+visible = false
 
 [node name="FullScreenGame" type="CanvasLayer" parent="." unique_id=1518418424]
 visible = false

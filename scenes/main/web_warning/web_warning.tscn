@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://tkx2amdgmxap"]
+
+[ext_resource type="Script" uid="uid://b7rv6jaw4m7vs" path="res://scenes/main/web_warning/web_warning.gd" id="1_jqn6u"]
+
+[node name="WebWarning" type="PanelContainer" unique_id=524692136]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jqn6u")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=271075935]
+custom_minimum_size = Vector2(800, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[center]
+Welcome to...
+[font_size=32][b][color=#bfce72]PROTO[/color][color=#7869c4]Alpha[/color][/b][/font_size]
+
+Please [color=#ff0000][i]click[/i][/color] this window and we can get the game started!"
+fit_content = true
+
+[node name="BTN_Clicker" type="Button" parent="." unique_id=1304031050]
+layout_mode = 2
+flat = true
+
+[connection signal="pressed" from="BTN_Clicker" to="." method="_on_btn_clicker_pressed"]
