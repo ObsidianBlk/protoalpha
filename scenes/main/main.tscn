@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://caeylxq5gwomt" path="res://assets/graphics/tv/tv_screen_boarder.png" id="5_hxu8e"]
 [ext_resource type="Texture2D" uid="uid://cyawkb7mwvu77" path="res://assets/graphics/tv/tv_ctrl_panel.png" id="6_7smn1"]
 [ext_resource type="Texture2D" uid="uid://bx4xestmcewyb" path="res://assets/graphics/tv/tv_grill_pattern.png" id="6_raeie"]
-[ext_resource type="Script" uid="uid://cgo2hb6wyaxta" path="res://scripts/nodes/ui_size_ratioed.gd" id="13_necax"]
+[ext_resource type="Script" uid="uid://c5hpg5kt5dy42" path="res://scenes/main/relative_margins.gd" id="13_necax"]
 [ext_resource type="Texture2D" uid="uid://ckxtl24abbjhs" path="res://assets/graphics/tv/console_body.png" id="13_th5th"]
 [ext_resource type="PackedScene" uid="uid://bho47owrq31dg" path="res://scenes/input_focus_manager/input_focus_manager.tscn" id="14_7smn1"]
 [ext_resource type="Theme" uid="uid://qrclpgi77ref" path="res://assets/console.theme" id="14_necax"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://d4g38v5ho1jt1" path="res://scenes/main/crt_effect/crt_effect.tscn" id="15_r4lks"]
 [ext_resource type="Script" uid="uid://cgn3dt0lj8cnd" path="res://scripts/nodes/controls/ratio_spacer.gd" id="16_hxu8e"]
 [ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
+[ext_resource type="Script" uid="uid://dnsbol4curcv2" path="res://scenes/main/console_body.gd" id="16_r4lks"]
 [ext_resource type="Script" uid="uid://dgbmsxanfwao6" path="res://scripts/resource/crt_effect_resource.gd" id="17_p8abn"]
 [ext_resource type="Texture2D" uid="uid://bxwerljngj41a" path="res://assets/graphics/marquee/marquee_logo_right.png" id="19_necax"]
 
@@ -195,7 +196,6 @@ stretch_mode = 1
 custom_minimum_size = Vector2(502.40002, 376.80002)
 layout_mode = 2
 size_flags_vertical = 0
-mouse_filter = 0
 stretch = true
 mouse_target = true
 script = ExtResource("4_nvumn")
@@ -366,29 +366,29 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="UISizeRatioed" type="Node" parent="GameLayer/CenterContainer/TVBody/TV_Controls" unique_id=590399978 node_paths=PackedStringArray("ctrl")]
+[node name="RelativeMargins" type="MarginContainer" parent="GameLayer/CenterContainer" unique_id=2100175968 node_paths=PackedStringArray("ctrl")]
+layout_mode = 2
+mouse_filter = 2
 script = ExtResource("13_necax")
-ctrl = NodePath("../../TV_Screen")
-ratio = Vector2(0.45, 1)
-metadata/_custom_type_script = "uid://cgo2hb6wyaxta"
+ctrl = NodePath("../TVBody")
 
-[node name="ConsoleBody" type="PanelContainer" parent="GameLayer" unique_id=1741482608]
-visible = false
+[node name="ConsoleBody" type="PanelContainer" parent="GameLayer/CenterContainer/RelativeMargins" unique_id=1741482608 node_paths=PackedStringArray("ctrl")]
 texture_filter = 3
 custom_minimum_size = Vector2(544, 196)
-offset_left = 560.0
-offset_top = 418.0
-offset_right = 1104.0
-offset_bottom = 614.0
+layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme = ExtResource("14_necax")
 theme_override_styles/panel = SubResource("StyleBoxTexture_7smn1")
+script = ExtResource("16_r4lks")
+ctrl = NodePath("../../TVBody")
+height_ratio = 0.4
+width_ratio = 3.0
 
-[node name="Content" type="Control" parent="GameLayer/ConsoleBody" unique_id=12867962]
+[node name="Content" type="Control" parent="GameLayer/CenterContainer/RelativeMargins/ConsoleBody" unique_id=12867962]
 layout_mode = 2
 
-[node name="ConsoleLogo" type="PanelContainer" parent="GameLayer/ConsoleBody/Content" unique_id=1344292316]
+[node name="ConsoleLogo" type="PanelContainer" parent="GameLayer/CenterContainer/RelativeMargins/ConsoleBody/Content" unique_id=1344292316]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -401,12 +401,12 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme_type_variation = &"ConsoleLogoPanel"
 
-[node name="Label" type="Label" parent="GameLayer/ConsoleBody/Content/ConsoleLogo" unique_id=1060421478]
+[node name="Label" type="Label" parent="GameLayer/CenterContainer/RelativeMargins/ConsoleBody/Content/ConsoleLogo" unique_id=1060421478]
 layout_mode = 2
 theme_type_variation = &"ConsoleLogoLabel"
 text = "Eldrich Entertainment System"
 
-[node name="ConsoleButtons" type="HBoxContainer" parent="GameLayer/ConsoleBody/Content" unique_id=370599912]
+[node name="ConsoleButtons" type="HBoxContainer" parent="GameLayer/CenterContainer/RelativeMargins/ConsoleBody/Content" unique_id=370599912]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -417,12 +417,12 @@ offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BTN_ConsolePower" type="Button" parent="GameLayer/ConsoleBody/Content/ConsoleButtons" unique_id=1812359637]
+[node name="BTN_ConsolePower" type="Button" parent="GameLayer/CenterContainer/RelativeMargins/ConsoleBody/Content/ConsoleButtons" unique_id=1812359637]
 layout_mode = 2
 theme_type_variation = &"ConsoleGlowButton"
 text = "pwr"
 
-[node name="BTN_ConsoleMemory" type="Button" parent="GameLayer/ConsoleBody/Content/ConsoleButtons" unique_id=623409152]
+[node name="BTN_ConsoleMemory" type="Button" parent="GameLayer/CenterContainer/RelativeMargins/ConsoleBody/Content/ConsoleButtons" unique_id=623409152]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_type_variation = &"ConsoleButton"
@@ -515,6 +515,7 @@ stream = SubResource("AudioStreamPolyphonic_hujxm")
 [connection signal="fullscreen_toggled" from="GameLayer/CenterContainer/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_fullscreen_toggled"]
 [connection signal="open_game" from="GameLayer/CenterContainer/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/ProtoAlpha" method="open_game"]
 [connection signal="quit_application" from="GameLayer/CenterContainer/TVBody/TV_Controls/Controls/ControlPlate/TVControlBox" to="." method="_on_tv_control_box_quit_application"]
+[connection signal="resized" from="GameLayer/CenterContainer/RelativeMargins/ConsoleBody" to="GameLayer/CenterContainer/RelativeMargins" method="_UpdateMargins"]
 [connection signal="focus_game" from="GameLayer/InputFocusManager" to="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer" method="set_disable_input" binds= [false]]
 [connection signal="focus_game" from="GameLayer/InputFocusManager" to="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/ProtoAlpha" method="enable_input" binds= [true]]
 [connection signal="focus_game" from="GameLayer/InputFocusManager" to="FullScreenGame" method="enable_game_fullscreen" binds= [true]]

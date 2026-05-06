@@ -62,21 +62,11 @@ func _exit_tree() -> void:
 		if vp.size_changed.is_connected(_on_viewport_size_changed):
 			vp.size_changed.disconnect(_on_viewport_size_changed)
 
-#func _gui_input(event: InputEvent) -> void:
-	#if not disable_input: return
-	#if event is InputEventMouseButton and event.is_pressed():
-		#if event.button_index == MOUSE_BUTTON_LEFT:
-			#game_focus_requested.emit.call_deferred()
-			#accept_event()
-	#elif event.is_action_pressed("shoot") and event is InputEventJoypadButton:
-		#game_focus_requested.emit.call_deferred()
-
 func _input(event: InputEvent) -> void:
 	if not (_mouse_entered and disable_input): return
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			game_focus_requested.emit.call_deferred()
-			accept_event()
 	elif event.is_action_pressed("shoot") and event is InputEventJoypadButton:
 		game_focus_requested.emit.call_deferred()
 

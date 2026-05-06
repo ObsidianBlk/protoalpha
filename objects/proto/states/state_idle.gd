@@ -83,7 +83,7 @@ func physics_update(_delta : float) -> void:
 
 func handle_input(event : InputEvent) -> void:
 	if actor == null: return
-
+	
 	if Game.Event_One_Of(event, [&"move_left", &"move_right", &"move_up", &"move_down"]):
 		var move_direction : Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 		if not is_equal_approx(move_direction.y, 0.0) and actor.is_on_ladder():
@@ -95,10 +95,7 @@ func handle_input(event : InputEvent) -> void:
 	elif event.is_action(&"shoot"):
 		if event.is_pressed() and interactor != null and interactor.interactable_count() > 0:
 			interactor.interact()
-			print("Interaction done")
-		else:
-			print("Entering Special")
-			special_triggered.emit(event.is_pressed())
+		else: special_triggered.emit(event.is_pressed())
 	elif Game.Event_One_Of(event, [&"special_1", &"special_2"]):
 		if Game.State.are_specials_from_keyboard_allowed():
 			if event.is_action(&"special_1"):

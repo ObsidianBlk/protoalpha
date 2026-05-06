@@ -1,13 +1,12 @@
 @tool
-extends Node
-class_name UISizeRatioed
+extends MarginContainer
 
 
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var ctrl : Control = null:				set=set_ctrl
-@export var ratio : Vector2 = Vector2.ONE:		set=set_ratio
+
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -17,39 +16,41 @@ func set_ctrl(c : Control) -> void:
 		_DisconnectCTRL()
 		ctrl = c
 		_ConnectCTRL()
-		_UpdateParentCustomSize()
-
-func set_ratio(r : Vector2) -> void:
-	if r.x > 0.0 and r.y > 0.0 and not ratio.is_equal_approx(r):
-		ratio = r
-		_UpdateParentCustomSize()
+		_UpdateMargins()
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	_ConnectCTRL()
-	_UpdateParentCustomSize()
+	_UpdateMargins()
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
 func _ConnectCTRL() -> void:
 	if ctrl == null: return
-	if not ctrl.resized.is_connected(_UpdateParentCustomSize):
-		ctrl.resized.connect(_UpdateParentCustomSize)
+	if not ctrl.resized.is_connected(_UpdateMargins):
+		ctrl.resized.connect(_UpdateMargins)
 
 func _DisconnectCTRL() -> void:
 	if ctrl == null: return
-	if ctrl.resized.is_connected(_UpdateParentCustomSize):
-		ctrl.resized.disconnect(_UpdateParentCustomSize)
+	if ctrl.resized.is_connected(_UpdateMargins):
+		ctrl.resized.disconnect(_UpdateMargins)
 
-func _UpdateParentCustomSize() -> void:
+func _UpdateMargins() -> void:
 	if ctrl == null: return
-	var parent : Node = get_parent()
-	if parent is Control:
-		parent.custom_minimum_size = ctrl.size * ratio
+	var gsize : Vector2 = Vector2.ZERO
+	
+	for child : Node in get_children():
+		if not child is Control: continue
+		var csize : Vector2 = child.get_size()
+		gsize.x = max(gsize.x, csize.x)
+		gsize.y = max(gsize.y, csize.y)
 
-# ------------------------------------------------------------------------------
-# Handler Methods
-# ------------------------------------------------------------------------------
+	var rsize : Vector2 = ctrl.get_size()
+	add_theme_constant_override(
+		"margin_top", floor(rsize.y + (gsize.y * 0.5))
+	)
+	add_theme_constant_override("margin_left", floor(gsize.x * 0.5))
+	
