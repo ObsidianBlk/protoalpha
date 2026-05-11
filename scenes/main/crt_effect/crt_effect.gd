@@ -66,8 +66,11 @@ func set_settings(s : CRTEffectResource) -> void:
 	if s != settings:
 		_DisconnectSettings()
 		if s == null:
+			print("Creating new settings")
 			settings = CRTEffectResource.new()
-		else: settings = s
+		else:
+			print("Setting new settings: ", s.resource_path)
+			settings = s
 		_ConnectSettings()
 
 func set_overrides(o : CRTEffectResource) -> void:
@@ -86,14 +89,16 @@ func set_overrides(o : CRTEffectResource) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	if settings == null:
-		settings = CRTEffectResource.new()
+	#if settings == null:
+		#settings = CRTEffectResource.new()
 	
 	_shader_surface.visible = enabled
 	if not Engine.is_editor_hint():
 		Settings.reset.connect(_on_settings_reset)
 		Settings.loaded.connect(_on_settings_load)
 		Settings.value_changed.connect(_on_settings_value_changed)
+	
+	_ActivateFromResource(settings)
 
 func _enter_tree() -> void:
 	if _Instance == null:
@@ -168,6 +173,7 @@ func _SetParameterValue(param : StringName, value : Variant, ignore_settings : b
 func _ActivateFromResource(crt : CRTEffectResource) -> void:
 	if crt != null:
 		for param : StringName in crt.PARAM_NAMES:
+			#print("(Res) CRT - ", param, ": ", crt.get_value(param))
 			_SetParameterValue(param, crt.get_value(param), true)
 
 # ------------------------------------------------------------------------------
@@ -195,10 +201,12 @@ func _on_settings_reset() -> void:
 
 func _on_settings_load() -> void:
 	set_enabled(Settings.load_value(CONFIG_SECTION, &"enabled", true))
+	print(settings.resource_path)
 	for param : StringName in CRTEffectResource.PARAM_NAMES:
 		var def : Variant = null
 		def = settings.get_value(param)
 		
+		#print("CRT - ", param, ": ", def, " | ", Settings.load_value(CONFIG_SECTION, param, def))
 		_SetParameterValue(
 			param,
 			Settings.load_value(CONFIG_SECTION, param, def),

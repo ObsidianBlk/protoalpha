@@ -79,21 +79,27 @@ func _on_audio_board_volume_changed(bus : StringName) -> void:
 func _on_vslider_master_value_changed(value: float) -> void:
 	var p : float = value / _vslider_master.max_value
 	AudioBoard.set_volume(AudioBoard.BUS_MASTER, p, true)
+	if OS.has_feature("wasm"):
+		Settings.save()
 
 func _on_vslider_music_value_changed(value: float) -> void:
 	var p : float = value / _vslider_music.max_value
 	AudioBoard.set_volume(AudioBoard.BUS_MUSIC, p, true)
+	if OS.has_feature("wasm"):
+		Settings.save()
 
 func _on_vslider_sfx_value_changed(value: float) -> void:
 	var p : float = value / _vslider_sfx.max_value
 	AudioBoard.set_volume(AudioBoard.BUS_SFX, p, true)
+	if OS.has_feature("wasm"):
+		Settings.save()
 
 func _on_key_pad_coded(value: int) -> void:
 	match value:
 		KEYPAD_CODE_TV_VIEW, KEYPAD_CODE_FULL_VIEW:
 			_key_pad.set_default_code(value)
 			Settings.set_value(SETTINGS_SECTION, SETTINGS_KEY, value)
-			print(Settings.get_value(SETTINGS_SECTION, SETTINGS_KEY, 55))
+			#print(Settings.get_value(SETTINGS_SECTION, SETTINGS_KEY, 55))
 		KEYPAD_CODE_TOGGLE_CRT:
 			var crt : CRTEffect = CRTEffect.Get()
 			if crt != null:
@@ -104,6 +110,8 @@ func _on_key_pad_coded(value: int) -> void:
 			fullscreen_toggled.emit()
 			_key_pad.reset()
 			value = _key_pad.get_default_code()
+	if OS.has_feature("wasm"):
+		Settings.save()
 	coded.emit(value)
 
 func _on_key_pad_power_cycled(power_on: bool) -> void:

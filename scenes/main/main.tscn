@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://caeylxq5gwomt" path="res://assets/graphics/tv/tv_screen_boarder.png" id="5_hxu8e"]
 [ext_resource type="Texture2D" uid="uid://cyawkb7mwvu77" path="res://assets/graphics/tv/tv_ctrl_panel.png" id="6_7smn1"]
 [ext_resource type="Texture2D" uid="uid://bx4xestmcewyb" path="res://assets/graphics/tv/tv_grill_pattern.png" id="6_raeie"]
+[ext_resource type="Resource" uid="uid://cc7vxdy33bjhq" path="res://scenes/main/crt_effect_settings.tres" id="8_pg34l"]
 [ext_resource type="Script" uid="uid://c5hpg5kt5dy42" path="res://scenes/main/relative_margins.gd" id="13_necax"]
 [ext_resource type="Texture2D" uid="uid://ckxtl24abbjhs" path="res://assets/graphics/tv/console_body.png" id="13_th5th"]
 [ext_resource type="PackedScene" uid="uid://bho47owrq31dg" path="res://scenes/input_focus_manager/input_focus_manager.tscn" id="14_7smn1"]
@@ -18,7 +19,6 @@
 [ext_resource type="Script" uid="uid://cgn3dt0lj8cnd" path="res://scripts/nodes/controls/ratio_spacer.gd" id="16_hxu8e"]
 [ext_resource type="PackedScene" uid="uid://lq2t4d33t4ng" path="res://scenes/main/tv_control_box/tv_control_box.tscn" id="16_nvumn"]
 [ext_resource type="Script" uid="uid://dnsbol4curcv2" path="res://scenes/main/console_body.gd" id="16_r4lks"]
-[ext_resource type="Script" uid="uid://dgbmsxanfwao6" path="res://scripts/resource/crt_effect_resource.gd" id="17_p8abn"]
 [ext_resource type="PackedScene" uid="uid://tkx2amdgmxap" path="res://scenes/main/web_warning/web_warning.tscn" id="18_pg34l"]
 [ext_resource type="Texture2D" uid="uid://bxwerljngj41a" path="res://assets/graphics/marquee/marquee_logo_right.png" id="19_necax"]
 
@@ -55,12 +55,6 @@ region = Rect2(37, 220, 8, 36)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pg34l"]
 atlas = ExtResource("2_th5th")
 region = Rect2(220, 220, 36, 36)
-
-[sub_resource type="Resource" id="Resource_s17dp"]
-script = ExtResource("17_p8abn")
-resolution = Vector2(640, 480)
-warp_amount = 0.372
-vignette_amount = 0.794
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ou6is"]
 texture = ExtResource("5_hxu8e")
@@ -124,9 +118,6 @@ texture_margin_right = 12.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_7smn1"]
 viewport_path = NodePath("GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport")
-
-[sub_resource type="Resource" id="Resource_raeie"]
-script = ExtResource("17_p8abn")
 
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_hujxm"]
 
@@ -268,7 +259,7 @@ theme_override_constants/margin_left = 26
 theme_override_constants/margin_top = 26
 theme_override_constants/margin_right = 26
 theme_override_constants/margin_bottom = 26
-settings = SubResource("Resource_s17dp")
+settings = ExtResource("8_pg34l")
 
 [node name="ScreenBoarder" type="PanelContainer" parent="GameLayer/CenterContainer/TVBody/TV_Screen" unique_id=912804341]
 layout_mode = 2
@@ -497,7 +488,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-settings = SubResource("Resource_raeie")
+settings = ExtResource("8_pg34l")
 
 [node name="TextureRect" type="TextureRect" parent="FullScreenGame/VBoxContainer/HBoxContainer" unique_id=1899868552]
 layout_mode = 2
