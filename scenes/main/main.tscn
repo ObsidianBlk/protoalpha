@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://dnsbol4curcv2" path="res://scenes/main/console_body.gd" id="16_r4lks"]
 [ext_resource type="PackedScene" uid="uid://tkx2amdgmxap" path="res://scenes/main/web_warning/web_warning.tscn" id="18_pg34l"]
 [ext_resource type="Texture2D" uid="uid://bxwerljngj41a" path="res://assets/graphics/marquee/marquee_logo_right.png" id="19_necax"]
+[ext_resource type="PackedScene" uid="uid://2t0r7goaa65k" path="res://scenes/main/touch_controls/touch_controls.tscn" id="22_m4h2d"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nvumn"]
 
@@ -501,6 +502,12 @@ layout_mode = 2
 size_flags_vertical = 3
 color = Color(0, 1, 0.049999952, 1)
 
+[node name="MobileControls" type="CanvasLayer" parent="." unique_id=439286245]
+layer = 10
+
+[node name="TouchControls" parent="MobileControls" unique_id=231534914 instance=ExtResource("22_m4h2d")]
+visible = false
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1993160923]
 stream = SubResource("AudioStreamPolyphonic_hujxm")
 
@@ -516,6 +523,8 @@ stream = SubResource("AudioStreamPolyphonic_hujxm")
 [connection signal="focus_game" from="GameLayer/InputFocusManager" to="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer" method="set_disable_input" binds= [false]]
 [connection signal="focus_game" from="GameLayer/InputFocusManager" to="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/ProtoAlpha" method="enable_input" binds= [true]]
 [connection signal="focus_game" from="GameLayer/InputFocusManager" to="FullScreenGame" method="enable_game_fullscreen" binds= [true]]
+[connection signal="focus_game" from="GameLayer/InputFocusManager" to="MobileControls/TouchControls" method="set_visible" binds= [true]]
 [connection signal="focus_tv" from="GameLayer/InputFocusManager" to="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer" method="set_disable_input" binds= [true]]
 [connection signal="focus_tv" from="GameLayer/InputFocusManager" to="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center/RatioSubViewportContainer/GameViewport/ProtoAlpha" method="enable_input" binds= [false]]
 [connection signal="focus_tv" from="GameLayer/InputFocusManager" to="FullScreenGame" method="enable_game_fullscreen" binds= [false]]
+[connection signal="focus_tv" from="GameLayer/InputFocusManager" to="MobileControls/TouchControls" method="set_visible" binds= [false]]

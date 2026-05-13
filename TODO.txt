@@ -2,6 +2,8 @@
 
 -- BUGS:
 * Web-build: Gamepad joy-stick not working correctly, but seems fine on desktop build
+	* NOTE: Input.warp_mouse() does not work on the Web!! (RTFM moron!)
+
 * Web-build: TV screen sized funky in some states
 * Web-build: Gamepad's jump button, coded as Y, is actually X.
   * Not a major issue, but strange
@@ -11,6 +13,8 @@
 *   Allow it to go through (some) walls???
 
 * ** Create Special Ability for defeating level 2
+
+* Touch Controls!
 
 * Start on Level 3(?)
   * What should the boss be?

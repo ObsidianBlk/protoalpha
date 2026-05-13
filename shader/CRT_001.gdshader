@@ -59,6 +59,8 @@ vec3 fetch_pixel(vec2 uv, vec2 off){
 		return vec3(0.0, 0.0, 0.0);
 	}
 
+	//vec3 clr = textureLod(SCREEN_TEXTURE , pos, 0.0).rgb + noise;
+	//vec3 clr = texture(SCREEN_TEXTURE , pos, 0.0).rgb + noise;
 	vec3 clr = texture(SCREEN_TEXTURE , pos, -16.0).rgb + noise;
 	return clr;
 }

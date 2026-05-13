@@ -1,12 +1,60 @@
 [gd_scene format=3 uid="uid://2t0r7goaa65k"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8xb5"]
+[ext_resource type="PackedScene" uid="uid://chuuce4tbjj1j" path="res://scenes/main/touch_controls/touch_dpad/touch_dpad.tscn" id="1_t1wra"]
+[ext_resource type="Script" uid="uid://c2sgwhymlplp4" path="res://scenes/main/touch_controls/touch_controls.gd" id="1_wxdm5"]
+[ext_resource type="Texture2D" uid="uid://c143vtak88e1r" path="res://assets/graphics/ui/touch_ctrls/button_circle.svg" id="2_oaf0b"]
+[ext_resource type="Texture2D" uid="uid://d3vqqqb7o35ac" path="res://assets/graphics/ui/touch_ctrls/button_circle_highlight.svg" id="3_wxdm5"]
+[ext_resource type="Texture2D" uid="uid://b2vlj5yqfjhp6" path="res://assets/graphics/ui/touch_ctrls/button_bean.svg" id="4_jfkpu"]
+[ext_resource type="Texture2D" uid="uid://cccx2ggo54r6w" path="res://assets/graphics/ui/touch_ctrls/button_bean_highlight.svg" id="5_rykj2"]
 
-[node name="TouchControls" type="PanelContainer" unique_id=1113841041]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_y8xb5")
+[sub_resource type="CircleShape2D" id="CircleShape2D_m5m5r"]
+radius = 32.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77nl2"]
+size = Vector2(64, 40)
+
+[node name="TouchControls" type="Node2D" unique_id=231534914]
+script = ExtResource("1_wxdm5")
+
+[node name="TouchDPad" parent="." unique_id=1661748708 instance=ExtResource("1_t1wra")]
+position = Vector2(143, 491)
+north_action = "move_up"
+south_action = "move_down"
+east_action = "move_right"
+west_action = "move_left"
+passby_press = true
+
+[node name="TBTN_Jump" type="TouchScreenButton" parent="." unique_id=733785640]
+position = Vector2(905, 424)
+texture_normal = ExtResource("2_oaf0b")
+texture_pressed = ExtResource("3_wxdm5")
+shape = SubResource("CircleShape2D_m5m5r")
+action = "jump"
+
+[node name="TBTN_Shoot" type="TouchScreenButton" parent="." unique_id=748509671]
+position = Vector2(1014, 515)
+texture_normal = ExtResource("2_oaf0b")
+texture_pressed = ExtResource("3_wxdm5")
+shape = SubResource("CircleShape2D_m5m5r")
+action = "shoot"
+
+[node name="TBTN_Start" type="TouchScreenButton" parent="." unique_id=654125323]
+position = Vector2(680, 514)
+texture_normal = ExtResource("4_jfkpu")
+texture_pressed = ExtResource("5_rykj2")
+shape = SubResource("RectangleShape2D_77nl2")
+action = "start"
+
+[node name="TBTN_Home" type="TouchScreenButton" parent="." unique_id=1606169328]
+position = Vector2(568, 498)
+texture_normal = ExtResource("2_oaf0b")
+texture_pressed = ExtResource("3_wxdm5")
+shape = SubResource("CircleShape2D_m5m5r")
+action = "focus_toggle"
+
+[node name="TBTN_Select" type="TouchScreenButton" parent="." unique_id=1850736047]
+position = Vector2(434, 512)
+texture_normal = ExtResource("4_jfkpu")
+texture_pressed = ExtResource("5_rykj2")
+shape = SubResource("RectangleShape2D_77nl2")
+action = "select"

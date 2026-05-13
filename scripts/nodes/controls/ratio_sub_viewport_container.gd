@@ -62,7 +62,7 @@ func _exit_tree() -> void:
 		if vp.size_changed.is_connected(_on_viewport_size_changed):
 			vp.size_changed.disconnect(_on_viewport_size_changed)
 
-func _input(event: InputEvent) -> void:
+func _gui_input(event: InputEvent) -> void:
 	if not (_mouse_entered and disable_input): return
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_LEFT:

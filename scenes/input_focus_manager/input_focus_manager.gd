@@ -27,6 +27,9 @@ var _mouse_left_stick : bool = true
 var _mouse_warping : bool = false
 var _joypad_device : int = -1
 
+var _wasm_enabled : bool = false
+var _wasm_mouse_pos : Vector2 = Vector2.ZERO
+
 var _ignore_hover : bool = false
 
 
@@ -40,6 +43,7 @@ var _ignore_hover : bool = false
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	_wasm_enabled = OS.has_feature("wasm")
 	match initial_focus:
 		0: # TV
 			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
@@ -76,6 +80,8 @@ func _input(event: InputEvent) -> void:
 		_joypad_device = event.device
 	elif event is InputEventMouseButton:
 		_joypad_device = -1
+		if _wasm_enabled:
+			_ParseFakeMouseMotion(_wasm_mouse_pos)
 	elif event is InputEventMouseMotion:
 		if not _mouse_warping:
 			_joypad_device = -1
@@ -132,6 +138,13 @@ func _Threshold(v : float, edge : float) -> float:
 	if abs(v) >= edge: return v
 	return 0.0
 
+func _ParseFakeMouseMotion(pos : Vector2) -> void:
+	var mouse_event : InputEventMouseMotion = InputEventMouseMotion.new()
+	_wasm_mouse_pos = pos
+	mouse_event.global_position = pos
+	mouse_event.position = pos
+	Input.parse_input_event(mouse_event)
+
 func _HandleMousePosition(delta : float) -> Vector2:
 	var pos : Vector2 = get_global_mouse_position()
 	if _joypad_device < 0: return pos
@@ -146,10 +159,14 @@ func _HandleMousePosition(delta : float) -> Vector2:
 			_Threshold(Input.get_joy_axis(_joypad_device, JOY_AXIS_RIGHT_X), JOY_DEAD_ZONE),
 			_Threshold(Input.get_joy_axis(_joypad_device, JOY_AXIS_RIGHT_Y), JOY_DEAD_ZONE)
 		)
+
 	if not stick.is_equal_approx(Vector2.ZERO):
 		pos += (stick * JOY_MOUSE_SENSITIVITY * delta)
 		_mouse_warping = true
-		Input.warp_mouse(pos)
+		if _wasm_enabled:
+			_ParseFakeMouseMotion(pos)
+		else:
+			Input.warp_mouse(pos)
 	return pos
 
 func _HoverFocusSnap() -> void:
@@ -203,4 +220,7 @@ func _on_viewport_gui_focus_changed(ctrl : Control) -> void:
 	var csize : Vector2 = ctrl.get_size()
 	_ignore_hover = true
 	_mouse_warping = true
-	Input.warp_mouse(ctrl.global_position + (csize * 0.5))
+	if _wasm_enabled:
+		_ParseFakeMouseMotion(ctrl.global_position + (csize * 0.5))
+	else:
+		Input.warp_mouse(ctrl.global_position + (csize * 0.5))
