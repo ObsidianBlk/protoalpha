@@ -5,7 +5,15 @@
 [ext_resource type="Texture2D" uid="uid://c143vtak88e1r" path="res://assets/graphics/ui/touch_ctrls/button_circle.svg" id="2_oaf0b"]
 [ext_resource type="Texture2D" uid="uid://d3vqqqb7o35ac" path="res://assets/graphics/ui/touch_ctrls/button_circle_highlight.svg" id="3_wxdm5"]
 [ext_resource type="Texture2D" uid="uid://b2vlj5yqfjhp6" path="res://assets/graphics/ui/touch_ctrls/button_bean.svg" id="4_jfkpu"]
+[ext_resource type="Script" uid="uid://ciyq3fws0bk4f" path="res://scripts/nodes/touch_button_anchor.gd" id="5_jfkpu"]
 [ext_resource type="Texture2D" uid="uid://cccx2ggo54r6w" path="res://assets/graphics/ui/touch_ctrls/button_bean_highlight.svg" id="5_rykj2"]
+[ext_resource type="Texture2D" uid="uid://hnocaq7frfm0" path="res://assets/graphics/ui/touch_ctrls/dpad_element_north.svg" id="8_2pxyy"]
+[ext_resource type="Texture2D" uid="uid://ci7eya4la1t12" path="res://assets/graphics/ui/touch_ctrls/dpad_element_north_highlight.svg" id="9_cu6s1"]
+[ext_resource type="Texture2D" uid="uid://fm3w5ufahvib" path="res://assets/graphics/ui/touch_ctrls/dpad_element_south.svg" id="10_jjhxn"]
+[ext_resource type="Texture2D" uid="uid://c4t1jemgocm5c" path="res://assets/graphics/ui/touch_ctrls/dpad_element_south_highlight.svg" id="11_v2xny"]
+[ext_resource type="Texture2D" uid="uid://csdachftjr58c" path="res://assets/graphics/ui/touch_ctrls/dpad_element_east.svg" id="12_2eep8"]
+[ext_resource type="Texture2D" uid="uid://dvwgemtm7nj5x" path="res://assets/graphics/ui/touch_ctrls/dpad_element_east_highlight.svg" id="13_375ko"]
+[ext_resource type="Texture2D" uid="uid://bg64thhk1i5o7" path="res://assets/graphics/ui/touch_ctrls/dpad_element_west.svg" id="14_lundw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m5m5r"]
 radius = 32.0
@@ -13,10 +21,23 @@ radius = 32.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_77nl2"]
 size = Vector2(64, 40)
 
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_tryjj"]
+points = PackedVector2Array(-32, -32, 32, -32, 32, 0, 0, 32, -32, 0)
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_govs1"]
+points = PackedVector2Array(0, -32, 32, 0, 32, 32, -32, 32, -32, 0)
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_5y0na"]
+points = PackedVector2Array(-32, 0, 0, -32, 32, -32, 32, 32, 0, 32)
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_40q5d"]
+points = PackedVector2Array(32, 0, 0, 32, -32, 32, -32, -32, 0, -32)
+
 [node name="TouchControls" type="Node2D" unique_id=231534914]
 script = ExtResource("1_wxdm5")
 
 [node name="TouchDPad" parent="." unique_id=1661748708 instance=ExtResource("1_t1wra")]
+visible = false
 position = Vector2(143, 491)
 north_action = "move_up"
 south_action = "move_down"
@@ -25,36 +46,149 @@ west_action = "move_left"
 passby_press = true
 
 [node name="TBTN_Jump" type="TouchScreenButton" parent="." unique_id=733785640]
-position = Vector2(905, 424)
+position = Vector2(892, 393)
 texture_normal = ExtResource("2_oaf0b")
 texture_pressed = ExtResource("3_wxdm5")
 shape = SubResource("CircleShape2D_m5m5r")
 action = "jump"
 
+[node name="TouchButtonAnchor" type="Node" parent="TBTN_Jump" unique_id=2113711311 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.7743055555555556
+anchor_right = 0.8298611111111112
+anchor_top = 0.6064814814814815
+anchor_bottom = 0.7052469135802469
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"
+
 [node name="TBTN_Shoot" type="TouchScreenButton" parent="." unique_id=748509671]
-position = Vector2(1014, 515)
+position = Vector2(982, 483)
 texture_normal = ExtResource("2_oaf0b")
 texture_pressed = ExtResource("3_wxdm5")
 shape = SubResource("CircleShape2D_m5m5r")
 action = "shoot"
 
+[node name="TouchButtonAnchor" type="Node" parent="TBTN_Shoot" unique_id=1828968050 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.8524305555555556
+anchor_right = 0.9079861111111112
+anchor_top = 0.7453703703703703
+anchor_bottom = 0.8441358024691358
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"
+
 [node name="TBTN_Start" type="TouchScreenButton" parent="." unique_id=654125323]
-position = Vector2(680, 514)
+position = Vector2(648, 493)
 texture_normal = ExtResource("4_jfkpu")
 texture_pressed = ExtResource("5_rykj2")
 shape = SubResource("RectangleShape2D_77nl2")
 action = "start"
 
+[node name="TouchButtonAnchor" type="Node" parent="TBTN_Start" unique_id=1305849929 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.5625
+anchor_right = 0.6180555555555556
+anchor_top = 0.7608024691358025
+anchor_bottom = 0.8256172839506173
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"
+
 [node name="TBTN_Home" type="TouchScreenButton" parent="." unique_id=1606169328]
-position = Vector2(568, 498)
+position = Vector2(536, 466)
 texture_normal = ExtResource("2_oaf0b")
 texture_pressed = ExtResource("3_wxdm5")
 shape = SubResource("CircleShape2D_m5m5r")
 action = "focus_toggle"
 
+[node name="TouchButtonAnchor" type="Node" parent="TBTN_Home" unique_id=1407827410 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.4652777777777778
+anchor_right = 0.5208333333333334
+anchor_top = 0.7191358024691358
+anchor_bottom = 0.8179012345679012
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"
+
 [node name="TBTN_Select" type="TouchScreenButton" parent="." unique_id=1850736047]
-position = Vector2(434, 512)
+position = Vector2(402, 491)
 texture_normal = ExtResource("4_jfkpu")
 texture_pressed = ExtResource("5_rykj2")
 shape = SubResource("RectangleShape2D_77nl2")
 action = "select"
+
+[node name="TouchButtonAnchor" type="Node" parent="TBTN_Select" unique_id=2001387963 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.3489583333333333
+anchor_right = 0.4045138888888889
+anchor_top = 0.7577160493827161
+anchor_bottom = 0.8225308641975309
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"
+
+[node name="BTN_North" type="TouchScreenButton" parent="." unique_id=2122689853]
+unique_name_in_owner = true
+position = Vector2(114, 412)
+texture_normal = ExtResource("8_2pxyy")
+texture_pressed = ExtResource("9_cu6s1")
+shape = SubResource("ConvexPolygonShape2D_tryjj")
+action = "move_up"
+
+[node name="TouchButtonAnchor" type="Node" parent="BTN_North" unique_id=435563503 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.07118055555555555
+anchor_right = 0.1267361111111111
+anchor_top = 0.5864197530864198
+anchor_bottom = 0.6851851851851852
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"
+
+[node name="BTN_South" type="TouchScreenButton" parent="." unique_id=2097219525]
+unique_name_in_owner = true
+position = Vector2(114, 500)
+texture_normal = ExtResource("10_jjhxn")
+texture_pressed = ExtResource("11_v2xny")
+shape = SubResource("ConvexPolygonShape2D_govs1")
+action = "move_down"
+
+[node name="TouchButtonAnchor" type="Node" parent="BTN_South" unique_id=93526003 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.07118055555555555
+anchor_right = 0.1267361111111111
+anchor_top = 0.7222222222222222
+anchor_bottom = 0.8209876543209876
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"
+
+[node name="BTN_East" type="TouchScreenButton" parent="." unique_id=1449064959]
+unique_name_in_owner = true
+position = Vector2(158, 456)
+texture_normal = ExtResource("12_2eep8")
+texture_pressed = ExtResource("13_375ko")
+shape = SubResource("ConvexPolygonShape2D_5y0na")
+action = "move_right"
+
+[node name="TouchButtonAnchor" type="Node" parent="BTN_East" unique_id=1535112755 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.109375
+anchor_right = 0.16493055555555555
+anchor_top = 0.654320987654321
+anchor_bottom = 0.7530864197530864
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"
+
+[node name="BTN_West" type="TouchScreenButton" parent="." unique_id=2019071139]
+unique_name_in_owner = true
+position = Vector2(70, 456)
+texture_normal = ExtResource("14_lundw")
+texture_pressed = ExtResource("14_lundw")
+shape = SubResource("ConvexPolygonShape2D_40q5d")
+action = "move_left"
+
+[node name="TouchButtonAnchor" type="Node" parent="BTN_West" unique_id=1644290498 node_paths=PackedStringArray("touch_ctrl")]
+script = ExtResource("5_jfkpu")
+touch_ctrl = NodePath("..")
+anchor_left = 0.03298611111111111
+anchor_right = 0.08854166666666667
+anchor_top = 0.654320987654321
+anchor_bottom = 0.7530864197530864
+metadata/_custom_type_script = "uid://ciyq3fws0bk4f"

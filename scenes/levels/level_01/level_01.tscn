@@ -284,7 +284,7 @@ length = 3
 disabled = true
 
 [node name="Terminal_H_Top" parent="SegB" unique_id=387392156 instance=ExtResource("6_7mo7t")]
-position = Vector2(-153, -288)
+position = Vector2(-105, -288)
 triggered = true
 trigger_layer = 4
 
