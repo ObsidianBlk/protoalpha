@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SpecialDef" format=3 uid="uid://cb0b0lnhrperq"]
+
+[ext_resource type="Texture2D" uid="uid://cr4ddyj68sq7f" path="res://assets/graphics/proto/specials_icon_0.tres" id="1_wsfoh"]
+[ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://special_def.gd" id="2_4iggk"]
+[ext_resource type="Resource" uid="uid://p0vcbjdbc78t" path="res://data/weapon_defs/wdef_bolt.tres" id="3_hef0p"]
+
+[resource]
+script = ExtResource("2_4iggk")
+special_name = "Charged Blaster"
+icon = ExtResource("1_wsfoh")
+weapon_definition = ExtResource("3_hef0p")
+has_infinite_energy = true
+metadata/_custom_type_script = "uid://cppyslgvqknyc"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SpecialDef" format=3 uid="uid://6wy5bk7kp2ru"]
+
+[ext_resource type="Texture2D" uid="uid://burv470jefr7y" path="res://assets/graphics/proto/specials_icon_1.tres" id="1_rjg2q"]
+[ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://special_def.gd" id="2_i03ai"]
+
+[resource]
+script = ExtResource("2_i03ai")
+special_name = "Fault Dash"
+icon = ExtResource("1_rjg2q")
+unlock_level = 1
+action_energy_cost = 100
+metadata/_custom_type_script = "uid://cppyslgvqknyc"

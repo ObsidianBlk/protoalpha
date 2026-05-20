@@ -31,6 +31,8 @@ enum Type {PROJECTILE=0, BEAM=1}
 ## Determins if a weapon is semi-automatic ([code]false[/code], trigger must be pressed for each shot)
 ## [br]or automatic ([code]true[/code], projectiles will be emitted based on [rate_of_fire]).
 @export var automatic : bool = false:						set=set_automatic
+## The energy cost, per shot, of the weapon.
+@export var energy_cost : int = 0:							set=set_energy_cost
 ## The [WeaponDef] for an alternate firing mode.
 @export var alt_fire : WeaponDef = null
 
@@ -77,6 +79,11 @@ func set_charging(c : bool) -> void:
 func set_automatic(a : bool) -> void:
 	if a != automatic:
 		automatic = a
+		changed.emit()
+
+func set_energy_cost(ec : int) -> void:
+	if ec >= 0 and ec != energy_cost:
+		energy_cost = ec
 		changed.emit()
 
 # ------------------------------------------------------------------------------

@@ -53,27 +53,10 @@ enum Special {
 	CHARGED_BLASTER=0,
 	FAULT_DASH=1
 }
-const _SPECIAL_KEY_NAME : StringName = &"name"
-const _SPECIAL_KEY_LEVEL : StringName = &"level"
-const _SPECIAL_KEY_INF_ENERGY : StringName = &"inf_energy"
-const _SPECIAL_KEY_IS_ACTION : StringName = &"is_action"
-const _SPECIAL_KEY_ENERGY_REQ : StringName = &"energy_req"
-const _SPECIAL_KEY_WEPDEF_PATH : StringName = &"wepdef_path"
-const _SPECIAL_LUT : Dictionary[Special, Dictionary] = {
-	Special.CHARGED_BLASTER : {
-		_SPECIAL_KEY_NAME: "Charged Blaster",
-		_SPECIAL_KEY_LEVEL: 0,
-		_SPECIAL_KEY_INF_ENERGY: true,
-		_SPECIAL_KEY_IS_ACTION: false,
-		_SPECIAL_KEY_ENERGY_REQ: 0
-	},
-	Special.FAULT_DASH : {
-		_SPECIAL_KEY_NAME: "Fault Dash",
-		_SPECIAL_KEY_LEVEL: LEVEL_1,
-		_SPECIAL_KEY_INF_ENERGY: false,
-		_SPECIAL_KEY_IS_ACTION: true,
-		_SPECIAL_KEY_ENERGY_REQ: 100
-	}
+
+const SPECIAL : Dictionary[Special, SpecialDef] = {
+	Special.CHARGED_BLASTER : preload("uid://cb0b0lnhrperq"),
+	Special.FAULT_DASH : preload("uid://6wy5bk7kp2ru")
 }
 
 
@@ -243,10 +226,10 @@ func is_password_valid(password : int) -> bool:
 ## Returns the current energy level ([code]0 - 255[/code]) for the given
 ## [param Special]
 func get_energy_level(special : Special) -> int:
-	if special in energy:
-		if _unlimited_energy or _SPECIAL_LUT[special][_SPECIAL_KEY_INF_ENERGY]:
+	if special in _energy:
+		if _unlimited_energy or SPECIAL[special].has_infinite_energy:
 			return MAX_ENERGY
-		return energy[special]
+		return _energy[special]
 	return -1
 
 ## Sets the energy level for [param special] to [param energy_level].
@@ -267,8 +250,14 @@ func set_energy_level(special : Special, energy_level : int) -> void:
 ## always be between the values of [code]0 - 255[/code]
 func change_energy_level(special : Special, amount : int) -> void:
 	if special in _energy:
-		if _SPECIAL_LUT[special][_SPECIAL_KEY_INF_ENERGY]: return
+		if SPECIAL[special].has_infinite_energy: return
 		set_energy_level(special, _energy[special] + amount)
+
+## Changes the energy level of the currently active Special by [param amount],
+## which can be either positive (increase energy) or negative (decrease
+## energy).
+func change_current_energy_level(amount : int) -> void:
+	change_energy_level(_current_special, amount)
 
 ## Reduces the energy level of [param special] by the amount of energy required to
 ## use [param special], if and only if the current energy level is greater than or
@@ -276,9 +265,9 @@ func change_energy_level(special : Special, amount : int) -> void:
 ## is returned, otherwise [code]false[/code] is returned.
 func use_special(special : Special) -> bool:
 	if special in energy:
-		if _unlimited_energy: return true
-		if _energy[special] >= _SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ]:
-			change_energy_level(special, -_SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ])
+		if _unlimited_energy or SPECIAL[special].weapon_definition != null: return true
+		if _energy[special] >= SPECIAL[special].action_energy_cost:
+			change_energy_level(special, -SPECIAL[special].action_energy_cost)
 			return true
 	return false
 
@@ -287,7 +276,7 @@ func use_special(special : Special) -> bool:
 ## [code]false[/code] is returned.
 func can_use_special(special : Special) -> bool:
 	if special in _energy:
-		return _energy[special] >= _SPECIAL_LUT[special][_SPECIAL_KEY_ENERGY_REQ]
+		return _energy[special] >= SPECIAL[special].action_energy_cost
 	return false
 
 ## Sets the given [param level] to the [param unlock] state.
@@ -310,8 +299,8 @@ func is_level_unlocked(level : int) -> bool:
 ## Returns [code]true[/code] is the given [param special] is unlocked and
 ## available for the player to use. Otherwise [code]false[/code] is returned.
 func is_special_unlocked(special : Special) -> bool:
-	if special in _SPECIAL_LUT:
-		var level : int = _SPECIAL_LUT[special][_SPECIAL_KEY_LEVEL]
+	if special in SPECIAL:
+		var level : int = SPECIAL[special].unlock_level
 		if level == 0: return true
 		# A "Locked" level is a defeated level...
 		return not is_level_unlocked(level)
@@ -325,6 +314,7 @@ func set_special(special : Special) -> bool:
 
 func get_special() -> Special:
 	return _current_special
+
 
 func get_password() -> int:
 	var password : int = 0

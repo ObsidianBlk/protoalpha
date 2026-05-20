@@ -94,6 +94,8 @@ func _Trigger(projectile_container : Node2D) -> void:
 		printerr("Weapon Definition failed to spawn projectile instance.")
 		return
 	
+	if _active_def.energy_cost > 0:
+		Game.State.change_current_energy_level(_active_def.energy_cost)
 	p.collision_mask = collision_mask
 	projectile_container.add_child(p)
 	p.global_position = global_position

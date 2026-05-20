@@ -173,17 +173,17 @@ const LEVELS : Dictionary[int, Dictionary] = {
 	#},
 }
 
-const SPECIALS_ICONS : Dictionary[GameState.Special, AtlasTexture] = {
-	GameState.Special.CHARGED_BLASTER : preload("uid://cr4ddyj68sq7f"),
-	GameState.Special.FAULT_DASH : preload("uid://burv470jefr7y"),
-}
-
-
-## Lookup Table Dictionary that takes the weapon name defined in [GameState] as the key
-## and the value is the resource object's UID path.
-const WEAPON_LUT : Dictionary[GameState.Special, String] = {
-	GameState.Special.CHARGED_BLASTER : "uid://p0vcbjdbc78t",
-}
+#const SPECIALS_ICONS : Dictionary[GameState.Special, AtlasTexture] = {
+	#GameState.Special.CHARGED_BLASTER : preload("uid://cr4ddyj68sq7f"),
+	#GameState.Special.FAULT_DASH : preload("uid://burv470jefr7y"),
+#}
+#
+#
+### Lookup Table Dictionary that takes the weapon name defined in [GameState] as the key
+### and the value is the resource object's UID path.
+#const WEAPON_LUT : Dictionary[GameState.Special, String] = {
+	#GameState.Special.CHARGED_BLASTER : "uid://p0vcbjdbc78t",
+#}
 
 # ------------------------------------------------------------------------------
 # Static Variables
@@ -264,18 +264,18 @@ static func Get_Level_State(level_id : int) -> LevelDevState:
 	return LevelDevState.NOT_AVAILABLE
 
 static func Is_Valid_Weapon(special : GameState.Special) -> bool:
-	return special in WEAPON_LUT
+	if special in GameState.SPECIAL:
+		return GameState.SPECIAL[special].weapon_definition != null
+	return false
 
 static func Get_Weapon_Resource(special : GameState.Special) -> WeaponDef:
-	if special in WEAPON_LUT:
-		var wdef : Resource = load(WEAPON_LUT[special])
-		if wdef is WeaponDef:
-			return wdef
+	if special in GameState.SPECIAL:
+		return GameState.SPECIAL[special].weapon_definition
 	return null
 
 static func Get_Special_Icon(special : GameState.Special) -> AtlasTexture:
-	if special in SPECIALS_ICONS:
-		return SPECIALS_ICONS[special]
+	if special in GameState.SPECIAL:
+		return GameState.SPECIAL[special].icon
 	return null
 
 static func Node_Has_Properties(n : Node, properties : Array[String]) -> bool:
