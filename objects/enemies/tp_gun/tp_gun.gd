@@ -106,7 +106,7 @@ func _AttackStage() -> void:
 		if weapon_def.charging:
 			#await get_tree().create_timer(weapon_def.rate_of_fire).timeout
 			await _weapon.fully_charged
-			_weapon.release_trigger()
+		_weapon.release_trigger()
 	_sprite.play(ANIM_TELEPORT_OUT)
 	_hitbox.disable_hitbox(true)
 

@@ -10,6 +10,11 @@ signal landed()
 signal falling()
 
 # ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const AUDIO : StringName = &"pickup"
+
+# ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _landed : bool = false
@@ -20,6 +25,7 @@ var _landed : bool = false
 ## The amount of time (in seconds) until this pickup automatically despawns.
 ## [br]Pickup will never despawn with a value less than or equal to [code]0.0[/code]
 @export var lifetime : float = 10.0
+@export var sound_sheet : SoundSheet = null
 
 
 # ------------------------------------------------------------------------------

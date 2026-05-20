@@ -3,7 +3,7 @@ extends PickupBody2D
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
-const HEALTH_VALUE : int = 5
+const ENERGY_VALUE : int = 15
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -12,8 +12,8 @@ const HEALTH_VALUE : int = 5
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_detected(hitbox : HitBox) -> void:
+func _on_detected(_hitbox : HitBox) -> void:
 	if sound_sheet != null:
 		sound_sheet.play(AUDIO)
-	hitbox.heal(HEALTH_VALUE)
+	Game.State.change_current_energy_level(ENERGY_VALUE)
 	queue_free.call_deferred()

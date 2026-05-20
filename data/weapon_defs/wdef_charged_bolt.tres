@@ -42,5 +42,4 @@ icon = SubResource("AtlasTexture_w0654")
 sound_sheet = SubResource("Resource_sap12")
 projectile = ExtResource("2_w0654")
 charging = true
-energy_cost = null
 metadata/_custom_type_script = "uid://dvj7a56df3qol"

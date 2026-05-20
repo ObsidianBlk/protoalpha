@@ -89,12 +89,6 @@ func is_triggered() -> bool:
 # Handler Methods
 # ------------------------------------------------------------------------------
 
-func _on_interactable_focus_entered() -> void:
-	print("Interactable focus entered")
-
-func _on_interactable_focus_exited() -> void:
-	print("Interactable focus exited")
-
 func _on_interactable_interacted() -> void:
 	if not locked:
 		triggered = not triggered

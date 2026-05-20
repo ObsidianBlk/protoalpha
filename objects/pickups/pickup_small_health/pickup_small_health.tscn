@@ -8,19 +8,19 @@
 [ext_resource type="Script" uid="uid://5ne0bxw7dsyh" path="res://scripts/nodes/bobbing_node_2d.gd" id="5_p4unv"]
 [ext_resource type="Script" uid="uid://ddbkyy847ju51" path="res://scripts/nodes/hitbox_detector.gd" id="6_uw7fb"]
 
-[sub_resource type="Resource" id="Resource_p4unv"]
+[sub_resource type="Resource" id="Resource_xk2kj"]
 script = ExtResource("3_vf3pb")
 stream = ExtResource("4_vf3pb")
 volume_linear = 1.0
-min_pitch = 0.9
-max_pitch = 1.1
+min_pitch = 1.1
+max_pitch = 1.3
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
-[sub_resource type="Resource" id="Resource_uw7fb"]
+[sub_resource type="Resource" id="Resource_7016t"]
 script = ExtResource("2_t0dr5")
 asp_group = &"Game"
 sound_list = Dictionary[StringName, ExtResource("3_vf3pb")]({
-&"pickup": SubResource("Resource_p4unv")
+&"pickup": SubResource("Resource_xk2kj")
 })
 metadata/_custom_type_script = "uid://wbuewjeffa70"
 
@@ -52,7 +52,7 @@ animations = [{
 [node name="PickupSmallHealth" type="CharacterBody2D" unique_id=1946710865]
 collision_layer = 0
 script = ExtResource("1_wg3qu")
-sound_sheet = SubResource("Resource_uw7fb")
+sound_sheet = SubResource("Resource_7016t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1431181625]
 position = Vector2(0, -4)

@@ -1,5 +1,8 @@
 -- TODO --
 
+* Test Energy Pickup!
+* Create small energy pickup
+
 * TV screen sized funky in some states
 
 -- ENHANCEMENTS:

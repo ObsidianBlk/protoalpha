@@ -94,11 +94,13 @@ const PICKUP_NONE : StringName = &"pickup_none"
 const PICKUP_HEALTH : StringName = &"pickup_health"
 const PICKUP_HEALTH_LARGE : StringName = &"pickup_health_large"
 const PICKUP_LIFE : StringName = &"pickup_life"
+const PICKUP_ENERGY_LARGE : StringName = &"pickup_energy_large"
 const PICKUP_LUT : Dictionary[StringName, String] = {
 	PICKUP_NONE : "",
 	PICKUP_HEALTH : "uid://ddd6ucx7yhx1u",
 	PICKUP_HEALTH_LARGE : "uid://baw6apsyn4rpx",
-	PICKUP_LIFE : "uid://bv3pmtfjy40p8"
+	PICKUP_LIFE : "uid://bv3pmtfjy40p8",
+	PICKUP_ENERGY_LARGE : "uid://dh6rjtxxvu0di"
 }
 
 ## The "Player" Group

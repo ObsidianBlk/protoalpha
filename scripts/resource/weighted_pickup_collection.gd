@@ -2,12 +2,28 @@
 extends WeightedCollection
 class_name WeightedPickupCollection
 
+
+# ------------------------------------------------------------------------------
+# Constants
+# --------------------------------------------------------------------------
+const _DEFAULT_WEIGHT : float = 1.0
+
+# ------------------------------------------------------------------------------
+# Setters / Getters
+# ------------------------------------------------------------------------------
+func _set_collection(c : Dictionary[StringName, float]) -> void:
+	super._set_collection(c)
+	if _collection.size() != Game.PICKUP_LUT.size():
+		for key : StringName in Game.PICKUP_LUT.keys():
+			if not key in _collection:
+				insert(key, _DEFAULT_WEIGHT)
+
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _init() -> void:
 	for key : StringName in Game.PICKUP_LUT.keys():
-		insert(key, 1.0)
+		insert(key, _DEFAULT_WEIGHT)
 
 func _get(property: StringName) -> Variant:
 	if has(property):

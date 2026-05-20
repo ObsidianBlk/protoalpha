@@ -23,6 +23,7 @@ const SFX_CHARGING : StringName = &"charging"
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var weapon_def : WeaponDef = null:			set=set_weapon_def
+@export var is_player : bool = false
 @export_flags_2d_physics var collision_mask : int
 @export var verbose : bool = false
 
@@ -94,7 +95,7 @@ func _Trigger(projectile_container : Node2D) -> void:
 		printerr("Weapon Definition failed to spawn projectile instance.")
 		return
 	
-	if _active_def.energy_cost > 0:
+	if is_player and _active_def.energy_cost > 0:
 		Game.State.change_current_energy_level(_active_def.energy_cost)
 	p.collision_mask = collision_mask
 	projectile_container.add_child(p)

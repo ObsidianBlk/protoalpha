@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://dh6rjtxxvu0di"]
+
+[ext_resource type="Script" uid="uid://dvmib3cugvi4s" path="res://objects/pickups/pickup_large_energy/pickup_large_energy.gd" id="1_av2go"]
+[ext_resource type="Script" uid="uid://5ne0bxw7dsyh" path="res://scripts/nodes/bobbing_node_2d.gd" id="2_etd3g"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="2_psnp5"]
+[ext_resource type="Texture2D" uid="uid://cj42l7sroidhk" path="res://assets/graphics/pickups/energy_pickup_large.png" id="3_av2go"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="3_wls66"]
+[ext_resource type="Script" uid="uid://ddbkyy847ju51" path="res://scripts/nodes/hitbox_detector.gd" id="4_av2go"]
+[ext_resource type="AudioStream" uid="uid://capj0fo0bjlsn" path="res://assets/audio/sfx/pickups/pickup_energy_large.wav" id="4_wls66"]
+
+[sub_resource type="Resource" id="Resource_ostaf"]
+script = ExtResource("3_wls66")
+stream = ExtResource("4_wls66")
+volume_linear = 1.0
+min_pitch = 0.9
+max_pitch = 1.1
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_xekkb"]
+script = ExtResource("2_psnp5")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("3_wls66")]({
+&"pickup": SubResource("Resource_ostaf")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_blxcu"]
+size = Vector2(12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blxcu"]
+atlas = ExtResource("3_av2go")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psnp5"]
+atlas = ExtResource("3_av2go")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wls66"]
+atlas = ExtResource("3_av2go")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xekkb"]
+atlas = ExtResource("3_av2go")
+region = Rect2(36, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ostaf"]
+atlas = ExtResource("3_av2go")
+region = Rect2(48, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b3hgq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blxcu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_psnp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wls66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xekkb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ostaf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="PickupLargeEnergy" type="CharacterBody2D" unique_id=1612855690]
+script = ExtResource("1_av2go")
+sound_sheet = SubResource("Resource_xekkb")
+metadata/_custom_type_script = "uid://dmslhe2vyvl8v"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=821879682]
+shape = SubResource("RectangleShape2D_blxcu")
+
+[node name="BobbingNode2D" type="Node2D" parent="." unique_id=730039950]
+script = ExtResource("2_etd3g")
+transition = 1
+metadata/_custom_type_script = "uid://5ne0bxw7dsyh"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BobbingNode2D" unique_id=116851385]
+sprite_frames = SubResource("SpriteFrames_b3hgq")
+frame_progress = 0.2090986
+
+[node name="Detector" type="Area2D" parent="BobbingNode2D" unique_id=2055881464]
+collision_layer = 0
+collision_mask = 256
+script = ExtResource("4_av2go")
+metadata/_custom_type_script = "uid://ddbkyy847ju51"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BobbingNode2D/Detector" unique_id=627401039]
+shape = SubResource("RectangleShape2D_blxcu")
+
+[connection signal="detected" from="BobbingNode2D/Detector" to="." method="_on_detected"]

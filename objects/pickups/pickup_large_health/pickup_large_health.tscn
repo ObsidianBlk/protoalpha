@@ -8,19 +8,19 @@
 [ext_resource type="Script" uid="uid://ddbkyy847ju51" path="res://scripts/nodes/hitbox_detector.gd" id="4_gbtsa"]
 [ext_resource type="AudioStream" uid="uid://d13g71wx7loqn" path="res://assets/audio/sfx/pickup_life_small.wav" id="4_jso7e"]
 
-[sub_resource type="Resource" id="Resource_0khkc"]
+[sub_resource type="Resource" id="Resource_ldueu"]
 script = ExtResource("3_m6pp3")
 stream = ExtResource("4_jso7e")
 volume_linear = 1.0
 min_pitch = 0.5
-max_pitch = 0.6
+max_pitch = 0.7
 metadata/_custom_type_script = "uid://dveho6qshxx2o"
 
-[sub_resource type="Resource" id="Resource_1tpxp"]
+[sub_resource type="Resource" id="Resource_tgo8e"]
 script = ExtResource("2_ldueu")
 asp_group = &"Game"
 sound_list = Dictionary[StringName, ExtResource("3_m6pp3")]({
-&"pickup": SubResource("Resource_0khkc")
+&"pickup": SubResource("Resource_ldueu")
 })
 metadata/_custom_type_script = "uid://wbuewjeffa70"
 
@@ -52,7 +52,7 @@ animations = [{
 [node name="pickup_large_health" type="CharacterBody2D" unique_id=1499247020]
 collision_layer = 0
 script = ExtResource("1_gbtsa")
-sound_sheet = SubResource("Resource_1tpxp")
+sound_sheet = SubResource("Resource_tgo8e")
 metadata/_custom_type_script = "uid://dmslhe2vyvl8v"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1327524356]
