@@ -186,7 +186,7 @@ texture = SubResource("AtlasTexture_nvumn")
 stretch_mode = 1
 
 [node name="RatioSubViewportContainer" type="SubViewportContainer" parent="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center" unique_id=1946008226]
-custom_minimum_size = Vector2(502.40002, 376.80002)
+custom_minimum_size = Vector2(686.4001, 514.80005)
 layout_mode = 2
 size_flags_vertical = 0
 stretch = true
@@ -201,7 +201,7 @@ handle_input_locally = false
 snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(502, 376)
+size = Vector2i(686, 514)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
@@ -362,14 +362,14 @@ size_flags_vertical = 3
 [node name="RelativeMargins" type="MarginContainer" parent="GameLayer/CenterContainer" unique_id=2100175968 node_paths=PackedStringArray("ctrl")]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 268
-theme_override_constants/margin_top = 537
+theme_override_constants/margin_left = 351
+theme_override_constants/margin_top = 703
 script = ExtResource("13_necax")
 ctrl = NodePath("../TVBody")
 
 [node name="ConsoleBody" type="PanelContainer" parent="GameLayer/CenterContainer/RelativeMargins" unique_id=1741482608 node_paths=PackedStringArray("ctrl")]
 texture_filter = 3
-custom_minimum_size = Vector2(537.6, 179.2)
+custom_minimum_size = Vector2(703.2, 234.4)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
@@ -477,7 +477,7 @@ flip_h = true
 flip_v = true
 
 [node name="RatioSpacer" type="Control" parent="FullScreenGame/VBoxContainer/HBoxContainer" unique_id=781003081]
-custom_minimum_size = Vector2(837.3333, 628)
+custom_minimum_size = Vector2(1144, 858)
 layout_mode = 2
 script = ExtResource("16_hxu8e")
 metadata/_custom_type_script = "uid://cgn3dt0lj8cnd"

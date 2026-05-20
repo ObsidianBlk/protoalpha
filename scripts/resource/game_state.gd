@@ -204,8 +204,8 @@ func reset() -> void:
 	lives = INITIAL_PLAYER_LIVES
 	unlocked_levels = ALL_LEVELS
 	_current_special = Special.CHARGED_BLASTER
-	for special : Special in energy:
-		energy[special] = MAX_ENERGY
+	for special : Special in _energy:
+		_energy[special] = MAX_ENERGY
 	_lock_change_emit -= 1
 	if _lock_change_emit <= 0:
 		changed.emit()

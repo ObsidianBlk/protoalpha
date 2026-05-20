@@ -41,6 +41,7 @@ func _DisconnectWeapon() -> void:
 func handle(triggered : bool) -> void:
 	if actor == null or weapon == null: return
 	
+	var special : GameState.Special = actor.get_special()
 	if weapon.weapon_def != null:
 		if triggered:
 			if weapon.can_shoot():
@@ -52,7 +53,6 @@ func handle(triggered : bool) -> void:
 			weapon.release_trigger()
 		energy_changed.emit(actor.get_special())
 	else:
-		var special : GameState.Special = actor.get_special()
 		match special:
 			GameState.Special.FAULT_DASH:
 				if special_state_fault_dash.is_empty(): return

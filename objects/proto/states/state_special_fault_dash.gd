@@ -43,6 +43,13 @@ func enter(_payload : Variant = null) -> void:
 		pop()
 		return
 	
+	if actor.velocity.is_equal_approx(Vector2.ZERO):
+		if state_idle.is_empty():
+			pop()
+		else:
+			swap_to(state_idle)
+		return
+	
 	if hitbox != null:
 		_source_hbo = hitbox.overrides
 		hitbox.overrides = hitbox_override

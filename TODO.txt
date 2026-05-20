@@ -1,12 +1,6 @@
 -- TODO --
 
--- BUGS:
-* Web-build: Gamepad joy-stick not working correctly, but seems fine on desktop build
-	* NOTE: Input.warp_mouse() does not work on the Web!! (RTFM moron!)
-
-* Web-build: TV screen sized funky in some states
-* Web-build: Gamepad's jump button, coded as Y, is actually X.
-  * Not a major issue, but strange
+* TV screen sized funky in some states
 
 -- ENHANCEMENTS:
 * FaultDash - Make it last longer, and allow player to cancel at any time.
@@ -31,6 +25,9 @@
   * While player is standing on it, will charge the player's energy bar.
   * If energy bar fully charged, will "overload" the energy bar. If fully overloaded
 	energy bar will discharge hurting the player (massively?)
+
+* Web-build: Gamepad's jump button, coded as Y, is actually X.
+  * Not a major issue, but strange
 
 -- UI --
 

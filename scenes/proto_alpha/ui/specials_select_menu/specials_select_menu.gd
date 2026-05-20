@@ -45,6 +45,8 @@ func _on_reveal() -> void:
 		if special == Game.State.get_special():
 			_button_lut[special].grab_focus()
 			_button_lut[special].set_pressed_no_signal(true)
+		else:
+			_button_lut[special].set_pressed_no_signal(false)
 	super._on_reveal()
 
 
