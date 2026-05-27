@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cr4ddyj68sq7f" path="res://assets/graphics/proto/specials_icon_0.tres" id="3_ykihv"]
 [ext_resource type="Script" uid="uid://bej08ed6q3dot" path="res://scripts/nodes/component_ui_sound.gd" id="4_ahdrs"]
 [ext_resource type="Texture2D" uid="uid://burv470jefr7y" path="res://assets/graphics/proto/specials_icon_1.tres" id="4_fqbrd"]
+[ext_resource type="Texture2D" uid="uid://3srn5mpkstpd" path="res://assets/graphics/proto/specials_icon_2.tres" id="6_c6lab"]
 
 [node name="SpecialsSelectMenu" type="MarginContainer" unique_id=1326436555]
 texture_filter = 3
@@ -121,15 +122,15 @@ layout_mode = 2
 [node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VLayout/HBoxContainer" unique_id=661324562]
 layout_mode = 2
 
-[node name="BTN_PlaceHolder1" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=901718257]
-modulate = Color(1, 1, 1, 0)
+[node name="BTN_Defragments" type="Button" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2" unique_id=901718257]
+unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 theme_type_variation = &"ButtonSpecials"
-text = "Place Holder"
-icon = ExtResource("3_ykihv")
+text = "Defragments"
+icon = ExtResource("6_c6lab")
 
-[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2/BTN_PlaceHolder1" unique_id=1079403342]
+[node name="ComponentUISound" type="Node" parent="PanelContainer/VLayout/HBoxContainer/VBoxContainer2/BTN_Defragments" unique_id=1079403342]
 script = ExtResource("4_ahdrs")
 signal_sounds = Dictionary[StringName, StringName]({
 &"focus_entered": &"btn_focused",

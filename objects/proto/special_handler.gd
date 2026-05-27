@@ -12,6 +12,7 @@ signal energy_changed(special : GameState.Special)
 @export var weapon : Weapon = null
 @export_subgroup("Special", "special_")
 @export var special_state_fault_dash : StringName = &""
+@export var special_state_deframents : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -59,6 +60,11 @@ func handle(triggered : bool) -> void:
 				if Game.State.use_special(special):
 					energy_changed.emit(special)
 					swap_to(special_state_fault_dash)
+			GameState.Special.DEFRAGMENTS:
+				if special_state_deframents.is_empty(): return
+				if Game.State.use_special(special):
+					energy_changed.emit(special)
+					swap_to(special_state_deframents)
 
 # ------------------------------------------------------------------------------
 # Handler Methods

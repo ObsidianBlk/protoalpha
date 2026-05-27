@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://nj2tagnipopm" path="res://objects/enemy_explosion/enemy_explosion.tscn" id="25_bg1mb"]
 [ext_resource type="Script" uid="uid://c7knmpbe2pcra" path="res://objects/proto/states/state_special_fault_dash.gd" id="28_hdeo6"]
 [ext_resource type="Script" uid="uid://bovns44e3e22o" path="res://scripts/resource/hitbox_resource.gd" id="29_m7pd3"]
+[ext_resource type="Script" uid="uid://cefsym25wtpfv" path="res://objects/proto/states/state_special_defragments.gd" id="30_km1b0"]
 
 [sub_resource type="Resource" id="Resource_m7pd3"]
 script = ExtResource("3_jl3in")
@@ -1809,6 +1810,7 @@ metadata/_custom_type_script = "uid://huvqh0h46t6l"
 script = ExtResource("17_j6iy6")
 weapon = NodePath("../../Body/Weapon")
 special_state_fault_dash = &"Special_FaultDash"
+special_state_deframents = &"Special_Defragments"
 
 [node name="Idle" type="Node" parent="StateMachine" unique_id=981379399 node_paths=PackedStringArray("interactor")]
 script = ExtResource("3_ida5t")
@@ -1866,6 +1868,12 @@ duration = 0.25
 hitbox = NodePath("../../HitBox")
 hitbox_override = SubResource("Resource_osq81")
 collision_ray = NodePath("../../Body/RC_FaultDash")
+state_idle = &"Idle"
+metadata/_custom_type_script = "uid://cbj43nrmcod25"
+
+[node name="Special_Defragments" type="Node" parent="StateMachine" unique_id=8952945]
+script = ExtResource("30_km1b0")
+pixel_offset = Vector2i(0, -12)
 state_idle = &"Idle"
 metadata/_custom_type_script = "uid://cbj43nrmcod25"
 

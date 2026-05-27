@@ -110,6 +110,8 @@ const GROUP_PLAYER : StringName = &"player"
 ## The "Boss" Group
 const GROUP_BOSS : StringName = &"boss"
 const GROUP_BOSS_MAP_WEAPON : StringName = &"boss_map_weapon"
+## The "Mob" Group
+const GROUP_MOB : StringName = &"mob"
 
 ## The "Player"'s primary collision layer
 const COLLISION_LAYER_PLAYER : int = 0x0002 # 2
@@ -177,28 +179,9 @@ const LEVELS : Dictionary[int, Dictionary] = {
 	#},
 }
 
-#const SPECIALS_ICONS : Dictionary[GameState.Special, AtlasTexture] = {
-	#GameState.Special.CHARGED_BLASTER : preload("uid://cr4ddyj68sq7f"),
-	#GameState.Special.FAULT_DASH : preload("uid://burv470jefr7y"),
-#}
-#
-#
-### Lookup Table Dictionary that takes the weapon name defined in [GameState] as the key
-### and the value is the resource object's UID path.
-#const WEAPON_LUT : Dictionary[GameState.Special, String] = {
-	#GameState.Special.CHARGED_BLASTER : "uid://p0vcbjdbc78t",
-#}
-
 # ------------------------------------------------------------------------------
 # Static Variables
 # ------------------------------------------------------------------------------
-## Identifies if the game is actively running. If true, then either the initial
-## level loads or the Level Select menu displays by default.
-#static var Game_Running : bool = false
-
-## Current number of player lives.
-#static var Player_Lives : int = INITIAL_PLAYER_LIVES
-
 ## The GameState object
 static var State : GameState = GameState.new()
 

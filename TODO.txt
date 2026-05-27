@@ -1,12 +1,13 @@
 -- TODO --
 
+* MUST TEST "Defragments" SPECIAL ABILITY!!!
+
+
 * TV screen sized funky in some states
 
 -- ENHANCEMENTS:
 * FaultDash - Make it last longer, and allow player to cancel at any time.
 *   Allow it to go through (some) walls???
-
-* ** Create Special Ability for defeating level 2
 
 * Touch Controls!
 

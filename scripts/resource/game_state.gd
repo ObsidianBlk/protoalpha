@@ -51,12 +51,14 @@ const _LIFE_CODE : Dictionary[int, int] = {
 
 enum Special {
 	CHARGED_BLASTER=0,
-	FAULT_DASH=1
+	FAULT_DASH=1,
+	DEFRAGMENTS=2,
 }
 
 const SPECIAL : Dictionary[Special, SpecialDef] = {
 	Special.CHARGED_BLASTER : preload("uid://cb0b0lnhrperq"),
-	Special.FAULT_DASH : preload("uid://6wy5bk7kp2ru")
+	Special.FAULT_DASH : preload("uid://6wy5bk7kp2ru"),
+	Special.DEFRAGMENTS : preload("uid://qvur75qixumo"),
 }
 
 
@@ -94,7 +96,8 @@ const CHEAT_KEYBOARD_SPECIALS : StringName = &"move_up_move_up_move_up_select_se
 var _lock_change_emit : int = 0
 var _energy : Dictionary[Special, int] = {
 	Special.CHARGED_BLASTER : MAX_ENERGY,
-	Special.FAULT_DASH : MAX_ENERGY
+	Special.FAULT_DASH : MAX_ENERGY,
+	Special.DEFRAGMENTS : MAX_ENERGY,
 }
 var _current_special : Special = Special.CHARGED_BLASTER
 

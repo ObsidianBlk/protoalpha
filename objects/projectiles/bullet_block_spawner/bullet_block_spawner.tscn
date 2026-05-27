@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://dtab04a5nwp4q"]
+
+[ext_resource type="Script" uid="uid://bclau2mbtwi7w" path="res://objects/projectiles/bullet_block_spawner/bullet_block_spawner.gd" id="1_i265d"]
+[ext_resource type="Texture2D" uid="uid://bcr5sw4aqgidx" path="res://assets/graphics/bullets/bullet_spawned_block.png" id="1_v684n"]
+[ext_resource type="Script" uid="uid://wjm481jeg5t0" path="res://scripts/nodes/weapon.gd" id="3_xnwju"]
+[ext_resource type="PackedScene" uid="uid://btl5usb0orr6" path="res://objects/projectiles/bullet_block_spawner/bullet_block.tscn" id="4_lmr5u"]
+[ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="4_o16ae"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i265d"]
+atlas = ExtResource("1_v684n")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idbu5"]
+atlas = ExtResource("1_v684n")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xnwju"]
+atlas = ExtResource("1_v684n")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o16ae"]
+atlas = ExtResource("1_v684n")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmr5u"]
+atlas = ExtResource("1_v684n")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6r1yg"]
+atlas = ExtResource("1_v684n")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0x7y"]
+atlas = ExtResource("1_v684n")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fydd"]
+atlas = ExtResource("1_v684n")
+region = Rect2(56, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jp3i2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i265d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idbu5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i265d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idbu5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xnwju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o16ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmr5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6r1yg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0x7y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fydd")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"done",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp3i2"]
+atlas = ExtResource("1_v684n")
+region = Rect2(64, 0, 8, 8)
+
+[sub_resource type="Resource" id="Resource_6i3hw"]
+script = ExtResource("4_o16ae")
+name = &"Bullet Block"
+icon = SubResource("AtlasTexture_jp3i2")
+projectile = ExtResource("4_lmr5u")
+metadata/_custom_type_script = "uid://dvj7a56df3qol"
+
+[node name="BulletBlockSpawner" type="Node2D" unique_id=169343302]
+script = ExtResource("1_i265d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=918631132]
+sprite_frames = SubResource("SpriteFrames_jp3i2")
+autoplay = "default"
+
+[node name="Weapon" type="Node2D" parent="." unique_id=1921692115]
+unique_name_in_owner = true
+script = ExtResource("3_xnwju")
+weapon_def = SubResource("Resource_6i3hw")
+collision_mask = 4105
+metadata/_custom_type_script = "uid://wjm481jeg5t0"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="AnimatedSprite2D" method="play" binds= [&"done"]]

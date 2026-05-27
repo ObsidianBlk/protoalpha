@@ -20,6 +20,7 @@ func _ready() -> void:
 	_button_lut = {
 		GameState.Special.CHARGED_BLASTER : %BTN_ChargedBolt,
 		GameState.Special.FAULT_DASH : %BTN_FaultDash,
+		GameState.Special.DEFRAGMENTS: %BTN_Defragments,
 	}
 	
 	var btn_group : ButtonGroup = ButtonGroup.new()

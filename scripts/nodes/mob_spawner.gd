@@ -175,6 +175,7 @@ func _SpawnMob() -> void:
 			
 			if not continuous:
 				_spawned += 1
+			mob_instance.add_to_group(Game.GROUP_MOB)
 			mob_instance.tree_exiting.connect(_on_spawn_exiting_tree.bind(mob_instance))
 			container.add_child(mob_instance)
 			mob_instance.global_position = global_position
