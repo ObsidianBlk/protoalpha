@@ -1,8 +1,5 @@
 -- TODO --
 
-* Test Energy Pickup!
-* Create small energy pickup
-
 * TV screen sized funky in some states
 
 -- ENHANCEMENTS:
@@ -17,7 +14,6 @@
   * What should the boss be?
 
 -- MISC:
-* ADD ENERGY PICKUPS!!!
 
 * Add more weapons (AKA Special Abilities)
 * Boss spawning animation/intro

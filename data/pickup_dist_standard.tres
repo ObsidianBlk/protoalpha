@@ -6,6 +6,7 @@
 script = ExtResource("1_6o0dr")
 collection = Dictionary[StringName, float]({
 &"pickup_energy_large": 10.0,
+&"pickup_energy_small": 20.0,
 &"pickup_health": 20.0,
 &"pickup_health_large": 10.0,
 &"pickup_life": 1.0,

@@ -34,6 +34,8 @@ size = Vector2(20, 53)
 [sub_resource type="Resource" id="Resource_14c3l"]
 script = ExtResource("10_38737")
 collection = Dictionary[StringName, float]({
+&"pickup_energy_large": 1.0,
+&"pickup_energy_small": 1.0,
 &"pickup_health": 0.0,
 &"pickup_health_large": 20.0,
 &"pickup_life": 1.0,
@@ -53,6 +55,8 @@ size = Vector2(54, 48)
 [sub_resource type="Resource" id="Resource_gf26o"]
 script = ExtResource("10_38737")
 collection = Dictionary[StringName, float]({
+&"pickup_energy_large": 1.0,
+&"pickup_energy_small": 1.0,
 &"pickup_health": 10.0,
 &"pickup_health_large": 5.0,
 &"pickup_life": 1.0,
@@ -63,6 +67,8 @@ metadata/_custom_type_script = "uid://kmjcdxe5lhnk"
 [sub_resource type="Resource" id="Resource_cxop6"]
 script = ExtResource("10_38737")
 collection = Dictionary[StringName, float]({
+&"pickup_energy_large": 1.0,
+&"pickup_energy_small": 1.0,
 &"pickup_health": 0.0,
 &"pickup_health_large": 20.0,
 &"pickup_life": 1.0,
