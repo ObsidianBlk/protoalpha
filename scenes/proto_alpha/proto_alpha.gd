@@ -241,6 +241,7 @@ func _ResumeGame() -> void:
 func _QuitGame(keep_ui_closed : bool = false) -> void:
 	_CloseLevel()
 	_game_running = false
+	Game.State.reset()
 	get_tree().paused = true
 	_hud.visible = false
 	if _ui.ui_active():
