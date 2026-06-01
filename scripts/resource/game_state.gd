@@ -27,7 +27,12 @@ const LEVEL_7 : int = 0x40
 ## Level 8 ID
 const LEVEL_8 : int = 0x80
 
+## The mask containing all the levels combined
 const ALL_LEVELS : int = LEVEL_1 | LEVEL_2 | LEVEL_3 | LEVEL_4 | LEVEL_5 | LEVEL_6 | LEVEL_7 | LEVEL_8
+
+const _LEVEL_INDEX_LUT : Array[int] = [
+	LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8
+]
 
 const _TOP_BIT : int = 0b10000_00000_00000_00000
 const _LEVEL_PASSWORD_BINARY : Dictionary[int, Array] = {
@@ -292,11 +297,20 @@ func set_level_unlocked(level : int, unlock : bool = true) -> void:
 		else:
 			unlocked_levels = unlocked_levels & (~level)
 
+func set_level_unlocked_by_index(level_idx : int, unlocked : bool = true) -> void:
+	if level_idx >= 0 and level_idx < _LEVEL_INDEX_LUT.size():
+		set_level_unlocked(_LEVEL_INDEX_LUT[level_idx], unlocked)
+
 ## Returns [code]true[/code] is [param level] id is marked as unlocked.
 ## Otherwise [code]false[/code] is returned.
 func is_level_unlocked(level : int) -> bool:
 	if level in [LEVEL_1,LEVEL_2,LEVEL_3,LEVEL_4,LEVEL_5,LEVEL_6,LEVEL_7,LEVEL_8]:
 		return (level & unlocked_levels) > 0
+	return false
+
+func is_level_index_unlocked(level_idx : int) -> bool:
+	if level_idx >= 0 and level_idx < _LEVEL_INDEX_LUT.size():
+		return is_level_unlocked(_LEVEL_INDEX_LUT[level_idx])
 	return false
 
 ## Returns [code]true[/code] is the given [param special] is unlocked and

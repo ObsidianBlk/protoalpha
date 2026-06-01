@@ -81,7 +81,7 @@ func _UpdateIconTexture() -> void:
 func _UpdateButton() -> void:
 	if _btn == null: return
 	var unavailable : bool = true
-	if level_number in LLUT and not Game.Get_Level_Path(level_number).is_empty():
+	if level_number in LLUT and not Game.Get_Level_Path(LLUT[level_number]).is_empty():
 		unavailable = not Game.State.is_level_unlocked(LLUT[level_number])
 	_btn.disabled = unavailable
 
