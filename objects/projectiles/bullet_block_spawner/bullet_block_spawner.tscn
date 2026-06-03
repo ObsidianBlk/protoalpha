@@ -93,6 +93,7 @@ script = ExtResource("4_o16ae")
 name = &"Bullet Block"
 icon = SubResource("AtlasTexture_jp3i2")
 projectile = ExtResource("4_lmr5u")
+rate_of_fire = 0.01
 metadata/_custom_type_script = "uid://dvj7a56df3qol"
 
 [node name="BulletBlockSpawner" type="Node2D" unique_id=169343302]

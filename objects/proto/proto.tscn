@@ -117,6 +117,18 @@ region = Rect2(48, 231, 24, 21)
 atlas = ExtResource("1_2x067")
 region = Rect2(72, 231, 24, 21)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_molts"]
+atlas = ExtResource("1_2x067")
+region = Rect2(0, 336, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2yhf"]
+atlas = ExtResource("1_2x067")
+region = Rect2(24, 336, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70ve8"]
+atlas = ExtResource("1_2x067")
+region = Rect2(48, 336, 24, 21)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qpscq"]
 atlas = ExtResource("1_2x067")
 region = Rect2(0, 84, 24, 21)
@@ -437,6 +449,20 @@ animations = [{
 }],
 "loop": false,
 "name": &"dead",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_molts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2yhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70ve8")
+}],
+"loop": true,
+"name": &"degragment",
 "speed": 12.0
 }, {
 "frames": [{
@@ -794,6 +820,34 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_pktpj"]
+length = 0.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ASprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"degragment"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ASprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
 [sub_resource type="Animation" id="Animation_08qad"]
 resource_name = "face_left"
 length = 0.1
@@ -966,8 +1020,8 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_70ve8"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_76xk5"]
+length = 0.25
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -992,20 +1046,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 1, 2]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("HitBox")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"CS_FaultDash"],
-"method": &"set_collision_shape_name"
-}]
 }
 
 [sub_resource type="Animation" id="Animation_mh7ni"]
@@ -1341,12 +1381,13 @@ tracks/1/keys = {
 _data = {
 &"climb": SubResource("Animation_jl3in"),
 &"dead": SubResource("Animation_l6vdm"),
+&"degragment": SubResource("Animation_pktpj"),
 &"face_left": SubResource("Animation_08qad"),
 &"face_right": SubResource("Animation_6fgtv"),
 &"fall": SubResource("Animation_bg1mb"),
 &"fault_arrow_exit": SubResource("Animation_molts"),
 &"fault_arrow_form": SubResource("Animation_g2yhf"),
-&"fault_arrow_motion": SubResource("Animation_70ve8"),
+&"fault_arrow_motion": SubResource("Animation_76xk5"),
 &"hurt_air": SubResource("Animation_mh7ni"),
 &"hurt_ground": SubResource("Animation_heo4x"),
 &"idle_a": SubResource("Animation_fql2o"),
@@ -1365,6 +1406,9 @@ _data = {
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_osq81"]
 animation = &"climb"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pi3w1"]
+animation = &"degragment"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_08qad"]
 animation = &"teleport_in"
@@ -1667,34 +1711,41 @@ input_2/name = "climb"
 input_2/auto_advance = false
 input_2/break_loop_at_end = false
 input_2/reset = true
+input_3/name = "defragment"
+input_3/auto_advance = false
+input_3/break_loop_at_end = false
+input_3/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pktpj"]
+graph_offset = Vector2(-1096.0577, -86.8208)
 nodes/output/position = Vector2(1240, 120)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(480, 260)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_osq81")
-"nodes/Animation 2/position" = Vector2(-800, 480)
+"nodes/Animation 2/position" = Vector2(-860, 300)
 nodes/attack_actions/node = SubResource("AnimationNodeStateMachine_1smkx")
-nodes/attack_actions/position = Vector2(-840, 280)
+nodes/attack_actions/position = Vector2(-900, 100)
 nodes/base_movement/node = SubResource("AnimationNodeStateMachine_bg1mb")
-nodes/base_movement/position = Vector2(-840, 100)
+nodes/base_movement/position = Vector2(-900, -80)
 nodes/facing/node = SubResource("AnimationNodeStateMachine_x6u88")
 nodes/facing/position = Vector2(120, 160)
 nodes/interrupt/node = SubResource("AnimationNodeOneShot_jl3in")
 nodes/interrupt/position = Vector2(120, 480)
 nodes/hurt_states/node = SubResource("AnimationNodeStateMachine_pi3w1")
-nodes/hurt_states/position = Vector2(-800, 860)
+nodes/hurt_states/position = Vector2(-880, 940)
 nodes/Teleport/node = SubResource("AnimationNodeStateMachine_pn48n")
-nodes/Teleport/position = Vector2(-800, 1260)
+nodes/Teleport/position = Vector2(-880, 1340)
 nodes/spawn_dead_anims/node = SubResource("AnimationNodeStateMachine_rwdmr")
-nodes/spawn_dead_anims/position = Vector2(-800, 1060)
+nodes/spawn_dead_anims/position = Vector2(-880, 1140)
 nodes/transition/node = SubResource("AnimationNodeTransition_hdeo6")
-nodes/transition/position = Vector2(-140, 280)
+nodes/transition/position = Vector2(-200, 100)
 nodes/fault_dash/node = SubResource("AnimationNodeStateMachine_2qjc2")
-nodes/fault_dash/position = Vector2(-800, 1480)
+nodes/fault_dash/position = Vector2(-880, 1560)
 nodes/actions/node = SubResource("AnimationNodeTransition_j6iy6")
-nodes/actions/position = Vector2(-380, 1000)
-node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"facing", &"Add2", 1, &"interrupt", &"interrupt", 0, &"transition", &"interrupt", 1, &"actions", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2", &"actions", 0, &"hurt_states", &"actions", 1, &"spawn_dead_anims", &"actions", 2, &"Teleport", &"actions", 3, &"fault_dash"]
+nodes/actions/position = Vector2(-460, 1080)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_pi3w1")
+nodes/Animation/position = Vector2(-860, 480)
+node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"facing", &"Add2", 1, &"interrupt", &"interrupt", 0, &"transition", &"interrupt", 1, &"actions", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2", &"transition", 3, &"Animation", &"actions", 0, &"hurt_states", &"actions", 1, &"spawn_dead_anims", &"actions", 2, &"Teleport", &"actions", 3, &"fault_dash"]
 
 [sub_resource type="Resource" id="Resource_osq81"]
 script = ExtResource("29_m7pd3")
@@ -1783,7 +1834,7 @@ collision_mask = 9
 libraries/ = SubResource("AnimationLibrary_6fgtv")
 script = ExtResource("11_jl3in")
 animated_sprite = NodePath("../ASprite")
-target_animation = &"fault_arrow_motion"
+target_animation = &"degragment"
 metadata/_custom_type_script = "uid://gg0uxpt06y26"
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1438986990]
@@ -1871,10 +1922,12 @@ collision_ray = NodePath("../../Body/RC_FaultDash")
 state_idle = &"Idle"
 metadata/_custom_type_script = "uid://cbj43nrmcod25"
 
-[node name="Special_Defragments" type="Node" parent="StateMachine" unique_id=8952945]
+[node name="Special_Defragments" type="Node" parent="StateMachine" unique_id=8952945 node_paths=PackedStringArray("hitbox")]
 script = ExtResource("30_km1b0")
 pixel_offset = Vector2i(0, -12)
+hitbox = NodePath("../../HitBox")
 state_idle = &"Idle"
+state_move = &"Move"
 metadata/_custom_type_script = "uid://cbj43nrmcod25"
 
 [node name="LadderDetector" type="Area2D" parent="." unique_id=249257466]

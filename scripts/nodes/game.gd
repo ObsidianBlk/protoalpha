@@ -139,7 +139,7 @@ const LEVELS : Dictionary[int, Dictionary] = {
 		_LEVEL_PATH:"res://scenes/levels/level_03/level_03.tscn",
 		_LEVEL_ICON:"res://assets/graphics/bosses/placeholder/Placeholder_Portrait.png",
 		_LEVEL_DEFEATED_ICON: "res://assets/graphics/bosses/placeholder/Placeholder_Defeated_Portrait.png",
-		_LEVEL_STATE: LevelDevState.READY
+		_LEVEL_STATE: LevelDevState.ACTIVE_DEV
 	},
 	GameState.LEVEL_4: {
 		_LEVEL_PATH:"",

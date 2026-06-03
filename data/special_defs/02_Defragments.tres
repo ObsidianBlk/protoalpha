@@ -8,5 +8,5 @@ script = ExtResource("1_d54td")
 special_name = "Defragments"
 icon = ExtResource("1_hkep2")
 unlock_level = 2
-action_energy_cost = 20
+action_energy_cost = 127
 metadata/_custom_type_script = "uid://cppyslgvqknyc"

@@ -8,5 +8,5 @@ script = ExtResource("2_i03ai")
 special_name = "Fault Dash"
 icon = ExtResource("1_rjg2q")
 unlock_level = 1
-action_energy_cost = 100
+action_energy_cost = 32
 metadata/_custom_type_script = "uid://cppyslgvqknyc"

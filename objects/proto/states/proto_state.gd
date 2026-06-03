@@ -22,10 +22,12 @@ const ANIM_TELEPORT_IN : StringName = &"teleport_in"
 const ANIM_TELEPORT_OUT : StringName = &"teleport_out"
 const ANIM_FAULT_DASH_FORM : StringName = &"fault_arrow_form"
 const ANIM_FAULT_DASH_EXIT : StringName = &"fault_arrow_exit"
+const ANIM_DEFRAGMENT : StringName = &"defragment"
 
 const TRANS_CORE : String = "core"
 const TRANS_ATTACK : String = "attack"
 const TRANS_CLIMB : String = "climb"
+const TRANS_DEFRAGMENT : String = "defragment"
 const ONCE_FIRE : int = 1
 
 const TRANS_ACTION_HURT : String = "hurt"

@@ -29,7 +29,7 @@ func _on_animation_finished() -> void:
 	var target : Node2D = _target.get_ref()
 	var parent : Node = get_parent()
 	if target != null and parent is Node2D:
-		_weapon.rotation = global_position.angle_to(target.global_position)
+		_weapon.rotation = (target.global_position - global_position).angle()
 		_weapon.press_trigger(parent)
 		_weapon.release_trigger()
 	spawn_completed.emit()

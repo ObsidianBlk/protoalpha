@@ -12,8 +12,12 @@ const DEFRAGMENT_SPAWNER : GDScript = preload("uid://bclau2mbtwi7w")
 @export var block_count : int = 5:			set=set_block_count
 @export var pixel_radius : int = 24
 @export var pixel_offset : Vector2i = Vector2i.ZERO
+@export var spawn_delay : float = 0.2
+@export_subgroup("Components")
+@export var hitbox : HitBox = null
 @export_subgroup("States")
 @export var state_idle : StringName = &""
+@export var state_move : StringName = &""
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -22,6 +26,7 @@ var _spread_angle : float = 0.0
 var _current_angle : float = 0.0
 var _blocks_spawned : int = 0
 
+var _delay : float = 0.0
 var _tagged_enemies : Dictionary[StringName, bool] = {}
 
 
@@ -36,24 +41,33 @@ func set_block_count(c : int) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
-func _GetTarget() -> Node2D:
-	var mobs : Array[Node] = get_tree().get_nodes_in_group(Game.GROUP_MOB)
+func _GetRandomFromGroup(group_name : StringName, tag : bool) -> Node2D:
+	var mobs : Array[Node] = get_tree().get_nodes_in_group(group_name)
 	mobs = mobs.filter(
 		func(item : Node):
-			return item is Node2D and not item.name in _tagged_enemies
+			if item is Node2D:
+				return not (tag and item.name in _tagged_enemies)
 	)
+	
 	if mobs.size() > 0:
 		var idx : int = 0
 		if mobs.size() > 1:
 			idx = randi_range(0, mobs.size() - 1)
-		_tagged_enemies[mobs[idx].name] = true
+		if tag:
+			_tagged_enemies[mobs[idx].name] = true
 		return mobs[idx]
 	return null
 
+func _GetTarget() -> Node2D:
+	var target : Node2D = _GetRandomFromGroup(Game.GROUP_MOB, true)
+	if target != null: return target
+	return _GetRandomFromGroup(Game.GROUP_BOSS, false)
+
 
 func _SpawnBlock() -> void:
+	var parent : Node = actor.get_parent()
 	var target : Node2D = _GetTarget()
-	if target == null:
+	if target == null or not parent is Node2D:
 		_EndSpecial.call_deferred()
 		return
 	
@@ -63,19 +77,17 @@ func _SpawnBlock() -> void:
 	pos += Vector2i((Vector2.RIGHT * pixel_radius).rotated(_current_angle))
 	
 	if ds != null:
-		var parent : Node = actor.get_parent()
-		if not parent is Node2D: return
 		parent.add_child(ds)
 		ds.global_position = Vector2(pos)
-		ds.spawn_completed.connect(_on_spawn_completed)
+		ds.set_target(target)
 		_blocks_spawned += 1
-	_current_angle += _spread_angle
+	_current_angle -= _spread_angle
 
 func _EndSpecial() -> void:
 	_blocks_spawned = block_count
-	if not state_idle.is_empty():
+	if is_equal_approx(actor.velocity.x, 0.0):
 		swap_to(state_idle)
-	else: printerr("Proto State Special Defragments missing idle state name")
+	else: swap_to(state_move)
 
 # ------------------------------------------------------------------------------
 # Virtual Methods
@@ -85,21 +97,33 @@ func enter(_payload : Variant = null) -> void:
 		pop()
 		return
 	
+	actor.set_tree_param(APARAM_TRANSITION, TRANS_DEFRAGMENT)
+	
 	_blocks_spawned = 0
 	_current_angle = 0.0
+	_delay = 0.001
 	if _spread_angle <= 0.0:
 		set_block_count(block_count)
-	# TODO: Instead of _SpawnBlock(), maybe run a special player animation and have
-	#   _SpawnBlock() get called when that animation finishes.
-	_SpawnBlock()
+	if hitbox != null:
+		hitbox.disable_hitbox(true)
+	# TODO: Special player animation??
 
 func exit() -> void:
+	actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
+	if hitbox != null:
+		hitbox.disable_hitbox(false)
 	_tagged_enemies.clear()
+
+func update(delta : float) -> void:
+	if _delay > 0.0 and _blocks_spawned < block_count:
+		_delay -= delta
+		if _delay <= 0.0:
+			_SpawnBlock()
+			_delay = spawn_delay
+			if _blocks_spawned == block_count:
+				_EndSpecial()
+
 
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
-func _on_spawn_completed() -> void:
-	if _blocks_spawned < block_count:
-		_SpawnBlock.call_deferred()
-	else: _EndSpecial()
