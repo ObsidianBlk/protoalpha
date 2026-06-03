@@ -81,7 +81,7 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton:
 		_joypad_device = -1
 		if _wasm_enabled:
-			_ParseFakeMouseMotion(_wasm_mouse_pos)
+			_ParseFakeMouseMotion(_wasm_mouse_pos, event.button_index)
 	elif event is InputEventMouseMotion:
 		if not _mouse_warping:
 			_joypad_device = -1
@@ -138,12 +138,20 @@ func _Threshold(v : float, edge : float) -> float:
 	if abs(v) >= edge: return v
 	return 0.0
 
-func _ParseFakeMouseMotion(pos : Vector2) -> void:
-	var mouse_event : InputEventMouseMotion = InputEventMouseMotion.new()
-	_wasm_mouse_pos = pos
-	mouse_event.global_position = pos
-	mouse_event.position = pos
-	Input.parse_input_event(mouse_event)
+func _ParseFakeMouseMotion(pos : Vector2, button_index : MouseButton = MouseButton.MOUSE_BUTTON_NONE) -> void:
+	var event : InputEventMouse = null
+	if button_index != MouseButton.MOUSE_BUTTON_NONE:
+		var mouse_event : InputEventMouseButton = InputEventMouseButton.new()
+		mouse_event.global_position = _wasm_mouse_pos
+		mouse_event.position = _wasm_mouse_pos
+		mouse_event.button_index = button_index
+	else:
+		var mouse_event : InputEventMouseMotion = InputEventMouseMotion.new()
+		_wasm_mouse_pos = pos
+		mouse_event.global_position = pos
+		mouse_event.position = pos
+		event = mouse_event
+	Input.parse_input_event(event)
 
 func _HandleMousePosition(delta : float) -> Vector2:
 	var pos : Vector2 = get_global_mouse_position()

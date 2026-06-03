@@ -187,7 +187,7 @@ texture = SubResource("AtlasTexture_nvumn")
 stretch_mode = 1
 
 [node name="RatioSubViewportContainer" type="SubViewportContainer" parent="GameLayer/CenterContainer/TVBody/TV_Screen/Screen_Main/TV_Center" unique_id=1946008226]
-custom_minimum_size = Vector2(489.6, 367.2)
+custom_minimum_size = Vector2(502.40002, 376.80002)
 layout_mode = 2
 size_flags_vertical = 0
 stretch = true
@@ -202,7 +202,7 @@ handle_input_locally = false
 snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 3
 audio_listener_enable_2d = true
-size = Vector2i(489, 367)
+size = Vector2i(502, 376)
 size_2d_override = Vector2i(320, 240)
 size_2d_override_stretch = true
 render_target_update_mode = 4
@@ -484,7 +484,7 @@ flip_h = true
 flip_v = true
 
 [node name="RatioSpacer" type="Control" parent="FullScreenGame/VBoxContainer/HBoxContainer" unique_id=781003081]
-custom_minimum_size = Vector2(816, 612)
+custom_minimum_size = Vector2(837.3333, 628)
 layout_mode = 2
 script = ExtResource("16_hxu8e")
 metadata/_custom_type_script = "uid://cgn3dt0lj8cnd"
@@ -511,6 +511,7 @@ color = Color(0, 1, 0.049999952, 1)
 
 [node name="MobileControls" type="CanvasLayer" parent="." unique_id=439286245]
 layer = 10
+visible = false
 
 [node name="TouchControls" parent="MobileControls" unique_id=231534914 instance=ExtResource("22_m4h2d")]
 visible = false
