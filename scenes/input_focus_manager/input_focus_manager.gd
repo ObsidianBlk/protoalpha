@@ -118,6 +118,9 @@ func _IsPointerPressed(event : InputEvent) -> bool:
 	elif event is InputEventJoypadButton:
 		if event.button_index == JOY_BUTTON_A:
 			var e : InputEventMouseButton = InputEventMouseButton.new()
+			if _wasm_enabled:
+				e.position = _wasm_mouse_pos
+				e.global_position = _wasm_mouse_pos
 			e.button_index = MOUSE_BUTTON_LEFT
 			e.pressed = true
 			Input.parse_input_event(e)

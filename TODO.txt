@@ -1,18 +1,16 @@
 -- TODO --
 
-* MUST TEST "Defragments" SPECIAL ABILITY!!!
-
-
+* Gamepad controls (on WEB) don't trigger fullscreen (but mouse does)... why?!?!
 * TV screen sized funky in some states
 
 -- ENHANCEMENTS:
+* Come up with a Level 3 BOSS and Special Ability!!
+
 * FaultDash - Make it last longer, and allow player to cancel at any time.
 *   Allow it to go through (some) walls???
 
 * Touch Controls!
 
-* Start on Level 3(?)
-  * What should the boss be?
 
 -- MISC:
 
