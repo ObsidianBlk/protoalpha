@@ -123,6 +123,12 @@ const _LEVEL_ICON : StringName = &"icon"
 const _LEVEL_DEFEATED_ICON : StringName = &"icon_defeat"
 const _LEVEL_STATE : StringName = &"state"
 const LEVELS : Dictionary[int, Dictionary] = {
+	GameState.LEVEL_0: { # Test Level
+		_LEVEL_PATH:"res://scenes/levels/test_level/test_level.tscn",
+		_LEVEL_ICON:"res://assets/graphics/bosses/Test_Level_Portrait.png",
+		_LEVEL_DEFEATED_ICON: "res://assets/graphics/bosses/placeholder/Placeholder_Defeated_Portrait.png",
+		_LEVEL_STATE: LevelDevState.READY
+	},
 	GameState.LEVEL_1: {
 		_LEVEL_PATH:"res://scenes/levels/level_01/level_01.tscn",
 		_LEVEL_ICON:"res://assets/graphics/bosses/seg_fault/Seg_Fault_Portrait.png",
@@ -249,6 +255,9 @@ static func Get_Level_State(level_id : int) -> LevelDevState:
 	if level_id in LEVELS:
 		return LEVELS[level_id][_LEVEL_STATE]
 	return LevelDevState.NOT_AVAILABLE
+
+static func Is_Test_Level_Allowed() -> bool:
+	return OS.has_feature("editor_runtime")
 
 static func Is_Valid_Weapon(special : GameState.Special) -> bool:
 	if special in GameState.SPECIAL:

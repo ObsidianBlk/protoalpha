@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://he3lk4pvj52s" path="res://objects/spike_tiles/ceiling_spike_tile.tscn" id="3_ajrsk"]
 [ext_resource type="PackedScene" uid="uid://d0je2ayc81oo5" path="res://objects/spike_tiles/wall_l_spike_tile.tscn" id="4_4j1ts"]
 [ext_resource type="PackedScene" uid="uid://cnoh613spfx7o" path="res://objects/spike_tiles/wall_r_spike_tile.tscn" id="5_ppfxi"]
+[ext_resource type="PackedScene" uid="uid://bxts4x5ryov0y" path="res://objects/tiles/charger_01/charger_01.tscn" id="6_ajrsk"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_6x2bp"]
 tile_data = PackedInt32Array(0, 327680, 0, 65536, 327680, 1, 131072, 327680, 2, 1, 458752, 0, 65537, 458752, 1, 131073, 458752, 2)
@@ -803,6 +804,10 @@ scenes/2/scene = ExtResource("3_ajrsk")
 scenes/3/scene = ExtResource("4_4j1ts")
 scenes/4/scene = ExtResource("5_ppfxi")
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4j1ts"]
+resource_name = "Misc"
+scenes/1/scene = ExtResource("6_ajrsk")
+
 [resource]
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 16
@@ -827,6 +832,7 @@ custom_data_layer_3/name = "ShiftableSlot"
 custom_data_layer_3/type = 1
 sources/0 = SubResource("TileSetAtlasSource_4tiyv")
 sources/1 = SubResource("TileSetScenesCollectionSource_4tiyv")
+sources/2 = SubResource("TileSetScenesCollectionSource_4j1ts")
 pattern_0 = SubResource("TileMapPattern_6x2bp")
 pattern_1 = SubResource("TileMapPattern_06gt1")
 pattern_2 = SubResource("TileMapPattern_4tiyv")

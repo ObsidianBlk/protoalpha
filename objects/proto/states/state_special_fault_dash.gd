@@ -5,6 +5,8 @@ extends ProtoState
 # ------------------------------------------------------------------------------
 enum DashState {FORMING=0, DASHING=1, ENDED=2}
 
+const SFX_TRIGGERED : String = "triggered"
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
@@ -60,6 +62,11 @@ func enter(_payload : Variant = null) -> void:
 	actor.set_tree_param(APARAM_SPECIAL_FAULTDASH_INACTIVE, false)
 	actor.set_tree_param(APARAM_TRANS_ACTION, TRANS_ACTION_SPECIAL_FAULT_DASH)
 	actor.set_tree_param(APARAM_ONCE_INTERRUPT, ONCE_FIRE)
+	
+	if Game.State.get_special() in GameState.SPECIAL:
+		var def : SpecialDef = GameState.SPECIAL[Game.State.get_special()]
+		if def.sound_sheet != null:
+			def.sound_sheet.play(SFX_TRIGGERED)
 	
 	actor.velocity.x = sign(actor.velocity.x) * dash_speed
 	actor.velocity.y = 0.0

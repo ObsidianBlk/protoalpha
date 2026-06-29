@@ -27,6 +27,8 @@ class_name SpecialDef
 ## [b]Note:[/b] Ignored if [property weapon_definition] is defined.
 @export var action_energy_cost : int = 0:
 	set=set_action_energy_cost
+## The [SoundSheet] containing the audio stream(s) used when the special is triggered.
+@export var sound_sheet : SoundSheet = null
 
 # --------------------------------------------------------------------------
 # Settings

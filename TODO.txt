@@ -1,13 +1,16 @@
 -- TODO --
 
+
 * Gamepad controls (on WEB) don't trigger fullscreen (but mouse does)... why?!?!
 * TV screen sized funky in some states
 
 -- ENHANCEMENTS:
 * Come up with a Level 3 BOSS and Special Ability!!
-
-* FaultDash - Make it last longer, and allow player to cancel at any time.
-*   Allow it to go through (some) walls???
+	* Boss: "Overflow"
+	* Boss Attack: Radial shock(bullet) discharges, directional discharges
+	* Level Gimicks:
+		* Charging Blocks
+		* Destroyable "Ball" that charges up and releases energy (bullets) radially
 
 * Touch Controls!
 
@@ -18,11 +21,9 @@
 * Boss spawning animation/intro
 * Boss defeated Victory animation/outtro
 
-* New tile that has a charge-up animation when stepped on, and charge-down when not
-  stepped on.
-  * While player is standing on it, will charge the player's energy bar.
-  * If energy bar fully charged, will "overload" the energy bar. If fully overloaded
-	energy bar will discharge hurting the player (massively?)
+* "Pushing" block (conveyor in the direction of arrow)
+* When player on a charger and energy bar is at full, "overload" the energy bar.
+  If fully overloaded energy bar will discharge hurting the player (massively?)
 
 * Web-build: Gamepad's jump button, coded as Y, is actually X.
   * Not a major issue, but strange

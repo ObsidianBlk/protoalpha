@@ -10,6 +10,8 @@ signal cheat_activated(cheat_code : StringName)
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
+## Level 0 (The Test Level) ID
+const LEVEL_0 : int = 0
 ## Level 1 ID
 const LEVEL_1 : int = 0x01
 ## Level 2 ID
@@ -304,6 +306,7 @@ func set_level_unlocked_by_index(level_idx : int, unlocked : bool = true) -> voi
 ## Returns [code]true[/code] is [param level] id is marked as unlocked.
 ## Otherwise [code]false[/code] is returned.
 func is_level_unlocked(level : int) -> bool:
+	if level == LEVEL_0: return true
 	if level in [LEVEL_1,LEVEL_2,LEVEL_3,LEVEL_4,LEVEL_5,LEVEL_6,LEVEL_7,LEVEL_8]:
 		return (level & unlocked_levels) > 0
 	return false

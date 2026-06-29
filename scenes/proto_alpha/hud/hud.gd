@@ -36,6 +36,7 @@ func _ready() -> void:
 # ------------------------------------------------------------------------------
 func _on_game_state_changed() -> void:
 	_lbl_lives.text = "%d"%[Game.State.lives]
+	_on_energy_changed(Game.State.get_special())
 
 func _on_player_rect_changed(pr : Rect2) -> void:
 	if _player_info == null: return

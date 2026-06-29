@@ -135,6 +135,7 @@ metadata/_custom_type_script = "uid://bej08ed6q3dot"
 [connection signal="level_requested" from="GridContainer/BTN_Level2" to="." method="_on_level_requested"]
 [connection signal="level_requested" from="GridContainer/BTN_Level3" to="." method="_on_level_requested"]
 [connection signal="level_requested" from="GridContainer/BTN_Level4" to="." method="_on_level_requested"]
+[connection signal="level_requested" from="GridContainer/BTN_CENTER" to="." method="_on_level_requested"]
 [connection signal="level_requested" from="GridContainer/BTN_Level5" to="." method="_on_level_requested"]
 [connection signal="level_requested" from="GridContainer/BTN_Level6" to="." method="_on_level_requested"]
 [connection signal="level_requested" from="GridContainer/BTN_Level7" to="." method="_on_level_requested"]

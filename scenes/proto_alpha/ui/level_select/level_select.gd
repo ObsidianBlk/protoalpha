@@ -28,6 +28,7 @@ func _on_reveal() -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_level_requested(id : int) -> void:
+	if id == GameState.LEVEL_0 and not Game.Is_Test_Level_Allowed(): return
 	var lstate : Game.LevelDevState = Game.Get_Level_State(id)
 	match lstate:
 		Game.LevelDevState.NOT_AVAILABLE:

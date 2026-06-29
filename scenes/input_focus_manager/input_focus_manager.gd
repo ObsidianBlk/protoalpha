@@ -214,6 +214,7 @@ func grab_tv_focus() -> void:
 
 func grab_game_focus() -> void:
 	if not _pointer_sprite.visible: return
+	release_focus()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	_pointer_sprite.visible = false
 	focus_game.emit()

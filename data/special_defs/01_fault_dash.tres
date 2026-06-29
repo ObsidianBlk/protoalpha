@@ -2,6 +2,25 @@
 
 [ext_resource type="Texture2D" uid="uid://burv470jefr7y" path="res://assets/graphics/proto/specials_icon_1.tres" id="1_rjg2q"]
 [ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://special_def.gd" id="2_i03ai"]
+[ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="3_bwjna"]
+[ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="4_4d48s"]
+[ext_resource type="AudioStream" uid="uid://bfdqc76nl3kgn" path="res://assets/audio/sfx/special_fault_dash.wav" id="5_4sxoq"]
+
+[sub_resource type="Resource" id="Resource_134sv"]
+script = ExtResource("4_4d48s")
+stream = ExtResource("5_4sxoq")
+volume_linear = 1.0
+min_pitch = 0.9
+max_pitch = 1.1
+metadata/_custom_type_script = "uid://dveho6qshxx2o"
+
+[sub_resource type="Resource" id="Resource_gqbts"]
+script = ExtResource("3_bwjna")
+asp_group = &"Game"
+sound_list = Dictionary[StringName, ExtResource("4_4d48s")]({
+&"triggered": SubResource("Resource_134sv")
+})
+metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [resource]
 script = ExtResource("2_i03ai")
@@ -9,4 +28,5 @@ special_name = "Fault Dash"
 icon = ExtResource("1_rjg2q")
 unlock_level = 1
 action_energy_cost = 32
+sound_sheet = SubResource("Resource_gqbts")
 metadata/_custom_type_script = "uid://cppyslgvqknyc"

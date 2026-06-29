@@ -16,6 +16,7 @@ const ICON_MISSING : Texture2D = preload("uid://druc8pb5ob1v1")
 const ANIM_PRESSED : StringName = &"pressed"
 
 const LLUT : Dictionary[int, int] = {
+	0: GameState.LEVEL_0,
 	1: GameState.LEVEL_1,
 	2: GameState.LEVEL_2,
 	3: GameState.LEVEL_3,
@@ -69,20 +70,22 @@ func _Update() -> void:
 func _UpdateIconTexture() -> void:
 	if _icon_texture == null: return
 	var icon : Texture2D = ICON_DEFAULT
-	if level_number in LLUT:
-		if Game.State.is_level_unlocked(LLUT[level_number]):
-			var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number])
-			icon = ICON_MISSING if ico == null else ico
-		else:
-			var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number], true)
-			icon = ICON_DEFAULT if ico == null else ico
+	if level_number != 0 or Game.Is_Test_Level_Allowed():
+		if level_number in LLUT:
+			if Game.State.is_level_unlocked(LLUT[level_number]):
+				var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number])
+				icon = ICON_MISSING if ico == null else ico
+			else:
+				var ico : Texture2D = Game.Get_Level_Icon(LLUT[level_number], true)
+				icon = ICON_DEFAULT if ico == null else ico
 	_icon_texture.texture = icon
 
 func _UpdateButton() -> void:
 	if _btn == null: return
 	var unavailable : bool = true
-	if level_number in LLUT and not Game.Get_Level_Path(LLUT[level_number]).is_empty():
-		unavailable = not Game.State.is_level_unlocked(LLUT[level_number])
+	if level_number != 0 or Game.Is_Test_Level_Allowed():
+		if level_number in LLUT and not Game.Get_Level_Path(LLUT[level_number]).is_empty():
+			unavailable = not Game.State.is_level_unlocked(LLUT[level_number])
 	_btn.disabled = unavailable
 
 # ------------------------------------------------------------------------------
