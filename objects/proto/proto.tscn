@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://ox02nn3ejehm" path="res://objects/proto/states/state_climb.gd" id="8_t4jra"]
 [ext_resource type="AudioStream" uid="uid://dfnb4m3o40dw5" path="res://assets/audio/sfx/teleports/frag_teleport.wav" id="9_k3t5h"]
 [ext_resource type="Script" uid="uid://gg0uxpt06y26" path="res://scripts/nodes/anim_sprite_player.gd" id="11_jl3in"]
+[ext_resource type="Script" uid="uid://pitg51pam6s6" path="res://objects/proto/component_overload_monitor.gd" id="12_osq81"]
 [ext_resource type="Script" uid="uid://c3n7vyfp1kdk5" path="res://objects/proto/states/state_spawn.gd" id="12_tjh6k"]
 [ext_resource type="Script" uid="uid://dg37gfjq0fw1r" path="res://scripts/nodes/ladder_detector.gd" id="13_ajrhu"]
 [ext_resource type="Script" uid="uid://b865x7ayjvbki" path="res://scripts/fsm/actor_state_machine.gd" id="13_jl3in"]
@@ -1717,7 +1718,6 @@ input_3/break_loop_at_end = false
 input_3/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pktpj"]
-graph_offset = Vector2(-1096.0577, -86.8208)
 nodes/output/position = Vector2(1240, 120)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(480, 260)
@@ -1787,6 +1787,13 @@ metadata/_custom_type_script = "uid://cwjk0b6j3hspo"
 [node name="ComponentHealth" type="Node" parent="." unique_id=800337913]
 script = ExtResource("2_ajrhu")
 metadata/_custom_type_script = "uid://bk46f3unrl4vx"
+
+[node name="ComponentOverloadMonitor" type="Node" parent="." unique_id=1751867229 node_paths=PackedStringArray("health")]
+script = ExtResource("12_osq81")
+health = NodePath("../ComponentHealth")
+discharge_damage = 2
+discharge_interval = 1.0
+metadata/_custom_type_script = "uid://pitg51pam6s6"
 
 [node name="HitBox" type="Area2D" parent="." unique_id=583676083 node_paths=PackedStringArray("health")]
 collision_layer = 256

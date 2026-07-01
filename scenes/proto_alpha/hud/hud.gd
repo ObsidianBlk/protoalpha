@@ -2,6 +2,12 @@ extends MarginContainer
 
 
 # ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const EP_THEME_LEVEL : StringName = &"HUDPlayerEP"
+const EP_THEME_OVERLOAD : StringName = &"HUDPlayerEPO"
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @onready var _player_info: VBoxContainer = %PlayerInfo
@@ -69,8 +75,15 @@ func _on_health_changed(health : int, max_health : int, is_boss : bool = false) 
 func _on_energy_changed(special : GameState.Special) -> void:
 	if Game.State == null or _energy_progress == null: return
 	_special_icon.texture = Game.Get_Special_Icon(special)
-	var energy : int = Game.State.get_energy_level(special)
-	var eprog : float = (float(energy) / float(GameState.MAX_ENERGY)) * 100.0
+	var overload : int = Game.State.get_energy_overload(special)
+	var eprog : float = 0.0
+	if overload > 0:
+		eprog = (float(overload) / float(GameState.MAX_ENERGY)) * 100.0
+		_energy_progress.theme_type_variation = EP_THEME_OVERLOAD
+	else:
+		var energy : int = Game.State.get_energy_level(special)
+		eprog = (float(energy) / float(GameState.MAX_ENERGY)) * 100.0
+		_energy_progress.theme_type_variation = EP_THEME_LEVEL
 	_energy_progress.value = eprog
 
 func _on_boss_dead() -> void:

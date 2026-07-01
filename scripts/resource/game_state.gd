@@ -70,6 +70,7 @@ const SPECIAL : Dictionary[Special, SpecialDef] = {
 
 
 const MAX_ENERGY : int = 255
+const OVERLOAD_ENERGY : int = 0xFFFF
 const INITIAL_PLAYER_LIVES : int = 3
 const MAX_PLAYER_LIVES : int = 5
 
@@ -96,6 +97,9 @@ const CHEAT_KEYBOARD_SPECIALS : StringName = &"move_up_move_up_move_up_select_se
 
 ## The energy levels for each of the player's special abilities/weapons
 @export var energy : Dictionary[Special, int]:		set=set_energy, get=get_energy
+
+## If [code]true[/code] energy values (including overload) cannot be changed.
+@export var energy_locked : bool = false
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -239,35 +243,83 @@ func get_energy_level(special : Special) -> int:
 	if special in _energy:
 		if _unlimited_energy or SPECIAL[special].has_infinite_energy:
 			return MAX_ENERGY
-		return _energy[special]
+		return _energy[special] & 0xFF
 	return -1
 
-## Sets the energy level for [param special] to [param energy_level].
+func get_energy_overload(special : Special) -> int:
+	if special in _energy:
+		return (_energy[special] & 0xFF00) >> 8
+	return -1
+
+## Sets the energy level for [param special] to [param energy_level] and
+## sets the overload value to [param overload_level] if [param overload_level].
+## is greater than or equal to [code]0[/code]
 ## [br][br]
-## [b]Note:[/b] [param energy_level] is clamped to the range [code]0 - 255[/code].
-func set_energy_level(special : Special, energy_level : int) -> void:
-	if _unlimited_energy: return
+## [param energy_level] and [param overload_level] is clamped to the range [code]0 - 255[/code].
+func set_energy_level(special : Special, energy_level : int, overload_level : int = -1) -> void:
+	if _unlimited_energy or energy_locked: return
 	energy_level = clampi(energy_level, 0, 255)
+	if overload_level >= 0:
+		energy_level += clampi(overload_level, 0, 255) << 8
 	if special in _energy and _energy[special] != energy_level:
 		_energy[special] = energy_level
 		if _lock_change_emit <= 0:
 			changed.emit()
+
+func set_energy_overload(special : Special, overload_level : int) -> void:
+	if special in _energy:
+		overload_level = clampi(overload_level, 0, 255)
+		var elevel : int = _energy[special] & 0xFF
+		set_energy_level(special, elevel, overload_level)
 
 ## Changes the energy level of [param special] by [param amount], which can be
 ## either positive (increase energy) or negative (decrease energy).
 ## [br][br]
 ## Regardless of the value of [param amount], the resulting energy level will
 ## always be between the values of [code]0 - 255[/code]
-func change_energy_level(special : Special, amount : int) -> void:
+func change_energy_level(special : Special, amount : int, allow_overload : bool = false) -> void:
 	if special in _energy:
-		if SPECIAL[special].has_infinite_energy: return
-		set_energy_level(special, _energy[special] + amount)
+		var elevel : int = _energy[special] & 0xFF
+		if not allow_overload:
+			if SPECIAL[special].has_infinite_energy: return
+			set_energy_level(special, elevel + amount)
+		else:
+			var overload : int = (_energy[special] & 0xFF00) >> 8
+			
+			if amount < 0 and overload > 0:
+				if absi(amount) > overload:
+					amount += overload
+					overload = 0
+				else:
+					overload += amount
+					amount = 0
+			
+			if not SPECIAL[special].has_infinite_energy:
+				if elevel + amount > MAX_ENERGY:
+					amount = (elevel + amount) - MAX_ENERGY
+					elevel = MAX_ENERGY
+				else:
+					elevel = clampi(elevel + amount, 0, MAX_ENERGY)
+			
+			if amount > 0:
+				overload = clampi(overload + amount, 0, MAX_ENERGY)
+			
+			set_energy_level(special, elevel, overload)
+
+#func change_energy_overload(special : Special, amount : int) -> void:
+	#if special in _energy:
+		#var elevel : int = _energy[special] & 0xFF
+		#var overload : int = (_energy[special] & 0xFF00) >> 8
+		#set_energy_level(special, elevel, overload + amount)
 
 ## Changes the energy level of the currently active Special by [param amount],
 ## which can be either positive (increase energy) or negative (decrease
 ## energy).
-func change_current_energy_level(amount : int) -> void:
-	change_energy_level(_current_special, amount)
+func change_current_energy_level(amount : int, allow_overload : bool = false) -> void:
+	change_energy_level(_current_special, amount, allow_overload)
+
+#func change_current_energy_overload(amount : int) -> void:
+	#change_energy_overload(_current_special, amount)
 
 ## Reduces the energy level of [param special] by the amount of energy required to
 ## use [param special], if and only if the current energy level is greater than or
@@ -277,7 +329,7 @@ func use_special(special : Special) -> bool:
 	if special in energy:
 		if _unlimited_energy or SPECIAL[special].weapon_definition != null: return true
 		if _energy[special] >= SPECIAL[special].action_energy_cost:
-			change_energy_level(special, -SPECIAL[special].action_energy_cost)
+			change_energy_level(special, -SPECIAL[special].action_energy_cost, true)
 			return true
 	return false
 
@@ -329,6 +381,7 @@ func is_special_unlocked(special : Special) -> bool:
 func set_special(special : Special) -> bool:
 	if is_special_unlocked(special):
 		_current_special = special
+		changed.emit()
 		return true
 	return false
 

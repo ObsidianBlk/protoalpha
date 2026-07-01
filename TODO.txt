@@ -1,5 +1,7 @@
 -- TODO --
 
+* [ BUG ] If triggering Fault Dash while discharging overload, Fault Dash is
+  constantly re-triggered
 
 * Gamepad controls (on WEB) don't trigger fullscreen (but mouse does)... why?!?!
 * TV screen sized funky in some states
