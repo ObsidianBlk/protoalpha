@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SpecialDef" format=3 uid="uid://qvur75qixumo"]
 
-[ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://special_def.gd" id="1_d54td"]
+[ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://scripts/resource/special_def.gd" id="1_d54td"]
 [ext_resource type="Texture2D" uid="uid://3srn5mpkstpd" path="res://assets/graphics/proto/specials_icon_2.tres" id="1_hkep2"]
 
 [resource]

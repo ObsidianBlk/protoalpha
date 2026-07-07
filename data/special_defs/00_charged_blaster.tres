@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SpecialDef" format=3 uid="uid://cb0b0lnhrperq"]
 
 [ext_resource type="Texture2D" uid="uid://cr4ddyj68sq7f" path="res://assets/graphics/proto/specials_icon_0.tres" id="1_wsfoh"]
-[ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://special_def.gd" id="2_4iggk"]
+[ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://scripts/resource/special_def.gd" id="2_4iggk"]
 [ext_resource type="Resource" uid="uid://p0vcbjdbc78t" path="res://data/weapon_defs/wdef_bolt.tres" id="3_hef0p"]
 
 [resource]
