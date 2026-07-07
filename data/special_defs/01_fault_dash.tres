@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SpecialDef" format=3 uid="uid://6wy5bk7kp2ru"]
 
 [ext_resource type="Texture2D" uid="uid://burv470jefr7y" path="res://assets/graphics/proto/specials_icon_1.tres" id="1_rjg2q"]
-[ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://scripts/resource/special_def.gd" id="2_i03ai"]
+[ext_resource type="Script" uid="uid://cppyslgvqknyc" path="res://scripts/resource/special_def.gd" id="2_bwjna"]
 [ext_resource type="Script" uid="uid://wbuewjeffa70" path="res://scripts/resource/sound_sheet.gd" id="3_bwjna"]
 [ext_resource type="Script" uid="uid://dveho6qshxx2o" path="res://scripts/resource/sound_entry.gd" id="4_4d48s"]
 [ext_resource type="AudioStream" uid="uid://bfdqc76nl3kgn" path="res://assets/audio/sfx/special_fault_dash.wav" id="5_4sxoq"]
@@ -23,7 +23,7 @@ sound_list = Dictionary[StringName, ExtResource("4_4d48s")]({
 metadata/_custom_type_script = "uid://wbuewjeffa70"
 
 [resource]
-script = ExtResource("2_i03ai")
+script = ExtResource("2_bwjna")
 special_name = "Fault Dash"
 icon = ExtResource("1_rjg2q")
 unlock_level = 1

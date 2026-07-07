@@ -14,6 +14,9 @@ class_name Game
 ## Scroll Axis used primarily for defining the axis a camera can scroll.
 enum ScrollAxis {HORIZONTAL=0, VERTICAL=1}
 
+## The type of damage a weapon does.
+enum DamageType {HP=0, EP=1}
+
 ## A simple Facing enum for horizontally aligned Mobs.
 ## [br][code]LEFT=-1[/code] and [code]RIGHT=1[/code]
 enum MobFacingH {LEFT=-1, RIGHT=1}
