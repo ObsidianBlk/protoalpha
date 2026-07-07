@@ -63,10 +63,9 @@ func enter(_payload : Variant = null) -> void:
 	actor.set_tree_param(APARAM_TRANS_ACTION, TRANS_ACTION_SPECIAL_FAULT_DASH)
 	actor.set_tree_param(APARAM_ONCE_INTERRUPT, ONCE_FIRE)
 	
-	if Game.State.get_special() in GameState.SPECIAL:
-		var def : SpecialDef = GameState.SPECIAL[Game.State.get_special()]
-		if def.sound_sheet != null:
-			def.sound_sheet.play(SFX_TRIGGERED)
+	var sdef : SpecialDef = GameState.Get_Special_Def(Game.State.get_special())
+	if sdef.sound_sheet != null:
+		sdef.sound_sheet.play(SFX_TRIGGERED)
 	
 	actor.velocity.x = sign(actor.velocity.x) * dash_speed
 	actor.velocity.y = 0.0

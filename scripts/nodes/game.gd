@@ -263,18 +263,21 @@ static func Is_Test_Level_Allowed() -> bool:
 	return OS.has_feature("editor_runtime")
 
 static func Is_Valid_Weapon(special : GameState.Special) -> bool:
-	if special in GameState.SPECIAL:
-		return GameState.SPECIAL[special].weapon_definition != null
+	var sdef : SpecialDef = GameState.Get_Special_Def(special)
+	if sdef != null:
+		return sdef.weapon_definition != null
 	return false
 
 static func Get_Weapon_Resource(special : GameState.Special) -> WeaponDef:
-	if special in GameState.SPECIAL:
-		return GameState.SPECIAL[special].weapon_definition
+	var sdef : SpecialDef = GameState.Get_Special_Def(special)
+	if sdef != null:
+		return sdef.weapon_definition
 	return null
 
 static func Get_Special_Icon(special : GameState.Special) -> AtlasTexture:
-	if special in GameState.SPECIAL:
-		return GameState.SPECIAL[special].icon
+	var sdef : SpecialDef = GameState.Get_Special_Def(special)
+	if sdef != null:
+		return sdef.icon
 	return null
 
 static func Node_Has_Properties(n : Node, properties : Array[String]) -> bool:

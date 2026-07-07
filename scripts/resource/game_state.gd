@@ -62,10 +62,10 @@ enum Special {
 	DEFRAGMENTS=2,
 }
 
-const SPECIAL : Dictionary[Special, SpecialDef] = {
-	Special.CHARGED_BLASTER : preload("uid://cb0b0lnhrperq"),
-	Special.FAULT_DASH : preload("uid://6wy5bk7kp2ru"),
-	Special.DEFRAGMENTS : preload("uid://qvur75qixumo"),
+const _SPECIAL_RES_LUT : Dictionary[Special, String] = {
+	Special.CHARGED_BLASTER : "uid://cb0b0lnhrperq",
+	Special.FAULT_DASH : "uid://6wy5bk7kp2ru",
+	Special.DEFRAGMENTS : "uid://qvur75qixumo",
 }
 
 
@@ -193,6 +193,16 @@ func _IsLevelCodeValid(pw : int, level : int) -> int:
 	return -1
 
 # ------------------------------------------------------------------------------
+# Static Public Methods
+# ------------------------------------------------------------------------------
+static func Get_Special_Def(special : Special) -> SpecialDef:
+	if special in _SPECIAL_RES_LUT:
+		var res : Variant = load(_SPECIAL_RES_LUT[special])
+		if res is SpecialDef:
+			return res
+	return null
+
+# ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
 func reset() -> void:
@@ -241,7 +251,7 @@ func is_password_valid(password : int) -> bool:
 ## [param Special]
 func get_energy_level(special : Special) -> int:
 	if special in _energy:
-		if _unlimited_energy or SPECIAL[special].has_infinite_energy:
+		if _unlimited_energy or special_has_infinite_energy(special):
 			return MAX_ENERGY
 		return _energy[special] & 0xFF
 	return -1
@@ -279,9 +289,10 @@ func set_energy_overload(special : Special, overload_level : int) -> void:
 ## always be between the values of [code]0 - 255[/code]
 func change_energy_level(special : Special, amount : int, allow_overload : bool = false) -> void:
 	if special in _energy:
+		var sdef : SpecialDef = Get_Special_Def(special)
 		var elevel : int = _energy[special] & 0xFF
 		if not allow_overload:
-			if SPECIAL[special].has_infinite_energy: return
+			if sdef.has_infinite_energy: return
 			set_energy_level(special, elevel + amount)
 		else:
 			var overload : int = (_energy[special] & 0xFF00) >> 8
@@ -294,7 +305,7 @@ func change_energy_level(special : Special, amount : int, allow_overload : bool 
 					overload += amount
 					amount = 0
 			
-			if not SPECIAL[special].has_infinite_energy:
+			if not sdef.has_infinite_energy:
 				if elevel + amount > MAX_ENERGY:
 					amount = (elevel + amount) - MAX_ENERGY
 					elevel = MAX_ENERGY
@@ -327,10 +338,12 @@ func change_current_energy_level(amount : int, allow_overload : bool = false) ->
 ## is returned, otherwise [code]false[/code] is returned.
 func use_special(special : Special) -> bool:
 	if special in energy:
-		if _unlimited_energy or SPECIAL[special].weapon_definition != null: return true
-		if _energy[special] >= SPECIAL[special].action_energy_cost:
-			change_energy_level(special, -SPECIAL[special].action_energy_cost, true)
-			return true
+		var sdef : SpecialDef = Get_Special_Def(special)
+		if sdef != null:
+			if _unlimited_energy or sdef.weapon_definition != null: return true
+			if _energy[special] >= sdef.action_energy_cost:
+				change_energy_level(special, -sdef.action_energy_cost, true)
+				return true
 	return false
 
 ## Returns [code]true[/code] is the energy level of [param special] is greater than
@@ -338,8 +351,20 @@ func use_special(special : Special) -> bool:
 ## [code]false[/code] is returned.
 func can_use_special(special : Special) -> bool:
 	if special in _energy:
-		return _energy[special] >= SPECIAL[special].action_energy_cost
+		return _energy[special] >= special_action_cost(special)
 	return false
+
+func special_has_infinite_energy(special : Special) -> bool:
+	var sdef : SpecialDef = Get_Special_Def(special)
+	if sdef != null:
+		return sdef.has_infinite_energy
+	return false
+
+func special_action_cost(special : Special) -> int:
+	var sdef : SpecialDef = Get_Special_Def(special)
+	if sdef != null:
+		return sdef.action_energy_cost
+	return 0
 
 ## Sets the given [param level] to the [param unlock] state.
 ## [br][br]
@@ -371,8 +396,9 @@ func is_level_index_unlocked(level_idx : int) -> bool:
 ## Returns [code]true[/code] is the given [param special] is unlocked and
 ## available for the player to use. Otherwise [code]false[/code] is returned.
 func is_special_unlocked(special : Special) -> bool:
-	if special in SPECIAL:
-		var level : int = SPECIAL[special].unlock_level
+	var sdef : SpecialDef = Get_Special_Def(special)
+	if sdef != null:
+		var level : int = sdef.unlock_level
 		if level == 0: return true
 		# A "Locked" level is a defeated level...
 		return not is_level_unlocked(level)

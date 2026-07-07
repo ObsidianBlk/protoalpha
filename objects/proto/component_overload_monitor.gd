@@ -83,7 +83,7 @@ func _Discharge() -> void:
 		if health != null:
 			health.hurt(discharge_damage)
 	elif elevel > 0:
-		if GameState.SPECIAL[_current_special].has_infinite_energy:
+		if Game.State.special_has_infinite_energy(_current_special):#GameState.SPECIAL[_current_special].has_infinite_energy:
 			_discharging = false
 		else:
 			if elevel > DISCHARGE_CHUNK:

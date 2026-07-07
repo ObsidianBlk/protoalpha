@@ -17,6 +17,8 @@ signal invulnerability_changed(enabled : bool)
 # ------------------------------------------------------------------------------
 ## [ComponentHealth] node. 
 @export var health : ComponentHealth = null
+## [ComponentEnergy] node.
+@export var energy : ComponentEnergy = null
 ## The amount of damage dealt to detected colliding [HitBox][br][br]
 ## A value of [code]-1[/code] will trigger an instant death to the colliding
 ## [HitBox] object (if that [HitBox] object has an assigned [ComponentHealth]
