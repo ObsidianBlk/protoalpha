@@ -20,6 +20,10 @@ signal depleted()
 @export var max_energy : int = 100:		set=set_max_energy, get=get_max_energy
 ## The component's current energy value.
 @export var energy : int = 100:			set=set_energy, get=get_energy
+## If [property player] is [code]true[/code] then when taking energy damage to
+## a Special with infinite energy, the overload will be equal to the damage taken
+## multiplied by this value.
+@export var overload_multiplier : float = 4.0
 
 
 # ------------------------------------------------------------------------------
@@ -51,11 +55,11 @@ func get_max_energy() -> int:
 	return _max_energy
 
 func set_energy(e : int) -> void:
-	if e > 0 and e <= _max_energy and e != _energy:
+	if e > 0 and e <= max_energy and e != energy:
 		if player:
 			Game.State.set_energy_level(Game.State.get_special(), e)
 		else: _energy = e
-		energy_changed.emit(_energy, _max_energy)
+		energy_changed.emit(energy, max_energy)
 
 func get_energy() -> int:
 	if player:
@@ -75,7 +79,10 @@ func _ready() -> void:
 # ------------------------------------------------------------------------------
 func hurt(amount : int) -> void:
 	if amount <= 0: return
-	energy = max(energy - amount, 0)
+	if player and Game.State.special_has_infinite_energy(Game.State.get_special()):
+		Game.State.change_current_energy_level(amount * overload_multiplier, true)
+	else:
+		energy = max(energy - amount, 0)
 	if energy <= 0:
 		depleted.emit()
 	else: hit.emit()

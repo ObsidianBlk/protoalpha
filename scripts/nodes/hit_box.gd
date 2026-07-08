@@ -11,6 +11,8 @@ signal hitbox_collided(hitbox : HitBox)
 signal hitbox_damaged(hitbox : HitBox)
 ## Emitted when the state of this [HitBox] vulnerability changes.
 signal invulnerability_changed(enabled : bool)
+## Emitted when the hurt() or health() method is called (usually by a [Projectile], but not always)
+signal used()
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -24,6 +26,12 @@ signal invulnerability_changed(enabled : bool)
 ## [HitBox] object (if that [HitBox] object has an assigned [ComponentHealth]
 ## object.
 @export var damage : int = 0
+## The type of damage dealth to the detected colliding [HitBox].
+@export var damage_type : Game.DamageType = Game.DamageType.HP
+## If [code]true[/code] then if EP damage is greater than the amount of
+## energy remaining, the overflow will hurt HP.[br][br]
+## [b]Note:[/b] Has no effect if [property energy] is [code]null[/code]
+@export var depleted_energy_hurts : bool = false
 ## If [code]true[/code] damage will be dealt every [property invulnerability_time] seconds.
 @export var continuous : bool = false
 ## The amount of time (in seconds) this [HitBox] will not take damage after being hit.
@@ -79,7 +87,7 @@ func _HurtIfWithin(hb : HitBox) -> void:
 	var dmg : int = get_damage()
 	if dmg == 0 or not hb.name in _hitboxes: return
 	if dmg > 0 and not hb.is_invulnerable():
-		hb.hurt(dmg)
+		hb.hurt(dmg, damage_type)
 		hitbox_damaged.emit(hb)
 	elif damage < 0:
 		hb.hurt(-1)
@@ -105,13 +113,27 @@ func has_health() -> bool:
 		return health != null
 	return false
 
-func hurt(amount : int) -> void:
-	if has_health():
-		if amount > 0 and not _is_invulnerable:
-			health.hurt(amount)
-			trigger_invulnerability(get_invulnerability_time())
-		elif amount < 0:
-			health.hurt(health.max_health * 2) # Why times 2? BECAUSE!
+func hurt(amount : int, type : Game.DamageType = Game.DamageType.HP) -> void:
+	match type:
+		Game.DamageType.HP:
+			if has_health():
+				if amount > 0 and not _is_invulnerable:
+					health.hurt(amount)
+					trigger_invulnerability(get_invulnerability_time())
+				elif amount < 0: # This basically causes an insta-kill
+					health.hurt(health.max_health * 2) # Why times 2? BECAUSE!
+		Game.DamageType.EP:
+			if energy != null:
+				if amount > 0 and not _is_invulnerable:
+					var old : int = energy.energy
+					energy.hurt(amount)
+					if depleted_energy_hurts and amount > old:
+						amount -= old
+						hurt(amount, Game.DamageType.EP)
+					else:
+						trigger_invulnerability(get_invulnerability_time())
+				# TODO: Should there be an "insta-kill" equivolent?
+	used.emit()
 
 func heal(amount : int) -> void:
 	if has_health():
@@ -163,8 +185,7 @@ func is_hitbox_disabled() -> bool:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_area_entered(area : Area2D) -> void:
-	var dmg : int = get_damage()
-	if dmg != 0 and area is HitBox:
+	if area is HitBox:
 		_hitboxes[area.name] = area
 		_HurtIfWithin(area)
 		hitbox_collided.emit(area)

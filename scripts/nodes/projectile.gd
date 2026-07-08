@@ -21,6 +21,7 @@ const DEFLECT_COLLISION_MASK : int = 0x8000
 @export_range(-180.0, 180.0) var angle : float:		set=set_angle, get=get_angle
 @export var lifetime : float = 2.0
 @export var dmg : int = 1
+@export var damage_type : Game.DamageType = Game.DamageType.HP
 @export var visual_node : Node2D = null:			set=set_visual_node
 
 # ------------------------------------------------------------------------------
@@ -149,5 +150,5 @@ func _on_area_entered(area : Area2D) -> void:
 			deflected.emit()
 		else:
 			hit.emit()
-			area.hurt(dmg)
+			area.hurt(dmg, damage_type)
 			die()

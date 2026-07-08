@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="WeaponDef" format=3 uid="uid://cdxmqw6onwytr"]
+
+[ext_resource type="Texture2D" uid="uid://e68gjjyaj2pk" path="res://assets/graphics/bullets/energy_bullet_01.png" id="1_mj2fv"]
+[ext_resource type="PackedScene" uid="uid://dlapg01w1roj0" path="res://objects/projectiles/energy_bolt/energy_bolt.tscn" id="2_6ji5d"]
+[ext_resource type="Script" uid="uid://dvj7a56df3qol" path="res://scripts/resource/weapon_def.gd" id="2_obr1v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ji5d"]
+atlas = ExtResource("1_mj2fv")
+region = Rect2(0, 0, 8, 8)
+
+[resource]
+script = ExtResource("2_obr1v")
+name = &"EnergyBolt"
+icon = SubResource("AtlasTexture_6ji5d")
+projectile = ExtResource("2_6ji5d")
+rate_of_fire = 0.1
+automatic = true
+energy_cost = 10
+metadata/_custom_type_script = "uid://dvj7a56df3qol"

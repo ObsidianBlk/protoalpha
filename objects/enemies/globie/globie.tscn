@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://bqqhkoqnra7on"]
+
+[ext_resource type="Texture2D" uid="uid://bgiktl6dqgtvp" path="res://assets/graphics/enemies/globie/globie.png" id="1_3dn2q"]
+[ext_resource type="Script" uid="uid://bdkyjpjdnd3tp" path="res://objects/enemies/globie/globie.gd" id="1_6oxgl"]
+[ext_resource type="Script" uid="uid://bqgl0w6fsrl5i" path="res://scripts/nodes/hit_box.gd" id="3_r3sqy"]
+[ext_resource type="Script" uid="uid://wjm481jeg5t0" path="res://scripts/nodes/weapon.gd" id="4_txn1e"]
+[ext_resource type="Resource" uid="uid://cdxmqw6onwytr" path="res://data/weapon_defs/wdef_energy_bolt.tres" id="5_1lijx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6oxgl"]
+atlas = ExtResource("1_3dn2q")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3sqy"]
+atlas = ExtResource("1_3dn2q")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txn1e"]
+atlas = ExtResource("1_3dn2q")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lijx"]
+atlas = ExtResource("1_3dn2q")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfdhu"]
+atlas = ExtResource("1_3dn2q")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gr5m"]
+atlas = ExtResource("1_3dn2q")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftoae"]
+atlas = ExtResource("1_3dn2q")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yui73"]
+atlas = ExtResource("1_3dn2q")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qand1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6oxgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3sqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txn1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lijx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfdhu")
+}],
+"loop": true,
+"name": &"charge_high",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gr5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftoae")
+}],
+"loop": true,
+"name": &"charge_low",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yui73")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6oxgl"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_txn1e"]
+radius = 48.0
+
+[node name="Globie" type="Node2D" unique_id=1450991665]
+script = ExtResource("1_6oxgl")
+
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=1584822129]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_qand1")
+animation = &"charge_high"
+autoplay = "idle"
+
+[node name="HitBox" type="Area2D" parent="." unique_id=705818692]
+collision_layer = 4096
+collision_mask = 256
+script = ExtResource("3_r3sqy")
+damage = 16
+damage_type = 1
+continuous = true
+metadata/_custom_type_script = "uid://bqgl0w6fsrl5i"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1372324806]
+shape = SubResource("CircleShape2D_6oxgl")
+
+[node name="Weapon" type="Node2D" parent="." unique_id=1003734973]
+unique_name_in_owner = true
+script = ExtResource("4_txn1e")
+weapon_def = ExtResource("5_1lijx")
+collision_mask = 256
+metadata/_custom_type_script = "uid://wjm481jeg5t0"
+
+[node name="Detector" type="Area2D" parent="." unique_id=924078170]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" unique_id=142489140]
+shape = SubResource("CircleShape2D_txn1e")
+
+[connection signal="hitbox_collided" from="HitBox" to="." method="_on_hitbox_collided"]
+[connection signal="used" from="HitBox" to="." method="_on_hit_box_used"]
+[connection signal="area_entered" from="Detector" to="." method="_on_detector_area_entered"]
+[connection signal="area_exited" from="Detector" to="." method="_on_detector_area_exited"]

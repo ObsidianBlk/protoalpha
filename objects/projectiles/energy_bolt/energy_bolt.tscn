@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://dlapg01w1roj0"]
+
+[ext_resource type="Script" uid="uid://ck06wsjubo1r" path="res://objects/projectiles/energy_bolt/energy_bolt.gd" id="1_ooygf"]
+[ext_resource type="Texture2D" uid="uid://e68gjjyaj2pk" path="res://assets/graphics/bullets/energy_bullet_01.png" id="2_r52hu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib8c3"]
+atlas = ExtResource("2_r52hu")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mm5fj"]
+atlas = ExtResource("2_r52hu")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omo5v"]
+atlas = ExtResource("2_r52hu")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lb0v"]
+atlas = ExtResource("2_r52hu")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r52hu"]
+atlas = ExtResource("2_r52hu")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cs2w"]
+atlas = ExtResource("2_r52hu")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xxfu"]
+atlas = ExtResource("2_r52hu")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tr74r"]
+atlas = ExtResource("2_r52hu")
+region = Rect2(56, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6cs2w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ib8c3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mm5fj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omo5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lb0v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r52hu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cs2w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xxfu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tr74r")
+}],
+"loop": false,
+"name": &"poof",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1xxfu"]
+radius = 3.0
+
+[node name="EnergyBolt" type="Area2D" unique_id=1413701893 node_paths=PackedStringArray("visual_node")]
+script = ExtResource("1_ooygf")
+dmg = 16
+damage_type = 1
+visual_node = NodePath("ASprite")
+metadata/_custom_type_script = "uid://jejiprc5138i"
+
+[node name="ASprite" type="AnimatedSprite2D" parent="." unique_id=1977566392]
+sprite_frames = SubResource("SpriteFrames_6cs2w")
+animation = &"poof"
+autoplay = "default"
+frame = 3
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1395743186]
+shape = SubResource("CircleShape2D_1xxfu")

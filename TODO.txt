@@ -1,5 +1,7 @@
 -- TODO --
 
+* [ BUG ] Overload discharge can cause the player to get locked in the hurt state forever or
+   until death depend on if the Special has infinite energy or not
 * [ BUG ] If triggering Fault Dash while discharging overload, Fault Dash is
   constantly re-triggered
 
