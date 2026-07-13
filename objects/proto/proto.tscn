@@ -207,6 +207,22 @@ region = Rect2(0, 210, 24, 21)
 atlas = ExtResource("1_2x067")
 region = Rect2(24, 210, 24, 21)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pktpj"]
+atlas = ExtResource("1_2x067")
+region = Rect2(0, 210, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76xk5"]
+atlas = ExtResource("1_2x067")
+region = Rect2(24, 210, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so8vw"]
+atlas = ExtResource("1_2x067")
+region = Rect2(0, 189, 24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vjtf"]
+atlas = ExtResource("1_2x067")
+region = Rect2(24, 189, 24, 21)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_3ua0g"]
 atlas = ExtResource("1_2x067")
 region = Rect2(0, 189, 24, 21)
@@ -547,6 +563,28 @@ animations = [{
 }],
 "loop": false,
 "name": &"hurt_air",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pktpj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76xk5")
+}],
+"loop": false,
+"name": &"hurt_e_air",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_so8vw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vjtf")
+}],
+"loop": false,
+"name": &"hurt_e_ground",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1077,6 +1115,60 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
+[sub_resource type="Animation" id="Animation_gffs1"]
+length = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ASprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"hurt_e_air"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ASprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_p830i"]
+length = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ASprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"hurt_e_ground"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ASprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
 [sub_resource type="Animation" id="Animation_heo4x"]
 length = 0.5
 tracks/0/type = "value"
@@ -1391,6 +1483,8 @@ _data = {
 &"fault_arrow_form": SubResource("Animation_g2yhf"),
 &"fault_arrow_motion": SubResource("Animation_76xk5"),
 &"hurt_air": SubResource("Animation_mh7ni"),
+&"hurt_e_air": SubResource("Animation_gffs1"),
+&"hurt_e_ground": SubResource("Animation_p830i"),
 &"hurt_ground": SubResource("Animation_heo4x"),
 &"idle_a": SubResource("Animation_fql2o"),
 &"idle_b": SubResource("Animation_k3t5h"),
@@ -1626,6 +1720,36 @@ states/fault_arrow_motion/node = SubResource("AnimationNodeAnimation_n3a1b")
 states/fault_arrow_motion/position = Vector2(569.6211, 100)
 transitions = ["Start", "fault_arrow_form", SubResource("AnimationNodeStateMachineTransition_af75y"), "fault_arrow_form", "fault_arrow_motion", SubResource("AnimationNodeStateMachineTransition_ugwmj"), "fault_arrow_motion", "fault_arrow_exit", SubResource("AnimationNodeStateMachineTransition_l43q3"), "fault_arrow_exit", "End", SubResource("AnimationNodeStateMachineTransition_dvxcj")]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uaf6k"]
+animation = &"hurt_e_air"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0bs7s"]
+animation = &"hurt_e_ground"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pn48n"]
+advance_mode = 2
+advance_expression = "is_on_surface()"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lm3v1"]
+advance_mode = 2
+advance_expression = "not is_on_surface()"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ncret"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3ua0g"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ve6f2"]
+states/hurt_e_air/node = SubResource("AnimationNodeAnimation_uaf6k")
+states/hurt_e_air/position = Vector2(517.7656, 149.91406)
+states/hurt_e_ground/node = SubResource("AnimationNodeAnimation_0bs7s")
+states/hurt_e_ground/position = Vector2(529.85156, -0.95703125)
+transitions = ["Start", "hurt_e_ground", SubResource("AnimationNodeStateMachineTransition_pn48n"), "Start", "hurt_e_air", SubResource("AnimationNodeStateMachineTransition_lm3v1"), "hurt_e_ground", "End", SubResource("AnimationNodeStateMachineTransition_ncret"), "hurt_e_air", "End", SubResource("AnimationNodeStateMachineTransition_3ua0g")]
+graph_offset = Vector2(-49.085938, -133.63672)
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k3t5h"]
 animation = &"hurt_air"
 
@@ -1655,6 +1779,17 @@ states/hurt_air/position = Vector2(450.254, 205.789)
 states/hurt_ground/node = SubResource("AnimationNodeAnimation_hdeo6")
 states/hurt_ground/position = Vector2(450.254, 73.918)
 transitions = ["Start", "hurt_ground", SubResource("AnimationNodeStateMachineTransition_x6u88"), "Start", "hurt_air", SubResource("AnimationNodeStateMachineTransition_6fgtv"), "hurt_air", "End", SubResource("AnimationNodeStateMachineTransition_08qad"), "hurt_ground", "End", SubResource("AnimationNodeStateMachineTransition_58maj")]
+graph_offset = Vector2(-202.64844, -86.015625)
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_n3g6h"]
+input_0/name = "hp"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "ep"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_jl3in"]
 sync = true
@@ -1719,6 +1854,7 @@ input_3/break_loop_at_end = false
 input_3/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pktpj"]
+graph_offset = Vector2(-1220.0283, 655.6948)
 nodes/output/position = Vector2(1240, 120)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(480, 260)
@@ -1732,8 +1868,8 @@ nodes/facing/node = SubResource("AnimationNodeStateMachine_x6u88")
 nodes/facing/position = Vector2(120, 160)
 nodes/interrupt/node = SubResource("AnimationNodeOneShot_jl3in")
 nodes/interrupt/position = Vector2(120, 480)
-nodes/hurt_states/node = SubResource("AnimationNodeStateMachine_pi3w1")
-nodes/hurt_states/position = Vector2(-880, 940)
+nodes/hurt_states_hp/node = SubResource("AnimationNodeStateMachine_pi3w1")
+nodes/hurt_states_hp/position = Vector2(-1100, 720)
 nodes/Teleport/node = SubResource("AnimationNodeStateMachine_pn48n")
 nodes/Teleport/position = Vector2(-880, 1340)
 nodes/spawn_dead_anims/node = SubResource("AnimationNodeStateMachine_rwdmr")
@@ -1746,7 +1882,11 @@ nodes/actions/node = SubResource("AnimationNodeTransition_j6iy6")
 nodes/actions/position = Vector2(-460, 1080)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_pi3w1")
 nodes/Animation/position = Vector2(-860, 480)
-node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"facing", &"Add2", 1, &"interrupt", &"interrupt", 0, &"transition", &"interrupt", 1, &"actions", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2", &"transition", 3, &"Animation", &"actions", 0, &"hurt_states", &"actions", 1, &"spawn_dead_anims", &"actions", 2, &"Teleport", &"actions", 3, &"fault_dash"]
+nodes/hurt_states_ep/node = SubResource("AnimationNodeStateMachine_ve6f2")
+nodes/hurt_states_ep/position = Vector2(-1100, 920)
+nodes/hurt_type/node = SubResource("AnimationNodeTransition_n3g6h")
+nodes/hurt_type/position = Vector2(-740, 760)
+node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"facing", &"Add2", 1, &"interrupt", &"interrupt", 0, &"transition", &"interrupt", 1, &"actions", &"transition", 0, &"base_movement", &"transition", 1, &"attack_actions", &"transition", 2, &"Animation 2", &"transition", 3, &"Animation", &"actions", 0, &"hurt_type", &"actions", 1, &"spawn_dead_anims", &"actions", 2, &"Teleport", &"actions", 3, &"fault_dash", &"hurt_type", 0, &"hurt_states_hp", &"hurt_type", 1, &"hurt_states_ep"]
 
 [sub_resource type="Resource" id="Resource_osq81"]
 script = ExtResource("29_m7pd3")
@@ -1848,7 +1988,7 @@ collision_mask = 9
 libraries/ = SubResource("AnimationLibrary_6fgtv")
 script = ExtResource("11_jl3in")
 animated_sprite = NodePath("../ASprite")
-target_animation = &"degragment"
+target_animation = &"hurt_e_air"
 metadata/_custom_type_script = "uid://gg0uxpt06y26"
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1438986990]
@@ -1866,6 +2006,9 @@ parameters/fault_dash/conditions/fault_arrow_finished = false
 parameters/actions/current_state = ""
 parameters/actions/transition_request = ""
 parameters/actions/current_index = -1
+parameters/hurt_type/current_state = ""
+parameters/hurt_type/transition_request = "hp"
+parameters/hurt_type/current_index = -1
 
 [node name="StateMachine" type="Node" parent="." unique_id=41649519]
 script = ExtResource("13_jl3in")

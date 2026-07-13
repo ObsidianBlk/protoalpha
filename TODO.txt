@@ -1,9 +1,10 @@
 -- TODO --
 
-* [ BUG ] Overload discharge can cause the player to get locked in the hurt state forever or
-   until death depend on if the Special has infinite energy or not
-* [ BUG ] If triggering Fault Dash while discharging overload, Fault Dash is
-  constantly re-triggered
+* [FINISH] ElectroLegs mob
+  - Need to figure out how to handle collision shapes in animations (specifically the main Collision shape)
+
+
+
 
 * Gamepad controls (on WEB) don't trigger fullscreen (but mouse does)... why?!?!
 * TV screen sized funky in some states
@@ -14,7 +15,7 @@
 	* Boss Attack: Radial shock(bullet) discharges, directional discharges
 	* Level Gimicks:
 		* Charging Blocks
-		* Destroyable "Ball" that charges up and releases energy (bullets) radially
+		* "Ball" that charges up and releases energy (bullets) radially
 
 * Touch Controls!
 
@@ -26,8 +27,6 @@
 * Boss defeated Victory animation/outtro
 
 * "Pushing" block (conveyor in the direction of arrow)
-* When player on a charger and energy bar is at full, "overload" the energy bar.
-  If fully overloaded energy bar will discharge hurting the player (massively?)
 
 * Web-build: Gamepad's jump button, coded as Y, is actually X.
   * Not a major issue, but strange

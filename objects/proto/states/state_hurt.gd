@@ -29,15 +29,21 @@ func enter(payload : Variant = null) -> void:
 		pop()
 		return
 	
+	var is_ep_damage : bool = (typeof(payload) == TYPE_BOOL and payload == true)
 	play_sfx(AUDIO_HURT)
 	if not actor.animation_finished.is_connected(_on_animation_finished):
 		actor.animation_finished.connect(_on_animation_finished)
-	#actor.set_tree_param(APARAM_ONCE_HURT, ONCE_FIRE)
+	
+	if is_ep_damage:
+		actor.set_tree_param(APARAM_TRANS_HURT_TYPE, TRANS_HURT_TYPE_EP)
+	else:
+		actor.set_tree_param(APARAM_TRANS_HURT_TYPE, TRANS_HURT_TYPE_HP)
+	
 	actor.set_tree_param(APARAM_TRANS_ACTION, TRANS_ACTION_HURT)
 	actor.set_tree_param(APARAM_ONCE_INTERRUPT, ONCE_FIRE)
 	actor.set_tree_param(APARAM_TRANSITION, TRANS_CORE)
 	
-	if typeof(payload) == TYPE_BOOL and payload == true:
+	if is_ep_damage:
 		_SpawnEPEffect()
 
 
@@ -51,5 +57,6 @@ func exit() -> void:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_animation_finished(anim_name : StringName) -> void:
-	if anim_name == ANIM_HURT_GROUND or anim_name == ANIM_HURT_AIR:
+	if anim_name in [ANIM_HURT_GROUND, ANIM_HURT_GROUND_EP, ANIM_HURT_AIR, ANIM_HURT_AIR_EP]:
+	#if anim_name == ANIM_HURT_GROUND or anim_name == ANIM_HURT_AIR:
 		pop(false, true)
