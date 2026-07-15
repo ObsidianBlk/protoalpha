@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cl1r4jttq45ui" path="res://objects/lazer/lazer.tscn" id="5_qv4mi"]
 [ext_resource type="PackedScene" uid="uid://bxrpuc6p7i18g" path="res://objects/crushers/crusher_big/crusher_big.tscn" id="6_hocnj"]
 [ext_resource type="PackedScene" uid="uid://bqqhkoqnra7on" path="res://objects/enemies/globie/globie.tscn" id="6_lbjl6"]
+[ext_resource type="PackedScene" uid="uid://bh353kuw32wm7" path="res://objects/enemies/electro_legs/electro_legs.tscn" id="7_6eemo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qv4mi"]
 
@@ -45,6 +46,9 @@ length = 10
 
 [node name="Globie" parent="SegA" unique_id=1450991665 instance=ExtResource("6_lbjl6")]
 position = Vector2(-129, 59)
+
+[node name="ElectroLegs" parent="SegA" unique_id=2038205547 instance=ExtResource("7_6eemo")]
+position = Vector2(-101, -54)
 
 [node name="SegB" type="Area2D" parent="." unique_id=466108398 node_paths=PackedStringArray("layer")]
 collision_layer = 0

@@ -63,7 +63,7 @@ func _Dissipate() -> void:
 	if overload > 0:
 		overload = clampi(overload - DISSIPATE_CHUNK, 0, GameState.MAX_ENERGY)
 		Game.State.set_energy_overload(_current_special, overload)
-		print("Overload Dissipating: ", overload)
+		#print("Overload Dissipating: ", overload)
 	
 	_Delay(dissipate_interval, _Dissipate)
 

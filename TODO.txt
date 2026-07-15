@@ -1,9 +1,10 @@
 -- TODO --
 
 * [FINISH] ElectroLegs mob
-  - Need to figure out how to handle collision shapes in animations (specifically the main Collision shape)
+  - HUNT MODE: Head toward player. If within range, leap at player. If ON player, leap away. Repeat.
+  - SEARCH MODE: Walk for random time in one direction, the swap. If hit wall, swap.
 
-
+* [BUG] Shooting Globie while it's firing energy blasts causes attack to fire constantly.
 
 
 * Gamepad controls (on WEB) don't trigger fullscreen (but mouse does)... why?!?!

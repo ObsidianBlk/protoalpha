@@ -1854,7 +1854,7 @@ input_3/break_loop_at_end = false
 input_3/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pktpj"]
-graph_offset = Vector2(-1220.0283, 655.6948)
+graph_offset = Vector2(-519.17285, -21.103416)
 nodes/output/position = Vector2(1240, 120)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_jl3in")
 nodes/Add2/position = Vector2(480, 260)
