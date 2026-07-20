@@ -654,4 +654,16 @@ parameters/interrupt/active = false
 parameters/interrupt/internal_active = false
 parameters/interrupt/request = 0
 
+[node name="EdgeRay_L" type="RayCast2D" parent="." unique_id=1459146094]
+unique_name_in_owner = true
+position = Vector2(-12, -5)
+target_position = Vector2(0, 6)
+collision_mask = 17
+
+[node name="EdgeRay_R" type="RayCast2D" parent="." unique_id=1027758357]
+unique_name_in_owner = true
+position = Vector2(8, -5)
+target_position = Vector2(0, 6)
+collision_mask = 17
+
 [connection signal="health_changed" from="ComponentHealth" to="." method="_on_health_changed"]

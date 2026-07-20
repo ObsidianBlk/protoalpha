@@ -1,16 +1,11 @@
 -- TODO --
 
-* [FINISH] ElectroLegs mob
-  - HUNT MODE: Head toward player. If within range, leap at player. If ON player, leap away. Repeat.
-  - SEARCH MODE: Walk for random time in one direction, the swap. If hit wall, swap.
-
-* [BUG] Shooting Globie while it's firing energy blasts causes attack to fire constantly.
-
-
 * Gamepad controls (on WEB) don't trigger fullscreen (but mouse does)... why?!?!
 * TV screen sized funky in some states
 
 -- ENHANCEMENTS:
+* Electro Legs (Mob)
+  - Actually create a proper "Thinking" state. The current timer method is janky.
 * Come up with a Level 3 BOSS and Special Ability!!
 	* Boss: "Overflow"
 	* Boss Attack: Radial shock(bullet) discharges, directional discharges

@@ -5,6 +5,12 @@ extends CharacterActor2D
 # Constants
 # ------------------------------------------------------------------------------
 const WALL_COLLISION_X_THRESHOLD : float = 0.001
+const EDGE_DETECTION_DELAY : float = 0.1
+const THINKING_RAND_WEIGHT : float = 200.0
+const THINKING_RAND_TARGET : float = 199.0
+const MIN_TIME_THINKING : float = 0.1
+const MAX_TIME_THINKING : float = 1.0
+
 const COLL_STATE_NORMAL : int = 0
 const COLL_STATE_AIR : int = 1
 const COLL_STATE_LEAP : int = 2
@@ -31,19 +37,24 @@ const APARAM_TRANS_INTERRUPTS : String = "parameters/interrupts/transition_reque
 # Export Variables
 # ------------------------------------------------------------------------------
 @export var speed : float = 48.0
-@export var jump : float = 40.0
-@export var hunt_distance : float = 40.0
+@export var jump : float = 120.0
+@export var hunt_distance : float = 260.0
+@export var hunt_jump_distance : float = 40.0
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
 var _dead : bool = false
 var _direction : Vector2 = Vector2.RIGHT
+var _edge_delay : float = 0.0
+var _thinking : float = 0.0
 
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _coll_shape: CollisionShape2D = %CollisionShape2D
+@onready var _edge_ray_l: RayCast2D = %EdgeRay_L
+@onready var _edge_ray_r: RayCast2D = %EdgeRay_R
 
 
 # ------------------------------------------------------------------------------
@@ -51,31 +62,53 @@ var _direction : Vector2 = Vector2.RIGHT
 # ------------------------------------------------------------------------------
 func _physics_process(delta: float) -> void:
 	if is_on_surface():
+		if _edge_delay > 0.0:
+			_edge_delay -= delta
+		
 		var player : CharacterActor2D = _GetPlayer()
 		if player == null:
-			_ProcessSearch(delta)
-		else: _ProcessHunt(delta, player)
+			if _thinking <= 0.0:
+				_ProcessSearch(delta)
+			else: _thinking -= delta
+		else:
+			_thinking = 0.0
+			_ProcessHunt(delta, player)
 	else: _ProcessAir(delta)
 
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
-func _ProcessAir(_delta : float) -> void:
-	var vec : Vector2 = Vector2(velocity.x, 0.0) + get_gravity()
+func _ProcessAir(delta : float) -> void:
+	var g : Vector2 = lerp(Vector2(0.0, velocity.y), get_gravity(), delta)
+	var vec : Vector2 = Vector2(velocity.x, 0.0) + g
 	velocity = vec 
 	move_and_slide()
 	if _SlideWallCollisionOccured():
 		_direction.x *= -1
 		velocity.x *= -1
 
-func _ProcessHunt(delta : float, player : CharacterActor2D) -> void:
-	velocity = Vector2.ZERO
+func _ProcessHunt(_delta : float, player : CharacterActor2D) -> void:
+	var pdist : float = global_position.distance_to(player.global_position)
+	var pdir : Vector2 = global_position.direction_to(player.global_position)
+	_direction = (pdir * Vector2.RIGHT).normalized()
+	
+	if pdist <= hunt_jump_distance:
+		velocity = (_direction * speed) + (Vector2.UP * jump)
+	else:
+		var g : Vector2 = get_gravity()
+		velocity = (_direction * speed) + g
+	move_and_slide()
 
 func _ProcessSearch(_delta : float) -> void:
-	velocity = (_direction * speed) + get_gravity() 
-	move_and_slide()
-	if _SlideWallCollisionOccured():
+	if randf_range(0, THINKING_RAND_WEIGHT) >= THINKING_RAND_TARGET:
+		velocity = Vector2.ZERO
 		_direction.x *= -1
+		_thinking = randf_range(MIN_TIME_THINKING, MAX_TIME_THINKING)
+	else:
+		velocity = (_direction * speed) + get_gravity()
+		move_and_slide()
+		if _DetectedCliff() or _SlideWallCollisionOccured():
+			_direction.x *= -1
 
 func _SlideWallCollisionOccured() -> bool:
 	for idx : int in range(get_slide_collision_count()):
@@ -112,6 +145,11 @@ func _GetPlayer() -> CharacterActor2D:
 	
 	return null
 
+func _DetectedCliff() -> bool:
+	if _edge_delay <= 0.0 and not (_edge_ray_l.is_colliding() and _edge_ray_r.is_colliding()):
+		_edge_delay = EDGE_DETECTION_DELAY
+		return true
+	return false
 
 func _Die() -> void:
 	if not _dead:

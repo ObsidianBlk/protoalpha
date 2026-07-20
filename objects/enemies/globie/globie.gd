@@ -88,6 +88,9 @@ func _HitState(shakes : int, duration : float) -> void:
 	_state = GlobieState.HIT
 	_KillTween()
 	
+	if _weapon.is_triggered():
+		_weapon.release_trigger()
+	
 	_sprite.play(ANIM_CHARGE_LOW)
 	if shakes > 0 and duration > 0.0:
 		var interval : float = duration / float(shakes)
@@ -114,7 +117,7 @@ func _DischargeState() -> void:
 	var duration : float = randf_range(MIN_DISCHARGE_TIME, MAX_DISCHARGE_TIME)
 	_tween = create_tween()
 	# TODO: Adjust when the trigger is pressed!
-	_weapon.press_trigger(get_parent())
+	#_weapon.press_trigger(get_parent())
 	
 	if _player_hitbox != null:
 		_weapon.look_at(_player_hitbox.global_position + PLAYER_POSITION_OFFSET)
@@ -122,7 +125,10 @@ func _DischargeState() -> void:
 		_tween.tween_interval(duration)
 		_tween.set_parallel(false)
 	else:
-		var cb : Callable = func(v : float): _weapon.rotation = v
+		var cb : Callable = func(v : float):
+			_weapon.rotation = v
+			if not _weapon.is_triggered():
+				_weapon.press_trigger(get_parent())
 		
 		_tween.set_ease(Tween.EASE_IN_OUT)
 		_tween.set_trans(Tween.TRANS_LINEAR)
